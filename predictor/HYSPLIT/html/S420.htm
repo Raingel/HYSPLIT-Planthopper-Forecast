@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Advanced / File Edit / User Defined Internal Vertical Levels (S420)</title>
+</head>
+<body>
+
+<p><h2>Advanced / File Edit / User Defined Internal Vertical Levels</h2></p>
+
+<p>By default, HYSPLIT analyzes the meteorological inputs to determine the 
+appropriate internal vertical model levels so that there are sufficient levels 
+to interpolate all the meteorological input levels to an internal level without 
+skipping input data due to insufficient vertical resolution or insufficient 
+number of data levels. Alternatively, users can define these vertical levels by 
+providing an input file called ZSG_LEVS.IN in the working directory.</p> 
+
+ZSG_LEVS.IN should be formatted as follows:
+
+<ul>
+{number of internal model levels} {index of top of surface layer} {model top [m AGL]}<br>
+END HEADER<br>
+{top height m AGL of level 1}<br>
+{top height m AGL of level 2}<br>
+{...}<br>
+{top height m AGL of top level}<br>
+</ul>
+
+<p>An example ZSG_LEVS.IN with 19 vertical levels, the surface layer extending 
+from the surface to the top of the second internal model level at 75m AGL, and 
+a model top of 10360.0 m AGL is formatted as follows:</p>
+
+<ul>
+19 2 10360.0<br>
+ENDHEADER<br>
+10.0000<br>
+75.0000<br>
+200.000<br>
+385.000<br>
+630.000<br>
+935.000<br>
+1300.00<br>
+1725.00<br>
+2210.00<br>
+2755.00<br>
+3360.00<br>
+4025.00<br>
+4750.00<br>
+5535.00<br>
+6380.00<br>
+7285.00<br>
+8250.00<br>
+9275.00<br>
+10360.0<br>
+</ul>
+
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

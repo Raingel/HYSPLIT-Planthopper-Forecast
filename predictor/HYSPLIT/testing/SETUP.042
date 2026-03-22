@@ -1,0 +1,11 @@
+&SETUP
+initd = 0,
+kblt = 2,
+kdef = 0,
+kmsl = 1,
+numpar = 32000,
+maxpar = 50000,
+ndump = 14,
+ncycl = 0,
+poutf = 'PARDUMP_042',
+/ 

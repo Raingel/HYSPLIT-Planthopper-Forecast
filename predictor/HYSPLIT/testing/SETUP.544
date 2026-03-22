@@ -1,0 +1,7 @@
+ &SETUP
+ initd = 3,
+ kmsl = 1,
+ POUTF='PARDUMP.544',
+ NDUMP=4,
+ NCYCL=4
+ /

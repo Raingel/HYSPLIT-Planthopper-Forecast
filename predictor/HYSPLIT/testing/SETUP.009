@@ -1,0 +1,9 @@
+ &SETUP
+ tm_tpot = 0,
+ tm_tamb = 0,
+ tm_rain = 0,
+ tm_mixd = 0,
+ tm_relh = 0,
+ tm_dswf = 0,
+ tm_terr = 1,
+ /

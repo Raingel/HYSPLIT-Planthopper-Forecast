@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Emission Cycling and Point Source File (S624)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Emission Cycling and Point Source File</h2></p>
+
+<p><h3>Emission Cycling</h3></p>
+
+<p><i>QCYCLE</i> (0.0) are the number of hours between emission start cycles.
+A zero value means that the emissions are not cycled. When non-zero, the number
+of emission hours is repeated again at <i>QCYCLE</i> hours after the starting
+emission time specified in the input <i>CONTROL</i> file. The <i>NUMPAR</i>
+parameter set in the release number limits menu is defined as the number of
+particles released over the emission duration per cycle unless its value is
+less than zero, in that case it defines the hourly particle number release
+rate directly as <i>|NUMPAR|</i>. The <i>QCYCLE</i> parameter is also used
+in conjunction with namelist option <a href="S628.htm">ICHEM=10</a> to that
+the concentrations from each release cycle are saved in their own 
+concentration array.</p>
+
+<p><h3>Optional Point-Source Emission File</h3></p>
+
+<p><i>EFILE</i> (undefined) is the file name that contains point-source temporal
+emission factors, where each record contains the {year month day hour duration
+latitude longitude emission-rate} for each emission period. Multiple emission
+periods can be defined. The values in this file replace the values set in the
+<i>CONTROL</i> file. The emission file can be created from the <a href="S417.htm">
+Advanced Menu</a> tab. The format of this file is more complex than the one
+used to multiply <a href="S640.htm">time-varying</a> unit-source dispersion
+factors created by the <i>ICHEM=10</i> option described above.</p>
+
+<center><p><img src="Image75.gif" width="485" height="315"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

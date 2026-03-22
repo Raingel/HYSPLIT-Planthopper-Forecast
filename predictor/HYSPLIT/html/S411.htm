@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Trajectory (S411)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Trajectory</h2></p>
+
+<p>This section provides some guidance in configuring the model input
+to perform certain specialized calculations. The default configuration
+supplied with the test meteorological data is confined to a simple
+trajectory calculation. More complex scenarios can be configured 
+through the <i>Advanced</i>, <i>Configuration Setup</i>, 
+<i>Trajectory</i> menu tab. The menu is used to modify the <i>SETUP.CFG</i>
+namelist file. This file is not required, and if not present in the root
+startup directory, default values are used. These parameters can all be
+changed without recompilation by modification of the contents of 
+<i>SETUP.CFG</i> and in some cases their modification will substantially
+change the nature of the simulation. The configuration file should be
+present in the root directory. An illustration of the menu is shown below.</p>
+
+<center><p><img width="531" height="352" src="Image42.gif"></p></center>
+
+<p>When using the GUI, the namelist file will be deleted and all variables
+are returned to their default value by selecting the "<i>Reset</i>" button.
+The following summarizes the namelist variables and their corresponding section
+in the GUI menu.</p>
+
+<ol>
+<li><a href="S610.htm">Set fixed or automatic TIME STEPS</a>
+<li><a href="S611.htm">Define subgrid and MSL/AGL UNITS</a>
+<li><a href="S612.htm">MULTIPLE trajectories in time</a>
+<li><a href="S613.htm">Trajectory points OUTPUT FREQUENCY</a>
+<li><a href="S616.htm">MIXING DEPTH computation method</a>
+<li><a href="S614.htm">Add METEOROLOGY output along trajectory</a>
+<li><a href="S615.htm">Meteorological grid offset ENSEMBLE</a>
+<li><a href="S633.htm">WRF vertical interpolation</a>
+<li><a href="S410.htm">Summary of all NAMELIST variable defaults</a>
+</ol>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

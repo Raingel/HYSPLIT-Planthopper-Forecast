@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Concentration / Special Runs / Daily (S352)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Special Runs / Daily</h2></p>
+
+<p>This special menu is used to execute multiple automated concentration
+simulations for days, weeks, or months. The script will start the first 
+simulation at the time set in the CONTROL file and then generate
+new simulations based upon the values shown in the menu. In the example
+shown below, the simulation starts at 95 10 16 00. Each simulation has
+a duration of 12 hours (only shown in the SETUP menu). A new simulation
+will be started every 6 hours until one day after the start time. The model
+output files are named according to the base name set in the control file 
+but are appended either with a six digit month, day and hour field or a
+sequential number. This approach differs from a single simulation with
+multiple starting times in that each simulation is independent and a new
+output file is created for each run.</p>
+
+<center><p><img width="711" height="265" src="Image58B.gif"></p></center>
+
+<p>The model should be configured and run for the first simulation time
+through the standard run menu to insure that the simulation is configured
+correctly. If part of the simulation requires meteorological data from the
+previous month or the next month, these should be included in the base
+simulation test.</p>
+
+<center><p><img width="503" height="328" src="Image58C.gif"></p></center>
+
+<p>After pressing the <i>Execute Script</i> the start of each simulation is
+noted in the log until the script completes. Note that concentration simulations
+are much slower than trajectories and it may take a while before the log is
+updated. In this example, four simulations were completed.</p> 
+
+<center><p><img width="596" height="330" src="Image58D.gif"></p></center>
+
+<p>A variation of the basic simulation that reduces the run duration by the
+new run increment time is configured when the <i>Shorten each new run duration</i>
+checkbutton is enabled. This procedure is the first step in creating the dispersion
+files needed to generate a Transfer Coefficient Matrix. See the help sections
+on <a href="S337.htm">SVD</a> and <a href="S437.htm">Cost Function</a> solutions
+of the TCM. In the example shown, setting the run reduction duration checkbutton
+results in only two completed simulations. The first one has a duration of 12 hours
+while the second one is 6 hours. The subsequent simulation would have a duration
+of zero hours. The concept behind the run duration reduction is that the output
+from all dispersion simulations should have the same end time. In the example
+shown here, the initial run duration should have been 24 hours, not 12, and then
+all four simulation would have completed and the last simulation, the one starting
+at 18 UTC would have had a duration of 6 hours and ended at 00 UTC the next day.
+This issue must be corrected in the SETUP menu where the base run duration needs
+to be changed from 12 to 24 hours.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

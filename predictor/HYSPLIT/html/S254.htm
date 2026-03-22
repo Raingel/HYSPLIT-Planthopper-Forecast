@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Trajectory / Special Runs / Daily (S254)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Special Runs / Daily</h2></p>
+
+<p>This special menu is used for automated trajectory simulations to run
+for very long durations: days, weeks, or months. The script will replace
+the starting month, day and hour in the CONTROL file with values generated in
+the script from the menu shown below. In this example the first model run 
+starts at the time set in the CONTROL file: 95 10 16 00.  A new trajectory
+calculation will be started every 6 hours for one day. The model output files
+are named according to the fields set in the control file and namelist file
+menus, but are appended with an eight digit date field. This approach
+differs from a single simulation with multiple starting times in that each
+simulation is independent and a new output file is created for each run.</p>
+
+<center><p><img width="729" height="170" src="Image58.gif"></p></center>
+
+<p>The model should be configured and run for the first simulation time
+through the standard run menu to insure that the simulation is configured
+correctly. If part of the simulation requires meteorological data from the
+previous month or the next month, these should be included in the base
+simulation test.</p>
+
+<center><p><img width="505" height="333" src="Image58A.gif"></p></center>
+
+<p>As each day's simulation is started, the output file name is written to the
+display log. A trajectory is not started at the simulation end time (95 10 17 00).
+In this example only four trajectories have been computed, the last of 
+which starts at 95 10 16 18.  However, all trajectories have the same duration
+of 12 h as the test trajectory example.</p> 
+
+<p>The script in this menu can be used to generate files for input
+to the trajectory <a href="S231.htm">frequency</a> analysis program or the 
+trajectory <a href="S255.htm">clustering</a> program.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

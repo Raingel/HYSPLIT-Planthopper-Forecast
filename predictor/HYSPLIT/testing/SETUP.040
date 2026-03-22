@@ -1,0 +1,6 @@
+ &SETUP
+ numpar = 50000,
+ vscales = 1.0,
+ vscaleu = 500.0,
+ maxpar = 100000,
+ /

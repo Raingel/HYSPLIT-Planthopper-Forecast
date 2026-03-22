@@ -1,0 +1,10 @@
+&SETUP
+ num3dv = 7,
+ arw3dv = 'P','T','U','V','W','QVAPOR','TKE_MYJ'
+ cnv3dv =  0.01, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0
+ arl3dv = 'PRES','TEMP','UWND','VWND','WWND','SPHU','TKEN',
+ num2dv = 12,
+ arw2dv = 'HGT','PSFC','RAIN','PBLH','UST','ZNT','SWDOWN','HFX','LH','T2','U10','V10',
+ cnv2dv = 1.0, 0.01, 0.001, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+ arl2dv = 'SHGT','PRSS','TPP1','PBLH','USTR','RGHS ','DSWF','SHTF','LHTF','T02M','U10M','V10M',
+/

@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>Meteorology / Help / Sample Programs (S142)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / Help / Sample Programs</h2></p>
+
+<p>The source code for many different meteorological data
+applications can be found in the <i>data2arl</i> directory. 
+A summary of these programs and some others where only the 
+executable is provided are given below. Some of these are 
+available for execution through the GUI, others must be run
+from the command line. All executables can be found in the
+<i>exec</i> directory.</p>
+
+<p><b>GRIB records</b></p>
+
+<p>The various programs and library routines that are required to
+convert GRIB formatted meteorological data files to ARL HYSPLIT
+compatible format can be found in the <i>data2arl</i> directory.
+Some of these are summarized below:</p>
+
+<p><i>content</i> - decodes individual GRIB sections in a record
+for diagnostic purposes. This program does not unpack the data but
+only lists the contents of the GRIB file.</p>
+
+<p><i>inventory</i> - decodes all the records within a GRIB file
+(without unpacking) providing file content information.</p>
+
+<p><i>unpacker</i> - decodes GRIB records in a data file to a real
+data array.</p>
+
+<p><i>sample</i> - creates a packed meteorological file using dummy
+fields hardwired into the program. The input meteorological data
+subroutines should be replaced by routines reading user supplied
+meteorological data files.</p>
+
+<p><i><a name="grib2arl">grib2arl</a> - a generic program to
+convert ECMWF or NOAA global data</i> from ECMWF or NOAA in
+<a href="S125.htm">GRIB1 format</a> on a global latitude longitude grid
+to the ARL format. ECMWF data may be on the
+native hybrid sigma or pressure surfaces. For computational 
+purposes, HYSPLIT requires either surface pressure or terrain 
+height as a surface field in the meteorological data file. The
+default is that surface pressure is assumed to be available in
+the input GRIB file, otherwise the terrain height is required. 
+This option is set using the "-p" flag. ECMWF GRIB files may 
+contain upper-level variables in one file, surface variables
+in another file, and invariant data in a third file. In this
+situation, the upper-level data are considered the primary 
+file "-i" and the surface data are the supplemental file
+"-s", and the invariant data are the constant file "-c".</p>
+
+<ul>
+<p><bUsage: grib2arl [-options]</p>
+<li>-i[primary grib data: file name {required}]
+<li>-s[supplemental grib data: file name {optional}]
+<li>-c[constant grib data: file name {optional}]
+<li>-x[subgrid extract center longitude {-80.0}]
+<li>-y[subgrid extract center latitude {60.0}]
+<li>-g[output projection {3}]<br>
+<ul>
+0 :conformal extract<br>
+1 :fixed northern hemisphere polar<br>
+2 :fixed southern hemisphere polar<br>
+3 :lat-lon global grid (as input)<br>
+4 :lat-lon extract grid<br>
+</ul>
+<li>-n[number of (x:y) extract grid points {100}]
+<li>-k[number of output levels including sfc {16}]
+<li>-p[surface defined by {1}:pressure or 0:terrain height]
+<li>-q[analyze grib file {0} or use saved configuration: 1]
+<li>-r[rain fall accumulation time hours: {6}]
+<li>-t[the number of time periods to process: {744}]
+<li>-z[zero initialization of output file 0:no {1}:yes]
+</ul>
+
+<p><i>fcsubs</i> - library routines required for direct access to
+variable length records</p>
+
+<p><i>cmapf</i> - library routines to convert from latitude-longitude
+to a conformal map projection</p>
+
+<p><i>w3arl</i> - library routines of the ARL version of the NCEP w3lib
+GRIB record decoder.</p>
+
+<p><b>ARL Packed Format</b></p>
+
+<p>The various programs and library routines that are required to
+manipulate or display meteorological data already in the ARL packed
+format can be found in the <i>exec</i> directory. Note that
+when these programs are run from the command line there will be a
+typical two line prompt, the first for the directory and second for
+the file name. A directory name should always have the proper
+terminator (/ or \). The following programs can be found:</p>
+
+<p><i>chk_rec</i> - program to dump the first 50 bytes of each
+meteorological data record. Those bytes contain ASCII data
+describing the packing.</p>
+
+<p><a href="S130.htm">chk_file</a> - program to examine header and data records of
+an ARL packed meteorological data file. The program uses the same
+I/O subroutines common to HYSPLIT code. If this program does not
+work with a data file, neither will HYSPLIT.</p>
+
+<p><i>chk_data</i> - a simple program that shows how to read and
+unpack the ARL format packed meteorological data.</p>
+
+<p><a href="S131.htm">contour</a> - creates SVG file of 
+meteorological data contoured and color filled for a single variable
+at a specified time. The output written to <i>contour.html</i></p>
+
+<p>display - creates SVG file of meteorological data
+contoured and color filled for a single variable at a specified
+time. The output written to <i>display.html.</i> This program is
+prompted interactive version of the command line program
+<i>contour</i>.</p>
+
+<p><i>edit_miss</i> - a simple missing data interpolation program
+to fill in data gaps.</p>
+
+<p><a href="S132.htm">profile</a> - creates text file of the 
+profile of meteorological variables at a specified location and time.
+The output is written to the screen and to the file <i>profile.txt</i>.</p>
+
+<p><a href="S133.htm">showgrid</a> - shows the extent of the meteorological
+grid domain with a "+" symbol at the intersection of each node. The output
+is written to <i>showgrid.html</i></p>
+
+<p><i>xtrct_grid</i> - extracts a subgrid from the full grid
+meteorological data file. It permits selection by lat-lon corners
+and number of levels from the ground. Creates output file called
+<i>extract.bin</i></p>
+
+<p><i>xtrct_time</i> - extracts data between two selected time
+periods from the designated meteorological file. Creates an output
+file called <i>extract.bin</i></p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

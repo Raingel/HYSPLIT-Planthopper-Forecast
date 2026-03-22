@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Concentration / Display / File Format (S363)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / File Format</h2></p>
+
+<p>Concentration packing has been implemented with HYSPLIT version
+4.5. The updated format is downward compatible in that all display
+programs can read files produced from versions prior to 4.5, but
+older versions of the display programs cannot read the new packed
+output format. Note that HYSPLIT V4.5 can be configured to produced
+the older style unpacked concentration files. Concentration file
+packing does not write the same information in fewer bytes, but
+rather writes the same information using twice as many bytes. The
+packed files are generally smaller because only concentration
+values at the non-zero grid points are written to the output file
+by the model. However this requires the grid point location to be
+written with the concentration, hence the additional bytes. If most
+of the grid is expected to have non-zero concentrations, then the
+old style format will save space. The output format of the
+unformatted binary (big-endian) concentration file written by
+dispersion model (<i>hycs_std)</i> and read by all concentration
+display programs is as follows:</p>
+
+<p><u>Record #1</u></p>
+<ul>
+<li>CHAR*4 Meteorological <i>MODEL</i> Identification
+<li>INT*4 Meteorological file starting time (<i>YEAR, MONTH, DAY, HOUR, FORECAST-HOUR</i>)
+<li>INT*4 <i>NUMBER</i> of starting locations
+<li>INT*4 Concentration packing flag (0=no 1=yes)
+</ul>
+<p><u>Record #2</u> Loop to record: <u>Number of starting locations</u></p>
+<ul>
+<li>INT*4 Release starting time (<i>YEAR, MONTH, DAY, HOUR</i>)
+<li>REAL*4 Starting location and height (<i>LATITUDE, LONGITUDE, METERS</i>)
+<li>INT*4 Release starting time (<i>MINUTES</i>)
+</ul>
+<p><u>Record #3</u></p>
+<ul>
+<li>INT*4 Number of (<i>LATITUDE-POINTS, LONGITUDE-POINTS</i>)
+<li>REAL*4 Grid spacing (<i>DELTA-LATITUDE,DELTA-LONGITUDE</i>)
+<li>REAL*4 Grid lower left corner (<i>LATITUDE, LONGITUDE</i>)
+</ul>
+<p><u>Record #4</u></p>
+<ul>
+<li>INT*4 <i>NUMBER</i> of vertical levels in concentration grid
+<li>INT*4 <i>HEIGHT</i> of each level (meters above ground)
+</ul>
+<p><u>Record #5</u></p>
+<ul>
+<li>INT*4 <i>NUMBER</i> of different pollutants in grid
+<li>CHAR*4 Identification <i>STRING</i> for each pollutant
+</ul>
+<p><u>Record #6</u> Loop to record: <u>Number of output times</u>
+<ul>
+<li>INT*4 Sample start (<i>YEAR MONTH DAY HOUR MINUTE FORECAST</i>)
+</ul>
+<p><u>Record #7</u> Loop to record: <u>Number of output times</u>
+<ul>
+<li>INT*4 Sample stop (<i>YEAR MONTH DAY HOUR MINUTE FORECAST</i>)
+</ul>
+<p><u>Record #8</u> Loop to record: <u>Number levels, Number of pollutant types</u></p>
+<ul>
+<li>CHAR*4 Pollutant type identification <i>STRING</i>
+<li>INT*4 Output <i>LEVEL</i> (meters) of this record
+<p><u>No Packing (all elements)</u></p>
+<li>REAL*4 Concentration output <i>ARRAY</i>
+<p><u>Packing (only non-zero elements)</u></p>
+<p>INT*4 Loop non-zero elements</p>
+<li>INT*2 First (I) index value
+<li>INT*2 - Second (J) index value
+<li>REAL*4 - Concentration at (I,J)
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

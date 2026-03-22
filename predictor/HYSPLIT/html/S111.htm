@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>Meteorology / ARL Data FTP / Current and Appended Forecasts (S111)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / ARL Data FTP </h2>
+
+<p>The ARL web server contains several meteorological model data
+sets already converted into a HYSPLIT compatible format in the
+public directories. Direct access via FTP to these data files is
+"hardwired" into the GUI. The data files are automatically updated
+on the server with each new forecast cycle. Only an email address
+is required for the password to access the server. The "FTP menu"
+is locked until the FTP process is completed, at which point a
+message box will appear indicating the file name that was just
+transferred. Alternatively, there is an option to download the
+files directly from the NOAA nomads website via HTTP 
+(http://http://nomads.ncep.noaa.gov/pub/data/nccf/com/hysplit/prod/).
+Some of the files are not available on NOMADS (see below).  
+</p>
+
+<p>Note that the NOAA models run by NCEP may be at higher spatial
+resolution than what is archived in a HYSPLIT compatible format on
+the ARL server. If calculations using higher resolution data are
+required, then the original GRIB encoded files must be obtained and
+converted as described in the data conversion section. GRIB decoding
+can be difficult. Although the required software is provided through
+the GUI, the large file size downloads may limit the practical
+application of these real-time data files.</p>
+
+<p><h3>Meteorology / Data FTP / Current Forecast</h3></p>
+
+<p>Forecast data are available for NOAA's Global Forecast System (GFS),
+the North America Model (NAM), and the High-Resolution Rapid 
+Refresh (HRRR). Forecast model data are available
+at various resolutions, projections, and forecast time durations.
+The files are updated at two to four hours after the cycle time. 
+Forecast files are available for the last several days depending
+upon the server and not all files are on all servers. All forecast
+files follow the same file naming convention of hysplit.t{cycle}z.{name},
+where cycle represents the initial UTC time of the forecast 
+(e.g. 00,06,12,18) and the names are as follows:
+</p>
+<ul>
+<li> gfsf :: 1-deg 3P +240h (814 Mb) global forecast at one-degree 
+resolution at 3 hour intervals at pressure levels out to +240 hours.
+<li> gfslrf :: 1-deg 6P +384h (251 Mb) long-range global forecast at
+one-degree resolution at 6 hour intervals at pressure levels
+and from forecast hours +240 to +384. 
+<li> gfs0p25f :: 0.25-deg 3S +189h (2500 Mb) global forecast at quarter-degree
+resolution at 3 hour intervals at hybrid levels out to +189 hours. The
+complete forecast is split over multiple files. The forecast start time
+must be selected. There are only 21 hours per file. Files with forecast hours 
+beyond +84 are not available on NOMADS.  
+<li> namf :: 12-km 3P +84h (1616 Mb) regional forecast for the entire domain at
+12 km resolution every three hours on pressure levels out to a +84 hours.  
+<li> namsf :: 12-km 1H +48h (2636 Mb) regional forecast extracted for CONUS
+at 12 km resolution at one-hour intervals on hybrid levels out to +48 hours.
+<li> namsf.AK :: 12-km 1H +48h (1523 Mb) regional forecast extracted for Alaska
+at 12 km resolution at one-hour intervals on hybrid levels out to +48 hours.
+<li> namsf.HI :: 2.5-km 1H +48h (1030 Mb) regional forecast Hawaii nest
+at 2.5 km resolution at one-hour intervals on hybrid levels out to +48 hours.
+<li> namsf.FW :: 1.5-km 1H +36h (1400 Mb) regional forecast Fire-Weather nest
+at 1.5 km resolution at one-hour intervals on hybrid levels out to +36 hours 
+(location, filesize, and horizontal resolution varies from cycle to cycle).
+<li> namsf.{XX}tile :: 12-km 1H +48h (271 Mb) regional forecast extracted for
+the XX quadrant of the US at 12 km resolution at hour intervals only for sigma
+surfaces below 0.6777 out to +48 hours. Quadrants are available for the northeast
+(NE), southeast (SE), southwest (SW), and northwest (NW).  No available on NOMADS. 
+<li> namsf{HH}.CONUS :: 3-km 1H +6h (3314 Mb) regional forecast CONUS nest 
+for forecast hour beginning at HH+1h at 3 km resolution at one-hour intervals on sigma
+surfaces out to +6, +12, +18, +24, +30, +36, +42 hours for files f00,f06,f12,f18,f24,
+f30,f36,f42 respectively. The forecast start time must be selected. There are only 6 forecast
+hours per file.
+<li> hrrrf :: 3-km 1S +18h (3418 Mb) for the CONUS is at 3 km resolution at one-hour
+intervals on sigma surfaces out to +18. Updated every hour. The
+complete forecast is split over multiple files. The forecast start
+time must be selected. Each file only contains 6h of data, except f18.
+
+</ul>
+
+<p>Additional information about the forecast data on the ARL server
+can be found at the <a href="http://www.ready.noaa.gov/READYmetdata.php">ARL web</a> page.
+</p>
+
+
+<p><h3>Meteorology / Data FTP / Appended Forecast</h3></p>
+
+<p>The appended forecast files consist of a special time extraction of the previous 
+seven (-48 hr) forecast cycle files to create a series of pseudo-analysis (0-hour
+initialization) and short-time (+3 h or +1,+2,+3,+4,+5) forecasts that have been
+appended to each other to create a continuous data time series for the previous
+48 hours in a single file. These special time extracts are only available for the
+following files.  For the NAM hybrid-level (nams) files the time period is instead
+for the 24 hours prior to the forecast.</p>
+
+<ul>
+<li> gfsa :: 1-deg 3P -48h (161 Mb)
+<li> nama :: 12-km 3P -48h (892 Mb)
+<li> namsa :: 12-km 1H -24h (1291 Mb)
+<li> namsa.AK :: 12-km 1H -24h (746 Mb)
+<li> namsa.HI :: 2.5-km 1H -24h (505 Mb)
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

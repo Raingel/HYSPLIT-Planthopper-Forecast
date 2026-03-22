@@ -1,0 +1,296 @@
+#!/bin/sh
+#set -x
+
+################################################################
+#    xcluster.scr -- Test of cluster program using             #
+#                    trajectories in cluster/example/endpts.   #
+#                    Force solution of 3                       # 
+#          						       #
+#    11-13-07                                                  #
+#    11-29-2010 - SVN properties defined                       #
+#    02-14-2013 - remove obsolete directory of arlmap file     #
+#    06-11-2014 - add various sets of endpts with              #
+#                     with varying numbers of clusters         #
+################################################################
+  
+  PGM=${PGM:-../exec}
+
+  subdir_list="Example"
+ #subdir_list="Example dateline_start_e dateline_start_w east_hem equator_start_n equator_start_s north_pole prime_meridian_start_e prime_meridian_start_w south_hem south_pole"
+
+  for subdir in ${subdir_list}
+  do
+  
+  DIR=../cluster/example/endpts/${subdir}
+
+# plot title
+  ilab1=${subdir}
+
+# number of clusters
+  case ${subdir} in
+    Example|dateline_start_e|dateline_start_w|equator_start_n|prime_meridian_start_e|prime_meridian_start_w) \
+                         nc=3;;
+    equator_start_s)     nc=4;;
+    east_hem|north_pole) nc=5;;
+    south_hem)           nc=7;;
+    *) nc=3;;
+  esac
+
+  if [ ! -f arlmap ]; then
+     cp ../graphics/arlmap ./
+  fi
+
+  rm -f cluster.ps
+
+#################
+# makeinfile.scr
+#################
+  rm -f INFILE
+  ls ${DIR}/*tdump* | while read fname; do  echo $fname >> INFILE; done   
+  if [ ! -s INFILE ]; then
+     echo "ERROR - INFILE not created"
+     exit
+  fi
+
+#################
+# cluster1.scr
+#################
+# dur=hours to do clustering
+  case ${subdir} in
+    Example)    dur=12;;
+    south_pole) dur=120;;
+    *)          dur=48;;
+  esac
+  int=1	        # Endpoint interval to use (hours)
+  skip=1	# Skip trajectory interval
+  ODIR=./   	# Cluster output directory (with trailing /)
+  iproj=0
+   
+  echo $dur   > CCONTROL
+  echo $int  >> CCONTROL 
+  echo $skip >> CCONTROL 
+  echo $ODIR >> CCONTROL 
+  echo $iproj >> CCONTROL
+    
+# do clustering
+  rm -f TCLUS TNOCLUS CLUSTER DELPCT CLUSTERno CMESSAGE
+  $PGM/cluster 
+  err=$?
+  if [ ${err} -ne 0 ]
+  then
+     echo "ERROR - cluster failed"
+     exit ${err}
+  fi
+  
+  if [ ! -f CLUSTER -o ! -f DELPCT ]; then
+     echo "ERROR - cluster failed"
+     exit
+  fi
+  rm TNOCLUS	# not used
+  rm TCLUS	# not used
+
+#################
+# cluster2.scr
+#################
+# variables for clusend (determining final number of clusters) --
+  mint=15    # min number traj 
+  minc=3     # min number of clusters
+  maxc=10    # max number of clusters
+  pct=30     # min % change in DELPCT from 1 step to the next
+             #     ie breakpoint to indicate end of clustering
+
+# TSV plot
+  $PGM/clusplot  -iDELPCT -oclusplot.ps -l${ilab1}
+  mv clusplot.ps cluster.ps
+  if [ ! -s cluster.ps ]; then
+     echo "ERROR - clusplot failed"
+     exit
+  fi
+      
+# determine final number of clusters
+  rm -f CLUSEND
+  if $PGM/clusend -iDELPCT -n${minc} -a${maxc} -t${mint} -p${pct} -oCLUSEND; then
+     echo $PGM/clusend OK 1st try
+  else
+     # relax criteria to help get # clusters
+     pct=`expr $pct - 10`
+     $PGM/clusend -iDELPCT -n${minc} -a${maxc} -t${mint} -p${pct} -oCLUSEND
+     err=$?
+     if [ ${err} -ne 0 ]
+     then
+        echo "ERROR - clusend failed"
+        exit ${err}
+     fi
+  fi
+  if [ ! -s CLUSEND ]; then
+     echo "ERROR - clusend failed"
+     exit 88
+  fi
+
+# generate list of trajs in each cluster
+  rm -f CLUSLIST_${nc}
+  $PGM/cluslist -iCLUSTER -n${nc} -oCLUSLIST_${nc}
+  if [ ! -s CLUSLIST_${nc} ]; then
+     echo "ERROR - cluslist failed"
+     exit
+  fi
+
+# add trajs not clustered (cluster #0) to CLUSLIST
+  if [ -s CLUSTERno ]; then       
+     cat CLUSLIST_${nc} >> CLUSTERno
+     mv CLUSTERno CLUSLIST_${nc}
+  fi
+
+# create TRAJ.INP.Cxx file for each cluster (list of trajs) 
+  rm -f TRAJ.INP*
+  if $PGM/clusmem -iCLUSLIST_${nc}; then
+
+     ##############################################
+     # for each cluster 
+     ##############################################
+     run=-1					# for cluster #0 
+     while [ $run -lt $nc ]; do
+        run=`expr $run + 1`
+        if [ -f TRAJ.INP.C${run}_${nc} ]; then	# cluster #0 may not exist
+           ##############################################
+           # create tdump file of all trajs
+           ##############################################
+           $PGM/merglist -i+TRAJ.INP.C${run}_${nc} -omdump -ptdump
+           if [ -s mdump.tdump ]; then
+               mv mdump.tdump C$run.tdump
+           else
+               echo "ERROR - merglist TRAJ.INP.C${run}_${nc}"
+               exit 
+           fi
+           ##############################################
+           # compute mean 
+           ##############################################
+           $PGM/trajmean -i+TRAJ.INP.C${run}_${nc} 
+           if [ -s tmean ]; then
+              mv tmean C${run}mean.tdump
+           else
+              echo "ERROR - trajmean TRAJ.INP.C${run}_${nc}"
+              exit 
+           fi
+        fi
+     done
+
+     ##############################################
+     # make one tdump for all means
+     ##############################################
+     # for each cluster  (not zero)
+     run=0
+     rm -f MEAN.LIST
+     while [ $run -lt $nc ]; do
+        run=`expr $run + 1`
+        echo "C${run}mean.tdump" >> MEAN.LIST
+     done
+
+     $PGM/merglist -i+MEAN.LIST -omdump -ptdump
+     if [ -s mdump.tdump ]; then
+        mv mdump.tdump Cmean.tdump
+     else
+        echo "ERROR - merglist MEAN.LIST"
+        exit 
+     fi
+     rm -f MEAN.LIST
+
+  else
+     echo "ERROR - clusmem $DIR"
+     exit 
+  fi
+
+  #################
+  # cluster3.scr
+  #################
+
+# plot trajectories for each cluster
+  run=-1				# for cluster #0 
+  while [ $run -lt $nc ]; do
+     run=`expr $run + 1`
+     if [ -s C$run.tdump ]; then 
+        rm -f LABELS.CFG
+        echo "'TITLE&','TRAJECTORIES IN CLUSTER ${run} of ${nc} $ilab1&'" \
+                 > LABELS.CFG
+        $PGM/trajplot -iC$run.tdump -e$dur -z80 -k0 -l0 -v4
+        if [ -s trajplot.ps ]; then
+           cat trajplot.ps >> cluster.ps
+           rm  trajplot.ps
+        else
+           echo "Error in trajplot -iC$run.tdump" 
+           exit 
+        fi
+        rm -f LABELS.CFG
+     fi
+  done
+   
+# compute/plot mean traj for each cluster
+  tmout=Cmean.tdump 
+  if [ -s $tmout ]; then
+     rm -f LABELS.CFG
+     echo "'TITLE&','CLUSTER MEAN TRAJECTORIES $ilab1&'" > LABELS.CFG
+     if [ ${nc} -eq 3 ]
+     then
+        $PGM/trajplot -i$tmout -e$dur -z80 -k${nc}:123 -l-12 -v4
+     elif [ ${nc} -eq 4 ]
+     then
+        $PGM/trajplot -i$tmout -e$dur -z80 -k${nc}:1234 -l-12 -v4
+     elif [ ${nc} -eq 5 ]
+     then
+        $PGM/trajplot -i$tmout -e$dur -z80 -k${nc}:12345 -l-12 -v4
+     elif [ ${nc} -eq 6 ]
+     then
+        $PGM/trajplot -i$tmout -e$dur -z80 -k${nc}:123456 -l-12 -v4
+     elif [ ${nc} -eq 7 ]
+     then
+        $PGM/trajplot -i$tmout -e$dur -z80 -k${nc}:1234561 -l-12 -v4
+     fi
+     if [ -s trajplot.ps ]; then
+        cat trajplot.ps >> cluster.ps
+        rm  trajplot.ps
+     else
+        echo "ERROR - trajplot -i$tmout"
+        exit 
+     fi
+     rm -f LABELS.CFG
+  fi
+
+# fix page numbers in concatenated file
+ #if [ -s cluster.ps ]; then
+ #   mv cluster.ps cluster.tmp.ps
+ #   ${PGM}/catps2ps -icluster.tmp.ps -ocluster.ps
+ #   rm cluster.tmp.ps
+ #fi
+
+# ---------------------------------------------------------------------
+# cleanup
+  rm -f INFILE
+  rm -f CCONTROL
+  rm -f CLUSTER CMESSAGE DELPCT CLUSTERno
+  rm -f *.tdump
+  rm -f TRAJ.INP*
+  rm -f CLUSEND
+  rm -f CLUSLIST_* 
+ #mv CLUSLIST_${nc} CLUSLIST
+
+  mv cluster.ps cluster_${subdir}.ps 
+
+# end $subdir loop
+  done
+
+# make final output file
+  rm -f cluster.ps
+  for subdir in ${subdir_list}
+  do
+     cat cluster_${subdir}.ps >> cluster.ps
+     rm  cluster_${subdir}.ps
+  done
+
+# fix page numbers in concatenated file
+  if [ -s cluster.ps ]; then
+     mv cluster.ps cluster.tmp.ps
+     ${PGM}/catps2ps -icluster.tmp.ps -ocluster.ps
+     rm cluster.tmp.ps
+  fi
+
+  exit

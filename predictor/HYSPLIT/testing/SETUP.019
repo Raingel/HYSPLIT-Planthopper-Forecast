@@ -1,0 +1,5 @@
+ &SETUP
+ initd = 0,
+ numpar = 10000,
+ ichem = 5,
+ /

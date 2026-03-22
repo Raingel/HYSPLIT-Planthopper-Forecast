@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>Concentration / Display / Ensemble / Create Files (S321)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Ensemble / Create Files</h2></p>
+
+<p>Multiple concentration output files from the ensemble or variance
+dispersion simulation can be processed to produce probability displays.
+This file creation step is required to create the files that are needed
+by the <i>Ensemble / Display / View Map</i> and <i> Box Plot</i> tabs.</p>
+
+<p>The <i>Create Files</i> menu calls a special program <i>conprob</i>
+that reads all the existing concentration files with a three-digit
+suffix (001 to 999) and generates various probability files. The <i>Create 
+Files</i> menu can be used to convert multiple concentration output files 
+to probability form, regardless of how they were generated. It is not 
+necessary to use the pre-configured <a href="S356.htm#run_ensemble">
+ensemble version</a> of the model to create the ensemble members. Any number 
+of multiple simulations can be used as long as the file suffixes end with a
+numeric three-digit sequence. Menu settings for the output file name should
+reflect the base name without the numeric suffix. An illustration of the 
+<i>Ensemble Create Files</i> menu is shown below.</p>
+
+<center><p><img src="Image29A.png" width="500"></p></center>
+
+<p>The creation of probability files is limited to one pollutant species 
+and/or one concentration level. If the input files contain more than one of 
+either, the index number of the desired species and level should be entered.
+The <i>Aggregation</i> number defaults to one, which means that only the ensemble
+members for one time period are aggregated together to produce the probability
+display. Hence there would be an independent probability map for each time 
+period. However, multiple time periods may be combined to produce a single
+probability plot. The <i>Aggregation</i> entry represents the number of time 
+periods, not the actual time span. For instance, if the model output is set to 
+produce a one-hour average and the model is run for 24 hours, then each ensemble 
+member will have 24 time periods of output. By default the probability output will
+represent the ensemble member variation for each hour, that is 24 frames of
+output will be produced. However if the aggregation period is set to 24, then
+all output times will be combined into one output frame and the ensemble 
+result will represent the hourly variations as well as the member variations.</p>
+
+<p>The last entry is optional and it represents the maximum concentration at which
+the probability to exceed certain concentration values are calculated. Leaving the
+field equal to zero causes the program to use the order-of-magnitude value just
+below the maximum concentration value of any member. If a value is set, then the
+program computes the probabilities to exceed the set maximum, and the probabilities
+at 10% and 1% of that value.</p>
+
+<p>The <i>Create Files</i> button runs the <i>conprob</i> extraction program, which 
+will always produce all the probability variations, one to each output file, for a 
+given aggregation period, in the working directory. The <i>conprob</i> output
+files contain the following information:</p>
+<ul>
+<li>cnumb - Number of members with concentrations greater than zero
+<li>cmean - Concentration mean of all members
+<li>cvarn - Concentration variance of all members
+<li>ccoev - Coefficient of variation (sqrt(variance)*100/mean)
+<li>cmax01 - Probability of 1% of the concentration maximum
+<li>cmax10 - Probability at 10% of the concentration maximum
+<li>cmax00 - Probability at the maximum concentration level
+<li>prob05 - Concentrations at the 05<sup>th</sup> percentile
+<li>prob10 - Concentrations at the 10<sup>th</sup> percentile
+<li>prob25 - Concentrations at the 25<sup>th</sup> percentile
+<li>prob50 - Concentrations at the 50<sup>th</sup> percentile
+<li>prob75 - Concentrations at the 75<sup>th</sup> percentile
+<li>prob90 - Concentrations at the 90<sup>th</sup> percentile
+<li>prob95 - Concentrations at the 95<sup>th</sup> percentile
+</ul>
+
+<p>The command line options for the probability program <b>conprob [-options]</b> 
+are as follows:</p>
+<ul>
+-b[base] input file name (cdump)<br>
+-c[concentration maximum] (0=auto | conc_high:conc_mid:conc_low)<br>
+-d[diagnostics = true]<br>
+-p[pollutant] index number for multi-pollutant files (1)<br>
+-t[temporal] aggregation period (1)<br>
+-v[value] of concentration below which is assumed to equal zero (0.0)<br>
+-z[level] index number for multi-level files (1)<br>
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

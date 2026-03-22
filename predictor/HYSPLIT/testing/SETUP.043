@@ -1,0 +1,11 @@
+&SETUP              
+EFILE='EMITTIMES.txt'  
+kmsl=1,             
+ninit=0,            
+ndump=1,           
+ncycl=1,           
+numpar=5000,        
+maxpar=500000,       
+pinpf = 'PARINIT',  
+poutf = 'PARDUMP_043',  
+/                   

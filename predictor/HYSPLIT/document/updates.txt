@@ -1,0 +1,1008 @@
+		ABSTRACT OF HYSPLIT CODE CHANGES
+_______________________________________________________________________________
+
+07 May 1998
+
+	Y2K Modifications required to plotting programs and
+	associated subroutines: trajplot, concrsmc, concplot,
+	conset, tm2min, and tm2day.
+
+18 Aug 1998
+
+	Tension term added to deformation calculation (advmet).
+	Constant delta-t integration option added to namelist file.
+	Isotropic turbulence and no BL averaging for short-range.
+	Option to dump particles at end of run and then restart.
+	Contour smoothing elimated for high-resolution concplot.
+
+27 Oct 1998
+
+	Corrected below cloud wet removal constant 1/sec to 1/min
+	Added option for definition of explicit gravitational settling
+	Included dimension limits check on deformation
+	Set KG=0 on return 1 from advpnt for end of met data case
+
+31 Dec 1998
+
+	Revised trajplot/concplot to use public domain psplot libraries.
+	Added compile options to code for trajectories multiple-in-time.
+	Updated end-of-file test in meteorological data subroutines. 
+	Added the horizontal diffusion coefficient as a 3D array.
+	Reduced the number of variables in advmet for no deposition cases.
+	Replaced exponential iteration with table lookup in parvar.
+	Added option for gridded area emissions if file emission.txt exists.
+
+04 Mar 1999
+	Revised subgrid selection to vary size according to plume size.
+	Converted graphics programs from binary to ascii map background file.
+	Profile and Display postscript programs available in /metdata.
+	Grib converter for NCEP/NCAR Reanalysis data.
+
+12 May 1999
+	Patched grid size determination near N & S pole points
+	Added terrain height array, eliminated 3D Z array 
+	Surface pressure now optional field for pressure data with terrain
+	Terrain compression added to definition of sigma
+	Internal model top set to constant 25 km
+	Input model top definition determines input data levels
+	Multi point source emissions each equals Q rather than Q/NLOC
+	Option to define Q's (and area) for each source location
+
+06 Jul 1999
+	Generalized input of surface boundary files: ROUGLEN and LANDUSE
+	Correction to handle meteorological files at minute intervals
+	Fixed initialzation procedure when first point off the grid
+
+01 Dec 1999
+	Internal vertical coordinate polynomial parameters to namelist
+	Corrected problem with concentration fields over the dateline
+	Meteorological data display program map domain selection corrected
+	Metset routine was corrected to handle single time period data sets
+	Metinp was corrected to handle old data with surface at level 1
+	Metinp surface correction now permits data to be read in any order 
+	Trajectory dump file added start location as first endpoint position
+	Fixed problem with disapearing plumes in high resolution conc grids 
+	Disabled old time subgrid read when current time between files
+	Corrected error in reading of PARDUMP file for initialization
+	Eliminated multiple messages when run time exceeds meteo data
+	Added meteo subgrid minimum size to namelist 
+
+10 Mar 2000
+	Standardized "runset" to handle variable q-term and q-area
+	Upgraded default compilation to 10 files, 35 sources
+	Correction to vertical autocorrelation in pardsp subroutine
+	Subgrid center in advpnt redefined when switching grids
+	Updated grib decoder I/O subroutines to faster version
+	Hysplit output converters provided for Vis5d and GRADS
+	More flexible input and grid creation for ECMWF data decoder
+	PARDUMP initialization file now set at NDUMP interval
+	Option to set initial heights MSL rather than AGL through cfg
+
+14 Jul 2000
+	Negative model top can be used to set RAMS scale height
+	Generalized PARDUMP initialization with time stamp for viewer
+	Concentration file programs added to GUI (con2stn, conpick)
+	Process ID can be appended to namelist file
+	Tdump file will always contain height-agl and pressure with
+		theta added as a 3rd variable for isentropic
+	Vertical particle dispersion routines corrected for biases
+	Concentration time series plot option added to GUI
+	Corrected option to set emission start relative to file time
+	Maximum contour for concplot can be set through GUI
+	AGL-MSL option also sets the vertical concentration grid
+	Backward concentration simulations permitted
+
+24 Apr 2001
+	Dynamic array allocation for all variables - no compile limits
+	Additional GUI options for concplot and trajplot
+	Concentration packing in output file (only non-zero pts) 
+	Multiple trajectory files can be superimposed with trajplot
+	Option to plot trajectory height as AGL instead of pressure
+	Timeplot routine has more generic labelling options
+	Installation to NT systems has been simplified
+	Conversion of Postscript graphics to GIF included in GUI
+	Expanded calendar function 1900-2100
+	Supports computation with global latitude-longitude grids
+	Conversion of NCEP/NCAR reanalysis netCDF files to ARL format
+
+16 Nov 2001
+	Matrix option included in base code as ichem=1
+	Simple sulfate conversion module included as option ichem=2
+	Conditional compilation only for main routines
+	Point source emission routines can read temporal variation file
+	Removed EPSF defininition in PSINIT of psplot library
+	Added boundary values for vertical velocity definition (metslp)
+        Simultaneous calculations on multiple meteorological grids
+        Define meteorological variables along a trajectory for output 
+	Simplified backward dispersion options now only runtime <0 required
+        Revised trajplot & concplot to be consistent with web version
+        Trajectory starts at times between two data files 
+	Ensemble and Matrix simulation and display option added to GUI
+	AVN GRIB decoder generalized and added to GUI
+	ETA GRIB decoder added to GUI
+	Automated drawing option of concentric circles on concentration plot
+	Fixed contours independent for concentration and deposition
+	PARDUMP file name input/output specification on namelist
+	Time projection for vertical motion on trajectory plot
+	All plot programs have a variable zoom factor
+	Multiple trajectory starts in time now a GUI option
+	Source location list file specified in GUI configuration script
+	Automated link to reanalysis data archives 
+
+04 Mar 2002
+	Relative directory pointer for GUI help files
+	Multiple trajectory start times now supported in trajplot
+	Hysplit model defaults to subgrid for lat-lon input meteo grids
+	Startup file incompatibility with tcl/tk GUI eliminated
+	Developed generic NOAA/ECMWF grib decoder for lat-lon input grids
+	GUI option to support grib conversion of local archived data
+	Added backward concentration option to GUI selection
+	Metdata utility programs modified to handle lat-lon grids
+	Version control script developed to track model changes
+	Suplemental text file editing for conc/traj plot added to GUI
+	Removed time step sensitivity to concentration grid for no particles
+	Code modification to support ensemble calculation on single processor
+	Created Master makefile to simplify installation on different platforms
+	Added option to not display source point locations in trajplot
+	Improved plot labels for trajplot and concplot
+	Added window clipping to maps so that short lines extend to map boundary
+	Multiple trajectory files in trajplot by reading file with filenames
+
+25 Jul 2002
+	Divergence option for w-velocity (metdiv,metwnd,advpnt,trjset)
+	Internal vertical mixing time step on profile (pardsp,pufdsp)
+	Corrected grib decoders for 2 byte forecast times (w3arl.f) 
+	Process id in trajplot, suffix applies to MAPTEXT and LABELS
+	Refined dateline test in consum
+	Concplot minimum concentrations, blank map when only deposition
+	Correction to internal sigma coordinate (consum,prf[all])
+        Edit_miss updated to reflect new subroutine library
+        Con2asc with command line options, modified conc_asc.tcl 
+	Variable number of arguments subroutine decodi & decodr
+	Plotting routine mapini fix with variable increment
+	Updated timeplot with y-axes log, dyn alloc, stn selection 
+	Updated con2stn with dynamic array allocation for stations
+	Main GUI (hymenu.tcl) permits scroll window maximization
+	ETA wind coordinate transformation with kvel=6 option
+	Added relative humidity as a trajectory variable
+
+01 Nov 2002
+	Wilson et al (1983) non-homogeneous turbulence correction
+	Limit subgrid size to data grid (advpnt,advrng,metsub)
+	Multiple subroutine mods to match Fortran code standards
+	Corrected for trajectory starts near Greenwich meridian
+	Minimum map size greater than zero (trajplot,concplot)
+	Updated User's Guide, ARL-224, and on-line help as HTML docs
+	GIS generate to shapefile conversion added to GUI (display, concplot)
+	Incorporated dust-storm PM10 emission algorithm into GUI
+	Splitting option in space and time for trajectories
+	Added a wind vector option to the display program (VECT & DIVG)
+	New PARDUMP file viewer/editor through GUI for PC and UNIX
+	Support for NMM sigma system with pressure offset
+
+13 Jan 2003
+	Patch conset to properly set default global grid
+	Main pgms hymodelt/hymodelc inititialization correction in back mode
+	Subs adviec/advmet rewrite of temporal interp function to code standard
+	Set mixed layer index last to last in BL rather than 1st above (stbanl)
+	Subs prfsig, ter, ecm, prs ... disabled virtual temp correction 
+	Revised test in metinp to require no missing time periods 
+	Graphics subroutine contxt fixed bad forecast time when calc ends early
+	Corrected 2nd pass of in sub adviec for proper temporal interpolation
+
+20 Feb 2003
+	Namelist KAGL to set output trajectory heights MSL or AGL
+	Concplot forces map center to position (-h) in conjunction with -g
+	Automatically create internal vertical meteorology grid polynomial
+	Correction to integration in computation of divergence vertical motion
+	Correction to multiple simultaneous grids and subgrid array allocation 
+	Converted subgrid size variable to array (one element per grid)
+
+02 Jun 2003
+	Restructured UNIX installation with fewer directories and libs
+	Temporal interpolation problem when meteo data time/interval<>0
+	New particle graphics programs: horizontal, vertical and cross-section
+	Modified concentration model for continuous data assimilation
+	Corrected ADVRNG to handle various latlon/conformal grid combinations
+
+30 Sep 2003
+	Created metval module to contain meteorological data arrays
+	New metsum routine for ichem=4 to set internal conc grid = meteo grid
+	Linked IER, GRS, and SO2 modules with conditional compilation option
+	Added surface water transport module to the standard code
+	Corrected subgrid problem with lat/lon grids near Greenwich and dateline
+
+21 Jan 2004 (Version 4.7)
+	Eliminated density array, value now computed when needed 
+	Recoded mixing routines to use velocity variance instead of diffusivity
+	Added option to compute variances from TKE field
+	Permit direct input of velocity variances (UVAR, VVAR, WVAR)
+	Created new utility routines add_???? to blend observational data
+	Revised trajplot to plot points at intervals of less than one hour
+	Trajplot option (-v3) to plot the diagnostic meteorology variables
+	Concplot modification to show the minutes field of emission start
+	New equations for turbulence directly from stability or TKE
+	Improved concplot/trajplot for highly zoomed maps (delta < 1 deg)
+
+01 Jun 2004 
+	Corrected mapbdy to curve latitude line segments
+	Added option (concplot) to drop contour and keep fill (contur)
+	Increased number of trajplot colors and option to drop lower panel
+	Modified MM5 decoder to include TKE and command line file name
+	Modified multiple routines to use module "funits" to define I/O units
+        GUI modifications to support more meteorological data FTPs and GRIB
+	Added KHMAX to setup.cfg to limit trajectory duration
+
+01 Sep 2004 
+
+	New isot=2 option in SETUP.CFG forces profile method when fluxes in data
+                 0 - Vertical diffusivity (BL averaged), horizontal deformation
+                 1 - Horizontal and vertical velocity variances (short-range)
+                 2 - Same as ISOT=1 except force profile method (no fluxes)
+                 3 - Same as ISOT=0 except vertical mixing not averaged
+                 4 - Velocity variances based upon input TKE with STD Zi
+                 5 - Same as ISOT=4 except Zi based upon TKE profile
+                 6 - Velocity variances from input meteorological data file
+	Option in SETUP.CFG forces TKE ratio vertical to horizontal turbulence
+	Initd >100 option to permit puff->particle, particle->puff conversions	
+               103 - converts 3D particle to #3
+               104 - converts 3D particle to #4
+               130 - converts #3 to 3D particle
+               140 - converts #4 to 3D particle
+	GUI Advanced-Configure-Directories option to set default paths
+
+01 Nov 2004
+	Added iterative advection integration time step (use when step fixed)
+	Patch backward trajectory maximum duration test
+	Subgrid boundary test in advpnt after call to adviec
+	Converted contour GIS label to scientific format
+	Added linear or sqrt dispersion option to pufdsp (kpuff in setup.cfg)
+	Test for same name if multiple concentration grids are defined
+	Tcl FTP menus modified to automatically create username password
+	GUI startup script tests for "Program Files" environment variable
+	Added temporal trajectory restart limits less than run duration
+	Custom option for trajectory start height as function of BL depth
+	Writes additional attributes file (.att) with GIS output option
+	Added GNU txt2dbf to library to add attributes to .dbf file
+	Added NCEP FTP option for NAM tiles based on lat/lon or tile number
+	Converted NCEP file names to new GFS/GDAS or NAM NDAS convention
+
+Feb 2005                   
+	Correction to temporal emissions file processing for years >1999
+	Higher resolution default map background file replaced previous version
+
+	The code was fixed to permit the definition of concentration grids
+	consisting of one data point. In this special situation, the grid
+	center location defined in the CONTROL file becomes the center of
+	the sampling grid cell or the position of the sampling node. The
+	grid span and grid resolution should be set to the same value. In
+	the 3D particle mode, the grid resolution is used to compute the
+	cell concentration.  Note that due to file unit number restrictions,
+	a maximum of 9 concentration grids can be defined for any simulation.
+
+	A special concentration packing option (CPACK=2) can be defined in
+	the SETUP.CFG namelist file.  Setting this option in conjunction with
+	a single point concentration grid forces the model to treat each
+	concentration grid definition as another sampling location in a
+	single output file.  In this situation there is no limit to the 
+	number of sampling locations that can be defined through the grid
+	definition section of the CONTROL file.  However there are limitations.
+	The characteristics of all grids must be defined and they must be the
+	same, otherwise the results may be unpredictable.  
+
+July 2005
+	emspnt - undefined initial vertical distribution for puffs
+	stbsnd - exponential undeflow for limiting stability conditions
+	advmet, adv2nt, adv3nt - corrections to global cyclic boundary 
+	metsub - grid shift not sufficient, go directly to grid expansion
+	massum - with cmass option to sum mass instead of concentration
+	added browse menu in gui for save/retrieve options
+	asc2shp menu has conversion method selection  
+	script to access nomads gdas files
+	fixed concentration display gui to point to level when changed
+	scripts added to automate monthly trajectory & dispersion runs
+	modified trajectory file format to avoid space delineated fields
+	added trajectory meteorology options dwsf and terrain
+	trajplot with -v1 plots the msl heights above the terrain
+	ensemble display supports single file with multiple time periods
+	concplot gui supports setting fixed contours 
+	concplot -c option supports dynamic or fixed, exponent or linear
+	added more premature termination messages to std out
+	permit trial version to run "old" forecast data
+	test to insure meteo data file has a consistent temporal frequency 
+	write current time to diagnostic message file
+	new program in meteorology menu to create a file from input data
+
+November 2005
+	enhanced information in attributes file for creation of GIS dbf
+        error in format specification in merge program & fixed user guide
+	non-zero return codes for premature terminations
+	boundary layer fraction tests to insure for initial trajectory
+	concentration averaging period test for hours >1 need min=0
+	dynamic sampling option for aircraft or balloons
+
+June 2006
+	revised temporal emissions input file for more complex scenarios
+	added dynamic plume rise option based upon heat release using Briggs Eqn 
+	option to use AER time averaged WRF output data files 
+	google earth conversion options added to concplot, trajplot
+	trajectory clustering menu available through GUI
+	LAPS & ARW-WRF netCDF data conversions (unix only)
+	support for staggered WRF meteorology grids
+	patch to advrng to simplify the switch from subgrid to global grids
+	corrected hymodelt ensemble to prevent below-ground sigma to height
+	generic grib2arl modified to handle special ctbto ecmwf data files
+	isotropic/3Dpart/min=1000 for run durations <=12 hours & 5 km grid
+	default sample simulation now hi-resolution
+	used mixed layer depth from meteorology file if available
+	variance ensemble using variable seed for tubulence   
+	all new options added to the GUI
+
+September 2006
+	converted SSS test to double precision
+	new variable in gblset to define lat/lon grid over prime meridian
+	map background file edited to remove extraneous lines along dateline
+	revised GUI for directories selection
+	updated clustering program and added example data
+
+January 2007
+	corrected arch_era.tcl for 2d file selection
+	grib2arl - added PBLH/MXHT surface field    
+	multiple GUI changes: user defined server, tcl FTP, progress widget 
+	setup.cfg: force anisotropy ratio for stable or unstable conditions
+	Added SNAP=2 option for computing maximum concentrations
+	Additional Concplot options for lat-lon map labelling
+	New -m4 option for cylindrical equidistant projection
+	Option to set size (P2PCF) for particle/puff conversions
+
+March 2007 
+	additional iostat test in parinp
+	carry minutes field to contxt (mods concplot,conmap,contxt)
+	correct conzro when called at initial model start time
+	moved PARDUMP file name creation to outside of integration loop
+	sort by meteo file start time in metini for same grid files
+	updated namelist menus and integrated with new help files
+
+May 2007
+	modified hymodelc,emspnt,emstmp for backward from EMITIMES
+	expanded number of files conprob can process
+	created new program to compute trajectory frequencies
+	added trajectory frequency option to the GUI
+	corrected sign on derivative for backward computed vertical motion
+	fixed GUI problem with Postscript to GIF conversion
+	permit more than six starting locations in GUI
+	auto creation of backup namelist files, TRAJ.CFG and CONC.CFG
+	fixed cross-section plot when no particles available to plot
+
+August 2007
+	mixed layer depth now computed from minimum temperature
+	default short range ISOT=2 to use profile rather than fluxes
+	added matrix solution and source attribution option to GUI
+	two-step initialization for computing MSL starting heights
+
+November 2007
+	revised stn2arl to create horizontal turbulence variations
+	new program snd2arl to create ARL format file from rawindsone
+	trajplot update: colors, center map, terrain, off-map clip 
+	further refinements on double precision emission tests
+	consistent unit conversion in geolocate and matrix-solve
+	renamed display matrix to source-receptor
+	correction to surface sigma level in arw2arl (sub cfgrec)  
+	refined internal grid resolution test in sub metlvl
+	revised emission start/stop tests from real to integer
+	emission rate correction for durations < time-step
+	improved message when meteo times doesn't match start time
+	additional puff split/merge factors to the namelist
+	geolocation trajectory option similar to dispersion version
+	automated executable and script update option through GUI
+	additional labels on cluster trajectory plots
+	contxt and concplot special labeling and B&W graphics 
+	xtrct_grid fixed problem with last dateline/prime correction
+	emission time factor correction for pollutant releases 
+        cluster labeling, and gui updates
+
+February 2008
+	new concentration grid plot color fill program and added to GUI
+	revised conprob files (and GUI) to be consistent with box plots
+	new GUI for box plots for ensemble simulation results
+	UNIX testing script for version control
+	emitimes permits multiple species on one particle when maxdim>1
+	minimum particle emission rate should equal number processors
+	fixed test for MPI option inconsistent with gridded emission input
+	improved puff split-merge algorithm and added new namelist options
+	removed FTP of NCEP GRIB-1 files from GUI menus
+	added additional download options for HYSPLIT compatible data files
+
+May 2008 
+	pufdsp correction to sqrt(age=0)
+	limits changed on plume rise routines: emrise and emstmp
+	routine contxt modified to handle year transition label
+	fires program modified for daily emission cycling 
+	sfcinp modified to handle any resolution input file
+	the PBLH variable added to the nams2arl converter 
+	new date output option (mm/dd/yyyy) added to con2stn 
+	additional missing fields permitted in metinp (10->20)
+	increased ntotpt to 20000 (number of lat-lons) in psplot 
+	gridplot modified to create one multi-frame output file
+	gem (global eulerian model) routines available in hymodelg
+	created new common block for variables from stbcon module 
+	new time-of-arrival "isochron" graphic
+	multiple routines to permit embedded blanks in directory/file names
+	namelist selection of PBL method and set minimum  
+	permit trajectory starts at non-zero minutes	
+	use tke for mixing depth independent option (isot=5 not supported)
+	trjmap fix to properly overlay fwrd-back vertical trajectory
+	con2xy interpolation correction affects concplot and volcplot
+	emsmat and hymodelc: fewer sources in emitimes file than control
+	gemcfg and gemini: initialize from 3D gblmdl37 (no deposition) 
+	pufpar, parpuf, gempar revised to convert using age
+	namelist variable p2pcf now conage
+	modified con2asc for comma delimited options and units convert
+        grib2arl reverse j for ecmwf subgrids
+        conmap,con2xy,consmt,concplot,volcplot - improved contour smoothing
+
+Aug 2008
+	new command line options for boxplot program
+        conavgpd - compute average concentration from cdump 
+        isochron - added features for shorter time scales than 24 hours
+        major mod all routines calling METINI, argument list modifications
+        multiple new turbulence switches now in namelist, ISOT no longer valid
+        new routine shpbdy.f and shpsub.f to read shapefiles replacing mapbdy.f
+	modified library routines: conmap and trjmap for shapfile input and ...
+	main pgms: concplot,trajplot,contour,display,parhplot,parxplot,showgrid
+	fixed library routines for cdf2arl to compile on little-endian systems
+
+November 2008
+        removed obsolete fortran statements from psplot library
+        modified fcread for gfortran compatibility
+        added -frecord statement to makefile for gfortran
+        metini warnings to message file
+	new program to sum concentration fields (global and regional)
+ 	gui options: global, arrival time, physics ensemble
+	windows based TOMS, cdump, and PARDUMP viewer
+
+February 2009 (Version 4.9)
+        program information added to Usage statement on many source applications
+        update.tcl modified to differentiate registered and trial versions
+        get_arl.tcl reflects changes to GFS forecast data files
+        ensemble boxplot program and new ensplots to support multi-frames
+	support background job submission through the MPI menu
+	change working directory in GUI without restarting GUI
+	made concadd more generic for averaging, adding, maximum, or masking
+	created master descriptor file for all executables
+	plume arrival time map now works with upwind simulations
+	the new MPI script will create working directories as needed
+	con2stn output now supports row as well as column formats
+	xtrct_time can be used to eliminate or extract between two time periods
+	for all xtrct* programs the output file is deleted first if it exists
+	grib2arl modified to eliminate missing fields aloft (RH and W)
+
+October 2009  
+	Trajectory mapping fixed for backward trajectory terrain projection
+	Google Earth display corrected for proper color overlays 
+	Simple OpenMP parallelization of the GEM equations subroutine
+	Reconfigured GEM for operational output 
+	Concentration model fixed for undefined trajectory namelist variable
+	Trajplot corrected to properly handle zero circles to force map scale
+	Defined new input variable cloud cover to reduce precipitation totals
+        Fixed 1 grid point offset error in trajfreq
+	Revised grib2arl to handle scrambled pressure level files 
+	The chk_index utility now handles files with multiple INDX records
+	Modified internal routines to set 10m wind and 2m temp if field missing
+	Revised initial install procedure to create default_* and sample_* files
+	Modified the GDAS archive GUI to set week number from the day of the month
+	Added a browse button to GUI menus for map background file select
+	Added simple listing of trajectory endpoints file to the GUI
+	Trajectory model now tests for start position on multiple files not just first
+	Added a menu number to advanced/configuration menus
+	Corrected the wincpick.txt display
+	Added the DATEM programs c2datem and statmain to the distribution
+	Corrected grib2arl for ECMWF 3D data in any level order
+	Improved search during initial install for pre-requisite software
+	GUI and most fortran programs now permit spaces within directory names
+	All programs terminate if calculation starts in data extrapolation region
+	Corrected the top label of the trajectory frequency plot
+	Revised example tcl scripts to remove .exe suffix (not required)
+	Added trap for stdout in GUI for most meteorological data conversion programs
+	Added comment to message and stdout when no vertical velocities
+	GEM output routine correction to offset output from start time
+	GEM correction of dzi computation for the depth of the bottom grid cell
+	Modified multiple programs to permit file and directory names >80 chars
+	Permit the use of wildcards in creating INFILE for frequency and clustering GUI
+	Added concentration threshold to mask option when adding binary concentration files
+	Created a GUI for concadd in simple or multi-file mode
+	Added the labels.cfg option in gridplot
+	Main concentration program has consum interpolation section for Xtra-fine grids
+	Added a units conversion multiplier to the matrix view menu
+	Created a GUI to write and read a LABELS.CFG file
+	Added noaa_logo to working directory for GE applications
+	Disabled reset of the meteorolgical directory, now forced to value in default_exec
+	Added a DATEM computation example to GUI, including graphics and statistics 
+	Added Google Earth output option for con2stn
+	Modified the clustering GUIs to permit operation from any directory
+
+December 2009
+	Added rotation angle to DATEM conversion GUI
+	New error traps to con2stn and corrected GUI for direct input of lat-lon
+	Modified compile.scr to test for all required executables
+	New intersection option for conadd program and added option to GUI
+	Modified concplot GUI to permit over-ride (text entry) of binary input file
+	When negative the namelist DELT variable sets the minimum time step
+
+January 2010
+	Revised clustering to handle meteorologcal variables, dateline, and pole
+	New concsum program
+	Generalized ARW2ARL decoder to handle files with/without TKE
+	Converted ARW precipitation accumulation over run to hourly accumulation
+	Added surface turbulent flux variables to ARW2ARL output  
+	Corrected hymodelc.F for consum interpolation near dateline
+	Added pressure level test to insure decoding correct GRIB record
+	Generalized ARW2ARL decoder to use a namelist file to define input and output variables
+	Additional diagnostics when reading emitimes file
+	Skipped trajectory height initialization for splitting-in-time
+	Minor corrections to DATEM programs: statmain and scatter
+	Update to concplot to permit up to ten user selected contours
+	Added STILT emulation mode (mixing ratio output) and corrections to
+	Meteorology input routines to properly handle AER-WRF coupled mass-averaged velocity fields
+	Added particle file conversion programs asc2par and par2asc
+	New program conappend to time-append binary concentration files
+	Corrected shpbdy subroutine to handle more complex map background shapefiles
+	Update script now also checks for new gif images in the html directory
+	Added new program parshift to translate or rotate particles in a position file
+	All GUI updates: windows7 cmd.exe removed, clustering, working cleanup
+
+February 2011
+	Permit definition of a vertical line source in EMITIMES file
+	Generalized input of /bdyfiles files to automatically determine EOL character sequence
+	afwa2arl decoder can now handle Lambert, Mercator, or Polar projections
+	Raised the limit meteorological directory and file names from 80 characters to 256 for each
+	Also added a new namelist field (MESSG) to define the base name of the MESSAGE file.
+	Log-normal particle size distribution in multiple sub-bins
+	added grib1 decoding for ukmet office files
+	randomized particle position during emission for vertical line sources and area sources
+	added SVN revision number to MESSAGE file
+	residence time option to trajectory frequency program
+	new color table options for concplot plus support for more than four contours
+	modified horizontal puff dispersion rate to be more consistent with particle dispersion
+	longer-range horizontal puff growth rate replaced by empirical function
+	change to use Kantha-Clayson as default when TKE field is missing
+	ensemble cleanup script added to GUI
+	corrected ECMWF precipitation units
+	added array bounds test in basic advection routines for fast wind case
+	rounded up particle release rate to the next integer value
+	permit the definition of a settling velocity (<0) but with no mass removal
+	code test to insure precip field available when defining wet deposition
+
+July 2011
+	concplot shows local time zones through an another input line in LABELS.CFG
+	close meteorological files to save memory after internal clock goes past valid times
+	specification as fraction of mixed layer without setting mass mixing ratio option
+	fixed geplot.f to correctly handle Google Earth files with contours over the IDL
+	simulate continuous sources by turning off the decay option within con2rem
+	multiple species on one particle with gravitationally settling use the last species
+	argument rearrangement to solve MAC problem with xterm
+	added NOAA logo command line option (+n) for selected programs
+	fixed STILT emulation mode: particle.dat file, grid definition, mass accumulation
+	force the particle number release rate to |NUMPAR| when NUMPAR<0	
+	no spatial interpolation of precipitation field
+	both rain and cloud to be defined in the same grid cell for wet removal
+	cloud bottom and top RH definition moved to namelist
+	corrected decoding of user defined 3D variable when using WRF-ARW
+	corrected meteorology ensemble with check cyclic boundary conditions
+	added DATEM format option in con2stn, timeplot, concplot, and testing script
+
+March 2012
+	Added a GUI option to batch process ensemble simulations to produce statistics
+	added specific humidity and humidity mixing ratio as an output option along the trajectory.
+	solved issue with labeling of KMZ files
+	replaced download of RUC with RAP
+	added the creation of a FTP log file
+	resolved issue of adding concentration files about the prime meridian
+	revised the ECMWF grib_api GRIB2 decoder to handle Lambert-Conformal grids (UNIX only)
+	corrected NARR converter for missing TKE
+	added an option to read potential temperature as input
+	fix to GIS contouring when no contours exist
+	closed the particle input file after reading so the same name can be used for output
+	new namelist option to turn on or off radioactive decay of deposited material (not in GUI) 
+	new default that airborne concentrations on the grid never decay
+	spatial gridding of statistical results when running with matrix source locations
+
+July 2012 (svn: 338)
+	Turn off time interpolationn for time-averaged meteorlogical data fields
+	New horizontal particle plotting program for global domains
+	New namelist variables VSCALEU and VSCALES to set turbulence time scale
+	Improved conversion of KML to KMZ with updates to ZIP program
+	Option to define MSL heights in EMITIMES file
+	New GUI option to only plot a fraction of all particles for clearer displays
+	Utility program support for meteorological grids exceeding 999 grid points
+	Corrected sign on missing TCLD field for wet removal calculations
+	Fixed missing clustering percentage on MAC GUI
+	Vertical velocity options to convert MSL to AGL, spatial averaging, vertical damping
+
+October 2012 (svn: 368)
+	CAPTEX release points added to the plants.txt file
+	Updates to KMZ file creation for contouring and animations
+	Corrections to meteorological offset ensemble when defining multiple grids
+	Updated NetCDF converter for concentration files to make them GIS compliant
+	Added more options to the box plot program
+	Particle to puff conversions now start with a minimum radius equal to concentration grid
+	Option to switch between metric and english units for altitude labels
+	Updates to GRIB2 converter for ECMWF and NOAA files
+
+April 2013 (svn: 460)
+	More generalized GRIB2 converter using the ECMWF GRIB_API libraries	
+	Added bootstrap resampling as an option in computing the correlation in STATMAIN
+	Removed restrictions on the maximum size of the meteorology subgrid
+	Lowered the default below-cloud wet deposition coefficient in the GUI
+	New option to explicity set the concentration for computing exceedence probablilities
+	Fixed error in plotting shapefile map background files for lines outside of the plot domain
+	Revised contour labels to used fixed format for a normal range of values rather than scientific
+	Corrected WRFARW converter to handle polar stereographic projections as well as Lambert conformal
+	New program to horizontally average concentration output fields
+	Compute the cloud fraction based upon RH when the cloud fraction field is missing
+	New namelist option (KWET) to define an external precipitation field to replace model values
+	Implemented variable Lagrangian time scale options when using TKE for turbulence
+	Option to have different vertical motion options when using multiple meteorological data
+	New default option for 3D particle dispersion to pre-compute random numbers for faster computations
+	Revised GRIDPLOT routine for similar look to CONCPLOT and added options for KML output
+	Set name of diagnostic vertical mass distribution file (default=VMSDIST) in the namelist
+	Additional symbol options when creating scatter plots (record, station, day, hour)
+	Various GUI updates to reflect additional features in the underlying programs
+
+July 2013 (svn: 497)	
+	Sample emission file for the Fukushima accident included in the distribution
+	Numerous issues associated with KML file output corrected
+	Modified routines to permit the use of EMITIMES input for backward simulations
+	Moved source-receptor solution option to its own menu and customized for time variations
+	New program added to create a CSV file for the transfer coefficient matrix and measurements
+	Major revision to the concentration to dose utility program menu
+
+August 2013 (svn: 515)
+	Resolved problem with particle file initialization when input number exceeded array limits
+	Modified physics ensemble tcl script with different options
+	Multiple GUI changes to match September 2013 workshop documentation
+	New GUI to compute radiological dose
+	Random number generator option defaults to faster method when NUMPAR>5000
+	Revised default conversion settings when creating animated GIFS to overwrite background
+	Modified default KSP value to 100 when distributions do not match
+	Fix when multiple meteorological grids and the source location is not on all grids
+
+March 2014 (svn: 577)
+	Corrected Mercator/Polar-Stereo projection option with WRF-ARW converter
+	New option in particle plotting programs to show color with age rather than height
+	New concplot option to turn off the printing of the maximum and minimum concentrations
+	New namelist option to permit particle position output every time step
+	Insure different time period meteorological files are properly defined when on the same grid
+	New option (NCYCL<0) to overwrite particle output file rather than append multiple time periods
+	MPI versions now support command line argument as the suffix for the CONTROL and SETUP files
+	Corrected backward version of the GEM subroutine to handle multiple meteorology files
+	Created a new particle input file to be use for continuous boundary conditions (BC)
+	New namelist variable KHINP defines the age of the particles to be read from the BC input file
+
+July 2014 (svn: 631)
+	Added support for bit-map decoding in ARL W3LIB and the NARR GRIB converter
+	WRF-ARW converter modified to compute hourly precipitation when data interval < 1h
+	Improved precision for vertical velocity and precipitation fields using WRF-ARW
+	New diagnostic output file with just WARNING messages when they exist
+	Numerous corrections to clustering programs: displaying mean trajectories, dateline issues 
+	CONTROL and SETUP.CFG files from the internet can now be retrieved with comments after hash
+	Bug fix in particle plot routines to avoid displaying deleted particles that have no position
+	Numerous corrections to Google Earth conversions: year boundary, clamp to ground,
+	Revised conversion of NARR GRIB files to be consistent with NOMADS file name convention
+	Numerous bug fixes to GUI scripts: reset button, file name data entry
+	Updated time-of-arrival graphical product
+	GRIB lat-lon grid conversion program extended to support 0.125 deg resolution'
+
+October 2014 (svn: 664)
+	Force concentration write to disk when internal time step doesn't match end of sampling
+	Revised point source emission algorithm to deal with sub-time step emission durations
+	Support for regular latitude-longitude WRF data grids
+	Added within-cloud particle scavenging option to use coefficient (1/s) rather than ratio (l/l)
+	Revised within-cloud particle scavenging ratio method to divide by cloud-layer for concentration
+	New diagnostic option (krand=3) to turn off particle mixing
+	New option (ichem=10) to create a multi-release time transfer coefficient matrix in one run
+	Master compilation script for LINUX version exports NetCDF library paths
+	Added an MPI option to the testing script
+	New option on con2stn to decay correct values extracted from the simulation
+	Various changes to display programs: concplot, isochron, gridplot, timeplot
+
+February 2015 (svn: 718)
+	More residence time option in trajectory frequency
+	Changed default scavenging coeficients for wet deposition
+	New GUI menu to process ensemble member reductions
+	Modified NARR2ARL code to deal with incorrect friction velocity
+	Enhanced GoogleEarth output for particle plotting programs
+	New option to create polar coordinate concentration grids
+	Improved handling around dateline for isochron and grid plot programs
+	Revised binary to coefficient matrix program to handle arbitrary start and stop times
+	Enhanced vertical mixing when convective available potential energy value exceeded (CAPEMIN)
+	Permit emission durations of less than one time step
+
+June 2015 (svn:761)
+	New option to create talagrand diagram to process ensembles
+	New module to compute decay and deposition of the Foot and Mouth disease virus
+	Corrected resuspension subroutine
+	Added new land use and terrain height files with 0.5 deg. resolution
+
+February 2016 (svn:804)
+	Added Ganser fall velocity applicable for particles larger than 20 microns
+	New option to calculate nuclide daughter products
+	Bug fix to allow for multiple vertical line sources
+	corrected longitude span for global grids less than 1 degree
+	New concadd option to mask base concentration as a factor of the base concentration
+        New concadd option to divide 2 concentration files	 
+
+January 2017 (svn:852)
+	Added decay of ground-level deposition amounts for daughter product application
+	Corrected the computation of the scan index in the polar grid section in consum
+	Added polar grid to con2asc
+	Added time interpolation for deposition in consum
+	c2datem: added option to use height from DATEM file if available
+	Corrected virtual temperature calculation when using meteorological datasets containing RH
+	concmbn:  - added option to crop to a concentration value and a multiplier
+        	  - added minimum grid span (GRDMIN)
+	Added density vertical dependency when calculating mixing ratio (ICHEM=6)
+	Conmerge: - allow to process cdump files containing minutes
+                  - allow for crossing a year by using tm2min library function
+	Added new HYSPTEST program to test model inputs and suggest appropriate changes.
+	Conappend - error checking - if grids differ, etc.
+	Gridplot - Added source location to plot
+	Added inverse modeling executable (lbfgsb) that solves the Transfer Coefficient Matrix for the source term vector
+	Added new program ecm2arl that converts ECMWF meteorological data to ARL format (based on grib2arl)
+
+September 2017 (svn:897)
+	Major update: Puffs can be converted to multiple 3D particles randomly distributed within the puff.
+	Added dimensioned CPACK so the model can support cartesian and polar grids within the same run.
+	New program mergextr to extract dates from a file of files with format (DG_YYYYMMDDHH)
+	xtrct_stn new option to rotate the wind vectors to Earth coordinates
+	Added option in concadd to force the time labels to the minimum and maximum times in the processed files	
+	gridplot added -r option to sum deposition
+	New program var2datem to read DATEM file and output randomly generated DATEM file results given a standard 
+	deviation and minimum concentration.
+	c2datem -t1 uses new algorithms that allows model output period to be longer than measurement period, and, 
+	allows the ending times of the model and measurement periods to not be aligned.
+	coninfo added -j option to output the Julian start and stop dates in the file
+
+February 2018 (svn:927)
+	Major update: This update permits the use of polar concentration grids for both particles and puffs. 
+	The previous version only worked with 3D particles. HYMODELC and HYSPTEST was modified to remove the puff 
+	restriction on CPACK=3 and the CONSUM subroutine was modified so that a scan section was added for polar 
+	grid points within the puff. The help file S626 was modified to note that polar grids do not work over the dateline. 
+	Also a polar grid puff computation (#420) was added to the testing script.
+	emrise: Corrected bouyancy flux conversion factor (FB). This affects the injection height when heat release is input. 
+	era52arl:Added conversion program for era52arl in the trunk/data2arl/era52arl subdirectory
+	mer2arl: Added conversion program for MERRA (NASA) meteorological data in the trunk/data2arl/mer2arl subdirectory
+	cdf2arl: converts NCEP/NCAR Reanalysis data in NetCDF4 file to a HYSPLIT compatible format; located in 
+	trunk/data2arl/cdf2arl subdirectory 
+
+	Renamed conc2cdf.f to con2cdf3.f and con2cdf4. con2cdf3.f creates NetCDF Version 3 files and contains a fix that 
+	outputs all emission source origin times and locations (previously only the last emissions source origin was output) 
+	and Matthew Krupcale's patches that improve memory efficiency for IO and a fix to the gettime subroutine. con2cdf4.f 
+	creates NetCDF Version 4 files, contains the same updates as con2cdf3.f, and includes another patch from Matthew 
+	Krupcale that incorporates NetCDF Version 4 compression capability.
+	arw2arl: Correction in converting WRF lat lon projection domains to ARL formatted files (correction to reference lat lon 
+	and sync lat lon). Allow for more decimal places written to ARLDATA.CFG file, which improves the precision of the header 
+	variables in the ARL formatted file.
+	xtrct_stn: Fixed rotation to Earth coordinates for upper level winds 
+	api2arl: Modified code in the api2arl directory to use ecCodes library rather than grib_api library.
+
+April 2018 (svn:951)
+	Changed default value of minimum mixed layer depth (KMIX0) from 0 to 25 meters.
+	Updated arw2arl.f to include a DIF variable for TKE and output all vertically staggered variables at the bottom interfaces.
+	implemented new weather balloon functionality for trajectories
+
+September 2019 (svn:1066)
+	Major updates: 	Fixed bug for interpolating TKE and velocity variances 
+	for non-WRF inputs in prfsig.f.
+	Added support for TKE from WRF-ARW meteorology to be either vertically 
+	staggered or unstaggered and improved the vertical interpolation of 
+	vertically staggered variables.
+	Default namelist parameters KMIX0 from 250 to 150 and VSCALES from 
+	200 to 5.
+	Changed how turbulent velocity is initialized. New namelist variable 
+	VINIT = 1 (default) initializes turbulent velocity by drawing from 
+	distribution; VINIT = 0 initializes turbulent velocity to zero
+
+	arw2arl: Increase number of 3D variables in output in the arw2arl 
+	converter, allow for DIF variable of AVGFLX_WWM to be output in the 
+	arw2arl converter and utilized within HYSPLIT, and fix vertical 
+	interpolation of WRF TKE on unstaggered grid.
+	gridplot: removed check for 4-letter ID in concentration file so it 
+	can read ensemble files
+	timeplot: for Log plots, set data minimum to YMIN so no data is 
+	plotted below Y axis
+	Conavg: Reads multiple HYSPLIT concentration files and computes the 
+	mean value at each grid point and then creates a new output file 
+	identical to input files except with mean values
+	lbfgsb: For the LN_Y option, how the observation variation is 
+	calculated has been changed; Also, a correction to add  a gradient 
+	calculation for the LN_Y option at the initial iteration only. The 
+	subsequent iterations within the main loop are correct.
+	Conset.f  modified so sample stop is now relative to sample start when 
+	month field is zero.
+	NUMGRD=-2 in CONTROL file means that the 1st grid has heights agl, the 
+	2nd grid heights are msl, only for hycs_std, hycm_std, and hysptest.  
+	Other hyc* are excluded.  In SETUP.CFG, KMSL=0.
+	hymodelc.F, hysptest.F, hymodelt.F added SEED to namelist so random 
+	seed can be set in the SETUP.CFG file.When SEED was added to Namelist, 
+	the seed_id for the ens and mpi compilations was overwritten. Changed 
+	default of SEED to 0 (from -1) and set seed_id=SEED+seed_id. When SEED 
+	is not set, seed_id retains it's original value (-1 for single 
+	processor) and users can still change value of seed_id in the mpi and 
+	ens compilations.
+	Major changes to era52arl. ERA5 is now downloaded through the cdspai 
+	which allows analysis and forecast fields to be downloaded into one 
+	file. Consequently two surface file fields are no longer needed. Kept 
+	the ability to process two fields. 2d file can have extra times not 
+	found in the 3d file. Can extract one ensemble member from files with 
+	multiple ensemble members. Can skip time periods in the grib file (If 
+	grib file is every hour but want ARL file that is every 3 hours for 
+	instance). Started adding functionality to convert grib2 files with 
+	model levels
+	legacy codes moved to data2arl/legacy from source.  Readme files and 
+	Makefiles updated.
+	Created a new namelist variable GEMAGE to use instead of CONAGE for the 
+	time to transfer puffs or particles from the Lagrangian to the 
+	Eurlerian grid (GEM). CONAGE is still used to define the particle-puff 
+	conversion times. Using this approach, any puff or particle can be 
+	transferred to the GEM grid, independent of any particle or puff mode 
+	conversions. Defining INITD=109 is no longer required to transfer mass 
+	to GEM.
+	New program con2inv outputs the inverse of the concentration file.
+	Skip advection in dummy call to advpnt.f from hymodelt.F so first 
+	timestep isn't performed twice and diagnostics at the initial time are 
+	at the initial time and location.
+	Vvmixing bug fix for -a1 and -a2 options.
+	Changed format of offset time duration from hours to tenths of hours.
+	Fixes to KML output in trajplot
+	Fixed format statements for tdump in trjinp, trajfind, and trajplot
+	Added level selection option to conlight
+	Added a Makefile and Make include files to top directory for compiling 
+	HYSPLIT on Linux withough using the compile.sh script.
+	Changed active and primary server name from arlftp.arlhq.noaa.gov to 
+	ftp.arl.noaa.gov in hysplit4.tcl
+
+April 2020 (svn:1283)
+	Major updates: Inclusion of center of mass trajectory option.
+	Updated bdyfiles.
+	Integration of python in postprocessing graphic utilities.
+	Incorporation of STILT routines, which include: 1) a new vertical 
+	interpolation scheme for ARL files derived from the WRF model; 2) a new 
+	mixed layer scheme that uses excess temperature for convective cases; 
+	3) a new boundary layer turbulence parameterization option (Hanna, 1982); 
+	4) an option to have the Lagrangian vertical timescale to vary by space 
+	and time following Hanna (1982); 5) a more complex vertical timescale 
+	that includes a reflection/transmission scheme that preserves well-mixed 
+	distributions of particles moving across interfaces; 6) an extreme 
+	convection option; 7) the Grell convective scheme utilizing WRF output 
+	convective fluxes; 8) an option to have a random initial seed number.
+
+	Corrected variable name NSTA in c2datem.
+	Fix unitialized variables in hymodelc, parxplot, and sunflx.
+	Include missing variables in call to contxt in volcplot.
+	Set KPBL when TKERD>0 and TKERN>=0 in stbtke.
+	Correct metinp for sign reversal in 80 km EDAS sensible heat flux.
+	Fixes shapefile issue with gfortran 4.8.5.
+	Fix the number of x major tickes in timeplot.
+	Bug fix when writing GELABEL file.
+	Bug fix for -w option in vmixing.
+	Set minimum value of z0 to 0.0001 in prfcom.
+	Pass CONTROL file suffix to gemchk.
+	Produce KML and GELABEL files for IGIS=3 in volcplot.
+	Include batch scripts for installing python packages.
+	Include missing deallocation and reallocation statements in boxplots.
+	Add python script for checking numerical values in testing (test_xdump.py).
+	Added user defined kmixd option in vmixing.
+	Bug fix to par2asc.f for -a option.
+	Change references to hysplit4 to hysplit.
+	Correct location of shapefiles in xrun.bat
+	Initialize sensitble heat flux when not in met file and idsp=2 in advmet.f.
+	Corrected dimensionm of IA in chmgea.f.
+	Corrected and definition of avgth and avgqv in mkcape.f.
+	Bug fix for auto_conc.tcl.
+	Add vertical scroll bar to get_arc.tcl, conc_add.tcl, conc_cfg.tcl, and conc_disp.tcl.
+
+December 2020 (svn:1376)
+        Add CESM data2arl converter.
+        Add Sofiev et al. plume rise algorithm.
+        WVERT=.TRUE. now compatible with WRF hybrid vertical coordinate system.
+        WRF wind fields compatiable with WVERT = .TRUE.
+        Changed defalut WVERT = .TRUE. (checks in metini.f will change WVERT =
+        .FALSE. if input meteorology is incompatible with WRF vertical
+        interpolation scheme.
+        Adjust WRF U and V to staggered points for WRF=3 and all idsp options.
+        Removed SH and LH sign reversals; corrected sign in ARL files.
+        Fixed DZDT flag setting.
+        Fixed index of grell convection output variables in prfcom.f
+        Make profile.F, xtrct_stn.f, contour.f, and display.F compatiable
+        with AWRF mass coupled winds.
+        Gui updates: fix reset in gui to ensure all variables are reset;
+        ensure concentration (deposition) multiplier is carried through all
+        menus; new concentration binary file utility; simplified the
+        probability output by creating files in ints own menu; fix for macOS
+
+May 2021 (svn:1495)
+        Add drn2arl converter.
+        Update python dependencies, graphics, packages.
+        Increase size of PROCESS in utility programs.
+        Update txt2dbf.c for compatiblity with older c compilers.
+        Update write statement in statmain.
+        Bug fix for processing hybrid vertical coordinates in MERRA2 converter.
+        Fix filedates in xtrct_stn
+        Add option NUMGRD = -4.
+        Bug fix to latlon.f.
+        Correct variable allocations in cluster.f, hymodelc.F, merglist.f, 
+        statmain.f, trajfreq.f, trajmean.f, and trajplot.f
+        Add insect additional horizontal speed to trajectory calculations.
+        Update ftp address.
+        Add option to write concplot contours to a file.
+        Add cooncentration and deposition multipliers to conprob.
+        Add krand options 10, 11, 12, and 13.
+        Update hymodelt.F and hysptest.F for new namelist options AREA and PLRISE.
+        Area emissions for particles were corrected so square emission area has the specified area.
+        Add aer2arl converter
+
+January 2022 (svn:1652) (hysplit.v5.2.0)
+
+        Updates to fortran plotting utilities including options for creating svg rather than ps files.
+        Option for user defined vertical levels added 
+        Unit testing using cmake added in testing/ctests directory
+        Update to arw2arl converter to allow for soil moisture and soil liquid water to be output.
+        Update to vmixing for input/output filenames
+        Update to xtrct_grid to add -s option for skipping level
+        Update user guide to include listing of utility programs 
+
+May 2022 (svn:1692) (hysplit.v5.2.1)
+	Bug fix to properly set the time and space varying vertical lagrangian timescale
+	   (user option vscales=-1.0) when the hysplit dispersion scheme is used (idsp=1).
+	Increase filename length limit to 1024.
+
+June 2022 (svn:1705) (hysplit.v5.2.2)
+        Fix file format written by statmain released under v5.2.1.
+        Fix txt2dbf and dbf2txt for Windows PC to properly read/write dbf files.
+
+August 2022 (hysplit.v5.2.3)
+        Fix to WRF vertical interpolation scheme.
+        Fix initial output time for trajectories with time averaged files.
+        Fix levels in aer2arl converter.
+
+September 2022 (hysplit.v5.2.4)
+        Drop particles with NaN in their position or turbulence component
+           when reading a PARDUMP file for particle initialization or when
+           writing particles to a PARDUMP file.
+        Initialize a few arrays to zero to prevent uninitialized memory blocks
+           from being read.
+        Avoid division-by-zero error
+
+November 2023 (hysplit.v5.3.0)
+	Add Freitas plume rise scheme.
+	Add api2arl_v6 converter that reads scaledValueOfFirstFixedSurface
+	   for pressure levels.
+	Expand the CONCPLOT -c option to take the number of contours.
+	Add -c60 and -61 options to CONCPLOT that use interval of sqrt(10).
+	Add +8 option to CONCPLOT for specifying near-min contour level.
+	Adjust wind error flag by checking IDSP and ZICONTROLTF.
+	Update HYSPLITPLOT to version 0.9.1.
+        Replace STAMEN_TERRAIN and STAMEN_TONER map backgrounds with
+	   OPEN_STREET and OPEN_TOPO, respectively.
+	Arrays are allocated with zero initial values.
+	Updates to api2arl_v5 converter.
+	Display message when no plume is drawn.
+	Updates to XML generation for KML XSD compliance.
+	CONPROB prints error message when no input files are present.
+	CONPROB works with concentration grids of different sizes, provided
+	   grid spacings remain the same across concentration grids.
+	Updates to PARTICLE.DAT and PARTICLE_STILT.DAT formats.
+	Increase number of vertical levels to 99.
+	ARW2ARL -b option can take up to 4 digits.
+	Add -d option to CONAVGPD.
+	Bug fix with updating internal vertical coordinate after advection.
+	Bug fix with updating time averaging wind for backward runs.
+	Bug fix with initializing variables for Grell convection.
+	Bug fix with plotting vertical projection trajectories.
+	Bug fix with creating KML when initial plot frames are empty.
+	Bug fix with creating KML for concentration-to-station via GUI.
+	Bug fix with extracting station via graphical user interface.
+	Bug fix with setting lat lon domains for DATA_DEL.
+	Bug fix with clustering trajectories via graphical user interface.
+	Use wget instead of ftp when downloading met data files with Windows PC.

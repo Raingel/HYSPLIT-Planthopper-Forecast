@@ -1,0 +1,81 @@
+Last update: 12 MAY 2020
+
+
+List of Contents
+-----------------------------------------------------------------------------
+1. Installing Anaconda 3 on MacOS
+2. Installing python packages
+3. Unit testing hysplitdata
+4. Unit testing hysplitplot
+5. Setting up Hysplit GUI to use python graphics
+
+
+-----------------------------------------------------------------------------
+1. Installing Anaconda 3 on MacOS
+
+- Point your web browser to https://www.anaconda.com/products/individual.
+- Download a Python 3.7 installer for MacOS.
+  Use of a 64-bit Graphical installer is recommended.
+  Version 2020.02 is the latest version available at the time of writing.
+- Run the installer as described at https://docs.anaconda.com/anaconda/install/mac-os/.
+  For simplicity, it is assumed that anaconda is installed in your home
+  directory, namely, $HOME/opt/anaconda3.
+
+
+-----------------------------------------------------------------------------
+2. Installing python packages
+
+- Open a terminal.
+- Change directory to the python directory of your hysplit installation.
+  For example, if hysplit is installed at $HOME/hysplit, the python
+  directory would be $HOME/hysplit/python.
+- Type ./install_macos.sh on the terminal and hit the enter key.
+  The hysplit anaconda environment will be created and all required
+  packages will be installed.
+
+
+-----------------------------------------------------------------------------
+3. Unit testing hysplitdata
+
+- Running unit tests is optional. It is a good idea to run unit tests and
+  check their outputs to ensure packages are installed correctly.
+- Assuming the terminal prompt from the previous step is still open,
+  change directory to hysplitdata/tests.
+- If the terminal prompt does not start with "(hysplit)", the hysplit
+  anaconda environment needs to be activated. Activate it by running
+  the "conda activate hysplit" command.
+- Enter pytest on the anaconda terminal and push the enter key.
+- All unit tests should pass.
+
+
+-----------------------------------------------------------------------------
+4. Unit testing hysplitplot
+
+- Running unit tests is optional. Running unit tests and checking their
+  outputs are encouraged to ensure all required packages are installed.
+- Assuming the anaconda prompt from the previous step is still open,
+  change directory to hysplitplot/tests from the python folder.
+- If the terminal prompt does not start with "(hysplit)", the hysplit
+  anaconda environment needs to be activated. Activate it by running
+  the "conda activate hysplit" command.
+- Run pytest on the terminal.
+- All unit tests should pass.
+
+
+-----------------------------------------------------------------------------
+5. Setting up Hysplit GUI to use python graphics
+
+- For this section, you would need to know where the hysplit anaconda
+  environment is installed. Open an anaconda3 prompt as described in Section 2.
+  Run "conda info -e" and look for the line starting with hysplit. If anaconda
+  is installed using default installation settings, the environment would be
+  located at $HOME/opt/anaconda3/envs/hysplit where $HOME is your home
+  directory.
+- Go to the work directory of your hysplit installation.
+- Run ../guicode/hysplit.tcl.
+- Click the Menu button at the bottom.
+- At the "Menus of Hysplit" window, locate the Advanced button on the top right.
+- Click buttons Advanced / Configuration Setup / Set Directories.
+- Enter the path to the hysplit environment at "Anaconda3 environment path."
+- Click the "Update file: default_exec."
+

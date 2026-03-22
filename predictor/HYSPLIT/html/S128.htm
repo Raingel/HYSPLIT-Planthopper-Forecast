@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Meteorology / Convert to ARL / User entered (S128)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / Convert to ARL / User entered </p></h2>
+
+<p>This menu tab is intended to convert user entered meteorological
+data to the ARL packed <a href="S141.htm">HYSPLIT compatible</a>
+format. The conversion program will create a data file with one or
+more time periods containing a uniform field in space and height
+but varying in time. The grid is centered over the location
+specified in the main menu and covers a 250 by 250 km domain at a horizontal
+resolution of 10 km. It is
+intended to be used for very short-range simulations. The main menu
+permits the selection of an existing text input file (space
+delimited format), or the creation of a file through the menu shown
+below. After the meteorological data have been entered and saved to
+a file, the conversion program is run from the "Run convert" menu
+button.</p>
+
+<center><p><img border="0" width="473" height="255" src="Image56.gif"></p></center>
+
+<p>The data entry widget contains five time fields and four data
+fields. The output file time interval is computed automatically
+from the input data. No interpolation is performed and the input
+data nearest in time to the output time are used for the
+conversion. The maximum output interval is one hour. Note that the
+date-time field defaults to the current system clock time. The
+meteorological variables are wind direction, speed (m/s), mixed
+layer depth (m), and Pasquill stability category (1=A to 7=G).
+After filling in the data for the first line, use the <i>Repeat</i>
+button the fill the remaining table entries and then edit the time
+and data fields as required.</p>
+
+<center><p><img border="0" width="386" height="235" src="Image57.gif"></p></center>
+
+<p>The conversion program computes the component turbulent velocity
+variances based upon the stability category and wind speed and
+assumes those values are constant with height within the mixed
+layer. Above the mixed layer top the variances are set to the
+model's minimum value. Using these data for input the model should
+be configured in the <a href="S625.htm">Advanced menu</a> 
+to use the variances for the dispersion. Otherwise the diffusion 
+calculation will default to the "deformation" method and with a 
+spatially constant wind field; the dispersion will always be at 
+its minimum value.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

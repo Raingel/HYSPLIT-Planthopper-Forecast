@@ -1,0 +1,397 @@
+<html>
+<head>
+<title>Concentration / Display / Contours (S330)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Contours</h2></p>
+
+<p>The concentration model generates a binary (big-endian) output file
+on a regular latitude-longitude grid, which is read by the other programs 
+to produce various displays and other output. The plotting program, 
+<i>concplot</i>, can be accessed through the GUI, which is shown in the
+illustration below, or it can be run directly from the 
+<a href="#Command_line">command line</a>. Most, but not all, of the
+command line options are available through the GUI.</p>
+
+<center><p><img border="0" width="569" height="834" src="Image39.png"></p></center>
+
+<p>Normally only one input file is shown, unless multiple files have
+been defined in the <a href="S310.htm">Concentration Setup Run</a>
+menu. The default output file name is shown and unless the box is
+checked all frames (time periods and/or levels) will be output to
+that one file. The program uses the map background file, <i>arlmap</i>, 
+which by default is located in the <i>\graphics</i> directory. Other
+customized map background files could be defined. Some of these higher
+resolution map background files are available from the 
+<a href="http://www.ready.noaa.gov/HYSPLIT.php">HYSPLIT download</a>
+web page. This plotting program also supports the use of ESRI formatted
+<a href="#shp_map">shapefiles</a>.</p>
+
+<p>The GIS output option will create an output file of the contour
+polygons (latitude-longitude vectors) in two different format: the
+ESRI generate format for import into ArcMap or ArcExplorer, or 
+XML formatted files packaged by <a href="http://www.info-zip.org">
+Info-Zip</a> for import into Google Earth.</p>  
+
+<p>For multiple pollutant files, only one pollutant may be 
+selected for display by individual levels, or averaged between 
+selected levels. These levels must have been predefined in the 
+<a href="S310.htm">Concentration Setup</a> menu. Multipliers can
+be defined for deposition or air concentrations. Normally these
+values would default to 1.0, unless it is desired to change the
+output units (for instance, g/m<sup>3</sup> to ug/m<sup>3</sup>
+would require a multiplier of 10<sup>6</sup>).</p>
+
+<p>Contours and color fill can be specified as black and white or
+color. The none option eliminates the black line defining contours
+and only leaves the color fill. This option is incompatible with
+GIS output options, which require computation of the contour vector.
+Contours can be determined <b>DYN</b>amically by the program, 
+changing with each map, or <b>FIX</b>ed to be the same for all maps.
+A user can set the contour scaling (difference between contours) to
+be computed on an <b>EXP</b>onential scale or a <b>LIN</b>ear scale.</p>
+
+<p>A Python implementation of the <i>concplot</i> program is added
+to this distribution package. By default, the GUI uses <i>concplot</i>
+built from FORTRAN code. To use the Python implementation,
+select the Python tab near the bottom of the user interface
+before generating a plot.</p>
+
+<p><a name="Command_line"><b>Concplot Command Line Options</b></a></p>
+
+<p>The Postscript/SVG conversion program (<i>concplot</i>), found in the
+<i>/exec</i> directory with all other executables, reads the binary
+concentration output file, calculates the most optimum map for display,
+and creates the output file <i>concplot.ps</i> or <i>concplot.html</i>.
+Multiple pollutant species
+or levels can be accommodated. Most routine variations can be invoked
+from the GUI. More complicated conversions should be run from the
+command line using the following optional parameters:</p> 
+
+<p>concplot -[options (default)]</p>
+
+<li>-a[Arcview GIS: (0)-no dump, 1-ESRI (log10), 2-ESRI (decimal), 3-Google Earth]
+ <ul><p>Selecting the ESRI Generate Format output creates an ASCII text file for each
+ output time period that consists of the value and 
+ latitude-longitude points along each contour. This file can be 
+ converted to an ESRI Shapefile or converted for other GIS 
+ applications through the utility menu &quot;<a href="S135.htm">GIS to 
+ Shapefile</a>&quot; &quot;. The view checkbox would be disabled to do just 
+ the GIS conversion without opening the Postscript viewer.&nbsp; Selecting Google 
+ Earth will create a compressed file (*.kmz) for use in 
+ <a href="http://earth.google.com/"><b>Google Earth</b></a>; a free software 
+ package to display geo-referenced information in 3-dimensions. You must have 
+ the free <a href="http://www.info-zip.org/Zip.html"><b>Info-Zip</b></a> file 
+ compression software installed to compress the Google Earth file and associated 
+ graphics.  The Python implementation can take several formats. See the description
+ for the --more-gis-options option below.
+</p></ul>
+
+<li>+a[KML altitude mode: 0-clampedToGround, 1-relativeToGround]:
+ <ul><p>Selecting clampedToGround (0) positions the contoured concentrations
+ flat on the Google Earth terrain, whereas selecting relativeToGround will 
+ generate 3D contours be extending the edges of the contours to the ground
+ from the valid height of the concentration data.</p></ul>
+
+
+<li>-b[Bottom display level: (0) m]
+<ul><p>= 0 - Represents the height (meters) below which no data will be
+processed for display. The level information is interpreted
+according to the display (-d) definition.</p></ul>
+
+<li>-c[Contours: (0)]
+<p><ul>
+= 0 - Dynamic contour values (10x intervals) are optimized for each map.<br>
+= 1 - Fixed contour values (10x intervals) are the same for all maps.<br>
+= 2 - Dynamic contour values (constant interval) are optimized for each map.<br>
+= 3 - Fixed contour values (constant interval) are the same for all maps.<br>
+= 4 - The contours are set by the user in conjunction with -v option.<br>
+=50 - Force contour interval x10 and set dynamically for each frame.<br>
+=51 - Force contour interval x10 and set as fixed for all frames.<br>
+</ul></p>
+
+<li>+c[Contour value file: (0)]
+<p><ul>
+= 0 - No file written<br>
+= 1 - Write contour values to text output file CONTUR<br>
+</ul></p>
+
+<li>-d[Display: (1)-by level, 2-levels averaged]
+<ul>
+<p><i>= 1 -</i> All output levels that fall between the bottom and top
+display heights are shown as individual frames. A single level will
+be displayed if both bottom and top heights equal the calculation
+level or they bracket that level. Deposition plots are produced if
+level zero data are available in the concentration file and the
+display height is set to 0.</p>
+
+<p><i>= 2 -</i> The concentrations at all levels between the specified
+range are averaged to produce one output frame per time period. If
+deposition data is available and a plot is required in addition to
+the air concentrations, then the bottom height should be set to 0.
+Deposition is not averaged with air concentrations.
+</ul></p>
+
+<li>-e[Exposure units flag: (0)-concentrations, 1-exposure, 2-threshold,
+3-special, 4-mass loading]
+<ul><p>= 1 - A custom output format in which all the air
+concentrations have been converted to time-integrated units and
+vertically averaged for all levels between the bottom and top
+heights.</ul>
+<ul>= 4 - A custom output format in which all the air
+concentrations have been converted to mass loading.</p></ul>
+
+<li>-f[Frames: (0)-all frames one file, 1-one frame per file]
+<ul><p>
+= 0 - All output frames (one per time period) in one file.<br>
+= 1 - Each time period is written to a file: concplot{frame number}.ps<br>
+</p></ul>
+
+<li>-g[Graphic circle overlay: ( )-auto, 0-numb, numb:dist(50) km]
+<ul>
+<p>= ( ) - Auto selection procedure draws four circles with the
+distance between them determined by the program algorithm.</p>
+
+<p>= # - Specifies the number of circles with the default (50 km)
+distance interval.</p>
+
+<p>= number:distance - specifies the number of circles and the
+distance interval between circles. For the special case of zero
+circles with a distance specified (e.g. -0:1500) the program will
+fix the map with the top and bottom edge at that distance from the
+center.</p>
+</ul>
+
+<li>+g[Graphics type: (0)-Postscript, 1-SVG]
+<ul><p>
+= 0 - Output in Postscript.<br>
+= 1 - Output in HTML containing Scalable Vector Graphics.</br>
+Note that this option is unavailable in the Python version.
+</p></ul>
+
+<li>-h[Hold map at center lat-lon: (source point), lat:lon]
+<ul><p>= lat:lon - Forces the center of the map to be at the specific
+latitude-longitude point rather than the default source location.
+This is normally used in conjunction with the -g option to get the
+same map each time or when there are multiple source locations.</p></ul>
+
+<li>-i[Input file name: (cdump)]
+<ul><p>= Name of the binary concentration file for which the graphics will
+be produced. Default name {cdump} or user defined}.</p></ul>
+
+<li>-j[Graphics map background file name: (arlmap)]
+<ul><p>The program first searches the local directory, then the
+..\graphics directory for the name of the default map background
+file (arlmap). Set this parameter to select the directory/name of
+any map background file of compatible format or specify a special
+file of <a href="#shp_map">shape file</a> file names.</p></ul>
+
+<li>-k[Kolor: 0-B&amp;W, (1)-Color, 2-No lines Color, 3-No lines B&W]
+<ul></p>
+= 0 - Uses gray shade patterns for the contour color fill.<br>
+= 1 - Uses the default four color fill pattern.<br>
+= 2 - Default color fill pattern but without black contour lines.<br>
+= 3 - Black and white color fill but without black contour lines.<br>
+</p></ul>
+
+<li>-l[Label options: ascii code, (73)-open star]
+<ul><p>The default plot symbol over the source location is an open star.
+This may be changed to any value defined in the 
+<a href="https://hcas.nova.edu/tools-and-resources/psplot/index.html">psplot</a>
+ZapfDingbats library. For instance a blank, or no source symbol
+would be defined as -l32</p></ul>
+
+<li>-L[LatLonLabels: 0=none, (1)=auto, 2=set:{value tenths}]
+<ul><p>
+= 0 - No latitude or longitude lines are drawn on the map<br>
+= 1 - Latitude and longitude lines spacing is determined automatically<br>
+= 2:tenths - line spacing is determined by the given value in tenths<br>
+</ul>
+
+<li>-m[Map projection: (0)-Auto, 1-Polar, 2-Lambert, 3-Mercator, 4-CylEqu]
+<ul><p>Normally the map projection is automatically determined based upon
+the size and latitude of the concentration pattern. Sometimes this
+procedure fails to produce an acceptable map and in these
+situations it may be necessary to force a map projection.</p></ul>
+
+<li>+m[Max-Min value plotting: 0=none, (1)=both, 2=values, 3=max-square]
+<ul><p>The default (1) prints the maximum and minimum values below the contours
+and plots a red square, the size of the concentration grid, at the location of
+the maximum concentration value. These can be turned off individually using this
+command line option. Note the +m rather than -m prefix.</p></ul>
+
+<li>-n[Number of time periods: (0)-all, number, min:max,-increment]
+<ul><p>
+= 0 - All time periods in the input file are processed.<br>
+= # - Sets the number of time periods to be processed starting with the first.<br>
+= #1:#2 - Processes time periods, including and between #1 and #2.<br>
+= [-#] - Sets the increment between time periods to be processed. For instance,
+-n-6 would only process every 6<sup>th</sup> time period.</p></ul>
+
+<li>-o[Output file name: (concplot.ps)]
+<ul><p>The name of the Postscript output file defaults to concplot.ps 
+unless it is set to a {user defined} value. The Python implementation supports
+several formats beside postscript. See the description for the
+--more-formats option below.</p></ul>
+
+<li>-p[Process file name suffix: (ps) or process ID]
+<ul><p>The suffix defines the character string that replaces the default
+"ps" in the output file name. A different suffix does not change
+the nature of the file. It remains Postscript. The suffix is used
+in multi-user environments to maintain multiple independent output
+streams.</p></ul>
+
+<li>-q[Quick DATEM plot file: ( )-none, filename]
+<ul><p>By defining the name of a text file in this field where the data
+values are defined in the <a href="S345.htm">DATEM format</a>, the values
+given in the file will be plotted on each graphic if the starting time of the
+sample value falls within the averaging period of the graphic.</p></ul>
+
+<li>-r[Removal: 0-none, (1)-each time, 2-sum, 3-total]
+<ul><p>
+= 0 - No deposition plots are produced even if the model produced 
+deposition output.<br>
+= 1 - One deposition plot is produced for each time period.<br>
+= 2 - The deposition is summed such that each new time period represents 
+the total accumulation.<br>
+= 3 - Similar to =2, deposition is accumulated to the end of the simulation
+and but only one plot is produced at the end.</p></ul>
+
+<li>-s[Species: 0-Sum (1)-Single Pollutant {N}-Species Number]
+<ul><p>= {Species Number} - Only one pollutant species may be displayed
+per plot sequence if multiple species were created during a
+simulation. However, an entry of "0" will cause all species
+concentrations to be summed for display.</p></ul>
+
+<li>-t[Top display level: (99999) m]
+<ul><p>= 99999 - Represents the height (m) above which no data will be
+processed for display. The level is interpreted according to the
+display definition.</p></ul>
+
+<li>-u[Units label for mass: (mass), also see "labels.cfg" file]
+<ul><p>Defines the character string for the units label. Can also be
+modified using the <a href="#Custom_labels">labels.cfg</a> file.</p></ul>
+
+<li>-v[Values (:labels:colors are optional) for up to 10 fixed contours: val1+val2+...val10]
+<ul><p>If the contour values are user set (-c4), then it is also possible
+to define up to ten individual contours explicitly through this
+option. For instance -v4+3+2+1, would define the contours 4, 3, 2,
+and 1.  Optionally, a label and/or color (RGB) can be defined for each contour 
+(e.g. -v4:LBL4:000000255+3:LBL3:000255255+2:LBL2:051051255+1:LBL1:255051255). 
+To specify a color but not a label, two colons must be present (e.g. -v4::000000255). 
+</p></ul>
+
+<li>-w[Grid point scan for contour smoothing (0)-none 1,2,3, ... grid points]
+<ul><p>
+Defines if the gridded concentration data are to be smoothed prior to contouring.
+For instance, a value of 1 means that each grid point value is replaced by the
+average value of 9 grid points (center point plus 8 surrounding).
+</p></ul>
+
+<li>-x[Concentration multiplier: (1.0)]
+<ul><p>
+= 1.0 - No units conversion.<br>
+= X - where {X} is the multiplier applied to the air 
+concentration input data before graphics processing.<br>
+</p></ul>
+
+<li>-y[Deposition multiplier: (1.0)]
+<ul><p>
+= 1.0 - No units conversion.<br>
+= X - where {X} is the multiplier applied to the deposition 
+input data before processing.<br>
+</p></ul>
+
+<li>-z[Zoom factor: 0-least zoom, (50), 100-most zoom]
+<ul><p>
+= 50 - Standard resolution.<br>
+= 100 - High resolution map (less white space around the 
+concentration pattern)<br>
+</p></ul>
+
+<p>Additional supplemental text may be added at the bottom of the
+graphic by creating a file called <i>MAPTEXT.CFG</i>, which should be 
+located in the working directory. This is a generic file used by
+all plotting programs but each program will used different lines in
+its display. The file can be created and edited through the 
+<a href="S414.htm">Advanced / Panel Labels</a> menu tab. Units and title 
+information can be edited by creating a <i>LABELS.CFG</i> file which can
+also be edited manually or through the 
+<a href="S418.htm">Advanced / Border Labels</a> menu tab.</p>
+
+<p><a name="command_line_python"><b>Additional Concplot Command Line Options for Python Implementation</b></a></p>
+
+<p>The following options are available only to the Python <i>concplot</i>.
+
+<p>--debug</p>
+<ul>
+<p><p>Print debug messages. This is useful for developers to diagnose an issue.</p></p>
+</ul>
+
+<p>--interactive</p>
+<ul>
+<p><p>Enter interactive mode. Users can zoom in or move the plot area.</p></p>
+</ul>
+
+<p>--more-formats=<i>f1</i>[,<i>f2</i>,...]</p>
+<ul>
+<p><p>Specify one or more additional output format(s). This option supplements
+the output format specified by the -o option. For example, for <i>-oa.ps --more-formats=pdf,png</i>,
+three files would be produced, namely, <i>a.ps</i>, <i>a.pdf</i>, and <i>a.png</i>.
+Supported formats are eps, jpg, pdf, pgf, png, ps, raw, rgba, svg, svgz, and tif.</p></p>
+</ul>
+
+<p>--more-gis-options=<i>f1</i>[,<i>f2</i>,...]</p>
+<ul>
+<p><p>Specify one or more additional GIS output format(s). This option supplements
+the -a option. For example, with <i>-a1 --more-gis-options=2</i>, both ESRI Generate
+and Google Earth files will be created.</p></p>
+</ul>
+
+<p>--source-time-zone</p>
+<ul>
+<p><p>Display dates and times as a local time at the source location.
+If the option is not given, dates and times will be in Coordinated Universal
+Time (UTC).</p></p>
+</ul>
+
+<p>--street-map[=<i>n</i>]</p>
+<ul>
+<p><p>Show street map in the background. Currently, the option value <i>n</i> may take 0 (OPEN_STREET)
+or 1 (OPEN_TOPO). If no option value is used (i.e., --street-map), <i>n</i> = 0 will be used.
+This option overrides the -j option.</p></p>
+</ul>
+
+<p>--time-zone=<i>tz</i></p>
+<ul>
+<p><p>Show dates and times as a local time at the given time zone <i>tz</i>.
+The time zone should be listed in the pytz Python package. For example,
+it could be US/Eastern, America/New_York, Etc/GMT-5, and so on.
+</p></p>
+</ul>
+
+<p><a name="shp_map"><b>ESRI Shapefile Map Background Files</b></a></p>
+
+<p>Another mapping option would be to specify a special pointer file, (originally
+called <i>shapefiles.txt</i>, but now a suffix other than "txt" is permitted) 
+to replace the map background file arlmap in
+the -j command line option (see above). Note -jshapefiles... rather than
+-j./shapefiles... is required. This file would contain the name
+of one or more shapefiles that can be used to create the map background.
+The line characteristics (spacing, thickness, color) can be specified for
+each shapefile following the format specified below:</p>
+<ul>
+Record format: 'file.shp' dash thick red green blue<br>
+file.shp = /dir/name of input shapefile in quotes<br>
+dash = {0} for solid; {dashes}/in; <0 color fill<br>
+thick = line thickness in inches (default = 0.0)<br>
+Red Green Blue = RGB values (0.0 0.0 0.0 is black)<br>
+Record example for default: 'arlmap.shp' 0 0.005 0.4 0.6 0.8
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

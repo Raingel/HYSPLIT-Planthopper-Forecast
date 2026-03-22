@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Meteorology / Utilities / GIS to Shapefile (S135)</title>
+</head>
+<body>
+
+<P><h2>Meteorology / Utilities / GIS to Shapefile</h2></P>
+
+<P>A utility tab is provided in the meteorology, trajectory, and concentration menus that 
+will convert an ESRI generate format text file to a Shapefile for import into ArcView or 
+comparable GIS applications. The &quot;ascii2shp&quot; conversion software is available 
+under the GNU license from the Free Software foundation.  The conversion can be run from 
+the command line or the GUI menu shown below.</P>
+
+<center><P><IMG SRC="Image28.gif" WIDTH=584 HEIGHT=329></P></center>
+
+<P>Normally the fields will be blank when the menu is first invoked.  Prior to creating the 
+shapefiles it is necessary to create the "<I>Generate</I>&quot; text file which contains the 
+latitude-longitude points of each contour as created by the contouring programs available 
+through the display menus.  Checking the GIS box in the menu (-a1 option on the command line) 
+creates these files.  All generate format files start with <I>GIS</I> and end with <I>.txt</I>. 
+The remainder of the file name depends upon the application from which it was created.  However 
+in all applications, the two-digit string prior to the <I>.txt</I> identifies the frame number.  
+There is one GIS output file per frame. Use the upper browse button to set the generate
+format input file name.</p>
+
+<p>The generate files can be converted to shapefiles consisting of points or lines (for
+trajectories), and lines or polygons (for concentrations). Polygons are closed lines. A polygon
+that runs off the map display is becomes a line and may not be displayed correctly if
+treated as a polygon.</p>
+
+<p>Normally the <i>base.dbf</i> file will contain only the minimum amount of information.
+However, the trajectory and concentration plotting programs automatically create an enhanced
+attributes file (GIS_???.att). To add this information to <i>base.dbf</i>, check one of the
+enhanced attributes options.</p>
+
+</P>In the lower text entry box enter the base name of the output shapefiles.  All output files
+will be created in the working directory.  Note that depending upon the upper level menu from
+which the conversion was called, the shapefile conversion will be either for lines (meteorology),
+points (trajectory), or polygons (concentration), although the option can be superseded by the
+checkbox selection.</P>
+
+<b>What is a Shapefile?</b>
+
+<P>The Shapefile format is a working and interchange format promulgated by ESRI for
+simple vector data with attributes. It is apparently the only file format that can be
+edited in ARCView 2/3, and can also be exported and imported in Arc/Info. An excellent white
+paper on the shapefile format is available from ESRI, but it is .pdf format, so you will need
+Adobe Acrobat to browse it. The file format actually consists of four files.</P>
+<ul>
+<li>XXX.shp - holds the actual vertices.
+<li>XXX.shx - hold index data pointing to the structures in the .shp file.
+<li>XXX.dbf - holds the attributes in xBase (dBase) format.
+<li>XXX.prj - holds the projection information.
+</ul>
+
+
+<b>Copyright</b>
+
+<P>The source for the Shapefile C Library is (c) 1998 Frank Warmerdam, and released under the 
+following conditions. The intent is that anyone can do anything with the code, but that I do not 
+assume any liability, nor express any warranty for this code. </P>
+
+<P>As of Shapelib 1.2.6 the core portions of the library are made available under two possible 
+licenses. The licensee can choose to use the code under either the Library GNU Public License 
+(LGPL) described in LICENSE.LGPL or under the following MIT style license. Any files in the 
+Shapelib distribution without explicit copyright license terms (such as this documentation, 
+the Makefile and so forth) should be considered to have the following licensing terms. Some 
+auxiliary portions of Shapelib, notably some of the components in the contrib directory come 
+under slightly different license restrictions. Check the source files that you are actually using 
+for conditions.</P>
+
+<b>Default License Terms</b>
+
+<P>Copyright (c) 1999, Frank Warmerdam</P>
+<P>This software is available under the following "MIT Style" license, or at the option of the 
+licensee under the LGPL (see LICENSE.LGPL). This option is discussed in more detail in shapelib.html. 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and 
+associated documentation files (the "Software"), to deal in the Software without restriction, 
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
+subject to the following conditions:</P>
+
+<P>The above copyright notice and this permission notice shall be included in all copies or 
+substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF 
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+DEALINGS IN THE SOFTWARE.</P>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Concentration (S412)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Concentration</h2></p>
+
+<p>This section provides some guidance in configuring the model input to
+perform certain specialized calculations. The default configuration supplied
+with the test meteorological data is confined to a simple dispersion
+calculation. More complex scenarios can be configured through the 
+<i>Advanced / Configuration / Concentration Setup</i> menu tab. The menu
+is used to modify the <i>SETUP.CFG</i> namelist file. This file is not
+required, and if not present in the root startup directory, default values
+are used. These parameters can all be changed without recompilation by
+modification of the contents of <i>SETUP.CFG</i> and in some cases their
+modification will substantially change the nature of the simulation. The
+configuration file should be present in the root directory. An illustration
+of the upper-level menu is shown below.</p>
+
+<center><p><img src="Image01.gif" width="532" height="465"></p></center>
+
+<p>When using the GUI, the namelist file will be deleted and all variables are
+returned to their default value by selecting the "<i>Reset</i>" button. The
+following summarizes the namelist variables and their corresponding section
+in the GUI menu. Not all variables can be set through the menu system but may
+be modified by directly editing the namelist file.</p>
+
+<ol>
+<li><a href="S610.htm">Set fixed or automatic TIME STEPS</a>
+<li><a href="S621.htm">Define subgrid and MSL/AGL UNITS</a>
+<li><a href="S622.htm">Configure release of PARTICLES or PUFFS</a>
+<li><a href="S623.htm">Set the particle/puff RELEASE NUMBER limits</a>
+<li><a href="S630.htm">Set the puff SPLIT-MERGE parameters</a>
+<li><a href="S624.htm">Define EMISSION CYCLING or input file</a>
+<li><a href="S625.htm">Configure the TURBULENCE method</a>
+<li><a href="S626.htm">Concentration GRID PACKING method</a>
+<li><a href="S627.htm">Input and output PARTICLE FILES</a>
+<li><a href="S628.htm">In-line chemical CONVERSION MODULES</a>
+<li><a href="S615.htm">Meteorological grid offset ENSEMBLE</a>
+<li><a href="S631.htm">Output CENTER-OF-MASS trajectory</a>
+<li><a href="S632.htm">WRF vertical interpolation</a>
+<li><a href="S410.htm">Summary of all NAMELIST variable defaults</a>
+</ol>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

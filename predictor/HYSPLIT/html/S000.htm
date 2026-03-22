@@ -1,0 +1,375 @@
+<html>
+<head>
+<title>HYSPLIT USER's Guide Overview (S000)</title>
+</head>
+
+<center>
+<p><h1>HYSPLIT USER's GUIDE</h1></p>
+<h3>
+Roland Draxler<br>
+Barbara Stunder<br>
+Glenn Rolph<br>
+Ariel Stein<br>
+Albion Taylor<br>
+Sonny Zinn<br>
+Chris Loughner<br>
+Alice Crawford<br>
+</h3>
+<h2>
+<p>Version 5.3 - Last Revision: November 2023<a href="#ref1"><sup>1</sup></a></p>
+</h2>
+
+<p><a href="index.htm"><b>TABLE OF CONTENTS</b></a></p>
+</center>
+<br>
+
+<p><b>Abstract</b>
+The HYSPLIT (Hybrid Single-Particle Lagrangian Integrated Trajectory) Model
+installation, configuration, and operating procedures are reviewed.
+Examples are given for setting up the model for trajectory and
+concentration simulations, graphical displays, and creating
+publication quality illustrations. The model requires specially
+preformatted meteorological data.  Programs that can be used to
+create the model's meteorological input data are described.  The
+User's Guide has been restructured so that the section titles match
+the GUI help menu tabs.  Although this guide is designed to support
+the PC and UNIX versions of the program, the executable of the
+on-line web version is identical. The only differences are the
+options available through the interface.</p>
+
+<p><b>Features</b></p>
+
+<p>The HYsplit (HYbrid Single-Particle Lagrangian Integrated 
+Trajectory) model is a complete system for computing trajectories 
+complex dispersion and deposition simulations using either puff or 
+particle approaches.<a href="#ref2"><sup>2</sup></a>
+It consists of a modular library structure with main programs for 
+each primary application: trajectories and air concentrations.</p>
+
+<p>Gridded meteorological data, on a latitude-longitude grid or
+one of three conformal (Polar, Lambert, Mercator) map projections,
+are required at regular time intervals. The input data are 
+interpolated to an internal sub-grid centered to reduce memory 
+requirements and increase computational speed. Calculations may 
+be performed sequentially or concurrently on multiple meteorological
+grids, usually specified from fine to coarse resolution.</p>
+
+<p>Air concentration calculations require the definition of the 
+pollutant's emissions and physical characteristics (if deposition
+is required).  When multiple pollutant species are defined, an 
+emission would consist of one particle or puff associated with each
+pollutant type.  Alternately, the mass associated with a single puff
+may contain several species. The latter approach is used for calculation
+of chemical transformations when all the species follow the same transport
+pathway.  Some simple chemical transformation routines are provided
+with the standard model distribution.</p>
+
+<p>The dispersion of a pollutant is
+calculated by assuming either a Gaussian or Top-Hat horizontal
+distribution within a puff or from the dispersal of a fixed number
+of particles.  A single released puff will expand until its size
+exceeds the meteorological grid cell spacing and then it will split
+into several puffs.  An alternate approach combines both puff and
+particle methods by assuming a puff distribution in the horizontal
+and particle dispersion in the vertical direction.  The resulting
+calculation may be started with a single particle.  As its
+horizontal distribution expands beyond the meteorological grid
+size, it will split into multiple particle-puffs, each with their
+respective fraction of the pollutant mass.  In this way, the
+greater accuracy of the vertical dispersion parameterization of the
+particle model is combined with the advantage of having an
+expanding number of particles represent the pollutant distribution
+as the spatial coverage of the pollutant increases and therefore a
+single particle can represent increasingly lower concentrations.</p>
+
+<p>Air concentrations are calculated
+at a specific grid point for puffs and as cell-average
+concentrations for particles.  A concentration grid is defined by
+latitude-longitude intersections.  Simultaneous multiple grids with
+different horizontal resolutions and temporal averaging periods can
+be defined for each simulation.  Each pollutant species is summed
+independently on each grid.</p>
+
+<p>The routine meteorological data
+fields required for the calculations may be obtained from existing
+archives or from forecast model outputs already formatted for input
+to HYSPLIT.  In addition, several different pre-processor programs
+are provided to convert NOAA, NCAR (National Center for Atmospheric
+Research) re-analysis, or ECMWF (European Centre for Medium-range
+Weather Forecasts) model output fields to a format compatible for
+direct input to the model.  The model's meteorological data 
+structure is compressed and in "direct-access" format.  Each time
+period within the data file contains an index record that includes
+grid definitions to locate the spatial domain, check-sums for each
+record to ensure data integrity, variable identification, and level
+information.  These data files require no conversion between
+computing platforms.</p>
+
+<p>The modeling system includes a <a href="S100.htm">
+Graphical User Interface</a> (GUI) to set up a trajectory, air
+concentration, or deposition simulation.  The post-processing part
+of the model package incorporates graphical programs to generate
+multi-color or black and white publication quality Postscript
+printer graphics.</p>
+
+<p>A complete description of all the
+equations and model calculation methods for trajectories and air
+concentrations has been published<a href="#ref3"><sup>3</sup></a> and it 
+is also available on-line.  The on-line and the version included 
+with the PC installation contains all the most recent corrections 
+and updates.</p>
+
+<p><b>Pre-Installation Preparation</b></p>
+
+<p>There are two installation
+programs that can be downloaded. The trial version (<i>HYSPLIT_win{32|64}U.exe
+~ 70 Mb</i>) available to anyone and a fully functional version
+(<i>HYSPLIT_win{32|64}R.exe ~ 70 Mb</i>) that requires a user registration
+through the web site.  Both versions identical, except the trial
+version will not work with forecast meteorological data files.
+It is assumed
+that tcl/tk, web browser, and ImageMagick would have already been installed
+when the registered
+version is installed on top of the trial version.</p>
+
+<p>The self-installing executable contains only HYSPLIT related programs. 
+No additional software is required to run a simulation if the
+command line interface is sufficient.  To enable the model's GUI,
+the computer should have Tcl/Tk script language installed.  The
+most recent version can be obtained over the Internet. The installation
+of Tcl/Tk will result in the association of the <i>.tcl</i> suffix
+with the <i>Wish</i> executable and all Hysplit GUI scripts will
+then show the Tk icon.  The HYSPLIT GUI has been tested with Tcl/Tk
+version 8.6.7.</p>
+
+<p>The primary HYSPLIT graphical
+display programs convert the trajectory and concentration model
+output files to Postscript format or to Scalable Vector Graphics (SVG)
+format as HTML.  The HYSPLIT GUI is configured to use SVG that
+can be viewed directly through web browser.
+The HYSPLIT code and GUI have been tested with
+Mozilla Firefox 78.12.0esr.  Installation to different
+default drives, directories, or other versions might require
+editing the main GUI script's directory pointers (edit file: 
+<i>/guicode/hysplit.tcl</i> or the directory entry in the
+Advanced-Configuration-Directories menu tab. </p>
+
+<p>The third optional GUI feature is
+the ability to convert the SVG output file to a different
+graphical formats using ImageMagick.  More information on this
+software can be found at The HYSPLIT code and GUI have been tested
+with ImageMagick 6.4.  Installation to a
+different default drives or directories as suggested by the
+installation process may require editing the main GUI script's
+directory pointers.
+Although the setup script tests for the default language,  it is
+possible that installation to non-English default windows operating
+systems might require additional editing of the directory
+pointers.</p>
+
+<p><b>Windows Installation (all operating systems)</b></p>
+
+<p>HYSPLIT installation to a computer
+running Windows is provided through a self-installing file. 
+Executables are installed in various directories for trajectories,
+dispersion, display and manipulation of results, and the creation
+of input meteorological data files.  The trajectory and dispersion
+model source code is not provided.  However all the Fortran source
+code to create meteorological data files in a format that the model
+can read are provided in the <i>/data2arl</i> directory.  Each
+subdirectory contains a <i>@readme.txt</i> file with more complete
+information about the contents of that directory.</p>
+
+<p>During the installation you will
+be prompted as to the directory location.  It is suggested you
+select a simple default location (such as <i>C:/hysplit</i>).  The
+installation program installs all code and executables to your
+selected directory, and creates a shortcut on the desktop to
+/guicode/hysplit.tcl with the "Start In" directory as your
+selected default.  You may have one of two versions of the
+installation program: HYSPLIT_win{32|64}{R|U}.exe.  The suffixes R and U
+refer to the Registered or Unregistered versions.  The two versions
+are almost identical, except that the unregistered version does 
+not permit calculations with current forecast meteorological data.</p>
+
+<p>HYSPLIT and all the related programs are available for either
+32 bit or 64 bit operating systems. The 32 bit version can be installed
+on either OS, while the 64 bit programs can only be installed on a
+64 bit OS. An Apple MAC version is also available (HYSPLIT_mac.dmg).</p> 
+
+<p>Installing on top of an old version will bring 
+up a "Continue" or "Cancel" prompt.  It is not possible to rename the
+installation directory at this stage.  Rename your old installation 
+prior to installing the new code if you wish to keep the original
+version.</p>
+
+<p>The installation will contain several sub-directories, some of
+which are required for model execution, and some of which provide
+additional documentation and other information. For instance ... </p>
+<ul>
+
+<li><p><i>bdyfiles</i> - This directory contains an
+ASCII version of gridded land use, roughness length, and terrain
+data.  The current file resolution is 360 x 180 at 1 degree.  The
+upper left corner starts at 180W  90N.  The files are read by both
+HYSPLIT executables, <i>hyts_std</i> (trajectory model) and
+<i>hycs_std</i> (concentration model), from this directory.  If not
+found, the model uses default constant values for land&#8209;use
+and roughness length.  The data structure of these files is defined
+in the file <a href="S444.htm">ASCDATA.CFG</a>, which should be 
+located in either the model's startup or <i>/bdyfiles</i> directory. 
+This file defines the grid system and gives an optional directory
+location for the landuse and roughness length files. These
+files may be replaced by higher resolution customized user-created
+files.  However, regardless of their resolution, the model will
+only apply the data from these files at the same resolution as the
+input meteorological data grid.   More information on the structure
+of these files can be found in the local <i>@readme.txt</i> file.</p>
+
+<li><p><i>data2arl</i> - Current forecast or archive
+meteorological data can be obtained from the ARL ftp server<i>: 
+ftp://gus.arlhq.noaa.gov /pub/archives (or /forecasts)</i>.  Older
+archive data can be ordered from the NCDC (National Climatic Data
+Center).  However if you have access to your own meteorological
+data or data formatted as GRIB (Gridded Binary), this directory
+contains various example decoder programs to convert meteorological
+data in various formats to the format (ARL packed) that HYSPLIT can
+read.  Sample programs include GRIB decoders for ECMWF model
+fields, NCAR/NCEP (National Centers for Environmental Prediction)
+re-analysis data, and NOAA Aviation, ETA, and Regional Spectral
+Model files.  All the required packing and unpacking subroutines
+can be found in the <i>/source</i> subdirectories. Sample
+compilation scripts for Compaq Visual Fortran 6.6 are in some of
+the decoder directories. More information on how to run these
+programs can be found in the <a href="S142.htm">Meteorology</a> 
+section.</p>
+
+<li><p><i>examples</i> - The directory contains several example
+scripts and batch files that can be used to create automated
+simulations.</p>
+
+<li><p><i>html</i> - Contains all the HELP files in
+HTML format.  These files can be displayed with any browser or
+interactively through the GUI.  The files that are opened in the
+GUI depend upon the context from which HELP is invoked.</p>
+
+<li><p><i>document</i> - This directory contains PDF
+(Adobe Portable Document Format) versions of the User's Guide (all
+the HTML help files put together in one document) and other
+documentation such as ARL-224, the principal ARL Technical
+Memorandum describing the model and equations.  This User's Guide
+(this document) provides detailed instructions in setting up the
+model, modifications to the <i>Control</i> file to perform various
+simulations and output interpretation.  The <i>@readme.txt</i> file
+contains additional information about compilation, typical CPU
+times, and a summary of recent model updates.</p>
+
+<li><p><i>exec</i> - Is the directory that contains
+all the executable programs. The GUI looks for all programs in this
+directory. When running examples from the command  prompt in
+certain directories, the relative path should be included prior to
+the executable:  "../exec/program.exe"</p>
+
+<li><p><i>graphics</i> - There are two types of
+graphical plotting programs provided in the ../exec directory.
+Publication quality graphics can be created using the postscript
+conversion programs, <i>concplot</i> and <i>trajplot</i>, which use
+a Fortran Postscript library created by Kevin Kohler<a href="#ref4"><sup>4</sup></a>.  
+All graphical routines use the map background file <i>arlmap</i> 
+in this directory.  The map background file uses a simple ASCII format 
+and contains the world's coastal and political boundaries at relatively 
+coarse resolution. Other higher resolution map background files are 
+available in the <i>/graphics/mapfiles</i> directory or from the HYSPLIT 
+download web page.  All graphical programs search the startup directory
+first for <i>arlmap</i> before going to <i>/graphics</i>, therefore
+customized maps can be created without changing the HYSPLIT
+installation structure.</p>
+
+<li><p><i>guicode</i> - This directory contains a
+Tcl/Tk GUI interface source code script for HYSPLIT.  The interface
+is used to set up the input <i>Control</i> file as well as run the
+graphical output display programs.  To use the interface you must
+first install Tcl/Tk.  The upper-level Tcl script is called
+<i>hysplit.tcl</i>, which calls all other Tcl scripts.  Executing
+this script starts the HYSPLIT GUI.  The Desktop shortcut as well
+as the Start Menu options should point to this script.  If the
+installation program did not properly setup the Desktop, you can
+manually create a shortcut to the script and edit its properties
+such that the "Start In" directory is <i>/hysplit</i>.  You should
+also select the HYSPLIT icon from the <i>/icons</i> directory.</p>
+
+<li><p><i>working</i> - This is the <i>Hysplit root
+directory</i>, which contains sample CONTROL files that can be used
+for initial guidance to set up more complex simulations. These
+should be loaded into the GUI from the appropriate "Retrieve" menu
+tab. Examples include:</p>
+<ul>
+<p>sample_conc - concentration simulation example from users guide</p>
+<p>sample_traj - trajectory simulation example from users guide</p>
+<p>The "plants.txt" file contains a sample
+listing of starting locations that can be opened in the GUI to
+select from a list of previously determined starting locations. 
+This file can easily be customized.  The "tilelist.txt" file
+contains the approximate coordinates of NCEP's NAM (North America
+Mesoscale model) tile domains.</p>
+</ul>
+</ul>
+
+<p><b>Problems</b>  </p>
+<p>If Tcl/Tk does not exist on your
+system or there are other problems with the GUI interface, it is
+very easy to run the sample cases directly in the <i>/working</i>
+directory by running the batch file "run_{model}.bat" If the sample
+simulation works well, then it is only necessary to manually edit the
+<i>CONTROL</i> file to try out different simulation variations. The 
+<i>CONTROL</i> file options are explained in more detail in the individual
+<a href="S210.htm">Trajectory</a> and <a href="S310.htm">Concentration</a>
+Setup sections.</p>
+
+<p>In general, premature termination
+during the model initialization phase will result in messages to
+standard output.  However after the model has started, fatal,
+diagnostic, and progress notification messages are written to a
+file called <i>Message</i>.  If the model output is not what you
+expected, first check the <i>Control</i> file to determine if the
+input setup is what is desired, then check the <i>Message</i> file
+for indication of abnormal performance.  These files are always
+written to the model's startup directory - <i>/Hysplit</i> if the
+model is run from the GUI.   At times error messages may be lost in
+the display buffer after premature termination.  In this case the
+model should be rerun from the command line window for proper
+display of all standard output messages.  The <i>"Advanced</i>"
+menu contains a the View MESSAGES tab that displays the last 
+<a href="S443.htm">MESSAGE</a> file for viewing.  Other features 
+of the <a href="S440.htm">advanced</a> menu are used to modify the 
+model's configuration file and are explained in more detail in that 
+section.   Modifications to these parameters require a complete 
+understanding of the model's design and operation.</p>
+
+<p><b>References</b></p>
+<ul>
+<p></p>
+<p><a name="ref1"><sup>[1]</sup></a>Draxler, R.R., 1999, HYSPLIT_4 
+User's Guide, NOAA Technical Memorandum ERL ARL-230, June, 35 pp.</p>
+
+<p><a name="ref2"><sup>[2]</sup></a>Draxler, R.R., and G.D. Hess,
+1998, An overview of the Hysplit_4 modelling system for
+trajectories, dispersion, and deposition, <i>Australian
+Meteorological Magazine, 47, 295-308</i>.</p>
+
+<p><a name="ref3"><sup>[3]</sup></a>Draxler, R.R.,
+and G.D. Hess, 1997, Description of the Hysplit_4 modeling system,
+NOAA Technical Memorandum ERL ARL-224, December, 24p.</p>
+
+<p><a name="ref4"><sup>[4]</sup></a>Stein, A.F., R.R. Draxler, G.D. Rolph, 
+B.J.B. Stunder, M.D. Cohen, and F. Ngan , 2015.
+NOAA’s HYSPLIT atmospheric transport and dispersion modeling system,
+Bulletin of the American Meteorological Society.  96, 2059–2077. 
+doi: http://dx.doi.org/10.1175/BAMS-D-14-00110.1</p>
+
+<p><a name="ref5"><sup>[5]</sup></a>PSPLOT libraries
+can be found at https://hcas.nova.edu/tools-and-resources/psplot/index.html and were created by
+Kevin Kohler (kevin@ocean.nova.edu).</p>
+</ul>
+</body>
+</html>

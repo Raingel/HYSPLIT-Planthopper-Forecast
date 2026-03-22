@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>Concentration / Multi-processor (S358)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Multi-processor </h2></p>
+
+<p>Special simulations may require a different executable file,
+modifications to the Control file that are not supported by the
+GUI, or interactions with other items under the <a href=
+"S412.htm">Advanced Menu</a> tab. More information is provided
+below for each special simulation that can be run under a
+multi-processor environment that supports MPI. These special
+simulations are available only for UNIX operating systems. All the
+MPI simulations execute the special script <i>run_mpi.sh</i> which
+can be found in the <i>/exec</i> directory. This
+script executes the appropriate MPI executable variation of the
+concentration model and almost certainly will require some
+customization to match the local operating system environment.</p>
+
+<p><b>Run MPI Model</b></p>
+
+<p>The standard concentration model can be run on multi-processor
+systems. As pollutant particles are released during the simulation,
+they are parsed out in sequence to the available processors. The
+calculation proceeds independently until the end of a concentration
+averaging period. At this point, the concentrations from each
+processor are summed, and only one concentration output file is
+updated. The MPI version can be quite effective in speeding up
+simulations requiring the release of many particles. No special
+configuration or control file is required and output can be viewed
+using the standard <a href="S330.htm">concentration display</a>
+menu.</p>
+
+<p><b>Run Matrix Model</b></p>
+
+<p>The multiprocessor version of the matrix calculation is
+configured the same way as for a <a href="S356.htm#run_matrix">
+single processor system</a>. The MPI calculation proceeds as 
+described above for the standard MPI model simulation.</p>
+
+<p><b>Run Ensemble Model</b></p>
+
+<p>The ensemble model automatically starts each member on a single
+processor in a multi-processor environment. The multiprocessor
+version of the ensemble calculation is configured the same way as
+for a <a href="S356.htm#run_ensemble">single processor system</a>.
+Note that if fewer than 27 processors are available, the ensemble
+<a href="S615.htm">configuration menu</a> permits starting
+the calculation at any ensemble member number within the valid
+range of 001 to 027.</p>
+
+<p><b>The Model Launch Menu</b></p>
+
+<p>The model launch menu contains four entries: the number of processors
+requested for the simualation, the name of the executable, the Prep-Code, 
+and the working directory. Each of these is assigned a default value 
+depending upon the calling menu.  Normally there should be no reason to
+change any of these values except the number of processors. If the working
+directory is changed and does not already exist, a new directory is
+created, and the script changes to that directory before starting the 
+simulation.</p>
+<br>The Prep-Code is just an internal flag to set any preprocessor options:
+<ul>
+<li>M = matrix
+<li>E = ensemble 
+<li>S = standard
+</ul>
+<p>If the Prep-Code field is left blank, the MPI script is not called, and
+the named executable will be run in background. In this way multiple jobs
+can be submitted on a multi-processor system in a non-MPI environment.
+However, in both MPI and non-MPI applications, when simultaneous calculations
+are desired, it is important that each simulation have its own working
+directory.</p>
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

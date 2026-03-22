@@ -1,0 +1,6 @@
+ &SETUP
+ initd = 0,
+ conage = 6
+ gemage = 12,
+ numpar = 2500,
+ /

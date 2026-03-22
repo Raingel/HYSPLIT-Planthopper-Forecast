@@ -1,0 +1,608 @@
+<html>
+<head>
+<title>Meteorology / Help / ARL Data Format (S141)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / Help / ARL Data Format</h2></p>
+
+<p>The following sections describe the ARL packed data format in a
+little more detail to permit the development of customized
+applications. Library routines are provided to simplify the task of
+creating a model compatible data file. A meteorological data file
+is composed of one or more time periods. Each time period begins
+with one or more ASCII index records that summarize the valid time,
+the grid definition, the variables, and level information. Each
+subsequent record contains one horizontal data field, consisting of
+50 ASCII bytes of time, variable, and level information for that
+record, followed by X times Y bytes of data, where X and Y are the
+number of data points in the horizontal and vertical directions,
+respectively. Floating point or integer data are packed as one byte
+per variable. Precision is maintained by packing the differences
+between adjacent grid points rather than packing the absolute
+values. In any time period, although not required, the surface data
+precede the upper-level data fields. All records are of the same
+length to permit the model to read the file in a "direct access"
+mode. Data files can be read on most computing platforms without
+any transformation and appended to each other using routine
+operating system commands such as "cat" or "type". Only binary
+transfers or copies are permitted. All the routines discussed in
+this section can be found in the <i>source</i> directory.</p>
+
+<p><b>Valid Meteorological Data Types</b></p>
+
+<p>Meteorological variables are identified to the model by a
+unique four-character identification field that is written to the
+first 50-byte header portion of each data record. Some of the
+variables that can be decoded by the model and their units are
+identified below.</p>
+
+<center><p><b>Sample Surface Level Parameters</b></p></center>
+<table align="center" border cellspacing="1" cellpadding="6">
+	<tr>
+		<td><u>Description</u></td>
+		<td><u>Units</u></td>
+		<td><u>Identification</u></td>
+	</tr>
+	<tr>
+		<td>U-component of wind at 10 m</td>
+		<td>m/s</td>
+		<td>U10M</td>
+	</tr>
+	<tr>
+		<td>V-component of wind at 10 m</td>
+		<td>m/s</td>
+		<td>V10M</td>
+	</tr>
+	<tr>
+		<td>Temperature at 2 m</td>
+		<td>K</td>
+		<td>T02M</td>
+	</tr>
+	<tr>
+		<td>Bounday Layer Height</td>
+		<td>m</td>
+		<td>PBLH</td>
+	</tr>
+	<tr>
+		<td>Pressure at surface</td>
+		<td>hPa</td>
+		<td>PRSS</td>
+	</tr>
+	<tr>
+		<td>Pressure at mean sea level</td>
+		<td>hPa</td>
+		<td>MSLP</td>
+	</tr>
+	<tr>
+		<td>Temperature at surface</td>
+		<td>K</td>
+		<td>TMPS</td>
+	</tr>
+	<tr>
+		<td>Friction Velocity</td>
+		<td>m/s</td>
+		<td>USTR</td>
+	</tr>
+	<tr>
+		<td>Friction Temperature</td>
+		<td>deg K</td>
+		<td>TSTR</td>
+	</tr>
+	<tr>
+		<td>Surface Roughness</td>
+		<td>m</td>
+		<td>RGHS</td>
+	</tr>
+	<tr>
+		<td>U-Momentum flux</td>
+		<td>N/m<sup>2</sup></td>
+		<td>UMOF</td>
+	</tr>
+	<tr>
+		<td>V-Momentum flux</td>
+		<td>N/m<sup>2</sup></td>
+		<td>VMOF</td>
+	</tr>
+	<tr>
+		<td>Sfc sensible heat flux</td>
+		<td>W/m<sup>2</sup></td>
+		<td>SHTF</td>
+	</tr>
+	<tr>
+		<td>Latent heat flux</td>
+		<td>W/m<sup>2</sup></td>
+		<td>LTHF</td>
+	</tr>
+	<tr>
+		<td>Downward short wave flux</td>
+		<td>W/m<sup>2</sup></td>
+		<td>DSWF</td>
+	</tr>
+	<tr>
+		<td>Relative humidity at 2 m</td>
+		<td>%</td>
+		<td>RH2M</td>
+	</tr>
+	<tr>
+		<td>Specific humidity at 2 m</td>
+		<td>kg/kg</td>
+		<td>SPH2</td>
+	</tr>
+	<tr>
+		<td>Convective Available Potential Energy</td>
+		<td>J/kg</td>
+		<td>CAPE</td>
+	</tr>
+	<tr>
+		<td>Total cloud cover</td>
+		<td>%</td>
+		<td>TCLD</td>
+	</tr>
+	<tr>
+		<td><u>POSSIBLE PRECIP FIELDS</u></td>
+		<td><u></u></td>
+		<td><u></u></td>
+	</tr>
+	<tr>
+		<td>Total precipitation for whole dataset</td>
+		<td>m</td>
+		<td>TPPA</td>
+	</tr>
+	<tr>
+		<td>Total precipitation (24-h)</td>
+		<td>m</td>
+		<td>TPPD</td>
+	</tr>
+	<tr>
+		<td>Total precipitation (12-h)</td>
+		<td>m</td>
+		<td>TPPT</td>
+	</tr>
+	<tr>
+		<td>Total precipitation (6-h)</td>
+		<td>m</td>
+		<td>TPP6</td>
+	</tr>
+	<tr>
+		<td>Total precipitation (3-h)</td>
+		<td>m</td>
+		<td>TPP3</td>
+	</tr>
+	<tr>
+		<td>Total precipitation (1-h)</td>
+		<td>m</td>
+		<td>TPP1</td>
+	</tr>
+	<tr>
+		<td>Precipitation Rate (6-h)</td>
+		<td>m/minute</td>
+		<td>PRT6</td>
+	</tr>
+	<tr>
+		<td>Precipitation Rate (3-h)</td>
+		<td>m/minute</td>
+		<td>PRT3</td>
+	</tr>
+</table>
+
+<center><p><b>Sample Upper-Level Parameters</b></p></center>
+
+<table align="center" border cellspacing="1" cellpadding="6">
+	<tr>
+		<td><u>Description</u></td>
+		<td><u>Units</u></td>
+		<td><u>Identification</u></td>
+	</tr>
+	<tr>
+		<td>U wind component (respect to grid)</td>
+		<td>m/s</td>
+		<td>UWND</td>
+	</tr>
+	<tr>
+		<td>V wind component (respect to grid)</td>
+		<td>m/s</td>
+		<td>VWND</td>
+	</tr>
+	<tr>
+		<td>Geopotential height</td>
+		<td>gpm*</td>
+		<td>HGTS</td>
+	</tr>
+	<tr>
+		<td>Temperature</td>
+		<td>K</td>
+		<td>TEMP</td>
+	</tr>
+	<tr>
+		<td>Pressure vertical velocity</td>
+		<td>hPa/s</td>
+		<td>WWND</td>
+	</tr>
+	<tr>
+		<td>Relative Humidity</td>
+		<td>%</td>
+		<td>RELH</td>
+	</tr>
+	<tr>
+		<td>Specific Humidity</td>
+		<td>kg/kg</td>
+		<td>SPHU</td>
+	</tr>
+	<tr>
+		<td>vertical velocity</td>
+		<td>m/s</td>
+		<td>DZDT</td>
+	</tr>
+	<tr>
+		<td>turbulent kinetic energy</td>
+		<td>m<sup>2</sup>/s<sup>2</sup></td>
+		<td>TKEN</td>
+	</tr>
+</table>
+
+
+
+<p>Data may be obtained from any source, however there are certain
+minimum data requirements to run the model: surface pressure or
+terrain height, u-v wind components, temperature, and moisture (RELH or SPHU). 
+
+<p>
+It is highly recommended to include both surface pressure and terrain height. If only surface pressure is available, then terrain height will either be estimated from the surface pressure or read from the TERRAIN.ASC file (see also the TERRFLG parameter in SETUP.CFG). 
+If only terrain height is available, then surface pressure will be estimated from the terrain height.
+
+<p>
+precipitation is required for wet removal calculations.
+
+
+<p>Not required, but necessary to improve vertical mixing
+calculations, is some measure of low-level stability. This
+may take the form of a near-surface wind and temperature or the
+fluxes of heat and momentum.</p>
+
+<p>It is also important to have sufficient vertical resolution in
+the meteorological data. Some of the NOAA higher resolution data
+files have five or more levels in the boundary layer (&lt;850 hPa)
+in addition to wind and temperatures near the surface, usually at 2
+and 10 m agl. These surface values are especially important when
+the data are only available on absolute pressure surfaces, rather
+than terrain following sigma surfaces, to avoid interpolation to
+the surface between data levels when the local terrain is well
+above sea-level.</p>
+
+<p>Starting with HYSPLIT (Revision 596) the optional field DIFF 
+is recognized as the difference between the original data and the
+packed data: DIFF=ORIGINAL-PACKED. The effect of this is to
+increase the precision of variables that have this additional field.
+When the DIFF field is read by HYSPLIT, the values are added to 
+the data field resulting in values closer to the original data.
+Currently only DIFW and DIFR (vertical velocity and precipitation)
+are recognized as valid DIFF fields.</p>
+
+
+<p><b>Creation of a Meteorological Input Data File</b></p>
+
+<p>One may prepare meteorological data from any number of
+different sources to be in a suitable format for the model using a
+series of routines described in this section. In general it is
+assumed one has access to a meteorological data source, either the
+data fields are already on a grid, such as those output from a
+meteorological model, or perhaps from observations that have been
+interpolated to a grid. Some example conversion programs are
+provided within the GUI to convert from either NOAA or ECMWF
+<a href="S125.htm"> GRIB </a>format data files to the HYSPLIT
+format.</p>
+
+<p>The meteorological data are processed in time-sequence, calling
+the subroutines provided, to create a HYSPLIT compatible output
+file. These subroutines will pack the data and write the index
+record. The index record, which precedes the data records for each
+time period, can only be written after the data records are
+processed. The packing routines must first be initialized by
+setting the appropriate grid parameters and defining all the
+meteorological variables that will be written to the file. Multiple
+output grids may be defined and written simultaneously by invoking
+the <i>PAKSET</i> routine with a different unit number for each
+grid. The grid parameters are all defined in a configuration file,
+which should be in the directory from which the procedure is
+invoked:</p>
+
+<p><i>CALL PAKSET (kunit,fname,krec,nx,ny,nz)</i></p>
+
+<p><i>Kunit</i> is the Fortran unit number to which the data
+records will be written. <i>Fname</i> is the character string of
+the name of the configuration file. It can be any name, but it will
+default to <i>metdata.cfg</i>. The file is opened internally on
+<i>kunit</i> to read the configuration file. This routine needs to
+be called once for each grid. <i>Krec</i> is the starting record
+number (of the index record) to which output will be written. It is
+normally set to 1 unless you want to start writing in the middle of
+a file. The remaining parameters (<i>nx, ny, nz</i>) are returned
+by the subroutine and define the horizontal and vertical grid
+dimensions. These values can be used to set variable dimensions. It
+is your responsibility to open <i>kunit</i> for output after having
+completed the <i>pakset</i> calls:</p>
+
+<p><i>OPEN(file=myfile, unit=kunit, form='unformatted',
+access='direct', recl={50+nx*ny})</i></p>
+
+<p>The individual data records are packed and written by a call to
+<i>PAKREC,</i> once for each variable at each level. The routine
+calculates the record offset from the index record according to the
+variable and level information provided in the arguments and writes
+the record according to the order specified in <i>metdata.cfg</i>.
+The data can be supplied in any order. Note that although the level
+indicator (LL) goes from 1 to the number of levels, one is
+subtracted before it is written to the 50 byte header to be
+consistent with the definition of surface data to be at level "0".
+All the records in a time period may be initialized according to
+the value of the <i>kini</i> flag. Initialization fills in the time
+variable for all records and assigns the variable identification
+field as <i>null</i>.</p>
+
+<p><i>CALL PAKREC (kunit,rvar,cvar,nx,ny,nxy,kvar,iy,im,id,ih,mn,ic,ll,kini)</i></p>
+<ul>
+kunit - integer unit number of the defined file<br>
+rvar - input array of real*4 data values<br>
+cvar - character*1 array of packed data values<br>
+nx,ny - integer horizontal grid dimensions<br>
+nxy - integer product nx*ny and length of cvar<br>
+kvar - character*4 descriptor of variable being written<br>
+iy,im - integer year and month<br>
+id,ih - integer day and hour<br>
+mn - integer minutes (usually 0)<br>
+ic - integer forecast hour (hours from initialization)<br>
+ll - integer level indicator (1 to NZ)<br>
+kini - integer initialization flag (0-no; 1-yes)<br>
+</ul>
+
+<p>When all the data records for a time period have been written,
+it is necessary to close that time period by writing its index
+record:</p>
+
+<p><i>CALL PAKNDX(kunit)</i></p>
+
+<p>At this point your program can return to <i>PAKREC</i> if data
+records for additional time periods are to be added to the
+file.</p>
+
+<p>The key to the process is creating the proper configuration
+file for the data set you want to create. Some of the sample data
+decoders provided dynamically configure the packing configuration
+file based upon the command line input information. A sample 
+<i>metdata.cfg</i> file for NOAA's global model output is
+shown below. An extract of the global one-degree latitude-longitude
+GRIB model data have been interpolated to a 100 km resolution
+Lambert Conformal projection 100x100 point grid centered about 45N
+90W. The configuration file format is such that the first 20
+characters are a dummy identification field followed by the
+data.</p>
+
+<p><b>Example Meteorological Packing Configuration File</b></p>
+<ul>
+<u>Col 1 (A20) .... Col 21 (A4,2I4,12F10,3I4)</u><br>
+Data Source........ GFSX<br>
+Grid Number........ 99<br>
+Z-Coordinate....... 2<br>
+Pole Latitude...... 45.0<br>
+Pole Longitude..... -90.0<br>
+Reference Latitude. 45.0<br>
+Reference Longitude -90.0<br>
+Reference grid size 100.0<br>
+Orientation........ 0.0<br>
+Tangent Latitude... 45.0<br>
+Synch point X...... 50.5<br>
+Synch point Y...... 50.5<br>
+Synch Latitude..... 45.0<br>
+Synch Longitude.... -90.0<br>
+Reserved........... 0.0<br>
+Number X points.... 100<br>
+Number Y points.... 100<br>
+Number of Levels... 16<br>
+</ul>
+
+
+<ul>
+<p>Format: F6.,I3,(1X,A4)</p>
+Level 01:.0000 6 PRSS MSLP TPP6 U10M V10M T02M<br>
+Level 02:1000. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 03: 975. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 04: 950. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 05: 925. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 06: 900. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 07: 850. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 08: 800. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 09: 750. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 10: 700. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 11: 600. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 12: 500. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 13: 400. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 14: 300. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 15: 200. 6 HGTS TEMP UWND VWND WWND RELH<br>
+Level 16: 100. 6 HGTS TEMP UWND VWND WWND RELH<br>
+</ul>
+
+<p>It is important that the information contained in this file is
+correct because it not only controls the writing of the packed
+meteorological data file, but much of the information is written
+into the index record of each time period. The model decodes this
+information to set up the internal processing of the meteorological
+data. Starting with HYSPLIT V4.5, the model is also capable of
+using meteorological data on a latitude-longitude grid. Previous
+versions were limited to data on a conformal map projection. Data
+on a regular latitude-longitude grid still need to be converted to
+the ARL packed format. Modifications to the packing configuration
+file required to support a latitude-longitude grid are noted below.
+A complete description of <i>metdata.cfg</i> format follows:</p>
+
+<p><b>Description of the Meteorological Packing Configuration File</b></p>
+
+<p><u>Record 1</u> consists of a four-character string that
+identifies the source of the meteorological data. This string will
+be passed through to many of the output graphics.</p>
+
+<p><u>Record 2</u> is an optional integer identification of the
+meteorological data grid. It was used extensively in previous
+meteorological data file formats. It is not used in Hysplit
+applications.</p>
+
+<p><u>Record 3</u> is an integer number that identifies the
+vertical coordinate system. Only four coordinate types are
+recognized: 1-pressure sigma; 2-pressure absolute; 3-terrain sigma;
+4-hybrid sigma.</p>
+
+<p><u>Records 4 &amp; 5</u> identifies the pole position of the
+grid projection. Most projections will either be defined at +90 or
+-90 depending upon the hemisphere. The longitude would be the point
+180 degrees from which the projection is cut. <u>Lat-Lon Grids
+only:</u> contains the latitude and longitude of the grid point
+with the maximum grid point value. Note that lat-lon grids grids
+should be defined with reference to the dateline.</p>
+
+<p><u>Records 6 &amp; 7</u> is the reference position at which the
+grid spacing is defined. <u>Lat-Lon Grids only:</u> contains the
+grid spacing in degrees latitude and longitude.</p>
+
+<p><u>Record 8</u> is the grid spacing in km at the reference
+position. <u>Lat-Lon Grids only:</u> a value of zero signals that
+the grid is a lat-lon grid.</p>
+
+<p><u>Record 9</u> is the grid orientation or the angle at the
+reference point made by the y-axis and the local direction of
+north. <u>Lat-Lon Grids only:</u> value always = 0.</p>
+
+<p><u>Record 10</u> is the angle between the axis and the surface
+of the cone. For regular projections it is equal to the latitude at
+which the grid is tangent to the earth's surface. A polar
+stereo-graphic grid would be tangent at either 90 or -90, while a
+Mercator projection is tangent at 0 latitude. A Lambert Conformal
+projection would be in between the two limits. An oblique
+stereo-graphic projection would have a cone angle of 90. <u>Lat-Lon
+Grids only:</u> value always = 0</p>
+
+<p><u>Records 11 &amp; 12</u> are used to equate a position on the
+grid with a position on the earth as given in the following two
+records:</p>
+
+<p><u>Records 13 &amp; 14</u>. In this example, the position
+indicated is the center of the grid located over the North Pole.
+Any position is acceptable. It need not even be on the grid<u>.
+Lat-Lon Grids only</u>: contains the latitude and longitude of the
+1,1 position grid point.</p>
+
+<p><u>Record 15</u> is not currently used.</p>
+
+<p><u>Records 16 &amp; 17</u> identify the number of grid points in
+each direction.</p>
+
+<p><u>Record 18</u> is the number of levels in the vertical,
+including the surface level.</p>
+
+<p><u>Record 19</u>, through the number of levels, identifies the
+height of each level in appropriate units according the definition
+of the vertical coordinate, the number of variables at that level,
+and the four character identification string for each variable. The
+height units are as follows for each coordinate:</p>
+<ul>
+1-sigma (fraction)<br>
+2-pressure (mb)<br>
+3-terrain (fraction)<br>
+4-hybrid (mb: offset.fraction)<br>
+</ul>
+
+<p><b>Decoding Meteorological Data Files</b></p>
+
+<p>One may want to develop other applications for HYSPLIT
+compatible meteorological data files. For these situations, some
+lower-level routines are provided in the source code library. The
+key to reading the meteorological files is decoding the index
+record. The format for this record is given below. Complete
+descriptions are similar to the variables in the discussion
+above.</p>
+
+<ul>
+<p><u>FORMAT	DESCRIPTION</u></p>
+<li>(A4)	 Data Source
+<li>(I3)	 Forecast hour (&gt;99 the header forecast hr = 99)
+<li>(I2)	 Minutes associated with data time
+<li>(12F7) 1- Pole Lat, 2- Pole Lon, 3- Tangent Lat, 4- Tangent Lon, 5- Grid Size, 6- Orientation, 7- Cone Angle, 8- Xsynch point, 9- Ysynch point, 10- Synch point lat, 11- Synch point long, 12) Reserved<br>
+<li>(3I3) 1) Number x points, 2) Number y points, 3) Number levels
+<li>(I2)	 Vertical coordinate system flag
+<li>(I4)	 Length in bytes of the index record, excluding the first 50 bytes
+<p><u>LOOP through the number of data levels</u></p>
+<li>(F6)	 height of the first level
+<li>(I2)	 number of variables at that level
+<p><u>LOOP through the number of variables</u></p>
+<li>(A4)	 variable identification
+<li>(I3)	 rotating checksum of the packed data
+<li>(1X)	 Reserved space for future use
+</ul>
+
+<p>Once the index record has been read and decoded you have
+sufficient information to read and decode the data records. A data
+un-packer is provided to convert the packed character*1 array to a
+real*4 array. It can also be used to extract a sub-grid from the
+full domain through specification of the sub-grid lower left
+corner:</p>
+
+<p><i>CALL PAKINP (rvar,cvar,nx,ny,nx0,ny0,lx,ly,prec,nexp,var1,ksum)</i></p>
+<ul>
+rvar	- real output array of integer dimensions lx,ly<br>
+cvar	- character*1 packed input array of length nx*ny<br>
+nx,ny- integer dimensions of the full grid<br>
+nx0	- integer sub-grid position of left edge in nx units<br>
+ny0	- integer sub-grid position of lower edge in ny units<br>
+lx	- integer first dimension of sub-grid length<br>
+ly	- integer second dimension of sub-grid length<br>
+prec	- real precision of packed data array<br>
+nexp	- integer scaling exponent of packed data array<br>
+var1	- real value of array at position (1,1)<br>
+ksum	- integer rotating checksum of packed data array<br>
+</ul>
+
+<p>If the entire grid is to be unpacked then <i>nx0=ny0=1</i> and
+<i>nx=lx</i>, <i>ny=ly</i>. The checksum (<i>ksum</i>) that is
+returned should be compared with the corresponding value in a table
+generated from reading the index record. If you are not going to
+compare the checksum, set <i>ksum = -1</i>, this will save a little
+computer time. Due to the sub-grid option the checksum cannot be
+computed in the regular unpacking loop, but requires a second pass
+through the data. The checksum pass is enabled when <i>ksum=0</i>.
+It will then return a non-zero value. If you don't reset it to
+zero, no further checksums will be computed.</p>
+
+<p>If you want to create your own packed data by converting a
+real*4 array to the character*1 packed data array use the
+following:</p>
+
+<p><i>CALL PAKOUT(rvar,cvar,nx,ny,nxy,prec,nexp,var1,ksum)</i></p>
+
+<p>Although the structure of the packed data may seem complex,
+unpacking is a very simple process, the basic elements of which are
+summarized in the Fortran code shown below. The value of each
+element is the sum of the initial value and the difference stored
+in that element location.</p>
+
+<p>SUBROUTINE UNPACK(CPACK,RVAR,NX,NY,NXY,NEXP,VAR1)</p>
+<ul>
+CHARACTER*1 CPACK(NXY)<br>
+REAL*4 RVAR(NX,NY)<br>
+SCALE=2.0**(7-NEXP)<br>
+VOLD=VAR1<br>
+INDX=0<br>
+DO J=1,NY<br>
+DO I=1,NX<br>
+INDX=INDX+1<br>
+RVAR(I,J)=(ICHAR(CPACK(INDX))-127.)/SCALE+VOLD<br>
+VOLD=RVAR(I,J)<br>
+END DO<br>
+VOLD=RVAR(1,J)<br>
+END DO<br>
+RETURN<br>
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

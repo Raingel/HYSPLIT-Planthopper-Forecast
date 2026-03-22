@@ -1,0 +1,6 @@
+ &SETUP
+ initd = 0,
+ numpar = 5000,
+ ichem = 3,
+ p10f = 1.0,
+ /

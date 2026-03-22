@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Concentration / Display Data / Terrain Overlay (S364)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display Data / Terrain Overlay</h2></p>
+
+<p>The use of several menu features is demonstrated here that will permit
+the creation of a map of the concentration plume with political boundaries
+and contours of the terrain as defined by the meteorological data. The
+basic process is to create a shapefile of the terrain and add that file
+to a shapefile of the political boundaries. Although this demonstration is
+for terrain and concentration any line or contour based shapefile can be
+displayed through the concentration or trajectory plotting programs.</p>
+
+<p>Open the Meteorology / Display Data / <a href="S131.htm">Contour Map</a>
+menu and select the meteorological data file, the station height field 
+(SHGT=terrain), and set the GIS checkbox, which will output the terrain field 
+in generate format. It might be necessary to force the contours and the center 
+of the map to get a nice looking display over the region of interest. In this 
+case for the west coast of the U.S. the maximum terrain height was set to 
+2500 m with an interval of 250 meters between contours.</p>
+
+<center><p><img src="Image102.gif" width="737" height="433"></p></center>
+
+<p>Run the contour program and the display shown below will be created.
+In the <i>working</i> there will be an additional file called 
+<i>GIS_METEO_01.txt</i> which is the generate format text file of the 
+terrain contours.</p>
+
+<center><p><img src="Image103.gif" width="669" height="725"></p></center>
+
+<p>Now open the GIS to Shapefile <a href="S135.htm">utility menu</a> and 
+browse for the generate format file name. Select the "Polygons" radiobutton 
+to insure that the terrain polygons are treated as closed connected lines. 
+After processing the input file, four output files will be created with the 
+base name of contour. The subsequent plotting programs only need the 
+<i>contour.shp</i> file, but the other files may be needed for import into 
+other GIS applications.</p>
+
+<center><p><img src="Image104.gif" width="583" height="327"></p></center>
+
+<p>If you do not have a plume simulation already completed, open the 
+concentration setup menu and run the default test case, but move the 
+starting location to 40N 125W and run the model for 24 rather than 12 hours.
+To simplify the output, set the concentration grid averaging time to 24 h
+and reduce the grid resolution from 0.05 to 0.10. Then run the model.</p>
+
+<center><p><img src="Image105.gif" width="555" height="513"></p></center>
+
+<p>After the run completes, go to the <i>hysplit/graphics</i>
+directory and copy <i>arlmap.shp</i> and <i>shapefiles_arl.txt</i> to the 
+working directory.  Rename <i>shapefiles_arl.txt</i> to <i>shapefiles.txt</i>. 
+Then open notepad in working to edit 
+<a href="S230.htm#shp_map"><i>shapefiles.txt</i></a> to add the additional 
+file (line) defining the shapefile with the terrain. For this display, the 
+line is twice as thick as the map background and the color is defined as 
+black (0.0 0.0 0.0).</p>
+
+<center><p><img src="Image106.gif" width="335" height="118"></p></center>
+
+<p>Now open the concentration / display / contours menu and define the
+<i>shapefiles.txt</i> in the field for the map background. This will 
+cause the display program to use the files defined in this file rather
+than the default map background. Multiple shapefiles can be displayed
+at the same time.</P>
+
+<center><p><img src="Image107.gif" width="607" height="672"></p></center>
+
+<p>Executing the display will result in the following image showing the
+intersection of the plume with the elevated terrain as it moves to the
+east.</p>
+
+<center><p><img src="Image108.gif" width="936" height="796"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

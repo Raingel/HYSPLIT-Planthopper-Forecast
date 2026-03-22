@@ -1,0 +1,3 @@
+'../graphics/states.shp' 0 0.01 0.4 0.6 0.8
+'../graphics/canada.shp' 0 0.01 0.4 0.6 0.8
+'../graphics/mexico.shp' 0 0.01 0.4 0.6 0.8

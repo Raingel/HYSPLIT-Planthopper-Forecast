@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Concentration / Special Runs  / Daughter products (S365)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Special Runs  / Daughter products</h2></p>
+
+
+
+
+<p>Setting up this run consists in the following steps.<p>
+Step 1: Define the nuclide parent name (e.g. Cs-137) and run a preprocessor
+(nuctree) that creates a summary text file (DAUGHTER.TXT) that contains
+the daughter nuclides produced by a parent nuclide along with the half-life 
+and branching fractions. This file is required to be in the working 
+directory when running HYSPLIT for this application.
+In addition, the preprocessor will read the CONTROL file and create a new
+(CONTROL.DAUGHTER) file containing the daughter information. The names
+of the species will be given in numbers that correspond to the daughter
+products names written in the DAUGHTER.TXT file.
+Finaly, the GUI will copy the CONTROL.DAUGHTER back to CONTROL. </p>
+<p>Step 2: configure setup (SETUP.CFG) indicating that the daughter products module will 
+be used (ICHEM=11) and set Maxdim=#daughters obtained from DAUGHTER.TXT<p>
+
+
+<center><p><img src="Image123.gif" width="255" height="125"></p></center>
+
+
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>
+

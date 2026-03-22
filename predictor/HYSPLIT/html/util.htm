@@ -1,0 +1,4217 @@
+<html>
+<head>
+<title>EXEC Directory Programs</title>
+</head>
+<body>
+
+<table width=500 align="center" cellspacing=10>
+<tr valign="top">
+
+<td>
+<center><h1>Category</h1></center>
+<table width=275 border=1>
+<tr><td><font size=+1>Concentration File Conversion</font><ul>
+<li><a href="#c2array">c2array</a>
+<li><a href="#c2datem">c2datem</a>
+<li><a href="#con2arcv">con2arcv</a>
+<li><a href="#con2asc">con2asc</a>
+<li><a href="#con2cdf4">con2cdf4</a>
+<li><a href="#con2ctbt">con2ctbt</a>
+<li><a href="#con2dose">con2dose</a>
+<li><a href="#con2grad">con2grad</a>
+<li><a href="#con2rem">con2rem</a>
+<li><a href="#con2srs">con2srs</a>
+<li><a href="#con2stn">con2stn</a>
+<li><a href="#condecay">condecay</a>
+<li><a href="#conprob">conprob</a>
+<li><a href="#constnlst">constnlst</a>
+<li><a href="#lbfgsb">lbfgsb</a>
+<li><a href="#macc2date">macc2date</a>
+<li><a href="#matrix">matrix</a>
+<li><a href="#stat2grid">stat2grid</a>
+<li><a href="#statmain">statmain</a>
+<li><a href="#tcsolve">tcsolve</a>
+</ul></tr>
+
+<tr><td><font size=+1>Concentration File Utilities</font><ul>
+<li><a href="#con2inv">con2inv</a>
+<li><a href="#conappend">conappend</a>
+<li><a href="#conavg">conavg</a>
+<li><a href="#conavgpd">conavgpd</a>
+<li><a href="#concacc">concacc</a>
+<li><a href="#concadd">concadd</a>
+<li><a href="#concmbn">concmbn</a>
+<li><a href="#concrop">concrop</a>
+<li><a href="#concsum">concsum</a>
+<li><a href="#conedit">conedit</a>
+<li><a href="#confreq">confreq</a>
+<li><a href="#conhavrg">conhavg</a>
+<li><a href="#coninfo">coninfo</a>
+<li><a href="#conlight">conlight</a>
+<li><a href="#conmask">conmask</a>
+<li><a href="#conmaxpd">conmaxpd</a>
+<li><a href="#conmaxv">conmaxv</a>
+<li><a href="#conmerge">conmerge</a>
+<li><a href="#conpuff">conpuff</a>
+<li><a href="#conread">conread</a>
+<li><a href="#constats">constats</a>
+<li><a href="#mergextr">mergextr</a>
+<li><a href="#tcmsum">tcmsum</a>
+</ul></tr>
+
+
+<tr><td><font size=+1>Ensembles</font><ul>
+<li><a href="#accudiv">accudiv</a>
+<li><a href="#ensperc">ensperc</a>
+<li><a href="#enstala">enstala</a>
+<li><a href="#var2datem">var2datem</a>
+</ul></tr>
+
+<tr><td><font size=+1>Graphics Creation</font><ul>
+<li><a href="#boxplots">boxplots</a>
+<li><a href="#concplot">concplot</a>
+<li><a href="#contour">contour</a>
+<!--
+<li><a href="#display">display</a>
+-->
+<li><a href="#ensplots">ensplots</a>
+<li><a href="#gridplot">gridplot</a>
+<li><a href="#isochron">isochron</a>
+<li><a href="#parhplot">parhplot</a>
+<li><a href="#parsplot">parsplot</a>
+<li><a href="#parvplot">parvplot</a>
+<li><a href="#parxplot">parxplot</a>
+<li><a href="#poleplot">poleplot</a>
+<li><a href="#scatter">scatter</a>
+<li><a href="#showgrid">showgrid</a>
+<li><a href="#stabplot">stabplot</a>
+<li><a href="#timeplot">timeplot</a>
+<li><a href="#trajplot">trajplot</a>
+<li><a href="#volcplot">volcplot</a>
+</ul></tr>
+
+
+<tr><td><font size=+1>Graphics Utilities</font><ul>
+<li><a href="#cat2svg">cat2svg</a>
+<li><a href="#catps2ps">catps2ps</a>
+<li><a href="#coversheet">coversheet</a>
+<li><a href="#gelabel">gelabel</a>
+<li><a href="#gen2xml">gen2xml</a>
+<li><a href="#splitsvg">splitsvg</a>
+<li><a href="#stn2ge">stn2ge</a>
+</ul></tr>
+
+<tr><td><font size=+1>HYSPLIT Configuration</font><ul>
+<li><a href="#dat2cntl">dat2cntl</a>
+<li><a href="#dustbdy">dustbdy</a>
+<li><a href="#dustedit">dustedit</a>
+<li><a href="#fires">fires</a>
+<li><a href="#firew">firew</a>
+<li><a href="#goes2ems">goes2ems</a>
+<li><a href="#hysplit">hy{c|t}{s|m}_{xxx}</a>
+<li><a href="#hysptest">hysptest</a>
+<li><a href="#latlon">latlon</a>
+<li><a href="#nuctree">nuctree</a>
+<li><a href="#printbdy">printbdy</a>
+<li><a href="#testnuc">testnuc</a>
+<li><a href="#timeplus">timeplus</a>
+<li><a href="#vmsmerge">vmsmerge</a>
+<li><a href="#vmsread">vmsread</a>
+<li><a href="#zcoord">zcoord</a>
+</ul></tr>
+
+<tr><td><font size=+1>Meteorological Data to ARL Format</font><ul>
+<li><a href="#api2arl">api2arl</a>
+<li><a href="#apidump">apidump</a>
+<li><a href="#arw2arl">arw2arl</a>
+<li><a href="#content">content</a>
+<li><a href="#drn2arl">drn2arl</a>
+<li><a href="#grib2arl">grib2arl</a>
+<li><a href="#narr2arl">narr2arl</a>
+<li><a href="#sfc2arl">sfc2arl</a>
+<li><a href="#snd2arl">snd2arl</a>
+<li><a href="#stn2arl">stn2arl</a>
+</ul></tr>
+
+<tr><td><font size=+1>Meteorological Data Editing</font><ul>
+<li><a href="#add_data">add_data</a>
+<li><a href="#add_grid">add_grid</a>
+<li><a href="#add_miss">add_miss</a>
+<li><a href="#add_time">add_time</a>
+<li><a href="#add_velv">add_velv</a>
+<li><a href="#aer2arl">aer2arl</a>
+<li><a href="#arl2meds">arl2meds</a>
+<li><a href="#data_avrg">data_avrg</a>
+<li><a href="#data_del">data_del</a>
+<li><a href="#edit_flux">edit_flux</a>
+<li><a href="#edit_head">edit_head</a>
+<li><a href="#edit_index">edit_index</a>
+<li><a href="#edit_miss">edit_miss</a>
+<li><a href="#edit_null">edit_null</a>
+<li><a href="#file_copy">file_copy</a>
+<li><a href="#file_merge">file_merge</a>
+<li><a href="#pole2merc">pole2merc</a>
+<li><a href="#rec_copy">rec_copy</a>
+<li><a href="#rec_insert">rec_insert</a>
+<li><a href="#rec_merge">rec_merge</a>
+<li><a href="#xtrct_grid">xtrct_grid</a>
+<li><a href="#xtrct_time">xtrct_time</a>
+</ul></tr>
+
+<tr><td><font size=+1>Meteorological Data Examination</font><ul>
+<li><a href="#arl2grad">arl2grad</a>
+<li><a href="#chk_data">chk_data</a>
+<li><a href="#chk_file">chk_file</a>
+<li><a href="#chk_index">chk_index</a>
+<li><a href="#chk_rec">chk_rec</a>
+<li><a href="#chk_times">chk_times</a>
+<li><a href="#data_year">data_year</a>
+<li><a href="#datecol">datecol</a>
+<li><a href="#datesmry">datesmry</a>
+<li><a href="#filedates">filedates</a>
+<li><a href="#findgrib">findgrib</a>
+<li><a href="#gridxy2ll">gridxy2ll</a>
+<li><a href="#inventory">inventory</a>
+<li><a href="#metdates">metdates</a>
+<li><a href="#metlatlon">metlatlon</a>
+<li><a href="#metpoint">metpoint</a>
+<li><a href="#profile">profile</a>
+<li><a href="#unpacker">unpacker</a>
+<li><a href="#velvar">velvar</a>
+<li><a href="#vmixing">vmixing</a>
+<li><a href="#xtrct_stn">xtrct_stn</a>
+</ul></tr>
+
+
+<tr><td><font size=+1>Particle Utilities</font><ul>
+<li><a href="#asc2par">asc2par</a>
+<li><a href="#par2asc">par2asc</a>
+<li><a href="#par2conc">par2conc</a>
+<li><a href="#parmerge">parmerge</a>
+<li><a href="#par02n">paro2n</a>
+<li><a href="#parshift">parshift</a>
+<li><a href="#stn2par">stn2par</a>
+</ul></tr>
+
+
+<tr><td><font size=+1>Shapefile Manipulation</font><ul>
+<li><a href="#asii2shp">ascii2shp</a>
+<li><a href="#dbf2txt">dbf2txt</a>
+<li><a href="#txt2dbf">txt2dbf</a>
+</ul></tr>
+
+
+<tr><td><font size=+1>Trajectory Analysis</font><ul>
+<li><a href="#clusend">clusend</a>
+<li><a href="#cluslist">cluslist</a>
+<li><a href="#clusmem">clusmem</a>
+<li><a href="#clusplot">clusplot</a>
+<li><a href="#cluster">cluster</a>
+<li><a href="#merglist">merglist</a>
+<li><a href="#trajfind">trajfind</a>
+<li><a href="#trajfreq">trajfreq</a>
+<li><a href="#trajfrmt">trajfrmt</a>
+<li><a href="#trajgrad">trajgrad</a>
+<li><a href="#trajmean">trajmean</a>
+<li><a href="#trajmerg">trakmerg</a>
+</ul></tr>
+
+
+
+</table>
+</td>
+
+<td>
+<center><h1>Listing</h1></center>
+<table width=225 border=1>
+<tr><th>Program</th>                           <th>unix</th>  <th>mac</th> <th>win</th> <th>gui</th></tr>
+<tr><td><a href="#accudiv">accudiv</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#add_data">add_data</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#add_grid">add_grid</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#add_miss">add_miss</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#add_time">add_time</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#add_velv">add_velv</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#aer2arl">aer2arl</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#api2arl">api2arl</a></td>    <td>X</td>     <td>X</td>   <td> </td>   <td></td>   </tr>
+<tr><td><a href="#apidump">apidump</a></td>    <td>X</td>     <td>X</td>   <td> </td>   <td></td>   </tr>
+<tr><td><a href="#arl2grad">arl2grad</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#arl2meds">arl2meds</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#arw2arl">arw2arl</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#asc2par">asc2par</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#ascii2shp">ascii2shp</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#boxplots">boxplots</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#c2array">c2array</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#c2datem">c2datem</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#cat2svg">cat2svg</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#catps2ps">catps2ps</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#chk_data">chk_data</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#chk_file">chk_file</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#chk_index">chk_index</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#chk_rec">chk_rec</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#chk_times">chk_times</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#clusend">clusend</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#cluslist">cluslist</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#clusmem">clusmem</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#clusplot">clusplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#cluster">cluster</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#con2arcv">con2arcv</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#con2asc">con2asc</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#con2cdf4">con2cdf4</a></td>  <td>X</td>     <td>X</td>   <td> </td>   <td></td>   </tr>
+<tr><td><a href="#con2ctbt">con2ctbt</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#con2dose">con2dose</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#con2grad">con2grad</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#con2inv">con2inv</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#con2rem">con2rem</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#con2srs">con2srs</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#con2stn">con2stn</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#conappend">conappend</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conavg">conavg</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conavgpd">conavgpd</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#concacc">concacc</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#concadd">concadd</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#concmbn">concmbn</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#concplot">concplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#concrop">concrop</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#concsum">concsum</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#condecay">condecay</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conedit">conedit</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#confreq">confreq</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conhavrg">conhavrg</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#coninfo">coninfo</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#conlight">conlight</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#conmask">conmask</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conmaxpd">conmaxpd</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conmaxv">conmaxv</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conmerge">conmerge</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conprob">conprob</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#conpuff">conpuff</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#conread">conread</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#constats">constats</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#constnlst">constnlst</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#content">content</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#contour">contour</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#coversheet">coversheet</a></td><td></td>   <td></td>   <td></td>   <td></td>   </tr>
+<tr><td><a href="#dat2cntl">dat2cntl</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#data_avrg">data_avrg</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#data_del">data_del</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#data_year">data_year</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#datecol">datecol</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#datesmry">datesmry</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#dbf2txt">dbf2txt</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<!--
+<tr><td><a href="#display">display</a></td>    <td>X</td>     <td>X</td>   <td></td>   <td></td>   </tr>
+-->
+<tr><td><a href="#drn2arl">drn2arl</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#dustbdy">dustbdy</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#dustedit">dustedit</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#edit_flux">edit_flux</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#edit_head">edit_head</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#edit_index">edit_index</a></td><td>X</td>   <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#edit_miss">edit_miss</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#edit_null">edit_null</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#ensperc">ensperc</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#ensplots">ensplots</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#enstala">enstala</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#file_copy">file_copy</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#file_merge">file_merge</a></td><td>X</td>   <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#filedates">filedates</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#findgrib">findgrib</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#fires">fires</a></td>        <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#firew">firew</a></td>        <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#gelabel">gelabel</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#gen2xml">gen2xml</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#goes2ems">goes2ems</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#grib2arl">grib2arl</a></td>  <td></td>      <td></td>    <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#gridplot">gridplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#gridxy2ll">grid2xyll</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#hysplit">hycm_ens</a></td>   <td></td>      <td></td>    <td></td>    <td>X</td>  </tr>
+<tr><td><a href="#hysplit">hycm_std</a></td>   <td></td>      <td></td>    <td></td>    <td>X</td>  </tr>
+<tr><td><a href="#hysplit">hycs_cb4</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#hysplit">hycs_ens</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#hysplit">hycs_gem</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#hysplit">hycs_grs</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#hysplit">hycs_ier</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#hysplit">hycs_so2</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#hysplit">hycs_std</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#hysplit">hycs_var</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#hysptest">hysptest</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#hysplit">hyts_ens</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#hysplit">hyts_std</a></td>   <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#inventory">inventory</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#isochron">isochron</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#latlon">latlon</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#lbfgsb">lbfgsb</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>	
+<tr><td><a href="#macc2date">macc2date</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#matrix">matrix</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#mergextr">mergextr</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#merglist">merglist</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#metdates">metdates</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#metlatlon">metlatlon</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#metpoint">metpoint</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#narr2arl">narr2arl</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#nuctree">nuctree</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#par2asc">par2asc</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#par2conc">par2conc</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#parhplot">parhplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#parmerge">parmerge</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#paro2n">paro2n</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#parshift">parshift</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#parsplot">parsplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#parvplot">parvplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#parxplot">parxplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#pole2merc">pole2merc</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#poleplot">poleplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#prntbdy">prntbdy</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#profile">profile</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#rec_copy">rec_copy</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#rec_insert">rec_insert</a></td><td>X</td>   <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#rec_merge">rec_merge</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#scatter">scatter</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#sfc2arl">sfc2arl</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#showgrid">showgrid</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#snd2arl">snd2arl</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#splitsvg">splitsvg</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#stabplot">stabplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#stat2grid">stat2grid</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#statmain">statmain</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#stn2arl">stn2arl</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#stn2ge">stn2ge</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>	
+<tr><td><a href="#stn2par">stn2par</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#tcmsum">tcmsum</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>	
+<tr><td><a href="#tcsolve">tcsolve</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#testnuc">testnuc</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#timeplot">timeplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#timeplus">timeplus</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#trajfind">trajfind</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#trajfreq">trajfreq</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#trajfrmt">trajfrmt</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#trajgrad">trajgrad</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#trajmean">trajmean</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#trajmerg">trajmerg</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#trajplot">trajplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#txt2dbf">txt2dbf</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td>X</td>  </tr>
+<tr><td><a href="#unpacker">unpacker</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#var2datem">var2datem</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#velvar">velvar</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#vmixing">vmixing</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#vmsmerge">vmsmerge</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#vmsread">vmsread</a></td>    <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#volcplot">volcplot</a></td>  <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#xtrct_grid">xtrct_grid</a></td><td>X</td>   <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#xtrct_stn">xtrct_stn</a></td><td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#xtrct_time">xtrct_time</a></td><td>X</td>   <td>X</td>   <td>X</td>   <td></td>   </tr>
+<tr><td><a href="#zcoord">zcoord</a></td>      <td>X</td>     <td>X</td>   <td>X</td>   <td></td>   </tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+
+<br><br><hr>
+<p><h1>Concentration File Conversion</h1></p>
+
+<a name="c2array"></a><h2><center>c2array</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: c2array -[arguments]<br>
+ &nbsp;&nbsp; -c[input to output concentration multiplier (1.0)]<br>
+ &nbsp;&nbsp; -d[write to diagnostic file (c2array.txt)]<br>
+ &nbsp;&nbsp; -h[half-life in days (0) to back decay measurments]<br>
+ &nbsp;&nbsp; -i[file name of file with names of input files (INFILE)]<br>
+ &nbsp;&nbsp; -m[measurement data file name (datem.txt)]<br>
+ &nbsp;&nbsp; -o[output concentration file name (c2array.csv)]<br>
+ &nbsp;&nbsp; -p[pollutant index select for multiple species (1)]<br>
+ &nbsp;&nbsp; -s[source position for backward mode (lat:lon)]<br>
+ &nbsp;&nbsp; -x[nearest neighbor or interpolation {(n)|i}]<br>
+ &nbsp;&nbsp; -z[level index select for multiple levels (1)]<br>
+<br></td></tr>
+<tr><td>
+ Program to read multiple HYSPLIT concentration files and a DATEM
+ formatted measured data file to create a merged CSV formatted
+ coefficient matrix that can be used as input to a linear equation
+ solver. The HYSPLIT files can be forward calculations from a
+ source point, one file per release time, or backward calculations
+ from multiple receptor points. The output matrix will consist of
+ columns each release time and one row for each measurement placed
+ in the last column. The HYSPLIT concentration binary input file
+ names are identified in an input file of file names. The program
+ determines the direction of the calculation (forward/backward)
+ based upon the time difference between successive concentration
+ outputs. The backward calculation is assumed to correspond to a
+ measured value and requires the command line entry of a source
+ position (-s) where the model calculations will be extracted. The
+ half-life entry is used to decay correct the measurement data back
+ to the simulation start time.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>srm_solve.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/src_coef.html"  target="_new"><i>src_coef.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="c2datem"></a><h2><center>c2datem</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: c2datem -[arguments]<br>
+ &nbsp;&nbsp; -c[input to output concentration multiplier]<br>
+ &nbsp;&nbsp; -d[write to diagnostic file]<br>
+ &nbsp;&nbsp; -e[output concentration datem format: (0)=F10.1 1=ES10.4]<br>
+ &nbsp;&nbsp; -h[header info: 2=input text, (1)=file name, 0=skip]<br>
+ &nbsp;&nbsp; -i[input concentration file name]<br>
+ &nbsp;&nbsp; -m[measurement data file name]<br>
+ &nbsp;&nbsp; -o[output concentration file name]<br>
+ &nbsp;&nbsp; -p[pollutant index select for multiple species]<br>
+ &nbsp;&nbsp; -r[rotation angle:latitude:longitude]<br>
+ &nbsp;&nbsp; -s[supplemental lat-lon information to output]<br>
+ &nbsp;&nbsp; -t[model output period can be longer than measurement period;<br>
+ &nbsp;&nbsp; &nbsp;&nbsp; and ending times do not have to be aligned:(0)=no, 1=yes]<br>
+ &nbsp;&nbsp; -x[n(neighbor) or i(interpolation)]<br>
+ &nbsp;&nbsp; -z[level select for multiple levels, if z=-1 read height from DATEM file]
+<br>
+<br></td></tr>
+<tr><td>
+ Program to read a HYSPLIT concentration file and match the results with measurements
+ in the DATEM file format to create an output file of model calculations in the DATEM
+ file format that correspond in location and times with the measured data.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>datem.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_stat.html" 
+                  target="_new"><i>conc_stat.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="con2arcv"></a><h2><center>con2arcv</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: con2arcv [6 character file ID]<br>
+Input: cdump<br>
+Output: YYMMDDHH_KP_KL_{6charID}.flt and .hdr<br>
+<br></td></tr>
+<tr><td>
+Converts binary concentration file to ESRI's Arcview binary raster file format 
+as one output file per sampling time period for each pollutant (KP) and
+level (KL).
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="con2asc"></a><h2><center>con2asc</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: con2asc -[options (default)]<br>
+ &nbsp;&nbsp; -c[Convert all records to one diagnostic file]<br>
+ &nbsp;&nbsp; -d[Delimit output by comma flag]<br>
+ &nbsp;&nbsp; -f[File flag for a file for each pollutant-level]<br>
+ &nbsp;&nbsp; -i[Input file name (cdump)]<br>
+ &nbsp;&nbsp; -m[Minimum output format flag]<br>
+ &nbsp;&nbsp; -o[Output file name base (cdump)]<br>
+ &nbsp;&nbsp; -s[Single output file flag]<br>
+ &nbsp;&nbsp; -t[Time expanded (minutes) file name flag]<br>
+ &nbsp;&nbsp; -u[Units conversion multiplier concentration (1.0)]<br>
+ &nbsp;&nbsp; -U[Units conversion multiplier deposition (1.0)]<br>
+ &nbsp;&nbsp; -v[Vary output by +lon+lat (default +lat+lon)]<br>
+ &nbsp;&nbsp; -x[Extended precision flag]<br>
+ &nbsp;&nbsp; -z[Zero points output flag]<br>
+<br></td></tr>
+<tr><td>
+ Converts a binary concentration file to a latitude-longitude based ASCII file, one
+ record per grid point, for any grid point with any level or pollutant greater than
+ zero. One output file is created for each sampling time period. 
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_asc.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_util.html" 
+                  target="_new"><i>conc_util.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="con2cdf4"></a><h2><center>con2cdf4</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: con2cdf4 [options] inpfile outfile<br>
+ &nbsp;&nbsp; Options<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; -d : NetCDF deflate level (0-9, default 1)<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; -h : Show this help message and exit<br>
+ &nbsp;&nbsp; Arguments<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; inpfile : Input HYSPLIT cdump file name<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; outfile : Output NetCDF file name<br>
+<br></td></tr>
+<tr><td>
+Converts HYSPLIT binary cdump concentration output to NetCDF
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="con2ctbt"></a><h2><center>con2ctbt</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: con2ctbt -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[Output file name base (cdump.srm)]<br>
+ &nbsp;&nbsp; -e[Emission amount (1.3E+15)]<br>
+ &nbsp;&nbsp; -c[Concentration number to output (1)]<br>
+ &nbsp;&nbsp; -s[Start site label (XXX00)]<br>
+<br></td></tr>
+<tr><td>
+Converts a binary concentration file to a latitude-longitude based ASCII
+file, one record per grid point, for any grid point not zero, in the agreed
+upon Comprehensive Test Ban Treaty Organization exchange format. See <i>con2srs</i> 
+for a newer variation of this program compatible with output fields generated 
+by FLEXPART.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="con2dose"></a><h2><center>con2dose</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: con2dose [input file] [output file]<br>
+<br></td></tr>
+<tr><td>
+ Temporally averages the input binary concentration file (output from HYSPLIT), converts
+ to dose units and outputs a new binary dose file. The calculation applies only for
+ long-term doses and requires the <i>con2dose.dat</i> file which contains various dose
+ conversion factors (EDE, bone, lung, thyroid, TEDE, etc.) for each radionuclide. The
+ <i>con2dose.dat</i> file is only provided with the source code distribution.
+ Requires each pollutant ID in the HYSPLIT output file to have a matching radiological
+ species ID in the <i>con2dose.dat</i> file. This approach has been replaced by the
+ more general Transfer Coefficient Matrix (TCM) where surrogate species are used in
+ the HYSPLIT calculation and where decay is also applied in the post-processing step.<br>
+</td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="con2grad"></a><h2><center>con2grad</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: con2grads [HYSPLIT filename]<br>
+&nbsp;&nbsp;Output:<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;concen.grd - Grads binary concentration data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;concen.ctl - Grads control script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;species.dep - Grads display script<br>
+&nbsp;&nbsp;&nbsp;&nbsp;species.con - Grads display script<br>
+<br></td></tr>
+<tr><td>
+Converts a binary HYSPLIT concentration file to Grads binary format<br>
+</td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="con2rem"></a><h2><center>con2rem</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: con2rem -[options(default)]<br>
+ &nbsp;&nbsp; -a[activity input file name (activity.txt) or {create|fdnpp}]<br>
+ &nbsp;&nbsp; -b[Breathing rate for inhalation dose in m3/hr (0.925)]<br>
+ &nbsp;&nbsp; -c[Output type: (0)-dose, 1-air conc/dep]<br>
+ &nbsp;&nbsp; -d[Type of dose: (0)=rate (R/hr) 1=dose over averging period (R)]<br>
+ &nbsp;&nbsp; -e[include inhalation dose (0)=No  1=Yes]<br>
+ &nbsp;&nbsp; -f[fuel (1)=U235 2=P239]<br>
+ &nbsp;&nbsp; -g[normal decay=0 (used only with c=1), time averaged decay (1)]<br>
+ &nbsp;&nbsp; -h[help with extended comments]<br>
+ &nbsp;&nbsp; -i[input file name  (cdump)]<br>
+ &nbsp;&nbsp; -n[noble gas 4-char ID (NGAS)]<br>
+ &nbsp;&nbsp; -o[output file name (rdump)]<br>
+ &nbsp;&nbsp; -p[process (1)=high-energy 2=thermal]<br>
+ &nbsp;&nbsp; -q[when -d1 convert dose from rem=(0) to sieverts=1]<br>
+ &nbsp;&nbsp; -s[sum species (0), 1=match to input, 2=output each species]<br>
+ &nbsp;&nbsp; -t[no decay=0 input decayed, or decay by species half-life (1)]<br>
+ &nbsp;&nbsp; -u[units conversion Bq->pCi, missing: assume input Bq]<br>
+ &nbsp;&nbsp; -w[fission activity in thermal mega-watt-hours, replaces -y option]<br>
+ &nbsp;&nbsp; -x[extended integration time in hours beyond calculation (0)]<br>
+ &nbsp;&nbsp; -y[yield (1.0)=kT]<br>
+ &nbsp;&nbsp; -z[fixed integration time in hours (0)]<br>
+<br></td></tr>
+<tr><td>
+ Converts a HYSPLIT binary concentration/deposition file to dose in rem/hr. The
+ HYSPLIT calculation should be done using a unit emission so that the concentration
+ units are m-3 and the deposition units are m-2. This program reads the file
+ activity.txt which contains the activity (Bq) at time=0 for all the isotope products.
+ The -acreate switch will create a sample activity.txt file for a 1KT device, while
+ the -afdnpp switch creates a sample file where the activity equals the maximum 3h
+ emissions from the FDNPP accident. During the processing step, the cumulative 
+ product of the activity and dose factor is computed for each decay weighted
+ concentration averaging period independently for noble gases and particles. For
+ general applications, HYSPLIT should be configured for two species: NGAS and RNUC.
+ For most radiological dose applications, this method is preferred over the original
+ approach using <i>con2dose</i> because decay is treated in the post-processing step
+ and multiple radionuclides can be assigned to a single computational species. This
+ approach works best when emissions are constant. For time-varying emissions, use
+ the program <i>condecay</i> before running <i>con2rem</i>.
+<br>
+<br></td></tr>
+<tr><td>
+<font color=green>GUI: <i>con2rem.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/TutorialX/html/dose_cemit.html" 
+                  target="_new"><i>dose_cemit.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="con2srs"></a><h2><center>con2srs</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: con2srs -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[Output file name base (cdump.srm)]<br>
+ &nbsp;&nbsp; -e[Emission amount (1.3E+15)]<br>
+ &nbsp;&nbsp; -c[Concentration number to output (1)]<br>
+ &nbsp;&nbsp; -l[Level to output (1)]<br>
+ &nbsp;&nbsp; -s[Start site label (XXX00)]<br>
+ &nbsp;&nbsp; -r (specifies regional grid.  Global by default)<br>
+ &nbsp;&nbsp; -d (process the deposition grid; off by default; overrides -l)<br>
+<br></td></tr>
+<tr><td>
+Converts binary concentration file to a latitude-longitude based ASCII file, one
+record per grid point, for any grid point not zero.  Adheres to the 
+informal source-receptor-sensitivy (SRS) output format that seems to be in
+use with FLEXPART people for storing concentrations, backwards sensitivities,
+and even depositions. This program forces a simple output - a single species 
+at a single level. It is up to other programs to combine SRS files into 
+something more complex, if and when desired. See <i>con2ctbt</i> for the 
+original version of this program.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="con2stn"></a><h2><center>con2stn</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: con2stn [-options]<br>
+ &nbsp;&nbsp; -a[rotation angle:latitude:longitude]<br>
+ &nbsp;&nbsp; -c[input to output concentration multiplier]<br>
+ &nbsp;&nbsp; -d[mm/dd/yyyy format: (0)=no 1=w-Label 2=wo-Label]<br>
+ &nbsp;&nbsp; -e[output concentration datem format: (0)=F10.1 1=ES10.4]<br>
+ &nbsp;&nbsp; -h[half-life-days (one entry for each pollutant)]<br>
+ &nbsp;&nbsp; -i[input concentration file name]<br>
+ &nbsp;&nbsp; -m[maximum number of stations (200)]<br>
+ &nbsp;&nbsp; -o[output concentration file name]<br>
+ &nbsp;&nbsp; -p[pollutant index (1) or 0 for all pollutants]<br>
+ &nbsp;&nbsp; -r[record format 0=record (1)=column 2=datem]<br>
+ &nbsp;&nbsp; -s[station list file name (contains: id lat lon)]<br>
+ &nbsp;&nbsp; -t[transfer coefficient processing]<br>
+ &nbsp;&nbsp; -x[(n)=neighbor or i for interpolation]<br>
+ &nbsp;&nbsp; -z[level index (1) or 0 for all levels]<br>
+<br></td></tr>
+<tr><td>
+ Program to read a hysplit concentration file and print the contents at
+ one or more locations to an output file.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_stn.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_util.html" 
+                  target="_new"><i>conc_util.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="condecay"></a><h2><center>condecay</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: condecay -[One Entry per Conversion] +[options(default)]<br>
+ &nbsp;&nbsp; -{Cnumb:Index:HalfL:Radio}<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cnumb=column number in emission file<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Index=index number in binary input file<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  HalfL=half life in days<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Radio=radionuclide character id<br>
+ &nbsp;&nbsp; +p[Process ID number]<br>
+ &nbsp;&nbsp; +d[Directory for TG_{YYYYMMDDHH} files]<br>
+ &nbsp;&nbsp; +e[Emissions base file name (cfactors).txt]<br>
+ &nbsp;&nbsp; +i[Input file base name (TG_)]<br>
+ &nbsp;&nbsp; +o[Output file base name (DG_)]<br>
+ &nbsp;&nbsp; +t[Time decay start: YYYYMMDDHH<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 0000000000 each file<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | default from file #1]<br>
+<br></td></tr>
+<tr><td>
+ Processes a series of binary unit-source concentration files, which
+ consists of a file name starting with TG_{YYYYMMDDHH} that identifies
+ the associated release time. The program command line contains one
+ entry for each species to be multiplied by a source term and decayed
+ by its half-life to the end of the sample collection period. Not all
+ species in the input file need to be converted. The resulting output
+ file name is called DG_{YYYYMMDDHH}. Emission values are defined in the
+ input file named cfactors.txt. All concentration input files must be
+ identical in terms of species and grid resolution.
+ This program would be used in conjunction TCM processing applications. In the
+ situation where the emission rate is constant with time, the program <i>con2rem</i>
+ can be used to apply emissions, decay, and convert to dose. However, when emissions
+ are time-varying, then the concentration file for every release period (TG files)
+ would be processed by <i>condecay</i> for the emissions and decay, and then by 
+<i>con2rem</i> for the final conversion to dose.
+<br></td></tr>
+<tr><td> 
+<font color=green>Tutorial: </font><a href="https://www.ready.noaa.gov/documents/TutorialX/html/dose_temit.html" target="_new"><i>dose_temit.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="conprob"></a><h2><center>conprob</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: conprob [-options]<br>
+ &nbsp;&nbsp; -b[base input file name (cdump)]<br>
+ &nbsp;&nbsp; -c[(conc_high:conc_mid:conc_low) set values]<br>
+ &nbsp;&nbsp; -d[dignostic output turned on]<br>
+ &nbsp;&nbsp; -p[pollutant index number (when input contains more than 1)]<br>
+ &nbsp;&nbsp; -t[temporal aggregation period (1)]<br>
+ &nbsp;&nbsp; -v[value below which concentration assumed to equal zero (0.0)]<br>
+ &nbsp;&nbsp; -x[Concentration multiplier: (1.0)]<br>
+ &nbsp;&nbsp; -y[Deposition multiplier:    (1.0)]<br>
+ &nbsp;&nbsp; -z[level index number (when input contains more than 1)]<br>
+<br></td></tr>
+<tr><td>
+Reads multiple HYSPLIT concentration files and computes various probability levels
+independently at each grid point and then creates a new ouput file for each
+probability level (files=probXX). Also computed are the probabilities to exceed
+predefined concentration levels (files=cmax{01|10|00}) from minimum to maximum.
+Other output files include the mean, variance, coefficient of variation, and
+number of members.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>prob_files.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/ens_data.html" 
+                  target="_new"><i>ens_data.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="constnlst"></a><h2><center>constnlst</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: constnlst [-options]<br>
+ &nbsp;&nbsp;  -i[Input file name of concentration file names]<br>
+ &nbsp;&nbsp;  -o[output concentration file name]<br>
+ &nbsp;&nbsp;  -a[start time (YYMMDDHHMM)]<br>
+ &nbsp;&nbsp;  -b[stop time (YYMMDDHHMM)]<br>
+ &nbsp;&nbsp;  -e[list concentrations (0) or 1 sum between start and stop times]<br>
+ &nbsp;&nbsp;  -h[write header to output (0) or 1 for no headers]<br>
+ &nbsp;&nbsp;  -w[output sample start time (0) or 1 simulation start time]<br>
+ &nbsp;&nbsp; -c[input to output concentration multiplier]<br>
+ &nbsp;&nbsp;  -s[station list file name (contains: id lat lon)]<br>
+ &nbsp;&nbsp;  -x[(n)=neighbor or i for interpolation]<br>
+ &nbsp;&nbsp;  -z[level index (1) or 0 for all levels]<br>
+ &nbsp;&nbsp;  -p[pollutant index (1) or 0 for all pollutants]<br>
+ &nbsp;&nbsp;  -r[record format 0=record (1)=column 2=datem]<br>
+ &nbsp;&nbsp;  -m[maximum number of stations (200)]<br>
+ &nbsp;&nbsp;  -d[mm/dd/yyyy format: (0)=no 1=w-Label 2=wo-Label]<br>
+<br></td></tr>
+<tr><td>
+ Program to read a HYSPLIT concentration file and print the contents at selected
+ locations for a given time (if -a and -b are the same) or sums concentrations
+ for a range of times. This program is similar to <i>con2stn</i> but with some
+ different options required for certain web applications.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+<a name="lbfgsb"></a><h2><center>lbfgsb</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+USAGE: lbfgsb<br>
+Input: PARAMETER_IN_000<br>
+Output: SOURCE_OUT_000<br>
+<br></td></tr>
+<tr><td>
+ The code will solve for values of the source emission rate vector to satisfy the 
+ measured values using a cost function approach to minimize the difference between
+ the observations and model predictions by varying the source term from a first-guess
+ estimate. The model predictions file should be in CSV format with the last column
+ corresponding to the measurements. The first row is the time associated with each
+ unknown source. The CSV file could be created using the program <i>C2ARRAY</i>.
+ All solution configuration values are set in the PARAMETER_IN file. See the 
+ program's README file for more information.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>srm_lbfgsb.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/src_cost.html" 
+                  target="_new"><i>src_cost.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="macc2date"></a><h2><center>macc2date</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: macc2date [filein] [fileout]<br>
+<br></td></tr>
+<tr><td>
+ Program reads the output file of the cost function (lbfgsb) analysis and converts
+ the time field from EXCEL fractional days format to year, month, day, hour, value, 
+ where value is the emission rate. The output is in the free-form  <i>cfactors</i>
+ format of time-varying emissions in much simpler format the <i>EMITIMES</i>. This
+ file is normally referred to as <i>cfactors.txt</i> and it is used by programs
+ <i>tcmsum</i> and <i>concdecay</i>.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>srm_sum.tcl</i></font> for use of cfactors.txt<br>
+</td></tr>
+</table>
+
+<a name="matrix"></a><h2><center>matrix</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: matrix [-options]<br>
+ &nbsp;&nbsp; -i[input file name]<br>
+ &nbsp;&nbsp; -o[output file name]<br>
+ &nbsp;&nbsp; -y[latitude]<br>
+ &nbsp;&nbsp; -x[longitude]<br>
+ &nbsp;&nbsp; -z[level vertical index]<br>
+ &nbsp;&nbsp; -m[source (s) or receptor (r) mode]<br>
+ &nbsp;&nbsp; -f[force release date: yymmddhh]<br>
+ &nbsp;&nbsp; -d[date sample select: mmddhhnn]<br>
+ &nbsp;&nbsp; -n[normalization on]<br>
+<br></td></tr>
+<tr><td>
+ The <i>matrix</i> program is used to extract source or receptor information from the
+ HYSPLIT generated source-receptor matrix.  Two output modes are available. In
+ receptor mode a receptor location is specified and the program computes the
+ contribution of each source to the selected receptor point.  In source mode
+ a source location is specified and the program outputs the concentrations at
+ all the receptor locations. All output files are in standard HYSPLIT binary.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>srm_disp.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/src_recp.html" 
+                  target="_new"><i>src_recp.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="stat2grid"></a><h2><center>stat2grid</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: stat2grid [-options]<br>
+ &nbsp;&nbsp; -i{in file}<br>
+ &nbsp;&nbsp; -o{out file}<br>
+ &nbsp;&nbsp; -v{variable #(3 to 8)}}<br>
+<br></td></tr>
+<tr><td>
+ Program reads the <i>statmain</i> statistics output file (from -s) and converts
+ the values by position to the HYSPLIT concentration grid format permitting plots
+ of model performance statistics with respect to location. The -v selects one of 
+ the following metrics: corr(3), nmse(4), fb(5), fms(6), ksp(7), and rank(8).
+ The index value represents the column number in the <i>statmain</i> output file.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_rank.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/src_stats.html" 
+                  target="_new"><i>src_stats.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="statmain"></a><h2><center>statmain</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: statmain [arguments]<br>
+ &nbsp;&nbsp;-a[averaging: space (s), time (t), low-pass filter (#)]<br>
+ &nbsp;&nbsp;-b[bootstrap resampling to compute correlation]<br>
+ &nbsp;&nbsp;-c[concentration normalization factor]<br>
+ &nbsp;&nbsp;-d[measurement directory or file name (when -t0)]<br>
+ &nbsp;&nbsp;-e[enhanced output in supplemental file]<br>
+ &nbsp;&nbsp;-f[station selection file suffix]<br>
+ &nbsp;&nbsp;-g[generate random initial seed for bootstrap resampling]<br>
+ &nbsp;&nbsp;-l[contingency level for spatial statistics (1)]<br>
+ &nbsp;&nbsp;-m[model variation string (when -t<>0]<br>
+ &nbsp;&nbsp;-o[write (1) merged data or read (2) merged file]<br>
+ &nbsp;&nbsp;-p[plume statistics (both meas & calc gt zero)]<br>
+ &nbsp;&nbsp;-r[calculation results directory or file name (when -t0)]<br>
+ &nbsp;&nbsp;-s[supplemental appended output file name]<br>
+ &nbsp;&nbsp;-t[tracer character number: (0),1,2,3, etc]<br>
+ &nbsp;&nbsp;-x[exclude 0,0 pairs]<br>
+ &nbsp;&nbsp;-y[set calculated to zero when below measured zero]<br>
+ &nbsp;&nbsp;-z[percentile level of non-zero for zero measured]<br>
+<br></td></tr>
+<tr><td>
+ Program reads DATEM formatted measured and calculated air concentration files
+ and perform some elementary statistical analyses for model comparison. Procedures
+ are based upon the original ETEX workshop metrics. Input and output file names can
+ be generated automatically when the tracer character ID is set to a non-zero value.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>datem.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/src_stats.html" 
+                  target="_new"><i>src_stats.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="tcsolve"></a><h2><center>tcsolve</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: tcsolve -[options]<br>
+ &nbsp;&nbsp; -i[input CSV matrix (c2array.csv)]<br>
+ &nbsp;&nbsp; -o[output file (tcsolve.txt)]<br>
+ &nbsp;&nbsp; -p[percent delete (0)]<br>
+ &nbsp;&nbsp; -u[units conversion(1)]<br>
+ &nbsp;&nbsp; -z[zero value(0)]<br>
+<br></td></tr>
+<tr><td>
+ The code will compute the inverse of the coefficient matrix (CM) and solve for values
+ of the source emission rate vector to satisfy the measured values. The default approach
+ is to use Singular Value Decomposition on the CM, which is defined by M equations 
+ (receptors) and N unknowns (sources). The input file should be in CSV format with the
+ last column corresponding to the measurements. The first row is the time associated 
+ with each unknown source. The CSV file could be created using the program C2ARRAY which
+ processes the HYSPLIT binary coefficients and DATEM formatted measurement data files.
+ The percent delete is the percentage of the lowest TCM values to be deleted.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>srm_solve.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/src_coef.html" 
+                  target="_new"><i>src_coef.sh</i></a><br>
+</td></tr>
+</table>
+
+<br><br><hr>
+<p><h1>Concentration File Utilities</h1></p>
+
+<a name="con2inv"></a><h2><center>con2inv</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: con2inv -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name with base format (concinv.bin)]<br>
+ &nbsp;&nbsp; -d[process id (bin)]<br>
+<br></td></tr>
+<tr><td>
+ Program to output the inverse of the concentration for 
+ source attribution calculations.  The pollutant 4-char ID
+ remains the same.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_invr.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="conappend"></a><h2><center>conappend</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: conappend -[options]<br>
+ &nbsp;&nbsp; -i[File name of containing input file names]<br>
+ &nbsp;&nbsp; -o[Output summation file]<br>
+ &nbsp;&nbsp; -c[Concentration conversion factor (1.0)]<br>
+<br></td></tr>
+<tr><td>
+ Program to read multiple HYSPLIT concentration files and
+ append the values into a single file. The files all need
+ to be identical in terms of grid size but each file would
+ represent a different time period.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="conavg"></a><h2><center>conavg</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: conavg [-options]<br>
+ &nbsp;&nbsp; -b[base input file name (cdump)]<br>
+ &nbsp;&nbsp; -d[dignostic output turned on]<br>
+ Output: cmean<br>
+<br></td></tr>
+<tr><td>
+Reads multiple identical concentration files, in terms of the grid, and computes
+the mean value at each grid point, which is then written to the output file 
+<i>cmean</i>. Note individual time headers are not checked and the output
+time fields are the same as the last input file.
+This program provides a quick way to generate an ensemble mean rather than
+using <i>conprob</i> which generates all the probability files including
+the mean.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="conavgpd"></a><h2><center>conavgpd</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: conavgpd -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name (xdump)]<br>
+ &nbsp;&nbsp; -m[concentration multiplier (1.0)]<br>
+ &nbsp;&nbsp; -h[averging period in hours]<br>
+ &nbsp;&nbsp; -a[start averaging period (YYMMDDHHMN)]<br>
+ &nbsp;&nbsp; -b[stop averaging period (YYMMDDHHMN)]<br>
+ &nbsp;&nbsp; -r[average (0) or sum=1]<br>
+<br></td></tr>
+<tr><td>
+ Combines multiple sequential time periods from a binary concentration file
+ and computes the average or sum based upon the period (-h) specified by the user 
+ and writes out a new concentration file.
+<br></td></tr>
+<tr><td> 
+<font color=green>Tutorial: </font><a href="https://www.ready.noaa.gov/documents/TutorialX/html/dose_cemit.html" target="_new"><i>dose_cemit.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="concacc"></a><h2><center>concacc</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: concacc -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name with base format (concacc.bin)]<br>
+<br></td></tr>
+<tr><td>
+ Program to accumulate concentrations from one time period to the next and 
+ output the results to another file. For example, the program can be used to
+ sum doses from individual time periods to get the total dose.
+<br></td></tr>
+<tr><td> 
+<font color=green>Tutorial: </font><a href="https://www.ready.noaa.gov/documents/TutorialX/html/ind_test.html" target="_new"><i>ind_test.sh</i></a>
+</td></tr>
+</table>
+
+<a name="concadd"></a><h2><center>concadd</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: concadd -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -b[base file name to which input file is added (gdump)]<br>
+ &nbsp;&nbsp; -o[output file name with base file format (concadd.bin)]<br>
+ &nbsp;&nbsp; -g[radius (grid points around center) to exclude; default=0]<br>
+ &nbsp;&nbsp; -c[concentration conversion factor (1.0)]<br>
+ &nbsp;&nbsp; -p[process (0)=add | 1=max value | 2=zero mask | 3=intersect]<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 4=replace   | 5=divide c1/c2]<br>
+ &nbsp;&nbsp; -t[forces the sampling time start stop times as minimum and maximum]<br>
+ &nbsp;&nbsp; -z[zero mask value (base set to zero when input>mask; default=0.0)]<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if zero mask value < 0 : <br> 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; base set to zero when input> zero mask value * base<br>
+<br></td></tr>
+<tr><td>
+ Program to add together two gridded HYSPLIT concentration files, where the
+ input file is added into the base file and written as a new file. The input
+ and base file need not be identical in time, but they must have the same
+ number of pollutants and levels. The file contents are matched by index
+ number and not height or species. The horizontal grids need to be identical
+ or even multiples of each other and they also need to intersect at the
+ corner point. Summations will occur regardless of any grid mismatches.
+ Options are also available to select the maximum value or define the input
+ file as a zero-mask such that grid points with non-zero values become zero
+ at those locations in the base file when written to the output file. The
+ intersect option only adds the input file to the base file when both
+ have values greater than zero at the intersection point, otherwise the
+ value is set to zero. The replace option will replace the value from the
+ base file with the value from the input file. This option is normally used
+ in conjunction with a non-zero radius. The -t flag forces the time labels
+ for each sampling period to represent the minimum starting time and maximum
+ stop time between the two input files.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_add.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/TutorialX/html/ind_test.html" 
+                  target="_new"><i>ind_test.sh</i></a>
+</td></tr>
+</table>
+
+<a name="concmbn"></a><h2><center>concmbn</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: concmbn -[options(default)]<br>
+ &nbsp;&nbsp; -b[crop the final grid: yes:(1), no:0]<br>
+ &nbsp;&nbsp; -c[coarse grid file name (cdump)]<br>
+ &nbsp;&nbsp; -f[fine grid file name (fdump)]<br>
+ &nbsp;&nbsp; -m[Multiplier used with -v option: (1.0)-one (default)]<br>
+ &nbsp;&nbsp; -o[output file name (concmbn.bin)]<br>
+ &nbsp;&nbsp; -p[percent of white space added around plume (10)]<br>
+ &nbsp;&nbsp; -s[number of surrounding coarse grid points to average, (0)=none, x]<br>
+ &nbsp;&nbsp; -t[number of perimeter fine grid points to average, (0)=none, x]<br>
+ &nbsp;&nbsp; -v[Minimum value to extract to: (0.0)-zero (default) ]<br>
+<br></td></tr>
+<tr><td>
+ Program to combine two gridded HYSPLIT concentration files; one a fine
+ grid and one a coarse grid.  The coarse grid is recalculated on a grid
+ covering the same area except that the grid has the resolution of the
+ fine grid provided. The file contents are matched by index number but 
+ not height or species. You must make sure that the fine grid spacing and
+ span are even multiples of the coarse grid spacing and span. The coarse 
+ grid points must be also be points on the fine grid. Summations will 
+ occur regardless of any grid mismatches. Prior to writing the coarse grid
+ values into to the final large fine grid, the new fine grid values are 
+ given a 1/r2 weighting using the surrounding coarse grid values.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="concrop"></a><h2><center>concrop</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: concrop -[options (default)]<br>
+ &nbsp;&nbsp; -b[latmin:lonmin:latmax:lonmax (all zeroes will produce full grid extract]<br>
+ &nbsp;&nbsp; -d[process id (txt)]<br>
+ &nbsp;&nbsp; -f[FCSTHR.TXT: (0)-none 1-output]<br>
+ &nbsp;&nbsp; -i[Input file name: (cdump)]<br>
+ &nbsp;&nbsp; -g[Grid limits rather than cropped file: (0)-no 1-center-radius -1-lat-lons]<br>
+ &nbsp;&nbsp; -o[Output file name: (ccrop)]<br>
+ &nbsp;&nbsp; -m[Multiplier used with -v option: (1.0)-one (default) ]<br>
+ &nbsp;&nbsp; -p[Time extract MMDDHH:MMDDHH]<br>
+ &nbsp;&nbsp; -v[Minimum value to extract to: (0.0)-zero (default) ]<br>
+ &nbsp;&nbsp; -w[Percent of white space added around plume (10)]<br>
+ &nbsp;&nbsp; -x[override white space: (0)-no (default) 1-yes]<br>
+<br></td></tr>
+<tr><td>
+ Removes the whitespace around a HYSPLIT binary concentration grid
+ file by resizing the grid about the non-zero concentration domain
+ or by specifying a sub-grid on the command line. Using the -x option
+ will force the extract of the selected domain regardless of white space.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_xtrct.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="concsum"></a><h2><center>concsum</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: concsum -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name with base format (concsum.bin)]<br>
+ &nbsp;&nbsp; -d[process id (bin)]<br>
+ &nbsp;&nbsp; -l[level sum and pollutant sum]<br>
+ &nbsp;&nbsp; -p[pollutant sum label (SUM)]<br>
+<br></td></tr>
+<tr><td>
+ Program to add multi-pollutant concentrations from one
+ HYSPLIT concentration file and output the sum (as one pollutant)
+ to another file (e.g. to get the total concentration when pollutants
+ are different particle sizes). The level sum flag sums the 
+ pollutants and levels to one output field.
+<br></td></tr>
+<tr><td> 
+<font color=green>Tutorial: </font><a href="https://www.ready.noaa.gov/documents/TutorialX/html/dose_cemit.html" target="_new"><i>dose_cemit.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="conedit"></a><h2><center>conedit</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: conedit [options]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name (cedit)]<br>
+ &nbsp;&nbsp; -m[meteorology string (skip)]<br>
+ &nbsp;&nbsp; -p[pollutant string (skip)]<br>
+<br></td></tr>
+<tr><td>
+ Edits the HYSPLIT binary concentration file by replacing the meteorology
+ and pollutant type four character identification strings. Only files
+ with one pollutant are supported. A string is left unchanged if not
+ defined.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="confreq"></a><h2><center>confreq</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: confreq [-arguments]<br>
+ &nbsp;&nbsp;  -h{elp}<br>
+ &nbsp;&nbsp;  -f{ile name of file names}<br>
+ &nbsp;&nbsp;  -z{eros included}<br>
+<br></td></tr>
+<tr><td>
+ Computes the concentration frequency distribution for one or more HYSPLIT binary 
+ concentration files specified in the file name of input files. All levels and 
+ species are included. Mismatches in time and grid are ignored. The current
+ compilation maximum sort dimension is one million.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="conhavrg"></a><h2><center>conhavrg</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: conhavrg [options]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name (cavrg)]<br>
+ &nbsp;&nbsp; -s[surrounding grid points to average (1)]<br>
+<br></td></tr>
+<tr><td>
+ Horizontally averages the HYSPLIT concentration file according to a grid point
+ scan distance (s) and where the area average equals 2s*2s. Scan distance is not
+ adjusted for differences in longitude distance with latitude. Mass is adjusted
+ to insure that the average concentration remains the same.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_havg.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="coninfo"></a><h2><center>coninfo</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: coninfo -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -t[list start/stop times (0=no), 1=yes]<br>
+ &nbsp;&nbsp; -j[output only first/last times in file (0=no), 1=Julian, 2=date]<br>
+<br></td></tr>
+<tr><td>
+Program prints summary information about the contents of a HYSPLIT
+concentration file such as the grid information, the start and stop
+times of each time period, or just the first and last time period.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_xtrct.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="conlight"></a><h2><center>conlight</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: conlight -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name (xdump)]<br>
+ &nbsp;&nbsp; -l[level number to extract (0 = all)<br>
+ &nbsp;&nbsp; -m[concentration multiplier (1.0)]<br>
+ &nbsp;&nbsp; -p[period MMDDHH:MMDDHH]<br>
+ &nbsp;&nbsp; -s[species: 0-sum, (1)-select]<br>
+ &nbsp;&nbsp; -t[time periods to extract (1)]<br>
+ &nbsp;&nbsp; -z[concentration minimum (0.0)]<br>
+ &nbsp;&nbsp; -y[concentration minimum for sum pollutants (0.0)]<br>
+<br></td></tr>
+<tr><td>
+ Extracts individual records from the binary concentration file
+ where every -t{count}th record is output and if the file contains
+ multiple species, the -s{pecies} number is selected for output. 
+ Multiplier and minimum values may be applied.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_add.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/ens_stats.html" 
+                  target="_new"><i>ens_stats.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="conmask"></a><h2><center>conmask</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: conmask [input] [mask] [output] [cmin]<br>
+ &nbsp;&nbsp; [input]  - name of input file of concentrations<br>
+ &nbsp;&nbsp; [mask]   - name of mask file where input may = 0<br>
+ &nbsp;&nbsp; [output] - name output file from input*mask<br>
+ &nbsp;&nbsp; [cmin]   - input gt cmin mask then set input = 0<br>
+<br></td></tr>
+<tr><td>
+The program reads two HYSPLIT concentration files and applies the
+second file as a mask to the first. Any non-zero values in file
+#2 becomes zero in file #1. For example, in source attribution
+calculations, the second file can be used to eliminate grid cells
+that do not contain the source because the backward calculation was 
+associated with a measurement of zero.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="conmaxpd"></a><h2><center>conmaxpd</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: conmaxpd -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name (xdump)]<br>
+ &nbsp;&nbsp; -m[concentration multiplier (1.0)]<br>
+ &nbsp;&nbsp; -h[window period for maximum in hours]<br>
+ &nbsp;&nbsp; -a[start time for window (YYMMDDHH)]<br>
+ &nbsp;&nbsp; -b[stop time for window (YYMMDDHH)]<br>
+<br></td></tr>
+<tr><td>
+ Computes the maximum concentration at each grid point per time
+ window for all time windows that fall between the window start
+ and stop times.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="conmaxv"></a><h2><center>conmaxv</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: conmaxv [options]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file name (cavrg)]<br>
+ &nbsp;&nbsp; -s[sliding time window in minutes (-1, defaults to data interval)]<br>
+<br></td></tr>
+<tr><td>
+Computes the maximum value at each grid cell using a sliding time window. The sliding
+time interval must be evenly divisible by the averaging (data interval) time. The output
+represents a single time period, the maximum value over the entire time period. For example,
+for a one hour simulation, with output every 5 minutes, there would be 12 time periods in 
+the HYSPLIT concentration output file. If the sliding time window is set to 15 minutes, at
+each grid point, the program computes 12 average concentrations, for time periods 1,2,3 and
+then 2,3,4, and so on. A single maximum value of those 12 sliding window averages is written
+to the output file at that grid point. Maximum concentrations are used primarily in hazardous
+chemical exposure calculations.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="conmerge"></a><h2><center>conmerge</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: conmerge -[options]<br>
+ &nbsp;&nbsp; -d[Date to stop process: YYMMDDHH {00000000}]<br>
+ &nbsp;&nbsp; -i[Input file name of file names]<br>
+ &nbsp;&nbsp; -o[Output file name]<br>
+ &nbsp;&nbsp; -t[Time summation flag]<br>
+<br></td></tr>
+<tr><td>
+ The program reads multiple HYSPLIT concentration files and sums the
+ values to a single file. Options are to sum only matching time periods
+ or sum all time periods into one time period.
+<br></td></tr>
+<tr><td> 
+<font color=green>Tutorial: </font><a href="https://www.ready.noaa.gov/documents/TutorialX/html/dose_temit.html" target="_new"><i>dose_temit.sh</i></a>
+</td></tr>
+</table>
+
+<a name="conpuff"></a><h2><center>conpuff</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: conpuff<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - Concentration file name<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+Reads the gridded HYSPLIT concentration file and prints the maximum
+concentration and puff mass centroid location for each concentration
+averaging period.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="conread"></a><h2><center>conread</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: conread<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - Concentration file name<br>
+&nbsp;&nbsp; line 2 - Extended diagnostics (0/1)<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+Program to read the gridded HYSPLIT concentration file and dump selected
+statistics each time period to standard output.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_file.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_util.html" 
+                  target="_new"><i>conc_util.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="constats"></a><h2><center>constats</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: constats {arguments}<br>
+ &nbsp;&nbsp; -f#[concentration file name (#<=2)]<br>
+ &nbsp;&nbsp; -o[output file name; undef stdout]<br>
+ &nbsp;&nbsp; -t[temporal match skip hour]<br>
+ &nbsp;&nbsp; -v[verbose output]<br>
+<br></td></tr>
+<tr><td>
+ Compares two HYSPLIT concentration files [-f1{name} and -f2{name}] by computing the FMS
+ overlap statistic with the assumption that both grids must be identical in terms of grid
+ size, levels, pollutants, and number of time periods. When the -t flag is set, time 
+ mismatches are ignored.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="mergextr"></a><h2><center>mergextr</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: mergextr [-arguments (default)]<br>
+ &nbsp;&nbsp; -a[date to start YYMMDDHH]<br>
+ &nbsp;&nbsp; -b[date to stop YYMMDDHH]<br>
+ &nbsp;&nbsp; -i[input file name of file names (mergelist.txt)]<br>
+ &nbsp;&nbsp; -o[Output file name: (xtrct.txt)]<br>
+<br></td></tr>
+<tr><td>
+ This program will read a file of filenames (format: DG_YYYYMMDDHH) and create 
+ a new file of filenames with only the dates between and including the dates 
+ entered. The <i>DG_</i> file name convention is usually associated with
+ the <i>concdecay</i> program.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="tcmsum"></a><h2><center>tcmsum</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: tcmsum -[options(default)]<br>
+ &nbsp;&nbsp; -c[column number in source term file (1)]<br>
+ &nbsp;&nbsp; -d[output file name suffix (bin)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump)]<br>
+ &nbsp;&nbsp; -o[output file base name (tcmsum)]<br>
+ &nbsp;&nbsp; -h[half-life-days (0.0 = none)]<br>
+ &nbsp;&nbsp; -p[pollutant sum label (SUM)]<br>
+ &nbsp;&nbsp; -s[source term input file name (cfactors.txt)]<br>
+ &nbsp;&nbsp; -t[time decay start: MMDDHH (run_start)]<br>
+<br></td></tr>
+<tr><td>
+ Program to add together the pollutant concentrations from one HYSPLIT concentration
+ file, where the pollutants represent different starting times as configured from a 
+ HYSPLIT Transfer Coefficient Matrix (TCM) simulation with ICHEM=10. The concentrations
+ for each starting time are multiplied by a source term defined in an auxiliary input file.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>srm_sum.tcl</i></font><br>
+</td></tr>
+</table>
+
+
+
+
+
+<br><br><hr>
+<p><h1>Ensembles</h1></p>
+
+<a name="accudiv"></a><h2><center>accudiv</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: accudiv [-options]<br>
+ Reads DATEM formatted measurement and modeled data
+ and calcuates the accuracy/diversity among all the
+ possible combinations of pairs, trios, etc.<br>
+ &nbsp;&nbsp; -b[base model output file name)]<br>
+ &nbsp;&nbsp; -m[measurement input file name ]<br>
+ &nbsp;&nbsp; -o[output file name ]<br>
+<br></td></tr>
+<tr><td>
+Applies a reduction technique to an ensemble.
+In this technique all the possible model combinations
+are tested and the chosen subensemble is the one that
+shows the minimum square error. The measurements and
+model results should be defined by DATEM format files
+with an identical number of records.<br>
+<br>
+</td></tr>
+<tr><td>
+<font color=green>GUI: <i>ens_reduc.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/ens_reduc.html" 
+                  target="_new"><i>ens_reduc.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="ensperc"></a><h2><center>ensperc</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: ensperc [-options]<br>
+ &nbsp;&nbsp; -b[base model output file name)]<br>
+ &nbsp;&nbsp; -m[measurement input file name ]<br>
+ &nbsp;&nbsp; -o[output file name ]<br>
+<br></td></tr>
+<tr><td>
+ Reads a DATEM formatted measurement file and model data files and calculates 
+ concentration percentiles for ensemble runs and measured values. The 
+ program requires DATEM formatted model outputs and measurements. Sequential
+ numbers (.000) are automatically appended to the base name to generate the
+ ensemble member file name. The cumulative concentration distribution is 
+ computed independently for measured and calculated pairs when both are non-zero.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="enstala"></a><h2><center>enstala</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: enstala [-options]<br>
+ &nbsp;&nbsp; -b[base model output file name)]<br>
+ &nbsp;&nbsp; -m[measurement input file name ]<br>
+ &nbsp;&nbsp; -o[output file name ]<br>
+<br></td></tr>
+<tr><td>
+ Reads a DATEM formatted measurement file and model data files and calculates 
+ values to generate a Talagrand diagram. Sequential numbers (.000.txt) are 
+ automatically appended to the base name to generate the ensemble member file name.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="var2datem"></a><h2><center>var2datem</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: var2datem -[arguments]<br>
+ &nbsp;&nbsp; -c[input to output concentration multiplier]<br>
+ &nbsp;&nbsp; -e[output concentration datem format: (0)=F10.1 1=ES10.4]<br>
+ &nbsp;&nbsp; -r[random number generator seed number (-1)]<br>
+ &nbsp;&nbsp; -p[percent standard deviation (10%) ]<br>
+ &nbsp;&nbsp; -n[minimum concentration (7.0) ]<br>
+ &nbsp;&nbsp; -d[write to diagnostic file]<br>
+ &nbsp;&nbsp; -h[header info: 2=input text, (1)=file name, 0=skip]<br>
+ &nbsp;&nbsp; -m[measurement data file name]<br>
+ &nbsp;&nbsp; -s[supplemental information ]<br>
+ &nbsp;&nbsp; -o[output concentration file name]<br>
+<br></td></tr>
+<tr><td>
+ Program to read DATEM file and output randomly generated DATEM file results
+ given a standard deviation and minimum concentration. It is a way to evaluate
+ measurement uncertainty when computing model performance statistics.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+
+
+
+<br><br><hr>
+<p><h1>Graphics Creation</h1></p>
+
+<a name="boxplots"></a><h2><center>boxplots</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: boxplots [-arguments]<br>
+ &nbsp;&nbsp; -a[ascii output file]<br>
+ &nbsp;&nbsp; -c[concentration conversion factor]<br>
+ &nbsp;&nbsp; -d[datem formatted measurement file]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -l[level index number (1)]<br>
+ &nbsp;&nbsp; -m[minimum scale for plot]<br>
+ &nbsp;&nbsp; -M[maximum scale for plot]<br>
+ &nbsp;&nbsp; -n[number of divisions (10)]<br>
+ &nbsp;&nbsp; -p[pollutant index number (1)]<br>
+ &nbsp;&nbsp; -s[start time period (1)]<br>
+ &nbsp;&nbsp; -t[title string]<br>
+ &nbsp;&nbsp; -u[units string for ordinate]<br>
+ &nbsp;&nbsp; -x[longitude]<br>
+ &nbsp;&nbsp; -y[latitude]<br>
+ Output: boxplots.{ps|html}<br>
+<br></td></tr>
+<tr><td>
+ Program to read the probability files output from the program
+ <i>conprob</i> and create up to 12 (time periods) box plots per page.
+ The probability files consist of binary concentration fields for each
+ probability level. Box plots are created for a specific location.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>disp_boxp.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/ens_data.html" 
+                  target="_new"><i>ens_data.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="concplot"></a><h2><center>concplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: concplot -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input file name: (cdump)]<br>
+ &nbsp;&nbsp; -o[Output file name: (concplot.{ps|html})]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; and 38 additional options (see command line for details)<br>
+<br></td></tr>
+<tr><td>
+Primary graphical display program for HYSPLIT binary concentration files. The data
+are contoured and color-filled against a map background. At a minimum, only the
+name of the input file is required. Colors, contour intervals, map background, and
+label details may be adjusted through the approximately 40 command line options.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_rank.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_disp.html" 
+                  target="_new"><i>conc_disp.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="contour"></a><h2><center>contour</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: contour [-options]<br>
+ &nbsp;&nbsp; -d[Input metdata directory name with ending /]<br>
+ &nbsp;&nbsp; -f[input metdata file name]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -y[Map center latitude]<br>
+ &nbsp;&nbsp; -x[Map center longitude]<br>
+ &nbsp;&nbsp; -r[Map radius (deg lat)]<br>
+ &nbsp;&nbsp; -v[Variable name to contour (e.g. TEMP)]<br>
+ &nbsp;&nbsp; -l[Level of variable (sfc=1)]<br>
+ &nbsp;&nbsp; -o[Output time offset (hrs)]<br>
+ &nbsp;&nbsp; -t[Output time interval (hrs)]<br>
+ &nbsp;&nbsp; -c[Color (1/3) or B&W (0/2); 0/1=lines 2/3=nolines]<br>
+ &nbsp;&nbsp; -g[Graphics map file (arlmap) or shapefiles.txt]<br>
+ &nbsp;&nbsp; -m[Maximum contour value (Auto=-1.0)]<br>
+ &nbsp;&nbsp; -i[Increment between contours (Auto=-1.0)]<br>
+ &nbsp;&nbsp; -a[Arcview text output]<br>
+ Output: contour.{ps|html}<br>
+<br></td></tr>
+<tr><td>
+Contour fields from a meteorological data file in ARL format<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>disp_map.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_flow.html" 
+                  target="_new"><i>traj_flow.sh</i></a><br>
+</td></tr>
+</table>
+
+<!--
+<a name="display"></a><h2><center>display</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: display<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - meteorological_file_name<br>
+&nbsp;&nbsp; line 3 - day, hour<br>
+&nbsp;&nbsp; line 4 - center Latitude, Longitude<br>
+&nbsp;&nbsp; line 5 - radius in deg Latitude<br>
+&nbsp;&nbsp; line 6 - enter 0 (B&W) or 1 (Color)<br>
+&nbsp;&nbsp; line 7 - enter 0 (None) or 1 (GIS output)<br>
+&nbsp;&nbsp; line 8 - Level Number<br>
+&nbsp;&nbsp; line 9 - four-character Variable ID<br>
+&nbsp;&nbsp; line 10 - number of contours  (max=8)<br>
+&nbsp;&nbsp; line 11 - contour interval  (-1=auto)<br>
+&nbsp;&nbsp; line 12 - maximum contour value (-1=auto)<br>
+Output: display.{ps|html}<br>
+<br></td></tr>
+<tr><td>
+Interactive standard-input version of the <i>contour</i> program.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+-->
+
+<a name="ensplots"></a><h2><center>ensplots</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: ensplots [-arguments]<br>
+ &nbsp;&nbsp; -b[base name for concentration files]<br>
+ &nbsp;&nbsp; -c[concentration conversion factor]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -m[minimum scale for plot]<br>
+ &nbsp;&nbsp; -M[maximum scale for plot]<br>
+ &nbsp;&nbsp; -n[number of divisions (10)]<br>
+ &nbsp;&nbsp; -x[longitude]<br>
+ &nbsp;&nbsp; -y[latitude]<br>
+ Output: ensplots.{ps|html}<br>
+<br></td></tr>
+<tr><td>
+ Program to read the probability files output from the program
+ <i>conprob</i> and create up to 12 (time periods) member plots 
+ per page in a format similar to <i>boxplots</i>. The graphic shows
+ the member number distribution by concentration for a single location.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>disp_box.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/ens_data.html" 
+                  target="_new"><i>ens_data.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="gridplot"></a><h2><center>gridplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: gridplot -[options(default)]<br>
+ &nbsp;&nbsp; -a[scale: 0-linear, (1)-logarithmic]<br>
+ &nbsp;&nbsp; -b[Science on a Sphere output: (0)-No, 1-Yes)]<br>
+ &nbsp;&nbsp; -c[concentration/deposition multiplier (1.0)]<br>
+ &nbsp;&nbsp; -d[delta interval value (1000.0)]<br>
+ &nbsp;&nbsp; -f[(0), 1-ascii text output files for mapped values]<br>
+ &nbsp;&nbsp; -g[GIS: 0-none 1-GEN(log10) 2-GEN(value) 3-KML 4-partial KML]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -h[height of level to display (m) (integer): (0 = dep)]<br>
+ &nbsp;&nbsp; -i[input file name (cdump.bin)]<br>
+ &nbsp;&nbsp; -j[graphics map background file name: (arlmap)]<br>
+ &nbsp;&nbsp; -k[KML options: 0-none 1-KML with no extra overlays]<br>
+ &nbsp;&nbsp; -l[lowest interval value (1.0E-36), -1 = use data minimum]<br>
+ &nbsp;&nbsp; -m[multi frames one file (0)]<br>
+ &nbsp;&nbsp; -n[number of time periods: (0)-all, numb, min:max, -incr]<br>
+ &nbsp;&nbsp; -o[output name (plot.ps)]<br>
+ &nbsp;&nbsp; -p[process output file name suffix]<br>
+ &nbsp;&nbsp; -r[deposition: (1)-each time, 2-sum]<br>
+ &nbsp;&nbsp; -s[species number to display: (1); 0-sum]<br>
+ &nbsp;&nbsp; -u[mass units (ie, kg, mg, etc)]<br>
+ &nbsp;&nbsp; -x[longitude offset (0), e.g., -90.0: U.S. center; 90.0: China center]<br>
+ &nbsp;&nbsp; -y[latitude center (0), e.g., 40.0: U.S. center]<br>
+ &nbsp;&nbsp; -z[zoom: (0=no zoom, 99=most zoom)<br>
+<br></td></tr>
+<tr><td>
+ Creates postscript or html file to show concentration field evolution by using color
+ fill of the concentration grid cells. It is designed especially for global grids such as
+ Science on a Sphere output, which assumes the concentration file is a global lat/lon grid.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_grid.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_disp.html" 
+                  target="_new"><i>conc_disp.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="isochron"></a><h2><center>isochron</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: isochron -[options(default)]<br>
+ &nbsp;&nbsp;  -d[time interval in hours, (-1)=automatic selection]<br>
+ &nbsp;&nbsp;  -f[Frames: (0)-all frames one file, 1-one frame per file]<br>
+ &nbsp;&nbsp;  -g[GIS: 0-none 1-GEN(log10) 2-GEN(value) 3-KML 4-partial KML]<br>
+ &nbsp;&nbsp;  +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp;  -h[level index (1); 0-all]<br>
+ &nbsp;&nbsp;  -i[input file name (cdump.bin)]<br>
+ &nbsp;&nbsp;  -j[Graphics map background file name: (arlmap)]<br>
+ &nbsp;&nbsp;  -k[KML options: 0-none 1-KML with no extra overlays]<br>
+ &nbsp;&nbsp;  -m[concentration multiplier (1.0)]<br>
+ &nbsp;&nbsp;  -n[number of contours (12)]<br>
+ &nbsp;&nbsp;  -o[output name (toa.ps or toa.xxx where xxx is defined by -p)]<br>
+ &nbsp;&nbsp;  -p[Process output file name suffix]<br>
+ &nbsp;&nbsp;  -s[species number to display: (1); 0-all]<br>
+ &nbsp;&nbsp;  -S[species output table created: (0)-no, 1-yes]<br>
+ &nbsp;&nbsp;  -t[lowest threshold value (1.0E-36)<br>
+ &nbsp;&nbsp;  -u[mass units (ie, kg, mg, etc)]<br>
+ &nbsp;&nbsp;  -x[longitude offset (0), e.g., -90.0: U.S. center; 90.0: China center]<br>
+ &nbsp;&nbsp;  -y[latitude center (0), e.g., 40.0: U.S. center]<br>
+ &nbsp;&nbsp;  -z[zoom: (0=no zoom, 99=most zoom)<br>
+<br></td></tr>
+<tr><td>
+ Creates a postscript or html file to show the time it takes for a concentration
+ grid cell to become non-zero after the start of the simulation. Times are designated
+ by using color fill of the concentration grid cells.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_time.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_disp.html" 
+                  target="_new"><i>conc_disp.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="parhplot"></a><h2><center>parhplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: parhplot -[options(default)]<br>
+ &nbsp;&nbsp; -a[GIS output: (0)-none, 1-GENERATE, 3-kml]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -i[input file name (PARDUMP)]<br>
+ &nbsp;&nbsp; -k[Kolor: (0)-B&W 1-Color]<br>
+ &nbsp;&nbsp; -m[scale output by mass 1-yes (0)-no]<br>
+ &nbsp;&nbsp; -s[select output species (1)-first specie, 0-sum all, or species id number]<br>
+ &nbsp;&nbsp; -n[plot every Nth particle (1)]<br>
+ &nbsp;&nbsp; -o[output file name (parhplot.ps)]<br>
+ &nbsp;&nbsp; -j[Map background file: (arlmap) or shapefiles.txt]<br>
+ &nbsp;&nbsp; -p[Process file name suffix: (ps) or process ID]<br>
+ &nbsp;&nbsp; -t[age interval plot in hours (0)]<br>
+ &nbsp;&nbsp; -z[Zoom factor:  0-least zoom, (50), 100-most zoom]<br>
+<br></td></tr>
+<tr><td>
+Plot the horizontal mass distribution from a PARDUMP file.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>disp_part.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/disp_part.html" 
+                  target="_new"><i>disp_part.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="parsplot"></a><h2><center>parsplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: parsplot -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (PARDUMP)]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -k[Kolor: (0)-B&W 1-Color]<br>
+ &nbsp;&nbsp; -j[map background file or {none} to turn off]<br>
+ &nbsp;&nbsp; -n[plot every Nth particle (1)]<br>
+ &nbsp;&nbsp; -o[output file base name (otherwise PYYMMDDHH.{ps|html})]<br>
+ &nbsp;&nbsp; -p[particle max value for color scaling]<br>
+ &nbsp;&nbsp; -s[size scaling fraction from default (1.0)]<br>
+ &nbsp;&nbsp; -t[particle age plot option not available]<br>
+<br></td></tr>
+<tr><td>
+ Global particle plot using a cylindrical equidistant projection. If the output
+ file name is defined on the command line, multiple time periods will be written
+ to the same file; otherwise output will be one file per time period!
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>disp_part.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="parvplot"></a><h2><center>parvplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: parvplot -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (PARDUMP)]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -k[Kolor: (0)-B&W 1-Color]<br>
+ &nbsp;&nbsp; -m[scale output by mass 1-yes (0)-no]<br>
+ &nbsp;&nbsp; -s[select output species (1) or species id number]<br>
+ &nbsp;&nbsp; -n[plot every Nth particle (1)]<br>
+ &nbsp;&nbsp; -o[output file name (parvplot.ps)]<br>
+ &nbsp;&nbsp; -p[Process file name suffix: (ps) or process ID]<br>
+ &nbsp;&nbsp; -t[age interval plot in hours (0)]<br>
+ &nbsp;&nbsp; -z[Zoom factor:  0-least zoom, (50), 100-most zoom]<br>
+<br></td></tr>
+<tr><td>
+Plot the vertical mass cross-section from a PARDUMP file.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>disp_part.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/disp_part.html" 
+                  target="_new"><i>disp_part.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="parxplot"></a><h2><center>parxplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: parxplot -[options(default)]<br>
+ &nbsp;&nbsp; -a[GIS output: (0)-none, 1-GENERATE, 3-kml]<br>
+ &nbsp;&nbsp; -i[input file name (PARDUMP)]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -k[Kolor: (0)-B&W 1-Color]<br>
+ &nbsp;&nbsp; -m[scale output by mass 1-yes (0)-no]<br>
+ &nbsp;&nbsp; -s[select output species (1)-first specie, 0-sum all, or species id number]<br>
+ &nbsp;&nbsp; -n[plot every Nth particle (1)]<br>
+ &nbsp;&nbsp; -o[output file name (parxplot.ps)]<br>
+ &nbsp;&nbsp; -j[Map background file: (arlmap) or shapefiles.&lt;(txt)|process suffix&gt;]<br>
+ &nbsp;&nbsp; -p[Process file name suffix: (ps) or process ID]<br>
+ &nbsp;&nbsp; -t[age interval plot in hours (0)]<br>
+ &nbsp;&nbsp; -x[Force cross section: lat1,lon1,lat2,lon2]<br>
+ &nbsp;&nbsp; -z[Zoom factor:  0-least zoom, (50), 100-most zoom]<br>
+<br></td></tr>
+<tr><td>
+ Plot the vertical cross-section through the plume center from a PARDUMP file.<br>
+<br></td></tr>
+<tr><td>
+<font color=green>GUI: <i>disp_part.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/disp_part.html" 
+                  target="_new"><i>disp_part.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="poleplot"></a><h2><center>poleplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: poleplot [-options]<br>
+ &nbsp;&nbsp; -b[background map file name (arlmap)]<br>
+ &nbsp;&nbsp; -c[concentration data file name (cdump)]<br>
+ &nbsp;&nbsp; -g[graphics (0)=fill, 1=lines, 2=both]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; -l[lat/lon label interval in degrees (0.5)]<br>
+ &nbsp;&nbsp; -m[maximum concentration value set]<br>
+ &nbsp;&nbsp; -o[output file name (poleplot.ps)]<br>
+ &nbsp;&nbsp; -v[vector output (0)=no 1=yes]<br>
+<br></td></tr>
+<tr><td>
+  Program plots HYSPLIT concentrations that were created on a polar grid
+  (cpack=3) rather than the default cartesian grid. Polar grids are defined
+  in terms distance and angle, where sector 1 starts from the north and 
+  sector 2 is clockwise adjacent. Sectors are defined by arc-degrees and
+  distance in increments of kilometers.
+<br>
+<br></td></tr>
+<tr><td>
+<font color=green>GUI: <i>pole_disp.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_pole.html" 
+                  target="_new"><i>conc_pole.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="scatter"></a><h2><center>scatter</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: scatter -[options]<br>
+ &nbsp;&nbsp; -i{input file}<br>
+ &nbsp;&nbsp; +g{graphics: (0)=postscript 1=svg}<br>
+ &nbsp;&nbsp; -o{output file (scatter.{ps|html})}<br>
+ &nbsp;&nbsp; -p{plot minimum (-999=auto)}<br>
+ &nbsp;&nbsp; -s{symbol plot: (0)=station 1=record 2=plus 3=day 4=hour}<br>
+ &nbsp;&nbsp; -x{plot maximum (-999=auto)}<br>
+<br></td></tr>
+<tr><td>
+Plots a scatter diagram from the file <i>dataA.txt</i> of merged measured and
+calculated values created by the <i>statmain</i> program. The default option
+plots the sampling station ID number at the data point.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>datem.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_stat.html" 
+                  target="_new"><i>conc_stat.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="showgrid"></a><h2><center>showgrid</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: showgrid [-filename options]<br>
+ &nbsp;&nbsp; -D[input metdata directory name with ending /]<br>
+ &nbsp;&nbsp; -F[input metdata file name]<br>
+ &nbsp;&nbsp; +G[graphics: (0)-Postscript 1-SVG]<br>
+ &nbsp;&nbsp; -P[process ID number for output file]<br>
+ &nbsp;&nbsp; -I[grid point plotting increment (0=none)]<br>
+ &nbsp;&nbsp; -L[lat/lon label interval in degrees]<br>
+ &nbsp;&nbsp; -A[location of arlmap or shapefiles.<(txt)|processid>]<br>
+ &nbsp;&nbsp; -X[Read from standard input]<br>
+ &nbsp;&nbsp; -Q[subgrid lower left latitude (xxx.xx)]<br>
+ &nbsp;&nbsp; -R[subgrid lower left longitude (xxxx.xx)]<br>
+ &nbsp;&nbsp; -S[subgrid upper right latitude (xxx.xx)]<br>
+ &nbsp;&nbsp; -T[subgrid upper right longitude (xxxx.xx)]<br>
+ &nbsp;&nbsp; -B[plot symbol at each lat/lon in file SYMBPLT.CFG]<br>
+ Output: showgrid.{ps|html}<br>
+<br></td></tr>
+<tr><td>
+Program will create a map of the full-domain of the meteorological data file with
+&plus; marks at each grid intersection matching the specified interval (-I). A smaller
+map domain may be chosen. If desired a four-character symbol may be plotted at the
+latitude-longitude points specified in the input file (-B) which is in free-format
+(latitude longitude 4-characters).<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>disp_grid.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="stabplot"></a><h2><center>stabplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: stabplot -i -n -y<br>
+ &nbsp;&nbsp; -i[process ID number]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG]<br>
+ &nbsp;&nbsp; -n[sequential station number (1+2+...+n]<br>
+ &nbsp;&nbsp; -y[auto y axis log scaling]<br>
+Input: STABILITY.{processID}.txt<br>
+Output: stabplot.{processID}.{ps|html}<br>
+<br></td></tr>
+<tr><td>
+Plots a time series of Pasquill-Gifford stability categories at one or more locations. 
+Requires the output file STABILITY.TXT from the <i>vmixing</i> program.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="timeplot"></a><h2><center>timeplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: timeplot [-arguments]<br>
+ &nbsp;&nbsp; -i[input concentration file name]<br>
+ &nbsp;&nbsp; -s[secondary file name for display]<br>
+ &nbsp;&nbsp; -e[process ID number appended to output file]<br>
+ &nbsp;&nbsp; +g[graphics type: (0)=Postscript, 1=SVG]<br>
+ &nbsp;&nbsp; -c[concentration multiplier (1.0)]<br>
+ &nbsp;&nbsp; -m[minimum ordinate value (0.0)]<br>
+ &nbsp;&nbsp; -n[sequential station number (1+2+...+n]<br>
+ &nbsp;&nbsp; -p[0=draw only points, 1=no connecting line, 2=both]<br>
+ &nbsp;&nbsp; -x[maximum ordinate value (data)]<br>
+ &nbsp;&nbsp; -y[y axis log scaling (default=linear)]<br>
+ &nbsp;&nbsp; -z[three char time label (UTC)]<br>
+ Output: timeplot.{ps|html}<br>
+<br></td></tr>
+<tr><td>
+ Program to plot a time series of concentrations at one or more locations by reading
+ the output file from program <i>con2stn</i>. Supplemental (secondary) data in
+ DATEM format may also be included on the plot.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_stn.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_util.html" 
+                  target="_new"><i>conc_util.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="trajplot"></a><h2><center>trajplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: trajplot -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input files: name1+name2+... or +listfile or (tdump)]<br>
+ &nbsp;&nbsp; -o[Output file name: (trajplot.{ps|html})]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; and 14 additional options (see command line for details)<br>
+<br></td></tr>
+<tr><td>
+ Basic trajectory plotting program for HYSPLIT formatted ASCII endpoint files.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>traj_disp.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_basic.html" 
+                  target="_new"><i>traj_basic.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="volcplot"></a><h2><center>volcplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: volcplot -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input concentration file name: (cdump)]<br>
+ &nbsp;&nbsp; -o[Output file name: (volcplot.{ps|html})]<br>
+ &nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+ &nbsp;&nbsp; and 20 additional options (see command line for details)<br>
+<br></td></tr>
+<tr><td>
+ Uses the binary gridded concentration output file from HYSPLIT to generate a visual
+ ash cloud against a map background using the VAFTAD display format.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+
+
+
+
+
+<br><br><hr>
+<p><h1>Graphical Utilities</h1></p>
+
+<a name="cat2svg"></a><h2><center>cat2svg</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: cat2svg -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input concatenated file (catsvg.html)]<br>
+ &nbsp;&nbsp; -o[Output file name: (svg.html)]<br>
+ &nbsp;&nbsp; -t[Truncate blanks at end of output text: 0-no (1)-yes]<br>
+<br></td></tr>
+<tr><td>
+ When html files containing SVG graphics are concatenated into a single file,
+ the resulting file will have multiple &lt;head&gt; and &lt;body&gt; tags. This program
+ normalizes it by removing spurious &lt;head&gt; tags and merging &lt;body&gt; tags.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="catps2ps"></a><h2><center>catps2ps</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: catps2ps -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input concatenated file (catps.ps)]<br>
+ &nbsp;&nbsp; -o[Output file name: (postscript.ps)]<br>
+ &nbsp;&nbsp; -t[Truncate blanks at end of output text: 0-no (1)-yes]<br>
+ &nbsp;&nbsp; -m[Mac version delete save and restore]<br>
+<br></td></tr>
+<tr><td>
+Removes extraneous header information and updates the page count for multiple
+frame Postscript files that have been created by appending individual
+single-frame files.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>hysplit.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="coversheet"></a><h2><center>coversheet</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: coversheet [-options]<br>
+ &nbsp;&nbsp; -b[backtracking (0)=no, 1=yes]<br>
+ &nbsp;&nbsp; -i[input text file (RSMC.TXT)]<br>
+ &nbsp;&nbsp; -j[input date stamp file (COVER.TXT)]<br>
+ &nbsp;&nbsp; -o[output file (cover.ps)]<br>
+<br></td></tr>
+<tr><td>
+Creates a graphical coversheet from a text file that summarizes various HYSPLIT
+run parameters. In a subsequent step, the simulation grapics are appended
+to the coversheet. This particular version has been customized for RSMC applications.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="gelabel"></a><h2><center>gelabel</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: gelabel [-options]<br>
+&nbsp;&nbsp; -p[Process file name suffix (ps|html) or process ID]<br>
+&nbsp;&nbsp; -4[Plot below threshold minimum for chemical output: (0)-no, 1-yes]<br>
+&nbsp;&nbsp; +g[graphics: (0)-Postscript, 1-SVG<br>
+Input: label input file is GELABEL_{ps|html}.{ps|html}<br>
+<br></td></tr>
+<tr><td>
+Creates a small table like graphic to assocate contour colors with concentration values.
+Results can be merged into Google Earth KML/KMZ files.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_disp.tcl</i> and <i>conc_grid.tcl</i></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/disp_ge.html" 
+                  target="_new"><i>disp_ge.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="gen2xml"></a><h2><center>gen2xml</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: gen2xml -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input generate filename: (hysgen.txt)]<br>
+ &nbsp;&nbsp; -a[Input generate attributes filename: (hysgen.att)]<br>
+ &nbsp;&nbsp; -o[Output file name: (hysgen.xml)]<br>
+<br></td></tr>
+<tr><td>
+Converts ESRI generate format GIS files to XML files for use in Google Map.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="splitsvg"></a><h2><center>splitsvg</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: splitsvg -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input file (svg.html)]<br>
+ &nbsp;&nbsp; -o[Output file name: (split.svg)]<br>
+ &nbsp;&nbsp; -f[extract the First frame only: (0)-no 1-yes]<br>
+<br></td></tr>
+<tr><td>
+ Create one SVG file per &lt;svg&gt; tag from an HTML file containing SVG graphics.
+ Note that the name of an output file is proceeded by the frame number.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/conc_disp.html" target="_new"><i>conc_disp.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="stn2ge"></a><h2><center>stn2ge</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: stn2ge [-options]<br>
+ &nbsp;&nbsp; -i[input file name output from con2stn]<br>
+ &nbsp;&nbsp; -s[selection station list file name]<br>
+ &nbsp;&nbsp; -o[output google earth file name (less .kml)]<br>
+<br></td></tr>
+<tr><td>
+Converts the concentration output from the <i>con2stn</i> program for the stations in
+the list file to Google Earth (kml) format. The station list file contains one or more
+records of station [ID latitude longitude].<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_stn.tcl</i></font><br>
+</td></tr>
+</table>
+
+
+<br><br><hr>
+<p><h1>HYSPLIT Configuration</h1></p>
+
+<a name="dat2cntl"></a><h2><center>dat2cntl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: dat2cntl [options]<br>
+ &nbsp;&nbsp; -c[numerator units conversion factor (1.0)]<br>
+ &nbsp;&nbsp; -d[emission rate set to the ...<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; (0) = measured data value,<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;  1  = 1/measured data value,<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;  2  = value in the conversion factor field (-c)]<br>
+ &nbsp;&nbsp; -n[number variables on location line (3),4,5]<br>
+ &nbsp;&nbsp; -i[input measured data file name in datem format]<br>
+ &nbsp;&nbsp; -s[output station number as pollutant ID: no=0, yes=(1)]<br>
+ &nbsp;&nbsp; -t[index for trajectory start: 1,2,3,4,5,6,(7)]<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; 1 = ending of sample<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; 2 = middle of sample;     3 = end and middle<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; 4 = start  of sample;     5 = end and start<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;(7)= end, middle, start;   6 = middle and start<br>
+ &nbsp;&nbsp;  -z[zero value (1.0E-12)<br>
+<br></td></tr>
+<tr><td>
+ Converts a DATEM format measured data file into CONTROL.{variation} by
+ reading the base CONTROL file and the DATEM observational data file.
+ The CONTROL file should represent a forward calculation from the source
+ location and time to encompass the sampling data that is expected to be
+ impacted by the release. The reconfigured CONTROL files are numbered
+ sequentially and correspond to the suffix name of the binary output
+ file. The station ID is written in the pollutant ID field for single
+ pollutant concentration simulations and it is incorporated into the
+ output file name for trajectory calculations. Trajectory starts are at
+ the beginning, middle, and end of the sampling period. Concentration
+ runs release particles over the entire sampling period.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_geol.tcl</i> and <i>traj_geol.tcl</i></font>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/src_geol.html" 
+          target="_new"><i>src_geol.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="dustbdy"></a><h2><center>dustbdy</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+USAGE: dustbdy<br>
+Input: CONTROL and LANDUSE.ASC<br>
+Output: CONTROL<br>
+<br></td></tr>
+<tr><td>
+Generates multiple latitude-longitude source points from a CONTROL file in which the 
+first two latitude-longtitude points are considered to be the corner points and the third
+point is the delta latitude-longtitude increment.  Each source point represents a PM10
+dust emission point based upon the land use category of desert. <br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>hymenu.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/cust_dust.html" 
+                  target="_new"><i>cust_dust.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="dustedit"></a><h2><center>dustedit</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: dustedit  -[options (default)]<br>
+ &nbsp;&nbsp; -b[bowen ratio selection value (2.5)]<br>
+ &nbsp;&nbsp; -i[input control file name (dustconus_controlXX)]<br>
+ &nbsp;&nbsp; -m[meteorology file name (hourly_data.txt)]<br>
+ &nbsp;&nbsp; -o[output control file name (dustconus_control.txt)]<br>
+<br></td></tr>
+<tr><td>
+Selects locations from /nwprod/fix/dustconus_controlXX that meet certain selection 
+criteria based upon current meteorological conditions at each potential dust
+emission location. There are three steps:
+<ol>
+<li> Find the maximum sensible heat flux from 1500-2100 UTC  
+<li> Determine if the latent flux &gt;= 5 and sensible flux &gt;= 25 watts/m2
+<li> Use as an emission point if the Bowen ratio (S/L) &gt;= 2.5
+</ol>
+A new CONTROL file is written that is used in the dust script instead of 
+dustconus_controlXX. The Bowen ratio is used as a surrogate for wet or dry conditions
+to turn off dust emissions where it has recently rained. Dust emissions will restart
+once it has dried out as indicated by a Bowen ratio above the threshold. This program is
+used as a pre-processor in the operational dust forecast.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="fires"></a><h2><center>fires</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: fires <br>
+ Usage: fires {bluesky directory} <br>
+ Usage: fires -d{bluesky directory} -g{aggregation grid size} <br>
+ Defaults:   directory=./    grid_size=0.20 <br>
+<br></td></tr>
+<tr><td>
+ Generates multiple lat-lon source points from a control file in which the 
+ first lat lon points are considered to be the corner point. Each source point
+ represents a forest fire smoke emission point based upon satellite analysis.<br> 
+<br>
+ <table>
+ <tr><td><b>File</b></td><td>	<b>Purpose</b></td></tr>
+ <tr><td>DOMAIN</td><td> 		CONTROL file that specifies the fire domain</td></tr>
+ <tr><td>CONTROL</td><td>		CONTROL file modified with each emission location</td></tr>
+ <tr><td>BLUESKY.TXT</td><td>	Names BlueSky output files, lat, lon, area</td></tr>
+ <tr><td>BLUESKY.CSV</td><td>	Aggregated fire locations for BlueSky input</td></tr>
+ <tr><td>FIRES.ARC</td><td>	Yesterday's emissions on the aggregation grid</td></tr>
+ <tr><td>FIRES.NEW</td><td>	Emissions for today plus any decayed archive emissions</td></tr>
+ <tr><td>FIRES.TXT</td><td>	NESDIS HMS file of fire locations for today</td></tr>
+ </table>
+<br>
+ The program is intended to be run in two modes. If no BlueSky emission data are 
+ available (BLUESKY.TXT does not exist), then a default emission scenario is 
+ assumed for each pixel location in FIRES.TXT. This pass will create the BlueSky
+ burns input file (BLUESKY.CSV). This file must then be processed in the BlueSky 
+ framework to produce the specied emission file for that location. On the second 
+ pass to this program, the BLUESKY.TXT file is read to create a modified CONTROL 
+ file with emission locations, rates, and burn areas. The script calling this 
+ program should delete all BLUESKY.??? files prior to the first pass execution.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="firew"></a><h2><center>firew</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: fires <br>
+ Usage: fires {bluesky directory} <br>
+<br></td></tr>
+<tr><td>
+ Simpler version of <i>fires</i> for web applications.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="goes2ems"></a><h2><center>goes2ems</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: goes2ems [start] [duration] [infile1] [infile2]<br>
+ &nbsp;&nbsp;  [start]    - initial HH hour or force YYYYMMDDHH<br>
+ &nbsp;&nbsp;  [duration] - emission duration in hours<br>
+ &nbsp;&nbsp;  [infile1]  - first day GOES emission file<br>
+ &nbsp;&nbsp;  [infile2]  - second day GOES emission file<br>
+<br></td></tr>
+<tr><td>
+The program reads the GOES PM2.5 emissions file and converts it to the
+HYSPLIT time-varying EMITIMES file format.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="hysplit"></a><h2><center>hysplit executables</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: hy{c|t}{m|s}_{xxx} [optional suffix]<br>
+ &nbsp;&nbsp; {c|t} where c=concentration and t=trajectory<br>
+ &nbsp;&nbsp; {m|s} where m=multi-processor and s=single-processor<br>
+ &nbsp;&nbsp; {xxx} where xxx=compilation-variation<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; std=standard version<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; ens=integrated grid ensemble<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; var=random initialization<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; gem=global eulerian model<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; ier=ozone steady state<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; grs=ozone seven equation<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; so2=sulfur dioxide wet chemistry<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; cb4=carbon bond four chemistry<br>
+ &nbsp;&nbsp;[.suffix] - added to all standard model input and output files if found<br>
+<br></td></tr>
+<tr><td>
+Various HYSPLIT executables are created using different compilation
+options from the same source code: hymodelc.F for air concentrations
+and hymodelt.F for trajectories.<br>
+<br></td></tr>
+<tr><td>
+A more detailed discussion about the input and output file requirements for the 
+variations of the primary HYSPLIT executables can be found in the model
+<a href="https://www.ready.noaa.gov/HYSPLIT_Tutorials.php" target="_new">tutorial</a>.
+A detailed description of the additional file requirements for the various HYSPLIT 
+chemistry versions (ier,grs,so2) can also be found
+<a href="https://www.ready.noaa.gov/HYSPLIT_pcchem.php" target="_new">on-line</a>.
+</td></tr>
+</table>
+
+<a name="hysptest"></a><h2><center>hysptest</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+USAGE: hysptest [optional suffix]<br>
+&nbsp;&nbsp;[.suffix] - added to all standard model input and output files if found<br>
+<br></td></tr>
+<tr><td>
+Test version of HYSPLIT that will evaluate the CONTROL and SETUP.CFG files for 
+consistency of options by actually running a single-particle dummy calculation
+using the meteorological data. This program is discussed in more detail
+in the model <a href="https://www.ready.noaa.gov/HYSPLIT_Tutorials.php" target="_new">tutorial</a>.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>test_cfg.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/test_inputs.html" 
+                  target="_new"><i>test_inputs.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="latlon"></a><h2><center>latlon</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+USAGE: dustbdy [-p{process ID suffix}]<br>
+Input: CONTROL<br>
+Output: CONTROL<br>
+<br></td></tr>
+<tr><td>
+ Generates multiple latitude-longitude source points from a CONTROL file in which the
+ first point is considered to be the corner point and the third point is the delta 
+ latitude-longitude increment. An input CONTROL file requires exactly three
+ starting locations:<br>
+ &nbsp;&nbsp;1: lower left corner of matrix grid (1,1)<br>
+ &nbsp;&nbsp;2: upper right corner of matrix grid (imax,jmax)<br>
+ &nbsp;&nbsp;3: location of grid point (2,2) adjacent to (1,1)<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>hymenu.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/src_recp.html" 
+                  target="_new"><i>src_recp.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="nuctree"></a><h2><center>nuctree</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: nuctree -n [-options]<br>
+ &nbsp;&nbsp; -o[output activity file name {DAUGHTER.TXT}]<br>
+ &nbsp;&nbsp; -n[Parent nuclide name (ie, Cs-137, I-131)]<br>
+ &nbsp;&nbsp; -p[Process ID number (CONTROL.pid, CONTROL_DAUGHTER.pid)]<br>
+ &nbsp;&nbsp; -r[generate random initial seed]<br>
+<br></td></tr>
+<tr><td>
+ This program will display the daughter nuclides produced by a parent 
+ nuclide along with the half-life and branching fractions of each nuclide.
+ It will also read a CONTROL file and use the pollutant ID to determine 
+ the daughter products. An additional CONTROL.DAUGHTER file will be created
+ with the daughter products information.  
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>conc_daug.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="prntbdy"></a><h2><center>prntbdy</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+USAGE: prntbdy<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; 1 - landuse.asc<br>
+&nbsp;&nbsp; 2 - rouglen.asc<br>
+&nbsp;&nbsp; 3 - terrain.asc<br>
+Input: Select Input File Number<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+Prints the contents of the various boundary files in the <i>bdyfiles<i> directory.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="testnuc"></a><h2><center>testnuc</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: testnuc<br>
+Input: none<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+ This is a hardwired program to test subroutine <i>nucdcy</i> in the HYSPLIT
+ subroutine library which is used to calculate radioactive decay and the
+ resulting daughter products defined on the same particle. Documentation
+ is not available nor are there any known applications.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="timeplus"></a><h2><center>timeplus</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: timeplus year(I2) month(I2) day(I2) hour(I2) fhour(I4)<br>
+<br></td></tr>
+<tr><td>
+ Prints a new date when given a date and forecast hour.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="vmsmerge"></a><h2><center>vmsmerge</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: vmsmerge -[options(default)]<br>
+ &nbsp;&nbsp; -i[input base file name (VMSDIST).000]<br>
+ &nbsp;&nbsp; -o[output file name (VMSDIST)]<br>
+<br></td></tr>
+<tr><td>
+ Merge multiple VMSDIST.XXX files into a single file by looping
+ sequentially 001->999 through vmsdist files to the first missing file.
+ The contents are merged into one file. These files are normally created 
+ by the MPI version.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="vmsread"></a><h2><center>vmsread</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: vmsread [-filename options]<br>
+ &nbsp;&nbsp;  -i[input file name (VMSDIST)]<br>
+ Output: vmsdist.txt<br>
+<br></td></tr>
+<tr><td>
+Program to read the HYSPLIT vertical mass distribution file on native
+levels and output results to a file at the same interval as in the
+MESSAGE file.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="zcoord"></a><h2><center>zcoord</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: zcoord<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; 30.0 -25.0 5.0<br>
+<br></td></tr>
+<tr><td>
+Program to show the HYSPLIT vertical coordinates based upon the values of the
+three polynomial coefficients: AA BB CC. New values can be entered after the
+program stops. There is no input prompt. The values used in each HYSPLIT simulation
+can be found in the MESSAGE file line: <i>Internal grid parameters (nlvl,aa,bb,cc)</i>
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+<br><br><hr>
+<p><h1>Meteorological Data to ARL Format</h1></p>
+
+<a name="api2arl"></a><h2><center>api2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: api2arl [-options]<br>
+ &nbsp;&nbsp;  -h[help information with extended discussion]<br>
+ &nbsp;&nbsp;  -e[encoding configuration file {name | create arldata.cfg}]<br>
+ &nbsp;&nbsp;  -d[decoding configuration file {name | create api2arl.cfg}]<br>
+ &nbsp;&nbsp;  -i[input grib data file name {DATA.GRIB2}]<br>
+ &nbsp;&nbsp;  -o[output data file name {DATA.ARL}]<br>
+ &nbsp;&nbsp;  -g[model grid name (4 char) default = {center ID}]<br>
+ &nbsp;&nbsp;  -s[sigma compute=1 or read=2 or ignore=(0)]<br>
+ &nbsp;&nbsp;  -t[top pressure (hPa) or number {50} of levels from bottom]<br>
+ &nbsp;&nbsp;  -a[averge vertical velocity no=(0) or yes=numpts radius]<br>
+ &nbsp;&nbsp;  -z[zero fields (no=0 yes=1)initialization flag {1}]<br>
+<br></td></tr>
+<tr><td>
+ The program converts model output data in GRIB2 format using the 
+ ECMWF ecCodes library (formerly used the ECMWF grib_api library) to 
+ the ARL packed format required for input to HYSPLIT. The data must 
+ be a global latitude-longitude or regional Lambert grid defined on 
+ pressure surfaces. The program will only convert one time period 
+ in any one input file. Multiple time period output files can be 
+ created by appending each time period processed using the cat command.<br>
+ v1 : Pressure level data from the NCEP NOMADS server<br>
+ v2 : Hybrid sigma coordinate; index increases with Z<br>
+ v3 : NOAA pressure and ECMWF hybrid &half;<sup>o</sup> data; index decreases with Z<br>
+ v4 : GSD HRRR data on pressure level surfaces<br>
+</td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="apidump"></a><h2><center>apidump</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: apidump<br>
+ Input: data.grib2<br>
+ Output: standard<br>
+<br></td></tr>
+<tr><td>
+ Decodes a GRIB2 message, providing a simply inventory of the contents.
+ There are no command line options and the GRIB message must be in a file
+ named <i>data.grib2</i>.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+<a name="arw2arl"></a><h2><center>arw2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE-1: arw2arl [netcdf data file name]<br>
+ USAGE-2: arw2arl -[options (default)]<br>
+ &nbsp;&nbsp;   -b[beginning time period index (1)]<br>
+ &nbsp;&nbsp;   -e[ending time period index (9999)]<br>
+ &nbsp;&nbsp;   -t[time interval in minutes between outputs (60.0)]<br>
+ &nbsp;&nbsp;   -s[create WRF variable namelist file for instantaneous winds]<br>
+ &nbsp;&nbsp;   -a[create WRF variable namelist file for average fluxes]<br>
+ &nbsp;&nbsp;   -k[create WRF variable namelist file for tke fields]<br>
+ &nbsp;&nbsp;   -c[create and run with namelist file (1)=inst, 2=avrg flux, 3=tke]<br>
+ &nbsp;&nbsp;   -d[diagnostic output turned on]<br>
+ &nbsp;&nbsp;   -i[input netcdf data file name (WRFOUT.NC)]<br>
+ &nbsp;&nbsp;   -o[output ARL packed file name (ARLDATA.BIN)]<br>
+ &nbsp;&nbsp;   -p[packing configuration file name (ARLDATA.CFG)]<br>
+ &nbsp;&nbsp;   -v[variable namelist file name (WRFDATA.CFG)]<br>
+ &nbsp;&nbsp;   -n[number of levels to extract from sfc (50)]<br>
+ &nbsp;&nbsp;   -z[zero initialization each time 0=no (1)=yes]<br>
+<br></td></tr>
+<tr><td>
+ Advanced Research WRF to ARL format converts ARW NetCDF files to a 
+ HYSPLIT compatible format. The WRFDATA.CFG namelist file can be manually
+ edited to select other variables to output. X variables are not found in
+ the WRF output but are created by this program. All variables require a
+ units conversion factor be defined in the namelist file.  When the input
+ file contains data for a single time period, then the ARL format output 
+ file from each execution should be appended (cat >>) to the output file
+ from the previous time periods execution.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>arch_arw.tcl</i></font><br>
+</td></tr>
+</table>
+
+
+<a name="content"></a><h2><center>content</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: content<br>
+ Input: GRIB1 file name<br>
+ Output: standard<br>
+<br></td></tr>
+<tr><td>
+Dump the contents, by section, of a GRIB1 file
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="drn2arl"></a><h2><center>drn2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+USAGE: drn2arl [setup file]<br>
+Input: DRONE_SETUP.CFG<br>
+<br></td></tr>
+<tr><td>
+Program to convert meterological drone data for ONE vertical profile to 
+standard packed form for input into other ARL programs. See the associated
+README file for more detailed instructions.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="grib2arl"></a><h2><center>grib2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: grib2arl [-options]<br>
+&nbsp;&nbsp; -[14 options, see source code]
+<br></td></tr>
+<tr><td>
+<font color=orange>This program is an orphaned application as it has been 
+moved to the <i>~/data2arl/legacy</i> directory and pre-compiled versions are
+no longer available.</font><br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>arch_{era|ecm}.tcl</i></font>
+<br>
+</td></tr>
+</table>
+
+<a name="narr2arl"></a><h2><center>narr2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: narr2arl [file_1] [file_2] [...]<br>
+<br></td></tr>
+<tr><td>
+ Converts an North American Regional Reanalysis (NARR) model pressure GRIB1 
+ file to the ARL packed format. Processes only one time period per execution.  
+ Multiple input files may be specified on the command line, each containing 
+ different variables required for the specific time period. Input data are
+ assumed to be already on a conformal map projection on model levels. However, 
+ wind vectors need to be rotated from true to the projection.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="sfc2arl"></a><h2><center>sfc2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: sfc2arl [filein] [fileout] [clat] [clon] [optional process ID number]<br>
+<br></td></tr>
+<tr><td>
+Creates a gridded meteorological file for multiple time periods in ARL packed
+format from an ASCII input file of surface observations. For example:<br><br>
+<font size=-1>
+ YY MM DD HH MM MSLP SFCP T02M RH2M MIXD WDIR WSPD PASQ SHGT<br>
+ 07 09 04 11 00 1007 0937 0021 0079 552.0 270 5.0  4 00175<br>
+ 07 09 04 12 00 1008 0938 0022 0065 745.0 300 6.0  4 00175<br>
+</font><br>
+The output data grid is compiled for 25 by 25 grid points at 10 km resolution and
+it is centered about the command line lat-lon position. This program is very 
+similar to <i>stn2arl</i> except the input file contains the additional variables,
+SFCP, T02M, RH2M, SHGT, and the vertical coordinate of the output grid is sigma
+rather than absolute pressure units.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="snd2arl"></a><h2><center>snd2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: snd2arl [filein] [fileout] [clat] [clon] [mixing] [yymmddhh] ...<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;[optional process ID number]<br>
+<br></td></tr>
+<tr><td>
+ Creates one time period ARL packed format meteorological file from a single rawinsonde
+ over a 50 x 50 (10 km) grid and where clat-clon is the grid center and mixing is an
+ integer from 1 to 7 defining the turbulent mixing from convective (1), neutral(4),
+ to very stable (7). The input file should be free format with the following information
+ (without the label record):<br><br>
+ <font size=-1>
+   Pressure     Temp    DewPt   Height Direction   Speed<br>
+    1007.00    27.40    18.40    93.00   150.00     4.63<br>
+    1000.00    26.60    17.60   146.00   151.60     4.55<br>
+     925.00    20.20    16.10   828.00   169.54     3.63<br>
+     891.00    17.40    15.30  1150.44   178.16     3.18<br>
+     883.89    17.20    15.25  1219.00   180.00     3.09<br>
+ </font>
+</td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="stn2arl"></a><h2><center>stn2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: stn2arl [filein] [fileout] [clat] [clon] [optional process ID number]
+<br>
+<br></td></tr>
+<tr><td>
+ Creates a gridded meteorological file for multiple time periods in ARL packed
+ format from an ASCII input file of surface observations. For example:<br><br>
+ <font size=-1>
+ YY MM DD HH MM WDIR WSPD MIXD PASQ<br>
+ 07 09 04 11 00 270 5.0 1500.0 4<br>
+ 07 09 04 12 00 280 5.0 1500.0 4<br>
+</font><br>
+The output data grid is compiled for 25 by 25 grid points at 10 km resolution and
+it is centered about the command line lat-lon position. This program is very 
+similar to <i>sfc2arl</i> except the input file contains only the minimum number 
+of variables.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>arch_user.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/meteo_enter.html" 
+                  target="_new"><i>meteo_enter.sh</i></a><br>
+</td></tr>
+</table>
+
+
+
+
+
+
+
+<br><br><hr>
+<p><h1>Meteorological Data Editing</h1></p>
+
+<a name="add_data"></a><h2><center>add_data</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: add_data [station data file name] [ARL gridded file name] ...<br> 
+ &nbsp;&nbsp; followed by the optional parameters {none= (default)}:<br>
+ &nbsp;&nbsp; -d to turn on diagnostic output<br>
+ &nbsp;&nbsp; -g{#}, where # is the grid point scan radius (9999)<br>
+ &nbsp;&nbsp; -t{#}, where # is (1) for blending temperature or 0 for no blend<br>
+ &nbsp;&nbsp; -z{#}, vertical interpolation: (0)=PBL, 1=all, 2=above PBL<br>
+<br></td></tr>
+<tr><td>
+ Edits the packed meteo data file based upon selected observations
+ in the station data input file. The station file contains wind
+ direction and speed at times, locations, and heights (any order).
+ Observations are matched with the gridded data interpolated to
+ the same location. Gridded winds are then adjusted in direction
+ and speed to match the observation. Those winds are then inter-
+ polated (using 1/r^2) back into the gridded data domain in the
+ mixed layer. The program is not intended to be a replacement for
+ data assimilation but a quick way to adjust the initial transport
+ direction to match local observations near the computational 
+ starting point. The optional -g# parameter is used to limit the
+ radius of influence of the 1/r^2 weighting to # grid points in a
+ radial direction from each of the observation locations. The
+ default (9999) is to use the whole grid. Vertical interpolation
+ defaults to mixed layer only, but can be set to do the entire
+ profile, or it can just process the levels above the mixed layer.<br>
+<br>
+Sample ASCII station observation input file (missing = -1.0)<br>
+ -------- required -----------------------  ---- optional ---<br>
+ YY MM DD HH MM  LAT   LON  HGT   DIR  SPD  TEMP Up2 Vp2 Wp2<br>
+ 95 10 16 00 00 39.0 -77.0 10.0 120.0 15.0 270.0 1.0 1.0 0.5<br>
+ 95 10 16 02 00 39.0 -77.0 10.0 120.0 15.0 270.0 1.0 1.0 0.5<br>
+ 95 10 16 04 00 39.0 -77.0 10.0 120.0 15.0 270.0 1.0 1.0 0.5<br>
+</td></tr>
+<tr><td>
+<br>
+</td></tr>
+</table>
+
+<a name="add_grid"></a><h2><center>add_grid</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: add_grid<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+Output: addgrid.bin<br>
+<br></td></tr>
+<tr><td>
+Program to interpolate an existing meteorological data file
+ to a finer spatial resolution grid at integer intervals of
+ the original grid spacing. The program should be run before 
+ <i>add_data</i> to insure that the
+ resolution of the meteorological data file is similar to that
+ of the observations. This combination of programs was used to
+ merge WRF and DCNet data for dispersion model calculations.
+<br></td></tr>
+<tr><td>
+<br>
+</td></tr>
+</table>
+
+<a name="add_miss"></a><h2><center>add_miss</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: add_miss<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+Output: addmiss.bin<br>
+<br></td></tr>
+<tr><td>
+ Examines a file for whole missing time periods (records missing)
+ and creates a new output file with interpolated data inserted into
+ the proper locations. The first two time periods in the file cannot
+ be missing. The missing data records must already exist in the file
+ to use this program. <font color=red>Files with DIFF records will 
+ not be interpolated correctly.</font>
+<br></td></tr>
+<tr><td>
+<br>
+</td></tr>
+</table>
+
+<a name="add_time"></a><h2><center>add_time</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: add_time<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+&nbsp;&nbsp; line 3 - The output frequency in minutes<br>
+Output: addtime.bin<br>
+<br></td></tr>
+<tr><td>
+ Program to interpolate additional time periods into a meteorological
+ data file. The new data output interval should be an even time multiple
+ of the existing data file. Options are set through standard input.
+ Linear interpolation is used to create the data for the output time periods
+ that fall between the time periods of the input data file. <font color=red>
+ Files with DIFF records will not be interpolated correctly.</font>
+<br></td></tr>
+<tr><td>
+<br>
+</td></tr>
+</table>
+
+<a name="add_velv"></a><h2><center>add_velv</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: add_velv<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+&nbsp;&nbsp; line 3 - Lower left corner of output grid (lat,lon)<br>
+&nbsp;&nbsp; line 4 - Upper right corner of output grid (lat,lon)<br>
+&nbsp;&nbsp; line 5 - Number of vertical levels including surface<br>
+Output: addvelv.bin<br>
+<br></td></tr>
+<tr><td>
+ Extracts a subgrid from a larger domain file and adds additional
+ 3D records for the velocity variances: u^2, v^2, and w^2. These are
+ computed from the TKE field. The program requires the input
+ meteorological file to contain the turbulent kinetic energy field.
+ The output file may then used as an input file for other programs
+ that will add observational data.
+ The program can be used to create a meteorological data file with
+ velocity variances over a smaller domain where observational 
+ variance data (i.e. DCNet) can be assimilated using <i>add_data</i>.
+<br></td></tr>
+<tr><td>
+<br>
+</td></tr>
+</table>
+
+<a name="aer2arl"></a><h2><center>aer2arl</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: aer2arl<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+&nbsp;&nbsp; line 3 - Meteorological model top pressure (hPa)<br>
+Output: outfile.arl<br>
+<br></td></tr>
+<tr><td>
+ Reads in an AER WRF formatted ARL file and writes out an ARL file with 
+ the new AWRF header and vertically staggered meteorological variables
+ repositioned accordingly.
+<br></td></tr>
+<tr><td>
+<br>
+</td></tr>
+</table>
+
+<a name="arl2meds"></a><h2><center>arl2meds</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: arl2meds<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+Output: meds.fix<br>
+<br></td></tr>
+<tr><td>
+Converts one ARL SHGT (terrain height) data record to MEDS format. This file
+ may be required by the meds2arl converter if the surface terrain (ST) variable
+ is not included within the MEDS data file. Note that the data may need to be
+ realigned with either the prime meridian or dateline to match the alignment
+ of the MEDS data. The MEDS data alignment is written to the meds.txt
+ diagnostic message output file by the meds2arl program. Therefore it may take
+ one or two iterations of arl2meds and meds2arl to get the proper command line
+ input parameters.<br>
+<br></td></tr>
+<tr><td> 
+<font color=orange>
+This program is an orphaned application as the primary converter program
+<i>meds2arl</i> has been moved to the <i>~/data2arl/legacy</i> directory.<br>
+</font>
+</td></tr>
+</table>
+
+<a name="data_avrg"></a><h2><center>data_avrg</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: data_avrg<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - Grid point filter (delta: i,j)<br>
+&nbsp;&nbsp; line 2 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 3 - ARLformat_datafile_name<br>
+Output: average.bin<br>
+<br></td></tr>
+<tr><td>
+Averages ARL format meteorological data according to input grid point
+filter options, such that each value is replaced by the average value
+of all grid points within the rectangular area &plusmn;i and &plusmn;j.
+<font color=red>Files with DIFF records will not be averaged correctly.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="data_del"></a><h2><center>data_del</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: data_del<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - Variable to remove (4-char ID)<br>
+&nbsp;&nbsp; line 2 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 3 - ARLformat_datafile_name<br>
+Output: clean.bin<br>
+<br></td></tr>
+<tr><td>
+This program deletes a variable from the ARL formatted meteorogical file. 
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="edit_flux"></a><h2><center>edit_flux</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: edit_flux<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+&nbsp;&nbsp; line 3 - the new roughness length (m)<br>
+Output: editflux.bin<br>
+<br></td></tr>
+<tr><td>
+ Edits the all flux fields based upon a pre-determined roughness length.
+ Using U = U* k / ln(Z/Zo) with the original Zo and  a new equation with 
+ a modified Zo^ that represents the new larger roughness length, take the 
+ ratio of the two equations such that U*^/U* = ln(Z/Zo)/ln(Z/Zo^). For 
+ computational purposes, assume that Z is always one meter greater than Zo^.
+ Then the the momentum flux fields are multiplied by this ratio, while T* is
+ divided by the ratio.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="edit_head"></a><h2><center>edit_head</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: edit_head<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+&nbsp;&nbsp; line 3 - Incorrect time (YY MM DD HH FH)<br>
+&nbsp;&nbsp; line 4 - Correct time (YY MM DD HH FH)<br>
+<br></td></tr>
+<tr><td>
+ Edits the 50 byte ASCII header of each data record of a pre-existing
+ meteorological data file. The program could be recompiled to perform
+ other edits besides changing incorrect time labels.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="edit_index"></a><h2><center>edit_index</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: edit_index<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+<br></td></tr>
+<tr><td>
+ Edit the extended header (to byte 108) for each index record of an existing
+ meteorological data file. The program needs to be modified and then recompiled
+ to customize the edit for each problem problem encountered.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="edit_miss"></a><h2><center>edit_miss</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: edit_miss<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - maximum number of missing periods permitted<br>
+&nbsp;&nbsp; line 2 - just list missing (0) or write into data file (1)<br>
+&nbsp;&nbsp; line 3 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 4 - ARLformat_datafile_name<br>
+&nbsp;&nbsp; line 5 - processing start day,hr<br>
+<br></td></tr>
+<tr><td>
+ Program <i>edit_miss</i> is used to interpolate missing variables
+ in an existing meteorological data file from adjacent time periods. 
+ The missing data must already exist in the file as valid records 
+ with either a blank or missing code in the field. For files with 
+ missing records, use program <i>add_miss</i>. <font color=red>Files 
+ with DIFF records will not be interpolated correctly.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="edit_null"></a><h2><center>edit_null</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: edit_null<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - Data grid size (nxp, nyp) for all files<br>
+&nbsp;&nbsp; line 2 - Data set name (with NULL field ID)<br>
+&nbsp;&nbsp; line 3 - Output data set name with merged data<br>
+&nbsp;&nbsp; line 4 - Data set name with the one-field to replace NULL<br>
+<br></td></tr>
+<tr><td>
+ This program replaces one record per time period in a file where the 
+ missing record is identified by NULL. The new field is read from another
+ file than only contains the one variable. The records are matched by time. 
+ For example, the program can be used to insert precipitation records into
+ a file. Some editing and recompilation may be required.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="file_copy"></a><h2><center>file_copy</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: file_copy [file1] [file2]<br>
+<br></td></tr>
+<tr><td>
+Appends file1 to the end of file2. This program can be used in the event
+that the <i>type file1&gt;&gt;file2</i> in DOS or <i>cat file1&gt;&gt;file2</i>
+in UNIX cannot be used.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>arch_ecm.tcl</i></font><br>
+</td></tr>
+</table>
+
+<a name="file_merge"></a><h2><center>file_merge</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: file_merge<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_file#1_name<br>
+&nbsp;&nbsp; line 3 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 4 - ARLformat_file#2_name<br>
+<br></td></tr>
+<tr><td>
+Merges the data records from file #1 into file #2 by replacing the records in
+file #2 with the same time stamp as those in file #1. If data times in file #1
+go beyond the end of file #2, those records are appended to file #2.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="pole2merc"></a><h2><center>pole2merc</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: pole2merc<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_northern_hemisphere_name<br>
+&nbsp;&nbsp; line 3 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 4 - ARLformat_southern_hemisphere_name<br>
+&nbsp;&nbsp; line 5 - Lower left corner (lat,lon) of Mercator grid<br>
+&nbsp;&nbsp; line 6 - Upper right corner (lat,lon) of Mercator grid<br>
+Output: mercator.bin<br>
+<br></td></tr>
+<tr><td>
+ Merges two meteorology files, a northern hemisphere and southern hemisphere polar
+ stereographic projection, to single Mercator projection output file. The polar
+ grids need to be identical in grid size.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="rec_copy"></a><h2><center>rec_copy</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: rec_copy<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/FROMdata/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_copyFROM_datafile_name<br>
+&nbsp;&nbsp; line 3 - /meteorological/TOdata/directory/<br>
+&nbsp;&nbsp; line 4 - ARLformat_copyTO_datafile_name<br>
+&nbsp;&nbsp; line 5 - Relative to start time record numbers copied (start,stop)<br>
+&nbsp;&nbsp; line 6 - Start copy at (day, hour)<br>
+<br></td></tr>
+<tr><td>
+Copies a range of records from file #1 to file #2 starting at the time specified. Both 
+meteorological grids need to be identical. The records to be copied are specified by
+the range of record numbers relative to the record number of the starting time. Records
+in the destination file are replaced regardless of whether they match in terms of content.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="rec_insert"></a><h2><center>rec_insert</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: rec_insert<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - the data grid size (nxp, nyp)<br>
+&nbsp;&nbsp; line 2 - the OLD data set name<br>
+&nbsp;&nbsp; line 3 - the NEW data set name<br>
+&nbsp;&nbsp; line 4 - the special MERGE data set name<br>
+<br></td></tr>
+<tr><td>
+The program is designed to be customized and recompiled for each application. The current
+version copies the records from the OLD meteorological data file into the NEW file. During
+the copy it tests for the NULL variable ID in the OLD meteorological data file and
+replaces that record with the equivalent record number in the special MERGE data file.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="rec_merge"></a><h2><center>rec_merge</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: rec_merge<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - the data definition file (METDATA.CFG)<br>
+&nbsp;&nbsp; line 2 - the OLD data set name<br>
+&nbsp;&nbsp; line 3 - the NEW data set name<br>
+&nbsp;&nbsp; line 4 - the special MERGE data set name<br>
+<br></td></tr>
+<tr><td>
+ The program merges in an additional data file (MERGE) with one record per time period, 
+ reading an OLD archive format data file (one without the index record) to the NEW style
+ format as defined by data definition file. Information about the original purpose of 
+ this program is no longer available.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="xtrct_grid"></a><h2><center>xtrct_grid</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: xtrct_grid [optional arguments] and prompted input<br>
+ &nbsp;&nbsp; -h [shows this help display]<br>
+ &nbsp;&nbsp; -p [add process ID to the file names]<br>
+ &nbsp;&nbsp; -g [use grid points to define the subgrid]<br>
+ &nbsp;&nbsp; -n [number of time periods to average (0)]<br>
+ &nbsp;&nbsp; Prompted standard input:<br>
+ &nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+ &nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+ &nbsp;&nbsp; line 3 - Lower left corner (lat,lon or i,j if -g set)<br>
+ &nbsp;&nbsp; line 4 - Upper right corner (lat,lon or i,j if -g set)<br>
+ &nbsp;&nbsp; line 5 - Number of data levels (including sfc)<br>
+ Output: extract.bin<br>
+<br></td></tr>
+<tr><td>
+Extracts a subgrid from a larger domain meteorological file in ARL format. The subgrid
+is selected through the lower left and upper right corners either by latitude-longitude
+or grid point value if the -g command line option is invoked. Note that subgrids cannot
+be smaller than the minimum record length required to write an INDX record. The length
+of the index record is determined by the number of variables and levels.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="xtrct_time"></a><h2><center>xtrct_time</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: -p[process_id] -s[skip DDHH] -d[delete] -h[help]<br>
+ &nbsp;&nbsp; Prompted standard input:<br>
+ &nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+ &nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+ &nbsp;&nbsp; line 3 - starting day, hour, min for extract<br>
+ &nbsp;&nbsp; line 4 - ending day, hour, min for the extract <br>
+ &nbsp;&nbsp; line 5 - skip time period interval (0=none 1=every other)<br>
+ &nbsp;&nbsp; line 6 - start and stop record numbers (over-ride or accept default)<br>
+Output: extract.bin<br>
+<br></td></tr>
+<tr><td>
+ Program to extract a selected number of time periods from a ARL format meteorological data
+ file. The (-d) delete option can be used to change the program to delete rather than
+ extract the selected time period. The skip (-s) option only skips duplicate time periods
+ matching the day hour (DDHH) specified.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+
+
+
+<br><br><hr>
+<p><h1>Meteorological Data Examination</h1></p>
+
+<a name="arl2grad"></a><h2><center>arl2grad</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: arl2grad {/meteo_dir_name/} {arl_filename} {output file name}<br>
+If the output filename is missing, then it is set to <i>MODEL_ID.grd</i><br>
+<br></td></tr>
+<tr><td>
+Converts ARL packed meteorological data to Grads format
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="chk_data"></a><h2><center>chk_data</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: chk_data<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+ A simple program to dump the first and last four elements of the data array for each
+ record (i.e. variable) of an ARL packed meteorological file. It is used primarily
+ for diagnostic testing.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="chk_file"></a><h2><center>chk_file</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: chk_file [-i{nteractive} -s{hort} -f{file} -t{ime}]<br>
+&nbsp;&nbsp; -i{nteractive} prompted standard input:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp;&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+&nbsp;&nbsp;&nbsp;&nbsp; line + - Enter to continue ...<br>
+&nbsp;&nbsp; -s{hort} only index record information output<br>
+&nbsp;&nbsp; -f{file} output to CHKFILE{1|2|3} otherwise to standard output<br>
+&nbsp;&nbsp; -t{ime} only writes the first and last record of each time period<br>
+<br></td></tr>
+<tr><td>
+Program to dump the 50 byte ascii header on each record in addition to a summary
+of the information contained in the index record.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="chk_index"></a><h2><center>chk_index</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: chk_index<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+&nbsp;&nbsp; line + - Enter to continue when changes noted<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+Check the extended header (bytes 1:108) for each meteorological index record 
+to insure that they are consistent for all time periods in the data file. There
+is one index record before all of the data records each time period.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="chk_rec"></a><h2><center>chk_rec</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: chk_rec<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+Elementary program to dump the 50 byte ASCII header for each record
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="chk_times"></a><h2><center>chk_times</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: chk_times<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+&nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+Program to list all the time periods in a file and checks to
+that the number of records per time period are consistent. The
+maximum forecast hour is also returned.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+
+
+
+<a name="data_year"></a><h2><center>data_year</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: data_year<br>
+Input: none (all meteorological files to be opened are hardcoded)<br>
+Output: AT{latitude}{longitude}<br>
+<br></td></tr>
+<tr><td>
+The program will create annual averages of a variable (temperature) at 
+several pre-designated latitude-longitude positions using the 2.5&deg; global
+reanalysis data. Directory, file names, and all other options are hardcoded.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="datecol"></a><h2><center>datecol</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: datecol {meteorology file#1} {meteorology file#2} {...#n}<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+Prints the dates from an ARL format meteorology file to standard output
+as one line each for years, months, days, and hours. This program is used in 
+several web applications.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="datesmry"></a><h2><center>datesmry</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: datesmry {output from program <i>datecol</i>}<br>
+Output: standard<br>
+<br></td></tr>
+<tr><td>
+Tabulates a set of dates from program <i>datecol</i> into bins for web use.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="filedates"></a><h2><center>filedates</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: filedates [input file]<br>
+<br></td></tr>
+<tr><td>
+Lists the [YY MM DD HH FF] as a series of records to standard
+output showing all of the time periods in an ARL formatted
+meteorological data file. Used in several web applications.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="findgrib"></a><h2><center>findgrib</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: findgrib<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - /GRIB1/directory/file_name<br>
+Output: standard
+<br>
+<br></td></tr>
+<tr><td>
+ Finds the starting GRIB string at the beginning of each GRIB1 record
+ and determines the record length between GRIB1 records from the byte
+ count and the actual record length encoded in the binary data.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="gridxy2ll"></a><h2><center>gridxy2ll</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: gridxy2ll [-filename options (in CAPS only)]<br>
+ &nbsp;&nbsp; -D[input metdata directory name with ending /]<br>
+ &nbsp;&nbsp; -F[input metdata file name]<br>
+ &nbsp;&nbsp; -P[process ID number for output file]<br>
+ &nbsp;&nbsp; -X[x point]<br>
+ &nbsp;&nbsp; -Y[y point]<br>
+ &nbsp;&nbsp; -W[image width]<br>
+ &nbsp;&nbsp; -H[image height]<br>
+<br></td></tr>
+<tr><td>
+Returns the latitude-longitde position of the upper-right corner
+point in meteorological grid units given the lower-left position
+and delta-width and -height in grid units.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="inventory"></a><h2><center>inventory</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: inventory<br>
+ Input: GRIB1 file name<br>
+ Output: standard<br>
+<br></td></tr>
+<tr><td>
+Produces and inventory listing of all the records in GRIB1 file
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="metdates"></a><h2><center>metdates</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: metdates [input file]<br><br>
+<br></td></tr>
+<tr><td>
+Print the dates from an ARL formatted meteorology file. The program
+is similar in function to <i>filedates</i> and one or both of these
+are used for web applications.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="metlatlon"></a><h2><center>metlatlon</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: metlatlon [directory filename]<br>
+<br></td></tr>
+<tr><td>
+ Prints a text listing of the latitude-longitude associated with each grid
+ point in an ARL formattted meteorological data file.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="metpoint"></a><h2><center>metpoint</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: metpoint [directory filename latitude longitude]<br>
+<br></td></tr>
+<tr><td>
+ Determines if a location is within the domain of an ARL formattted
+ meteorological data file. The program command line contains latitude, 
+ longitude, file name, and directory, and returns the i,j of the position.
+ Negative values are outside the grid.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="profile"></a><h2><center>profile</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: profile [-options]<br>
+ &nbsp;&nbsp; -d[Input metdata directory name with ending /]<br>
+ &nbsp;&nbsp; -f[input metdata file name]<br>
+ &nbsp;&nbsp; -y[Latitude]<br>
+ &nbsp;&nbsp; -x[Longitude]<br>
+ &nbsp;&nbsp; -o[Output time offset (hrs)]<br>
+ &nbsp;&nbsp; -t[Output time interval (hrs)]<br>
+ &nbsp;&nbsp; -n[Hours after start time to stop output (hrs))]<br>
+ &nbsp;&nbsp; -p[process ID number for output text file]<br>
+ &nbsp;&nbsp; -e[extra digit in output values (0)-no,1-yes]<br>
+<br></td></tr>
+<tr><td>
+ Extracts the meteorological profile at the selected location with the values
+ always written to a file called <i>profile.txt</i>, which may be appended by
+ a process ID. Without the -t option set, only the first time period will be
+ extracted. Use -o to start at a time after the first time period.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>disp_prof.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/meteo_prof.html" 
+                  target="_new"><i>meteo_prof.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="unpacker"></a><h2><center>unpacker</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: unpacker<br>
+ Input prompted on the command line:
+ Line 1 - GRIB1 file name<br>
+ Output: standard<br>
+<br></td></tr>
+<tr><td>
+Decodes each section and all variables in a GRIB1 meteorological file.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="velvar"></a><h2><center>velvar</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: velvar<br>
+Input: CONTROL<br>
+Output: velvar.txt<br>
+<br></td></tr>
+<tr><td>
+Creates a time series of velocity variance and diagnostic values using the meteorological
+data and location specified in a standard HYSPLIT CONTROL file.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="vmixing"></a><h2><center>vmixing</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: vmixing (optional arguments)<br>
+ &nbsp;&nbsp; -p[process ID]<br>
+ &nbsp;&nbsp; -s[KBLS - stability method (1=default)]<br>
+ &nbsp;&nbsp; -t[KBLT - PBL mixing scheme (2=default)]<br>
+ &nbsp;&nbsp; -d[KMIXD - Mixing height scheme (0=default)]<br>
+ &nbsp;&nbsp; -l[KMIX0 - Min Mixing height (50=default)]<br>
+ &nbsp;&nbsp; -a[CAMEO variables (0[default]=No, 1=Yes, 2=Yes + Wind Direction]<br>
+ &nbsp;&nbsp; -m[TKEMIN - minimum TKE limit for KBLT=3 (0.001=default)]<br>
+ &nbsp;&nbsp; -w[an extra file for turbulent velocity variance (0[default]=No,1=Yes)]<br>
+Output: STABILITY{processID}.TXT<br>
+<br></td></tr>
+<tr><td>
+Creates a time series of meteorological stability parameters.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="xtrct_stn"></a><h2><center>xtrct_stn</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ Usage: xtrct_stn [-i{nteractive} -f{ile of lat-lons} -r{rotate winds to true}]<br>
+ &nbsp;&nbsp; Prompted standard input:<br>
+ &nbsp;&nbsp; line 1 - /meteorological/data/directory/<br>
+ &nbsp;&nbsp; line 2 - ARLformat_datafile_name<br>
+ &nbsp;&nbsp; line 3 - Number of variables to extract, for each variable ...<br>
+ &nbsp;&nbsp; line 4 - &nbsp;&nbsp;&nbsp;&nbsp;CHAR_ID(a4) level#(i2) Units_multiplier(f10) <br>
+ &nbsp;&nbsp; line 5 - Position of data extraction (lat,lon) when NOT -f<br>
+ &nbsp;&nbsp; line 6 - Interpolation as Nearest Neighbor (0) or Linear (1)<br>
+ &nbsp;&nbsp; line 7 - Output file name<br>
+ &nbsp;&nbsp; line 8 - Initial output record number (to append to an existing file)<br>
+ Output: ASCII; records grouped by time period, then station, with all variables on one line<br>
+<br></td></tr>
+<tr><td>
+ Creates a time series of meteorological variables interpolated to a specific latitude-longitude
+ point. Multiple variables may be defined, each by their 4-character ID. To enhance the interactive
+ mode, prompting for each input line can be turned on (-i). If the file of latitude-longitude
+ points is defined (-f) then the position of the extraction point is not required. The first record
+ of the lat-lon file is the number of lines to follow.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+
+<br><br><hr>
+<p><h1>Particle Utilities</h1></p>
+
+<a name="asc2par"></a><h2><center>asc2par</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: asc2par -[options(default)]<br>
+ &nbsp;&nbsp;  -i[input  file name (PARDUMP.txt)]<br>
+ &nbsp;&nbsp;  -o[output file name (PARDUMP.bin)]<br>
+<br></td></tr>
+<tr><td>
+ Converts the ASCII formatted particle dump file, created by the
+ program <i>par2asc</i> to a big-endian binary file. Each output
+ time is composed of a header record indicating the number of 
+ particles to follow for that time period:<br>
+ Header Record: NUMPAR,NUMPOL,IYR,IMO,IDA,IHR<br>
+ &nbsp;&nbsp; Each particle output is composed of three data records:<br>
+ &nbsp;&nbsp; Record 1: MASS(1:NUMPOL)<br>
+ &nbsp;&nbsp; Record 2: TLAT,TLON,ZLVL,SIGH,SIGW,SIGV<br>
+ &nbsp;&nbsp; Record 3: PAGE,HDWP,PTYP,PGRD,NSORT<br>
+</td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="par2asc"></a><h2><center>par2asc</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: par2asc -[options(default)]<br>
+ &nbsp;&nbsp; -i[input  file name (PARDUMP)]<br>
+ &nbsp;&nbsp; -o[output file name (PARDUMP.txt)]<br>
+ &nbsp;&nbsp; -v[inventory date/times (PARINV)]<br>
+ &nbsp;&nbsp; -a[optional one-line-per-particle output that<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;   can be imported into GIS:(0)-none ; 1-PAR_GIS.txt created]<br>
+<br></td></tr>
+<tr><td>
+ Converts the particle dump output file (big-endian binary) to an ASCII-formatted particle
+ file, and as an option, output an inventory file listing the date/time(s) of the output.
+ Each output time of the ASCII-formatted particle file is compose of a header record 
+ indicating the number of particles to follow for that time period. With the optional -a1 
+ text file option, PAR_GIS.txt is created, where each particle has one line, and the 
+ following is written: header record + one record for each particle.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="par2conc"></a><h2><center>par2conc</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: par2conc -[options(default)]<br>
+ &nbsp;&nbsp; -i[input  file name (PARDUMP)]<br>
+<br></td></tr>
+<tr><td>
+ Converts the particle dump output file (big-endian binary) to a HYSPLIT-formatted
+ concentration file using a CONTROL file to determine the grid and averaging times.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="parmerge"></a><h2><center>parmerge</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: parmerge -[options(default)]<br>
+ &nbsp;&nbsp; -i[input base file name (PARDUMP).000]<br>
+ &nbsp;&nbsp; -o[output file name (PARDUMP)]<br>
+<br></td></tr>
+<tr><td>
+ Merges multiple PARDUMP.XXX files into a single file. These files are normally
+ created by the MPI version. The program loops sequentially 001 through 999 for
+ any existing PARDUMP files and merges the contents into one file. The program
+ stops at the first missing file.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="paro2n"></a><h2><center>paro2n</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: paro2n -[options(default)]<br>
+ &nbsp;&nbsp; -i[input  file name (PARDUMP)]<br>
+ &nbsp;&nbsp; -o[output  file name (PARDUMP.NEW)]<br>
+<br></td></tr>
+<tr><td>
+  Converts the {o}ld particle dump output file (big-endian binary) to the {n}ew 
+  format that includes the minutes field.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="parshift"></a><h2><center>parshift</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: parshift -[options (default)]<br>
+ &nbsp;&nbsp; -b[blend shift outside of the window]<br>
+ &nbsp;&nbsp; -d[delete particles instead of shift/rotate (0)-all #-specie]<br>
+ &nbsp;&nbsp; -i[input base file name (PARDUMP)]<br>
+ &nbsp;&nbsp; -o[output base file name (PARINIT)]<br>
+ &nbsp;&nbsp; -r[rotation degrees:kilometers:latitude:longitude]<br>
+ &nbsp;&nbsp; -s[search for multiple files with .000 suffix]<br>
+ &nbsp;&nbsp; -t[time MMDDHHMN (missing process first time only)]<br>
+ &nbsp;&nbsp; -w[window corner lat1:lon1:lat2:lon2 (-90.0:-180.0:90.0:180.0)]<br>
+ &nbsp;&nbsp; -x[shift delta longitude (0.0)]<br>
+ &nbsp;&nbsp; -y[shift delta latitude  (0.0)]<br>
+<br></td></tr>
+<tr><td>
+ The program provides for the spatial adjustment of the particle positions in the HYSPLIT 
+ binary particle position output file as specified on the command line. One or more files 
+ may be processed by a single execution with the adjusted output always written to a new 
+ file name. The position adjustment is only applied to one time period if the input file 
+ contains multiple time periods. The shift is specified in either delta latitude-longitude
+ units. Unless a latitude-longitude window is specified, all particle positions in the fil
+ are adjusted. Adjustments outside of the window may be linearly blended to zero adjustment
+ at a distance of two windows. Adjustments may also be specified as a rotation and distance
+ from a point. Particles in a window may also be deleted.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>par_shift.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/cust_toms.html" 
+                  target="_new"><i>cust_toms.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="stn2par"></a><h2><center>stn2par</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: stn2par -[options(default)]<br>
+ &nbsp;&nbsp; -i[input file name (meas-t1.txt)]<br>
+ &nbsp;&nbsp; -n[number of grid pts (50)]<br>
+ &nbsp;&nbsp; -g[grid interpolation (0.5) deg (0=stn)]<br>
+ &nbsp;&nbsp; -o[output file name (PARINIT)]<br>
+ &nbsp;&nbsp; -p[particle=(0) or puff=1 distribution]<br>
+ &nbsp;&nbsp; -r[turns on random initial seed number]<br>
+ &nbsp;&nbsp; -s[split factor (10) per station]<br>
+ &nbsp;&nbsp; -t[temporal output interval (24) hrs]<br>
+ &nbsp;&nbsp; -z[height distribution (3000) meters]<br>
+<br></td></tr>
+<tr><td>
+ Converts measured data in DATEM format to a multi-time period PARDUMP file which can be
+ used for HYSPLIT initialization or display applications.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+
+
+
+
+
+
+<br><br><hr>
+<p><h1>Shapefile Manipulation</h1></p>
+
+<a name="ascii2shp"></a><h2><center>ascii2shp</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: ascii2shp [options] outfile type &lt; infile<br>
+&nbsp;&nbsp; reads stdin and creates outfile.shp, outfile.shx and outfile.dbf<br>
+&nbsp;&nbsp; type must be one of these: points lines polygons<br>
+&nbsp;&nbsp; infile must be in 'generate' format<br>
+&nbsp;&nbsp; Options:<br>
+&nbsp;&nbsp; &nbsp;&nbsp; -i Place integer value id in .dbf file (default)<br>
+&nbsp;&nbsp; &nbsp;&nbsp; -d Place double precision id in .dbf file<br>
+<br></td></tr>
+<tr><td>
+Converts trajectory endpoints and concentration contours in GENERATE format
+to ESRI formatted shape files.<br>
+ascii2shp version 0.3.0<br>
+Copyright (C) 1999 by Jan-Oliver Wagner<br>
+The GNU GENERAL PUBLIC LICENSE applies. Absolutly No Warranty!<br>
+ARL ascii2shp version 1.1.10<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>asc2shp.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/disp_shp.html" 
+                  target="_new"><i>disp_shp.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="dbf2txt"></a><h2><center>dbf2txt</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+USAGE: dbf2txt [-d delimiter] [-v] dbf-file<br>
+<br></td></tr>
+<tr><td>
+Extracts the text information from a database file (.dbf).
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="txt2dbf"></a><h2><center>txt2dbf</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: txt2dbf [{-Cn | -In | -Rn.d}] [-d delimiter] [-v] txt-file dbf-file<br>
+<br></td></tr>
+<tr><td>
+ Converts tab-delimited ASCII-Tables in the dbase-III-Format. The table structure
+ is defined on the command line:<br>
+ &nbsp;&nbsp;-Cn	[text, n characters]<br>
+ &nbsp;&nbsp;-In	[integer, with n digits]<br>
+ &nbsp;&nbsp;-Rn.d [real, with n digits (including '.') and d decimals]<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>asc2shp.tcl</i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/disp_shp.html" 
+                  target="_new"><i>disp_shp.sh</i></a><br>
+</td></tr>
+</table>
+
+
+
+
+
+<br><br><hr>
+<p><h1>Trajectory Analysis</h1></p>
+
+<a name="clusend"></a><h2><center>clusend</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: clusend - [ options (default)]<br>
+ &nbsp;&nbsp; -a[max # of clusters: #, (10)]<br>
+ &nbsp;&nbsp; -i[input file (DELPCT)]<br>
+ &nbsp;&nbsp; -n[min # of clusters: #, (3)]<br>
+ &nbsp;&nbsp; -o[output file (CLUSEND)]<br>
+ &nbsp;&nbsp; -t[min # of trajectories: #, (30)]<br>
+ &nbsp;&nbsp; -p[min % change in TSV difference from one step to next: %, (30)]<br>
+<br></td></tr>
+<tr><td>
+Scans the DELPCT output file from the <i>cluster</i> program, locating the first 
+&quot;break&quot; in the data. &quot;Break&quot; is defined as an ICRIT% increase in TSV.
+<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>trajclus_run.tcl</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_clus.html" 
+                  target="_new"><i>traj_clus.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="cluslist"></a><h2><center>cluslist</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: cluslist - [ options (default)]<br>
+ &nbsp;&nbsp; -i[input file (CLUSTER)]<br>
+ &nbsp;&nbsp; -n[number of clusters: #, (-9-missing)]<br>
+ &nbsp;&nbsp; -o[output file (CLUSLIST)]<br>
+<br></td></tr>
+<tr><td>
+Lists trajectories in each cluster per given number of clusters<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>trajclus_run.tcl</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_clus.html" 
+                  target="_new"><i>traj_clus.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="clusmem"></a><h2><center>clusmem</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: clusmem - [ options (default)]<br>
+ &nbsp;&nbsp; -i[input file (CLUSLIST)]<br>
+ &nbsp;&nbsp; -o[output file (TRAJ.INP.Cxx)]<br>
+Input: CLUSLIST<br>
+Output: TRAJ.INP.C{i}, where i=cluster_number<br>
+<br></td></tr>
+<tr><td>
+Creates a file listing the trajectories in each cluster for input
+to programs <i>trajplot</i> or <i>trajmean</i>.<br>
+<br></td></tr>
+<tr><td>
+<font color=green>GUI: <i>trajclus_run.tcl</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_clus.html" 
+                  target="_new"><i>traj_clus.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="clusplot"></a><h2><center>clusplot</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: clusplot -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input files: name (DELPCT)]<br>
+ &nbsp;&nbsp; -l[Label with no spaces (none)]<br>
+ &nbsp;&nbsp; -o[Output file name: (clusplot.ps)]<br>
+ &nbsp;&nbsp; -p[Process file name suffix: (ps) or label]<br>
+Input: DELPCT<br>
+<br></td></tr>
+<tr><td>
+Plots TSV data from DELPCT file created by cluster program. One can infer 
+the final number(s) of clusters from the plot.   
+<br>
+<br></td></tr>
+<tr><td>
+<font color=green>GUI: <i>trajclus_run.tcl</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_clus.html" 
+                  target="_new"><i>traj_clus.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="cluster"></a><h2><center>cluster</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: cluster<br>
+&nbsp;&nbsp; prompted standard input:<br>
+&nbsp;&nbsp; line 1 - Hours to do clustering<br>
+&nbsp;&nbsp; line 2 - Endpoint interval to use<br>
+&nbsp;&nbsp; line 3 - Skip trajectory interval<br>
+&nbsp;&nbsp; line 4 - Cluster output directory<br>
+&nbsp;&nbsp; line 5 - Map (0)-Auto 1-Polar 2-Lambert 3-Merc 4-CylEqu<br>
+Input: INFILE<br>
+Output: TCLUS, TNOCLUS, DELPCT, CLUSTER, CLUSTERno<br>
+<br></td></tr>
+<tr><td>
+Program starts with N trajectories (clusters) and ends with one cluster. MC is 
+the current number of clusters. Program <i>clusend</i> identifies stop point. 
+Cluster pairs are chosen based on total spatial variance (TSV - the sum of 
+the within-group sum of squares). The two clusters to be paired result in the 
+minimum increase in TSV.<br>
+<br></td></tr>
+<tr><td> <font color=green>GUI: <i>trajclus_run.tcl</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_clus.html" 
+                  target="_new"><i>traj_clus.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="merglist"></a><h2><center>merglist</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: merglist -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input files: name1+name2+... or +listfile or (tdump)]<br>
+ &nbsp;&nbsp; -o[Output file base name: (mdump)]<br>
+ &nbsp;&nbsp; -p[Process file name suffix: (tdump) or process ID]<br>
+<br></td></tr>
+<tr><td>
+ Program to merge HYSPLIT trajectory endpoints (tdump) files where the list 
+ of input files contains one trajectory per file which are then merged into
+ a single output file. Although this program is usually associated with clustering,
+ it can be used in any trajectory application.
+<br>
+<br></td></tr>
+<tr><td>
+<font color=green>GUI: <i>trajclus_run.tcl</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_clus.html" 
+                  target="_new"><i>traj_clus.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="trajfind"></a><h2><center>trajfind</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: trajfind [in_file] [out_file] [lat] [lon]<br>
+<br></td></tr>
+<tr><td>
+ Processes multiple trajectories resulting from the time-height split option
+ contained in [in_file] to extract a single trajectory to [out_file] that passes
+ nearest to the selected latitude-longitude given on the command line. This 
+ program is primarily designed to determine optimal balloon trajectories showing
+ a time sequence of balloon heights required to reach the final position.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="trajfreq"></a><h2><center>trajfreq</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: trajfreq -[options (default)]<br>
+ &nbsp;&nbsp; -f[frequency file name (tfreq.bin)]<br>
+ &nbsp;&nbsp; -g[grid size in degrees (1.0)]<br>
+ &nbsp;&nbsp; -i[input file of file names (INFILE)]<br>
+ &nbsp;&nbsp; -h[number of hours to include in analysis (9999)]<br>
+ &nbsp;&nbsp; -r[residence time (0),1,2,3]:<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; (0) = no<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;  1  = yes; divide endpoint counts by number of trajectories<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;  2  = yes; divide endpoint counts by number of endpoints<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;  3  = yes; divide endpoint counts by max count number for any grid cell<br>
+ &nbsp;&nbsp; -c[include only files with same length as first endpoint file]<br>
+ &nbsp;&nbsp;&nbsp;&nbsp; (0) = no<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;  1  = yes<br>
+ &nbsp;&nbsp; -s[select bottom:top (0:99999) m AGL]<br>
+ &nbsp;&nbsp; -b[YYMMDDHHNNFF - force begin date label (first file)]<br>
+ &nbsp;&nbsp; -e[YYMMDDHHNNFF - force end   date label (last file)]<br>
+ &nbsp;&nbsp; -a[ascii2shp shapefile input file(0) or 1]<br>
+ &nbsp;&nbsp; -k[min longitude for ascii2shp shapefile input file]<br>
+ &nbsp;&nbsp; -l[max longitude for ascii2shp shapefile input file]<br>
+ &nbsp;&nbsp; -m[min latitude  for ascii2shp shapefile input file]<br>
+ &nbsp;&nbsp; -n[max latitude  for ascii2shp shapefile input file]<br>
+<br></td></tr>
+<tr><td>
+ Converts multiple trajectory input files into a concentration file that represents
+ trajectory frequencies.<br>
+<br></td></tr>
+<tr><td> 
+<font color=green>GUI: <i>traj_freq.tcl</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_freq.html" 
+                  target="_new"><i>traj_freq.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="trajfrmt"></a><h2><center>trajfrmt</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: trajfmt [file1] [file2]<br>
+<br></td></tr>
+<tr><td>
+ Reads a trajectory endpoints file1, reformats, and writes file2. The program is designed
+ to be a template for editing trajectory files. The code should be customized and 
+ recompiled for the intended problem. The current data record format follows:
+ (8I6,F8.1,2F9.3,11(1X,F8.1)
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="trajgrad"></a><h2><center>trajgrad</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: trajgrad [file name]<br>
+Output:grads.bin<br>
+<br></td></tr>
+<tr><td>
+ Trajectory model output data in ASCII format is converted to GrADS format.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+<a name="trajmean"></a><h2><center>trajmean</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+ USAGE: trajplot -[options (default)]<br>
+ &nbsp;&nbsp; -i[Input files: name1+name2+... or +listfile or (tdump)]<br>
+ &nbsp;&nbsp; -m[Map projection: (0)-Auto 1-Polar 2-Lamb 3-Merc 4-CylEqu]<br>
+ &nbsp;&nbsp; -o[Output file name: (tmean)]<br>
+ &nbsp;&nbsp; -p[Process file name suffix: (ps) or process ID]<br>
+ &nbsp;&nbsp; -v[Vertical: 0-pressure (1)-agl]<br>
+<br></td></tr>
+<tr><td>
+ Calculates the mean trajectory given a set of trajectories; the file input 
+ section option follows trajplot; the output is the standard tdump-format file.
+<br>
+<br></td></tr>
+<tr><td>
+<font color=green>GUI: <i>trajclus_run.tcl</i></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Tutorial: </font><a href="https://www.ready.noaa.gov/documents/Tutorial/html/traj_clus.html" 
+                  target="_new"><i>traj_clus.sh</i></a><br>
+</td></tr>
+</table>
+
+<a name="trajmerg"></a><h2><center>trajmerg</h2>
+<table width=500 border=1 align="center">
+<tr><td>
+Usage: trajmerg [file1] [file2] [file3]<br>
+<br></td></tr>
+<tr><td>
+Merges trajectories in file1 and file2 into file3.
+<br></td></tr>
+<tr><td> 
+<br>
+</td></tr>
+</table>
+
+</body>
+</html>

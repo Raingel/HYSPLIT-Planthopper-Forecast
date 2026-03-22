@@ -1,0 +1,4 @@
+open grads.ctl
+enable print plot.mif
+run grads.gs
+draw title Hysplit Model Trajectories

@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Trajectory / Quick Start Help (S261)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Quick Start Help</h2></p>
+
+<p>After the initial installation, the model will be configured
+to run the example case discussed in more detail below. The "Quick
+Start" menu tab can be used to run the example or the previous
+simulation in one-step. For more detailed simulation configurations,
+follow the steps below.</p>
+
+<p>The easiest way to run the model is to use the GUI menu to
+create the model's input <i>CONTROL</i> file. For the purposes of
+this demonstration appropriate meteorological files are provided.
+If for some reason the menu system is not available, perhaps
+because <a href="http://www.tcl.tk">Tcl/Tk</a> was not
+installed, the <a href="S262.htm">Control file</a> can be created
+manually</p>
+
+<p><u>Step 1</u> - start the GUI menu system using
+<i>\working\hysplit.tcl</i> or the desktop shortcut to
+<i>Hysplit</i>. A widget will appear with the <i>HYSPLIT</i>
+graphic and three button options: <i>Menu, Help</i> and
+<i>Exit</i>.<b>Click on <i>Menu</i> tab<i>.</i></b></p>
+
+<p><u>Step 2</u> - The four main menus of the Hysplit GUI will
+appear: <a href="S140.htm">Meteorology</a>,
+<a href="S260.htm">Trajectory</a>,
+<a href="S360.htm">Concentration</a>, and 
+<a href="S440.htm">Advanced</a>.
+An additional small widget underneath the main menu gives the
+current Hysplit version information. Do not delete this widget as
+it will terminate the GUI. It provides the reference frame for the
+model's standard output and messages. <b>Click on the
+<i>Trajectory</i> tab</b>.</p>
+
+<p><u>Step 3</u> - Five options appear under this item: 
+<a href="S210.htm">Setup Run</a>,
+<a href="S220.htm">Run Model</a>,
+<a href="S230.htm">Display</a>,
+<a href="S134.htm">Utilities</a>, and
+<a href="S253.htm">Special Runs</a>. 
+Normally these are run in sequence, however any item can be selected
+and run if the appropriate input files were created during a previous
+simulation. <b>Click on the <i>Setup</i> tab</b>.</p>
+
+<p><u>Step 4</u> - <i>Setup Run</i> is used to enter the
+basic model simulation parameters: the starting time of the
+calculation; starting location in terms of latitude, longitude, and
+height; the run-time or duration of the trajectory calculation; and
+the names and locations of all required files. When modifications
+to this menu are complete, click on <i>Save</i>. However for this
+example, you will use the <a href="S211.htm">Retrieve</a> option
+for predefined configurations, so do nothing here and <b>go on to
+Step 5</b>.</p>
+
+<p><u>Step 5</u> - The example calculation is configured by
+<b>clicking on <i>Retrieve</i></b> and then <b><i>entering the
+text: sample_traj</i></b>, which is the name of the example
+simulation control file that was created for this demonstration.
+Then <b>click on <i>OK</i>. A</b>fter the data entry widget is
+closed, <b>click on <i>Save</i></b> and the setup menu will
+close.</p>
+
+<p><u>Step 6</u> - Click on <a href="S220.htm"><b>Run Model</b></a>, 
+which first copies the setup configuration (default_traj) saved in
+the previous step, to the model's input <i>CONTROL</i> file. The
+model calculation is then started. A series of messages will appear
+on standard output text window showing the progress of the calculation.
+When the simulation is completed, the trajectory end-points output file
+is ready to be converted for graphical display. Under some operating
+systems, the standard output widget will not show any output until the
+end of the calculation and the <i>Trajectory</i> menu items will be locked
+until the calculation completes.</p>
+
+<p>After completion <b>click on Exit</b> to close the window.</p>
+
+<p><u>Step 7</u> - Selecting <a href="S230.htm">Display</a> 
+will run a special program that converts the text file of trajectory
+<a href="S263.htm">end-point positions</a> into a high quality SVG
+file (<i>trajplot.html</i>) suitable for printing. The conversion widget
+provides options for the frequency of the labels on the trajectory,
+a variable zoom factor, and color or black and white graphics options. If
+a web browser has been installed and associated with the .html file suffix,
+then it will be
+invoked by the GUI. If the web browser does not automatically open, it may be 
+necessary to manually edit <i>../guicode/hysplit.tcl</i> to change the directory
+location associated with the web browser program. After <b>clicking on
+Execute Display</b>, the following graphic will appear in the web browser
+window:</p>
+
+<center><img src="Image09.gif" width="437" height="481"></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

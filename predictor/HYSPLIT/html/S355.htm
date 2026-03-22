@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>Concentration / Display / Source-Receptor / Stats (S355)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Source-Receptor / Stats </h2></p>
+
+<p><b>Summary: </b>This procedure is intended to find the source location that
+provides the best fit with measurement data. After running HYSPLIT with the
+<a href="S356.htm">matrix</a> option and <a href="S628.htm">ICHEM=1</a>, the script
+extracts each source location from the CONTROL file, converts the output to
+the DATEM format, and then calls the statistical analysis program which is
+converted to a gridded binary file which can be plotted by any of the
+standard concentration plotting programs.
+</p>
+
+<center><a name="datem"></a><p><img src="Image99.gif" width="654" height="470"></p></center>
+
+<p><b>Step 1:</b> defines the <a href="S345.htm">DATEM</a> formatted measured data file 
+and unit conversion factor required to convert the HYSPLIT concentration predictions
+to the same units as given in the measured data file. 
+</p>
+
+<p><b>Step 2:</b> defines name of the statistical output file that will contain
+the statistical results from each source location compared with the measured
+data values. Normally the <i>statmain</i> program outputs one results file per
+execution. In this configuration, the results form each source location are 
+appended to a single file, one record per source. 
+</p>
+
+<p><b>Step 3:</b> defines the root name of the final output graphics file which will
+show a plot of the statistical results by source location. The <i>.ps</i> suffix is
+created by default. 
+</p>
+
+<p><b>Step 4:</b> runs sequentially through all steps of the process, reading each source
+location from the <i>CONTROL</i> file, running <i>matrix</i> to extract that location from the 
+HYSPLIT simulation output file, using <i>c2datem</i> to convert that binary extract to the
+DATEM format, and then running <i>statmain</i> to append the results to the statistical
+output file. <font color=green>This step needs only to be run once.</font>
+</p>
+
+<p><b>Step 5:</b> defines which <a href="S500.htm">statistic</a> will be shown: 
+Corr - correlation coefficient, NMSE - normalized mean square error, FB - fractional bias, 
+FMS - figure of merit in space, KSP - Kolmogorov Smirnoff parameter, and finally the rank, 
+which is a combination of the previous parameters. Once all source locations have been processed, 
+the statistical file is read and converted to binary gridded format using <i>stat2grid</i>. This 
+output file can then be plotted with any of the display programs such as <i>gridplot</i>.
+</p>
+
+<p><b>Default file names:</b> The following describes the assigned default input and output
+files names for each processing section, so that they can be identified in the working directory.
+File names in italics are the ones that can be changed through the menu.</p>
+
+<p>matrix<ul>
+<li><i>cdump</i> - binary outfile from a single multi-source simulation using the ICHEM=1 option</li>
+<li>SRM_cdump - binary concentration output file extracted for one source location</li>
+</ul></p>
+
+<p>c2datem<ul>
+<li>SRM_cdump - binary concentration input file from the previous step</li>
+<li><i>measured.txt</i> - measured data file in DATEM format</li>
+<li>hysplit_datem.txt - model prediction output for a single source converted to DATEM format</li>
+</ul></p>
+
+<p>statmain<ul>
+<li><i>measured.txt</i> - measured data input file in DATEM format</li>
+<li>hysplit_datem.txt - model prediction input file for a single source from previous step</li>
+<li><i>sumstats.txt</i> - statistical summary output appended one record per source location</li>
+</ul></p>
+
+<p>stat2grid<ul>
+<li><i>sumstats.txt</i> - statistical summary input file from previous step</li>
+<li>statmap.bin - binary statistical output file gridded in the HYSPLIT
+<a href="S363.htm">concentration</a> format</li>
+</ul></p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

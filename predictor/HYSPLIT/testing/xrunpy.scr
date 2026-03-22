@@ -1,0 +1,100 @@
+#!/bin/sh
+
+# produces same graphics as xrun.scr using trajplot.py and concplot.py
+# for test cases 001 through 010
+# concatenation of the ps files does not seem to work well.
+#---------------------------
+# Last Revised: 29 Mar 202  (AMC) - modified xrun.scr to test python plotting programs.
+
+# export PGM=../nwpara/exec/hysplit_ 
+# export DEV=../hysplit/exec/
+
+  export PGM=../exec/
+  export DEV=../exec/
+  export EXM=../examples/
+
+rm -f *py.ps
+rm -f python_results.ps
+
+# -------------------------
+echo "'TITLE&','Forward Trajectory (001)&'" >LABELS.CFG
+python ${PGM}trajplot.py -itdump_001 -oplot_001py.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.001 
+cat plot_001py.ps >python_results.ps
+
+# --------------------------
+echo "'TITLE&','Add Backward Trajectory (002)&'" >LABELS.CFG
+python ${PGM}trajplot.py -itdump_001+tdump_002 -oplot_002py.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.002 
+cat plot_002py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Forward Isobaric Trajectory (003)&'" >LABELS.CFG
+python ${PGM}trajplot.py -itdump_003 -oplot_003py.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.003 
+cat plot_003py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Add Backward Isobaric Trajectory (004)&'" >LABELS.CFG
+python ${PGM}trajplot.py -itdump_003+tdump_004 -oplot_004py.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.004 
+cat plot_004py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Trajectory Ensemble (005)&'" >LABELS.CFG
+python ${PGM}trajplot.py -itdump_005 -oplot_005py.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.005
+cat plot_005py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Trajectory Matrix (006)&'" >LABELS.CFG
+python ${PGM}trajplot.py -s1 -l0 -z90 -itdump_006 -oplot_006py.ps
+rm -f CONTROL MESSAGE LABELS.CFG TRAJ.CFG MESSAGE.006
+cat plot_006py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Multiple-in-Time Trajectory (007)&'" >LABELS.CFG
+python ${PGM}trajplot.py -l3 -itdump_007 -oplot_007py.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.007
+cat plot_007py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Splitting-in-Time Trajectory (008)&'" >LABELS.CFG
+python ${PGM}trajplot.py -s0 -l0 -itdump_008 -oplot_008py.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.008
+cat plot_008py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Terrain below Trajectory (009)&'" >LABELS.CFG
+echo "'../graphics/county.shp' 0 0.002 0.4 0.6 0.8" >shapefiles.009
+echo "'../graphics/states.shp' 0 0.015 0.2 0.2 0.5" >>shapefiles.009
+python ${PGM}trajplot.py -v1 -itdump_009 -oplot_009py.ps -jshapefiles.009
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.009 shapefiles.009
+cat plot_009py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Multiple Meteorology Trajectory (109)&'" >LABELS.CFG
+python ${PGM}trajplot.py -v1 -itdump_109 -oplot_109py.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.109 WARNING.109
+cat plot_109py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Standard Dispersion Simulation (010)&'" >LABELS.CFG
+python ${PGM}concplot.py -icdump_010 -oplot_010py.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+rm -f LABELS.CFG CONC.010 MESSAGE.010 VMSDIST.010
+cat plot_010py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Standard Dispersion With 4 User Set Contours (110)&'" >LABELS.CFG
+python ${PGM}concplot.py -icdump_010 -oplot_110py.ps -c4 -v1E-12+1E-13+1E-14+1E-15
+rm -f LABELS.CFG 
+cat plot_110py.ps >>python_results.ps
+
+# ------------------------
+echo "'TITLE&','Standard Dispersion With 8 User Contours and GE (210)&'" >LABELS.210 
+python ${PGM}concplot.py -icdump_010 -oplot_210py.ps -a3 -c4 -v1E-12+1E-13+1E-14+1E-15+1E-16+1E-17+1E-18+1E-19
+rm -f LABELS.210
+cat plot_210py.ps >>python_results.ps
+
+# ------------------------
+

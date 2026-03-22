@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Release Particles or Puffs (S622)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Release Particles or Puffs</h2></p>
+
+<p>The menu is divided into three sections. In the first two the value of the 
+<i>INITD</i> namelist parameter is being set. In the upper portion of
+the menu, the model is configured as either a full 3D particle or puff
+model, or some hybrid combination of the two. The released particles or
+puffs maintain their mode for the entire duration of the simulation.
+Valid options are:</p>
+<ul>
+<li>0 - 3D particle horizontal and vertical (<b>DEFAULT</b>)
+<li>1 - Gaussian-horizontal and Top-Hat vertical puff (Gh-THv)
+<li>2 - Top-Hat-horizontal and vertical puff (THh-THv)
+<li>3 - Gaussian-horizontal puff and vertical particle distribution (Gh-Pv)
+<li>4 - Top-Hat-horizontal puff and vertical particle distribution (THh-Pv)
+</ul>
+
+<p>Introduced with the September 2004 version are mixed mode model
+calculations, where the mode can change during transport depending upon
+the age (from release) of the particle. A mixed-mode may be selected to
+take advantage of the more accurate representation of the 3D particle
+or Gaussian approach near the source and the smoother horizontal distribution
+provided by one of the hybrid puff approaches at the longer transport distances.
+Valid options are:</p>
+<ul>
+<li>103 - 3D particle (#0) converts to Gh-Pv (#3)
+<li>104 - 3D particle (#0) converts to THh-Pv (#4)
+<li>130 - Gh-Pv (#3) converts to  3D particle (#0)
+<li>140 - THh-Pv (#4) converts to 3D particle (#0)
+</ul>
+
+<p>Options 130 and 140 are the inverse of 103 and 104, respectively. Selecting
+either one starts the simulation as puffs (#3 or #4) and after <i>CONAGE</i> hours
+they convert to a 3D particle (#0). While the particle to puff conversion 
+is one-to-one, one particle is converted to one puff, the puff to particle
+conversion results in one puff splitting into multiple particles. The exact
+number will vary depending upon the available array space as defined by the value
+of <i>MAXPAR</i>. Puff splitting can only fill up half of the available array
+space. Therefore, if insufficient space has been pre-allocated, eventually splitting
+will be turned off and the puff to particle conversion will become one-to-one. The 
+number of splits per puff is defined as 0.5 times the array size <i>MAXPAR</i> divided
+by the number of puffs to be emitted over the duration of the simulation and where the
+number of puffs is computed by <i>NUMPAR*NHRS/QCYCLE</i>. The split rate is computed at
+each entry to the program (hourly) and may be turned back on if sufficient array space
+again becomes available.</p>
+
+<p>An example of the conversion (130) after 6 hours transport of a single Gaussian
+puff to multiple particles is shown below as a snapshot at 3 hours and 6 hours after
+release. On the left, the puff was converted to 50 particles (numpar=100) and on the
+right to 5000 particles (numpar=10000).</p>
+
+<center>
+<table>
+<tr>
+<ta><img src="Image124.gif" width="300"></ta>
+<ta><img src="Image125.gif" width="300"></ta>
+</tr>
+</table>
+</center>
+
+<p>An option introduced with the January 2009 version (4.9), converts puffs or
+particles to the <a href="S359.htm">Global Eulerian Model</a> grid. The mass is
+transferred to the global grid after the specified number of hours (<i>gemage</i>). 
+This approach should only be used for very long-range (hemispheric)
+transport due to the artificial diffusion introduced when converting pollutant
+plumes to a gridded advection-diffusion computational approach. The method is
+ideal for estimating contributions to background concentrations.  All mixed-
+mode particles/puffs (not just 3D) will convert to the global grid if the
+global option is selected from the special runs menu.</p>
+
+<p>The third section defines the 3-D particle dispersion algorithm. The default 
+is to use the HYSPLIT dispersion scheme. The STILT scheme was introduced in 2020. 
+The STILT scheme is more complex module that includes a reflection/transmission 
+scheme that preserves a well-mixed distribution of particles as they move 
+vertically across model layer interfaces. The STILT scheme is computationally 
+more expensive to run.</p>
+
+<center><p><img src="Image73.gif" width="566" height="555"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

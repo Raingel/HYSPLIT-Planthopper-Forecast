@@ -1,0 +1,212 @@
+<html>
+<head>
+<title>Concentration / Setup Run / Grid Definition (S313)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Setup Run / Grid Definition</h2></p>
+
+<p>This section is used to define the grid system to which the
+concentrations are summed during the integration and subsequently
+for post-processing and display of the model's output. There are 10
+entries in the CONTROL file for each concentration grid that has
+been defined. The lines 16(1) through 25(10) correspond with each
+of the menu items shown in the illustration below.</p>
+
+<center><p><img src="Image24.gif" width="435" height="490"></p></center>
+
+<p>Dispersion calculations are performed on the computational
+(meteorological) grid without regard to the definition or location
+of any concentration grid. Therefore it is possible to complete a
+simulation and have no results to view if the concentration grid
+was in the wrong location. In addition, very small concentration
+grid spacing will reduce the model's integration time step and may
+result is substantially longer simulation clock times.</p>
+
+<p>15- <u>Number of simultaneous concentration grids</u></p>
+<ul>
+<p>Default: 1</p>
+<p>Multiple or nested grids may be defined. The concentration
+output grids are treated independently. The following 10 entries
+will be repeated for each grid defined.</p>
+
+<p>In the special case with the first grid heights above
+ground level and the second grid heights above mean sea level,
+this value is set to negative 2, and the MSL flag is <u>not</u> set.
+Similarly if this value is set to negative 4, the first and third grids 
+are referenced to ground level, the second and fourth to mean sea level.  
+(See section "Height of each level" below.)</p>
+</ul>
+
+<p>16(1)- <u>Center Latitude, Longitude (degrees)</u></p>
+<ul>
+<p>Default: [source location]</p>
+<p>Sets the center position of the concentration sampling grid in
+degrees and decimal. Input of zero's will result in selection of
+the default value, the location of the emission source. Sometimes
+it may be desirable to move the grid center location downwind near
+the center of the projected plume position.</p>
+</ul>
+
+<p>17(2)- <u>Grid spacing (degrees) Latitude, Longitude</u></p>
+<ul>
+<p>Default: 1.0 1.0</p>
+<p>Sets the interval in degrees between nodes of the sampling grid.
+Puffs must pass over a node to contribute concentration to that
+point and therefore if the spacing is too wide, they may pass
+between intersection points. Particle model calculations represent
+grid-cell averages, where each cell is centered on a node position,
+with its dimensions equal to the grid spacing. Finer resolution
+concentration grids require correspondingly finer integration
+time-steps. This may be mitigated to some extent by limiting fine
+resolution grids to only the first few hours of the simulation.</p>
+
+<p>In the special case of a polar (arc,distance) concentration grid,
+defined when the namelist variable <a href="S626.htm">cpack=3</a>, the 
+definition changes such that the latitude grid spacing equals the 
+sector angle in degrees and the longitude grid spacing equals the 
+sector distance spacing in kilometers.</p>
+</ul>
+
+<p>18(3)- <u>Grid span (deg) Latitude, Longitude</u></p>
+<ul>
+<p>Default: [180.0] [360.0]</p>
+<p>Sets the total span of the grid in each direction. For instance,
+a span of 10 degrees would cover 5 degrees on each side of the
+center grid location. A plume that goes off the grid would have
+cutoff appearance, which can sometimes be mitigated by moving the
+grid center further downwind.</p>
+
+<p>Grid span and spacing should be set according to the scale of the run.  
+Small scale runs can have fine spacing and small span; the opposite for
+large scale runs.  </p>
+
+<p>In the special case of a polar (arc,distance) concentration grid,
+defined when the namelist variable <a href="S626.htm">cpack=3</a>, 
+the definition changes such that the latitude span always equals 
+360.0 degrees and the longitude span equals the total downwind 
+distance in kilometers. Note that the number of grid points equals 
+360/arc-angle or the total-distance divided by the sector-distance.</p>
+</ul>
+
+<p>19(4)- <u>Enter grid # 1 directory</u></p>
+<ul>
+<p>Default: ( \main\sub\output\ )</p>
+<p>Directory to which the binary concentration output file for this
+grid is written. As in other directory entries a terminating (\)
+slash is required.</p>
+</ul>
+
+<p>20(5)- <u>Enter grid # 1 file name</u></p>
+<ul>
+<p>Default: file_name</p>
+<p>Name of the concentration output file for each grid. See Section
+6 for a description of the format of the concentration output
+file.</p>
+</ul>
+
+<p>21(6)- <u>Number of vertical concentration levels</u></p>
+<ul>
+<p>Default: 1</p>
+<p>The number of vertical levels in the concentration grid
+including the ground surface level if deposition output is
+required.</p>
+</ul>
+
+<p>22(7)- <u>Height of each level (m)</u></p>
+<ul>
+<p>Default: 50</p>
+<p>Output grid levels may be defined in any order for the puff
+model as long as the deposition level (0) comes first (a height of
+zero indicates deposition output). Air concentrations must have a
+non-zero height defined. A height for the puff model indicates the
+concentration at that level. A height for the particle model
+indicates the average concentration between that level and the
+previous level (or the ground for the first level). Therefore
+heights for the particle model need to be defined in ascending
+order. Note that the default is to treat the levels as
+above-ground-level (AGL) unless the MSL (above Mean-Sea-Level) flag
+has been set (see <a href="S412.htm">advanced configuration</a>).</p>
+</ul>
+
+<p>23(8)- <u>Sampling start time: year month day hour minute</u></p>
+<ul>
+<p>Default: [simulation start]</p>
+<p>Each concentration grid may have a different starting, stopping,
+and output averaging time. Zero entry will result in setting the
+default values. Default values are to use the simulation starting time (1). 
+"Backward" calculations require that the stop time
+should come before the start time.</p>
+
+<p>If the month field is zero, then the minute and hour fields in the sample
+start will be used to set the sample start time relative to the simulation start time (1).<br>
+For example, if the simulation starting time is 18 10 31 05 and the sample start is set
+at 00 00 00 02 00 then the sample start time will be at 18 10 31 07 00.</p>
+
+Warning: The adjustable time step feature (DELT=0 in SETUP.CFG) should only be used
+when the sampling start time minute field is zero.
+If the minute field is non-zero, then the time step should be set to be
+a factor of the minute field. (For example, if you are setting the sampling start to be
+30 minutes past the hour, you could set DELT to be 30, 15, 10, 6, 5, 3, 2 or 1.)
+This needs to be done to ensure that the time HYSPLIT begins the sampling
+period lines up with the start of a new time step.</p>
+
+
+</ul>
+
+<p>24(9)- <u>Sampling stop time: year month day hour minute</u></p>
+<ul>
+<p>Default: [One year from simulation starting time]</p>
+<p>After this time no more concentration records are written. Early
+termination on a high resolution grid (after the plume has moved
+away from the source) is an effective way of speeding up the
+computation for high resolution output near the source because once
+turned-off that particular grid resolution is no longer used for
+time-step computations.</p>
+
+<p>Zero entry (00 00 00 00 00) results in setting the default values.
+Default values are one
+year from the simulation starting time (1). 
+(Or one year before the simulation start in the
+case of backward runs) </p>
+
+<p>If the month field is zero, then the minute and hour fields in the sample
+stop will be used to set the sample stop time relative to the sample start time (23(8)).
+<br> This was implemented in V985. <br>
+For example, if the sample start is set to 18 10 31 07 00 and the sample stop
+is 00 00 00 05 00 then the sample stop will be set to 18 10 31 12 00.
+</p>
+
+</ul>
+
+<p>25(10)- <u>Sampling interval: type hour minute</u></p>
+<ul>
+<p>Default: 0 24 0</p>
+<p>Each grid may have its own sampling or averaging interval. The
+interval can be of three different types: averaging (type=0),
+snapshot (type=1), or maximum (type=2). Averaging will produce output
+averaged over the specified interval. For instance, you may want to
+define a concentration grid that produces 24-hour average air
+concentrations for the duration of the simulation, which in the case
+of a 2-day simulation will result in 2 output maps, one for each day.
+Each defined grid can have a different output type and interval. 
+Snapshot (or now) will give the instantaneous output at the output
+interval, and maximum will save the maximum concentration at each grid
+point over the duration of the output interval. Therefore, when a maximum
+concentration grid is defined, it is also required to define an identical
+snapshot or average grid over which the maximum will be computed. There
+is also the special case when the type value is less than zero. In that
+case the value represents the averaging time in hours and the output
+interval time represents the interval at which the average concentration
+is output. For instance, a setting of {-1 6 0} would output a one-hour
+average concentration every six hours.</p>
+</ul>
+
+<hr>
+<center><a href="S312.htm">Previous Section of the CONTROL file</a><br>
+<center><a href="S314.htm">Next Section of the CONTROL file</a><br>
+
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

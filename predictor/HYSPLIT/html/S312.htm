@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>Concentration / Setup Run / Pollutant Definition (S312)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Setup Run / Pollutant Definition </h2></p>
+
+<p>There are four <i>CONTROL</i> file entries, lines 11(1) through
+14(4), that correspond with each line of the pollutant menu shown
+in the illustration below.</p>
+
+<center><p><img src="Image23.gif" width="425" height="245"></p></center>
+
+<p>10- <u>Number of different pollutants</u></p>
+<ul>
+<p>Default: 1</p>
+<p>Multiple pollutant species may be defined for emissions. Each
+pollutant is assigned to its own particle or puff and therefore may
+behave differently due to deposition or other pollutant specific
+characteristics. Each will be tracked on its own concentration
+grid. The following four entries are repeated for each pollutant
+defined.</p>
+</ul>
+
+<p>11(1)- <u>Pollutant four Character Identification</u></p>
+<ul>
+<p>Default: TEST</p>
+<p>Provides a four-character label that can be used to identify the
+pollutant. The label is written with the concentration output grid
+to identify output records associated with that pollutant and will
+appear in display labels. Additional user supplied deposition and
+chemistry calculations may be keyed to this identification
+string.</p>
+</ul>
+
+<p>12(2)- <u>Emission rate (per hour)</u></p>
+<ul>
+<p>Default: 1.0</p>
+<p>Mass units released each hour. Units are arbitrary except when
+specific chemical transformation subroutines are associated with
+the calculation. Output air concentration units will be in the same
+units as specified on this line. For instance an input of kg/hr
+results in an output of kg/m<sup>3</sup>. When multiple sources are
+defined this rate is assigned to all sources unless the optional
+parameters are present on line 3(1).</p>
+</ul>
+
+<p>13(3)- <u>Hours of emission</u></p>
+<ul>
+<p>Default: 1.0</p>
+<p>The duration of emission may be defined in fractional hours. An
+emission duration of less than one time-step will be emitted over
+one time-step with a total emission that would yield the requested
+rate over the emission duration.</p>
+</ul>
+
+<p>14(4)- <u>Release start time: year month day hour minute</u></p>
+<ul>
+<p>Default: [simulation start]</p>
+<p>The previously specified hours of emission start at this time.
+An entry of zero's in the field, when input is read from a file,
+will also result in the selection of the default values that will
+correspond with the starting time of the meteorological data file.
+Day and hour are treated as relative to the file start when month
+is set to zero.</p>
+</ul>
+
+<p><b>Temporal or Area Emission Variations</b></p>
+
+<p>This menu is only designed to input point source emission
+rates. Unless additional input values are provided in the control
+file after each emission location, the same rate will apply to all
+defined point sources for the duration of the emission. When more
+complex emission scenarios are required, 
+<a href="S441.htm#area_source">emission data</a> can be read in from
+a file that defines a diurnal emission cycle for any number of 
+pollutants at any number of locations. If the emission rate is to
+vary in time beyond one diurnal cycle, there is another
+<a href="S441.htm#emit_time">input file</a> that can be
+<a href="S417.htm">defined</a> to set a new rate with each emission
+cycle. In this latter scenario the rate as well as the location may
+be changed.</p>
+
+<hr>
+<center><a href="S310.htm">Previous Section of the CONTROL file</a><br>
+<center><a href="S313.htm">Next Section of the CONTROL file</a><br>
+
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

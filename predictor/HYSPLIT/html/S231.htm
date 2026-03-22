@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Trajectory / Display / Frequency (S231)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Display / Frequency </h2></p>
+
+<p>Multiple trajectory files can be displayed by creating an arbitrary grid over the computational domain and then counting the number of trajectory intersections over each grid cell and normalizing by the total number of trajectories (or endpoints, as discussed in the following). A trajectory may intersect a grid cell once or multiple times (with residence time options 1, 2, or 3). With the default residence time (RT) option (0), the number of trajectories that intersect each grid cell are divided by the total number of trajectories. With RT=1, the number of endpoints in each grid cell are divided by the total number of trajectories (in this case, there can be values over 100%). With RT=2, the number of endpoints in each grid cell are divided by the total number of endpoints. With RT=3, the number of endpoints in each grid cell are divided by the maximum number of endpoints in any cell. Each trajectory is defined by one output file which is only permitted to contain one trajectory. Trajectory output file names begin with the base name defined in the setup menu <i>tdump</i> and are then followed by some arbitrary identification text (such as the date) that is created by the <a href="S254.htm"> Run Daily </a> menu option. The trajectory endpoint files should reside in the working directory. The first step in the processes is to create a file of trajectory file names which will always be called  <i>INFILE</i>. The text entry box defines the trajectory base name which is treated as a wildcard string when the filenames are searched and added to the contents of <i>INFILE</i>. This file may be manually edited to remove any trajectory files that are not required for the frequency analysis. Then select the grid resolution according to the scale of the  desired result. Too fine a grid with too few trajectories can result in poorly contoured display. The gridded binary output file is in the HYSPLIT concentration <a href="S363.htm"> format</a>. The concentration plotting routine is used to display the trajectory frequency results and hence some of the label options are inconsistent with this particular application. The trajectory frequency results could be exported to an ASCII file using one of the <a href="S341.htm"> concentration convert </a> utility options or displayed using one of the GIS formats.  
+</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>
+
+ 
+

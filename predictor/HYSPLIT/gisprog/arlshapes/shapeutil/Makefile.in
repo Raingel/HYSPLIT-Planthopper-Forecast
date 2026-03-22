@@ -1,0 +1,40 @@
+SHELL = @SHELL@
+
+iprefix = @prefix@
+bindir = @bindir@
+srcdir = @srcdir@
+libdir = @libdir@
+top_srcdir = @top_srcdir@
+
+CC  = @CC@
+
+EXEEXT = @EXEEXT@
+DEBUG = @DEBUG@
+CFLAGS=@CFLAGS@ $(DEBUG)
+ARFLAGS=@ARFLAGS@
+
+INSTALL = @INSTALL@
+
+INCLUDES = -I $(top_srcdir) -I $(top_srcdir)/arcview1 -I $(top_srcdir)/arcview2 -I .
+
+MODULES = shapeuidraw.o arrayutil.o intersectable.o unformio.o
+
+# add -DWITH_STRICMP if you are compiling i.e. with MS VC
+# add -DDEBUG if you want lots of debugging infos
+
+prefix = ..
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+
+all: libshaputil.a
+
+libshaputil.a: $(MODULES)
+	$(AR) $(ARFLAGS) cru $@  $(MODULES)
+	cp $@ ../
+
+clean:
+	rm -f *.o *.a
+
+distclean: clean
+	rm -f Makefile

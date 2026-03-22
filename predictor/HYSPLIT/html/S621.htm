@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Sub-grid Size and Vertical Coordinate (S621)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Sub-grid Size and Vertical Coordinate</h2></p>
+
+<p><h3>Meteorological Sub-grid Size</h3></p>
+
+<p>MGMIN (10) is the minimum size in grid units of the meteorological
+sub-grid. The sub-grid is set dynamically during the calculation and
+depends upon the horizontal distribution of end-points and the wind
+speed. Larger sub-grids than necessary will slow down the calculation
+by forcing the processing of meteorological data in regions where no
+transport or dispersion calculations are being performed. In some
+situations, such as when the computation is between meteorological
+data files that have no temporal overlap or insufficient spatial overlap,
+the model may try to reload meteorological data with a new sub-grid. This
+will result in a fatal error. One solution to this error would be to 
+increase the minimum grid size larger than the meteorological grid to
+force a full-grid data load.</p>
+
+<p><h3>Vertical Grid Coordinate System</h3></p>
+
+<p>KMSL (0) sets the default for input heights to be relative to the terrain
+height of the meteorological model. Hence input heights are specified as AGL.
+Setting this parameter to "1" forces the model to subtract the local terrain
+height from source input heights before further processing. Hence input heights
+should be specified as relative to Mean Sea Level (MSL). In concentration
+simulations, the MSL option also forces the vertical concentration grid heights
+to be considered relative to mean sea level. The option to set the release
+height dynamically as a fraction of the mixed layer depth is not available
+for concentration-dispersion simulations.</p>
+
+<center><p><img src="Image72.gif" width="557" height="316"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

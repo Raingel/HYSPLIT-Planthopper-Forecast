@@ -1,0 +1,40 @@
+#!/bin/csh -f
+#
+# The script downloads MERRA2 data using wget (replacing date
+# info in myfile.dat.all) and executes mer2arl convert.
+# Note MERRA2*.nc4 files will be deleted once ARL files are done.
+#
+#-----------------------------------------------------------------
+
+set hdir = ./
+
+set prefix = 'MERRA2_400'  # 100=>19800101,200=>19920101,300=>20010101,400=>20110101
+
+set cdate  = '20120301'    # starting date 'YYYYMMDD'
+
+m4 -DYEAR=2F`echo $cdate | cut -c1-4`  \
+   -DMONTH=2F`echo $cdate | cut -c5-6` \
+   -DAAAAAAAA=$cdate                   \
+   -DPREFIX1=2F$prefix                 \
+   -DPREFIX2=$prefix                   \
+   myfile.dat.all >! myfile.dat
+
+wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --auth-no-challenge=on --keep-session-cookies --content-disposition -i myfile.dat
+
+set yyyy = `echo $cdate |cut -c1-4`
+set mm   = `echo $cdate |cut -c5-6`
+set dd   = `echo $cdate |cut -c7-8`
+
+$hdir/mer2arl <<EOF
+$yyyy
+$mm
+$dd
+$prefix
+EOF
+
+mv ARLDATA.BIN MERRA2_${cdate}.ARL
+mv MESSAGE MESSAGE.$cdate
+
+rm -rf MERRA2*${cdate}*.nc4
+
+exit

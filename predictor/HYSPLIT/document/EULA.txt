@@ -1,0 +1,25 @@
+                HYSPLIT END-USER LICENSE AGREEMENT
+
+By continuing, the recipient agrees to the following usage agreement: 
+
+1) PERMITTED USERS: HYSPLIT use, whether it be via the NOAA Air Resources Laboratory's (ARL) website or via the downloaded PC software, is available at no charge to those individuals (recipients) who have a formal affiliation with one of the following institutions engaged in atmospheric sciences or in the provision of atmospheric operational products, and whose credentials we can verify: government, commercial, educational, or non-profit.
+
+2) DISTRIBUTION: The recipient may NOT redistribute the model software without permission from the NOAA ARL. The recipient may not knowingly redistribute their account information (username and password) to anyone and shall honor all disclaimers and other limitations of liability. If the HYSPLIT results are based on FORECAST meteorological data obtained from the NOAA ARL, the recipient may not redistribute those results outside of his/her organization, nor to the public-at-large, without permission from the NOAA ARL.
+
+3) LIMITATION OF LIABILITY: THE UNITED STATES GOVERNMENT DOES NOT WARRANT ACCURACY OR COMPLETENESS OF THIS PRODUCT, AND IS NOT RESPONSIBLE FOR ERRORS AND OMISSIONS, AND IS NOT LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL OR EXEMPLARY DAMAGES OR LOST PROFIT RESULTING FROM ANY USE OR MISUSE OF THIS INFORMATION. HYSPLIT SOFTWARE IS BEING DISTRIBUTED "AS IS" AND THE U.S. GOVERNMENT DOES NOT MAKE ANY WARRANTY CLAIMS, EITHER EXPRESSED OR IMPLIED, WITH RESPECT TO THE HYSPLIT SOFTWARE, ITS QUALITY, ACCURACY, COMPLETENESS, PERFORMANCE, MERCHANTABILITY OR FITNESS FOR ANY INTENDED PURPOSE.
+
+4) SUITABILITY: Recipients acknowledge that any products derived from using HYSPLIT and related meteorological data depend on the configuration of the simulation and may or may not be suitable for their intended application. The correct application of the model and the interpretation of the results is the responsibility of the recipient. HYSPLIT model results created by the recipient shall not be presented as official government material. 
+
+5) SUPPORT: The NOAA ARL is not obligated to provide any support, consulting, training, or assistance of any kind with regard to the use of this material. 
+
+6) WEB ACCESS: The NOAA ARL will deny access to any user who is found to be abusing the system by using automated methods to request products on it's server in a manner that limits others from obtaining products in a timely manner. 
+
+7) INDEMNIFICATION: Non-governmental recipients shall indemnify and save harmless the United States and its agents and employees against any and all loss, damage, claim or liability whatsoever, due to personal injury or death, or damage to property of others directly or indirectly due to the use of HYSPLIT by the recipient, including failure to comply with the provisions of this agreement.  
+
+8) EDITING: Any unauthorized editing or alteration of HYSPLIT or information provided by the U.S. government will result in the termination of the agreement between the recipient and the U.S. government and access to the website. 
+
+9) MAINTENANCE: The recipient shall keep the NOAA ARL informed of any address changes. This information is necessary to notify users of any HYSPLIT program changes, updated passwords, or if new information becomes available.  
+
+9) AVAILABILITY: Access to HYSPLIT and it's timely delivery of products from the ARL server through the Internet are not guaranteed. 
+
+10) CITATION: The recipient provide a citation to the NOAA Air Resources Laboratory in any publications, presentations, or other derivative works that result from the use of HYSPLIT. Examples of such a citation are available in the \document directory in the file called HYSPLIT_license.txt. 

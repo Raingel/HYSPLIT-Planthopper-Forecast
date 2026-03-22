@@ -1,0 +1,188 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Configure Turbulence-Dispersion Computation (S625)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Configure Turbulence-Dispersion Computation</h2></p>
+
+<p><a name="turb_kblt"><b>Vertical Turbulence</b></p>
+
+<p><i>KBLT</i> is a flag used to set the vertical turbulence computational method,
+that is how the turbulent velocity variances are computed from either the heat
+and momentum fluxes or the model profiles of wind and temperature. Three different
+computational approaches (Beljaars/Holtslag, Kanthar/Clayson, Hanna - see the technical
+documentation for details) are defined. Another option is the use the TKE 
+(Turbulent Kinetic Energy) output from the meteorological model provided in the 
+input meteorological data file. Not all model data contain the TKE field. Another 
+option is a special case where the input meteorological data are assumed to contain
+the 3-dimensional component velocity variance fields, usually a measured component.</p>
+<ul>
+<li>1 - Beljaars/Holtslag and Betchov/Yaglom
+<li>2 - Kanthar/Clayson (<b>DEFAULT</b>)
+<li>3 - TKE field from the input meteorology data file 
+<li>4 - Measured velocity variances from the input meteorology
+<li>5 - Hanna
+</ul>
+
+<p><a name="turb_kdef"><b>Horizontal Turbulence</b></p>
+
+<p><i>KDEF</i> defines the way the horizontal turbulence is computed. The default 
+approach is to compute the horizontal mixing in proportion to the vertical mixing
+using one of the methods defined above (see the technical documentation for details).
+The original computation was to compute the mixing from the deformation of the
+horizontal wind field.  The limitation of this method is that for shorter-range
+dispersion simulations (&lt;100 km) the deformation parameterization used in
+conjunction with larger scale meteorological fields will not reflect the diurnal
+variations in horizontal turbulence. Using diurnal sensitive methods will not 
+effect longer-range calculations because the particles are distributed over many
+meteorological grid cells where variations in the transport vector dominate the
+horizontal dispersion process.</p>
+<ul>
+<li>0 - In proportion to the vertical turbulence (<b>DEFAULT</b>)
+<li>1 - Computed from the velocity deformation
+</ul>
+
+<p><a name="turb_kbls"><b>Boundary Layer Stability</b></p>
+
+<p><i>KBLS</i> defines how the stability is computed. Normally when turbulent fluxes
+(heat and momentum) are available from the meteorological data file, they are used to
+compute stability. Sometimes it may be desirable to force the stability to be computed
+from the wind and temperature profiles, especially if the fluxes represent long-time
+period averages rather than instantaneous values. If fluxes are not present, the
+profiles are used for the stability computation.</p> 
+<ul>
+<li>1 - Heat and momentum fluxes (<b>DEFAULT</b>)
+<li>2 - Wind and temperature profiles 
+</ul>
+
+<p><a name="turb_scale"><b>Vertical and Horizontal Lagrangian Timescales</b></p>
+
+<p><i>?SCALE?</i> defines the time in seconds that the turbulence is no longer
+autocorrelated. These values are used to convert various mixing coefficients
+into turbulent velocities. Different values are defined for vertical and horizontal
+components. The horizontal Lagrangian time scale default value is about equal to 1/f,
+the Coriolis parameter. Also the vertical time scale is further divided into stable and 
+unstable conditions. The Lagrangian time scale also controls the transition of the
+dispersion rate from linear to square root growth as a function of time. Setting the 
+stable vertical Lagrangian time scale (VSCALES) to -1 will result in the Hanna vertical 
+Lagrangian Time Scale to be used, which varies in space and time and is calculated based 
+on the vertical velocity variance estimated in the vertical turbulence scheme. Setting 
+VSCALES=0 will result in the Hanna Lagrangian Time Scale to be used (VSCALES=-1) if 
+HYSPLIT is run in STILT mode (ichem=8), otherwise VSCALES will be set to 5.0. 
+When the Hannal Lagrangian time scale is set, the unstable vertical Lagrangian 
+time scale (VSCALEU) is not used. </p>
+
+<ul>
+<li>200.0 = <i>VSCALEU</i> vertical Lagrangian time scale (sec) for unstable PBL
+<li>5.0 = <i>VSCALES</i> vertical Lagrangian time scale (sec) for stable PBL
+<li>10800.0 = <i>HSCALE</i> horizontal Lagrangian time scale (sec)
+</ul>
+
+
+<p><a name="turb_kzmx"><b>Vertical Mixing Profile</b></p>
+
+<p><i>KZMIX</i> determines if any additional processing is to be performed on the
+vertical mixing profile. The current default is for no adjustments. In previous versions
+the boundary layer mixing profile was replaced with its average value. This compensated
+for some meteorological data sets with poor vertical data resolution that might result
+in particles being trapped near the surface due to insufficient mixing. The last two
+options are scale factors that can be applied to the mixing coefficients and currently
+are not available for modification through the GUI.</p>
+<ul>
+<li>0 - NONE vertical diffusivity in PBL varies with height  (<b>DEFAULT</b>)
+<li>1 - Vertical diffusivity in PBL single average value
+<li>2 - scale boundary-layer values multiplied by <i>TVMIX</i>
+<li>3 - scale free-troposphere values multiplied by <i>TVMIX</i>
+</ul> 
+
+<p><a name="turb_kmxd"><b>Mixed Layer Depth Computation</b></p>
+
+<p><i>KMIXD</i> is used to control how the boundary layer depth is computed. In addition
+to acting as a vertical lid to particle dispersion (advection is not affected), the 
+mixed layer depth is also used to scale the boundary layer mixing coefficients and 
+computing turbulent fluxes from wind and temperature profiles. The default is to use
+the value provided by the meteorological model through the input data set (KMIXD=0). If those are not available,
+the computation will use the temperature profiles (KMIXD=1).
+If HYSPLIT is run in STILT mode (ICHEM=8), then the default is to 
+use a modified Richardson # approach (KMIXD=3) that includes excess temperature for convective 
+cases for estimating the mixed layer depth. See the technical document for details 
+on these schemes. Setting KMIXD in the SETUP.CFG will over-ride the defaults. 
+Another option to 
+use for testing is to replace the index value (0,1,2,3) with a value greater than 10. 
+In this situation, that value will be used as the mixed layer depth and will be constant 
+for the duration of the
+simulation.</p>  
+<ul>
+<li>0 = Use meteorological model MIXD if available (<b>DEFAULT</b>)
+<li>1 = Compute from the temperature profile
+<li>2 = Compute from the TKE profile. (Requires that TKE be available.)
+<li>3 = Compute from modified Richardson number (<b>STILT MODE DEFAULT</b>) (new in hysplit.v5.0.0)
+<li>&gt; = 10 use this value as a constant
+</ul>
+<p><i>KMIX0</i> is a related parameter that sets the minimum mixing depth. The default
+value is 150 meters and is related to the typical vertical resolution of the meteorological
+data. A resolution near the surface of 15 hPa is typical of pressure-level data files. This
+suggests that it is difficult to infer a mixed layer depth of less than 150 m 
+(10 m per hPa) for most meteorological input data.</p>
+<ul>
+<li>150 = The minimum mixing depth (<b>DEFAULT</b>)
+</ul>
+
+<p><a name="turb_kpuf"><b>Puff Growth Computation Method</b></p>
+
+<p><i>KPUFF</i> is the flag to use either the linear with time or the empirical fit
+with time dispersion equations for the horizontal growth rate of puffs. This parameter
+does not affect particle dispersion. The linear with time approach suggests that not
+all turbulent scales have been sampled and puffs grow in proportion to increasing time.
+The empirical fit equation is similar but the rate of puff growth decreases with time.
+Slower puff growth rate in the linear approach is represented by the separation of puffs
+after splitting due to variations in the flow. The empirical approach should only be used
+in those situations where puff splitting is constrained because of memory or computing
+time limitations.</p>
+<ul>
+<li>0 = Linear with time puff growth (<b>DEFAULT</b>)
+<li>1 = Empirical fit to the puff growth
+</ul>
+
+<p><a name="turb_tker"><b>Turbulence Anisotropy Factors</b></p>
+
+<p><i>TKERD and TKERN </i> are the ratios of the vertical to the horizontal turbulence
+for daytime and nighttime, respectively. <i>TKER{D|N}</i> is defined as W'2/(U'2+V'2).
+A zero value forces the model to compute a TKE ratio consistent with its turbulence
+parameterization. A non-zero value forces the vertical and horizontal values derived
+from the TKE to match the specified ratio. This option is only valid with <i>KBLT=3</i>.
+The <i>Urban</i> button increases the internal TKE by 40% and slightly raises the 
+nighttime ratio to account for enhanced turbulence in an urban setting. The landuse
+file supplied with the model is not of sufficient resolution to define urban areas and
+hence the urban setting applies to all points in the computational domain.
+</p>
+<ul>
+<li>0.18 = <i>TKERD</i> day (unstable) turbulent kinetic energy ratio 
+<li>0.18 = <i>TKERN</i> night (stable) turbulent kinetic energy ratio
+</ul>
+
+<center><p><img src="Image76.gif" width="726" height="748"></p></center>
+
+<p><a name="turb_scal"><a href="S640.htm"><b>Other Turbulence Parameters Not Defined in GUI</b></a></p>
+<ul>
+<li>1.0 = <i>TVMIX</i> vertical mixing scale factor (in conjunction with <i>KZMIX</i> 
+<li>1 = <i>KRAND</i> method to calculate random number (0=precompute if NUMPAR
+greater than 5000 or dynamic if NUMPAR less than or equal to 5000; 1=precompute;
+2=dynamic; 3=none; 4=random initial seed number and dynamic; 10=same as 0 with random
+initial seed for non-dispersion applications; 11=same as 1 with random initial seed
+for non-dispersion applications; 12=same as 2 with random initial seed for
+non-dispersion applications; 13=same as 3 with random initial seed for non-dispersion
+applications)
+</ul>
+
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>
+
+
+
+

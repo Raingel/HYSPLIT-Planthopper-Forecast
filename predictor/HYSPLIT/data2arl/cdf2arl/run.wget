@@ -1,0 +1,32 @@
+#!/bin/csh -f
+
+set yyyy = 2017
+
+foreach var (pres air uwnd vwnd prate)
+
+set ftpsite = ftp.cdc.noaa.gov/Datasets/ncep.reanalysis
+
+if ($var == 'prate') then
+   set indir = surface_gauss
+   set flnm  = ${var}.sfc.gauss.${yyyy}.nc
+else
+   set indir = surface
+   set flnm  = ${var}.sig995.${yyyy}.nc
+
+   if ($var == 'pres') set flnm = ${var}.sfc.${yyyy}.nc
+endif
+
+wget ftp://${ftpsite}/${indir}/${flnm}
+
+end #var
+
+foreach var (hgt air uwnd vwnd omega rhum)  #3d
+
+ set indir = pressure
+ set flnm = ${var}.${yyyy}.nc
+
+ wget ftp://${ftpsite}/${indir}/${flnm}
+
+end #var
+
+exit

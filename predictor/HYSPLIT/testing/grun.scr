@@ -1,0 +1,1230 @@
+#!/bin/bash
+#
+# grun.scr - test the PROCESS option of HYSPLIT graphics programs.
+#
+# Change history:
+# 21 Sep 2021 (SYZ) - initial
+# 14 Oct 2021 (SYZ) - check the GIS option of CONTOUR.
+
+export PGM=../exec/
+export DEV=../exec/
+export EXM=../examples/
+
+rm -f grun_*.log grun_*.ps grun_*.html
+
+function die() {
+   local msg=$1
+   echo "$msg"
+   exit 1
+}
+
+function verify() {
+   for arg; do
+      fname=${arg}
+      [ ! -f "${fname}" ] && echo "ERROR: file not found: ${fname}"
+   done
+}
+
+function verify_delete() {
+   for arg; do
+      fname=${arg}
+      verify "${fname}"
+      if [ -f "${fname}" ]; then
+         rm "${fname}"
+      fi
+   done
+}
+
+# -------------------------
+if [ ! -f tdump_001 ]; then
+   time ${PGM}hyts_std 001
+   rm -f WARNING.001 MESSAGE.001 
+fi
+
+# -------------------------
+echo "Test 001 ..."
+echo "'TITLE&','TRAJPLOT BASELINE (001)&'"		 >LABELS.CFG
+echo "37.500 -90.000 LOC001"				 >STATIONPLOT.CFG
+echo "MAPTEXT.CFG"					 >MAPTEXT.CFG
+echo "LINE 2 NOT USED BY TRAJPLOT"			>>MAPTEXT.CFG
+echo "SHOULD SEE 'LOC001' AT LAT 37.50 AND LON -90.000"	>>MAPTEXT.CFG
+
+strace ${PGM}trajplot -itdump_001 -ogrun_001.ps -a1 1> grun_001a1.log 2>&1
+verify_delete GIS_traj_ps_01.txt GIS_traj_ps_01.att
+
+strace ${PGM}trajplot -itdump_001 -ogrun_001.ps -a3 1> grun_001a3.log 2>&1
+verify_delete grun_001_01.kml
+
+strace ${PGM}trajplot -itdump_001 -ogrun_001.ps 1> grun_001.log 2>&1
+verify grun_001.ps
+rm -f LABELS.CFG STATIONPLOT.CFG MAPTEXT.CFG TRAJ.CFG
+cat grun_001.ps >grun_all.ps
+
+# -------------------------
+echo "Test 002 ..."
+echo "'TITLE&','TRAJPLOT WITH -p002 (002)&'"		 >LABELS.002
+echo "37.500 -90.000 LOC002"				 >STATIONPLOT.002
+echo "MAPTEXT.002"					 >MAPTEXT.002
+echo "LINE 2 NOT USED BY TRAJPLOT"			>>MAPTEXT.002
+echo "SHOULD SEE 'LOC002' AT LAT 37.50 AND LON -90.000"	>>MAPTEXT.002
+
+strace ${PGM}trajplot -itdump_001 -p002 -ogrun_002.ps -a1 1> grun_002a1.log 2>&1
+verify_delete GIS_traj_002_01.txt GIS_traj_002_01.att
+
+strace ${PGM}trajplot -itdump_001 -p002 -ogrun_002.ps -a3 1> grun_002a3.log 2>&1
+verify_delete grun_002_01.kml
+
+strace ${PGM}trajplot -itdump_001 -p002 -ogrun_002.ps 1> grun_002.log 2>&1
+verify grun_002.002
+mv grun_002.002 grun_002.ps
+rm -f LABELS.002 STATIONPLOT.002 MAPTEXT.002
+cat grun_002.ps >>grun_all.ps
+
+# -------------------------
+echo "Test 003 ..."
+echo "'TITLE&','TRAJPLOT WITH +g1 (003)&'"		 >LABELS.CFG
+echo "37.500 -90.000 LOC003"				 >STATIONPLOT.CFG
+echo "MAPTEXT.CFG"					 >MAPTEXT.CFG
+echo "LINE 2 NOT USED BY TRAJPLOT"			>>MAPTEXT.CFG
+echo "SHOULD SEE 'LOC003' AT LAT 37.50 AND LON -90.000"	>>MAPTEXT.CFG
+
+strace ${PGM}trajplot +g1 -itdump_001 -ogrun_003.html -a1 1> grun_003a1.log 2>&1
+verify_delete GIS_traj_html_01.txt GIS_traj_html_01.att
+
+strace ${PGM}trajplot +g1 -itdump_001 -ogrun_003.html -a3 1> grun_003a3.log 2>&1
+verify_delete grun_003_01.kml
+
+strace ${PGM}trajplot +g1 -itdump_001 -ogrun_003.html 1> grun_003.log 2>&1
+verify grun_003.html
+rm -f LABELS.CFG STATIONPLOT.CFG MAPTEXT.CFG TRAJ.CFG
+cat grun_003.html >grun_all.html
+
+# -------------------------
+echo "Test 004 ..."
+echo "'TITLE&','TRAJPLOT WITH +g1 -p004 (004)&'"	 >LABELS.004
+echo "37.500 -90.000 LOC004"				 >STATIONPLOT.004
+echo "MAPTEXT.004"					 >MAPTEXT.004
+echo "LINE 2 NOT USED BY TRAJPLOT"			>>MAPTEXT.004
+echo "SHOULD SEE 'LOC004' AT LAT 37.50 AND LON -90.000"	>>MAPTEXT.004
+
+strace ${PGM}trajplot +g1 -itdump_001 -p004 -ogrun_004.html -a1 1> grun_004a1.log 2>&1
+verify_delete GIS_traj_004_01.txt GIS_traj_004_01.att
+
+strace ${PGM}trajplot +g1 -itdump_001 -p004 -ogrun_004.html -a3 1> grun_004a3.log 2>&1
+verify_delete grun_004_01.kml
+
+strace ${PGM}trajplot +g1 -itdump_001 -p004 -ogrun_004.html 1> grun_004.log 2>&1
+verify grun_004.004
+mv grun_004.004 grun_004.html
+rm -f LABELS.004 STATIONPLOT.004 MAPTEXT.004
+cat grun_004.html >>grun_all.html
+
+# ------------------------
+if [ ! -f cdump_010 ]; then
+   time ${PGM}hycs_std 010
+   rm -f WARNING.010
+fi
+
+# ------------------------
+echo "Test 005 ..."
+echo "'TITLE&','CONCPLOT BASELINE (005)&'"		 >LABELS.CFG
+echo "LINE 1 NOT USED BY CONCPLOT"			 >MAPTEXT.CFG
+echo "LINE 2 NOT USED BY CONCPLOT"			>>MAPTEXT.CFG
+echo "MAPTEXT.CFG"					>>MAPTEXT.CFG
+
+strace ${PGM}concplot -icdump_010 -ogrun_005.ps -c4 -v1E-12+1E-13+1E-14+1E-15 -a2 1> grun_005a2.log 2>&1
+verify_delete GIS_00100_ps_01.txt GIS_00100_ps_01.att
+
+strace ${PGM}concplot -icdump_010 -ogrun_005.ps -c4 -v1E-12+1E-13+1E-14+1E-15 -a3 1> grun_005a3.log 2>&1
+verify_delete HYSPLIT_ps.kml GELABEL_ps.txt gistmp_ps.txt
+
+strace ${PGM}concplot -icdump_010 -ogrun_005.ps -c4 -v1E-12+1E-13+1E-14+1E-15 1> grun_005.log 2>&1
+verify grun_005.ps
+rm -f LABELS.CFG MAPTEXT.CFG
+cat grun_005.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 006 ..."
+echo "'TITLE&','CONCPLOT WITH -p006 (006)&'"		 >LABELS.006
+echo "LINE 1 NOT USED BY CONCPLOT"			 >MAPTEXT.006
+echo "LINE 2 NOT USED BY CONCPLOT"			>>MAPTEXT.006
+echo "MAPTEXT.006"					>>MAPTEXT.006
+
+strace ${PGM}concplot -p006 -icdump_010 -ogrun_006.ps -c4 -v1E-12+1E-13+1E-14+1E-15 -a2 1> grun_006a2.log 2>&1
+verify_delete GIS_00100_006_01.txt GIS_00100_006_01.att
+
+strace ${PGM}concplot -p006 -icdump_010 -ogrun_006.ps -c4 -v1E-12+1E-13+1E-14+1E-15 -a3 1> grun_006a3.log 2>&1
+verify_delete HYSPLIT_006.kml GELABEL_006.txt gistmp_006.txt
+
+strace ${PGM}concplot -p006 -icdump_010 -ogrun_006.ps -c4 -v1E-12+1E-13+1E-14+1E-15 1> grun_006.log 2>&1
+verify grun_006.006
+rm -f LABELS.006 MAPTEXT.006
+mv grun_006.006 grun_006.ps
+cat grun_006.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 007 ..."
+echo "'TITLE&','CONCPLOT WITH +g1 (007)&'"		 >LABELS.CFG
+echo "LINE 1 NOT USED BY CONCPLOT"			 >MAPTEXT.CFG
+echo "LINE 2 NOT USED BY CONCPLOT"			>>MAPTEXT.CFG
+echo "MAPTEXT.CFG"					>>MAPTEXT.CFG
+
+strace ${PGM}concplot +g1 -icdump_010 -ogrun_007.html -c4 -v1E-12+1E-13+1E-14+1E-15 -a2 1> grun_007a2.log 2>&1
+verify_delete GIS_00100_html_01.txt GIS_00100_html_01.att
+
+strace ${PGM}concplot +g1 -icdump_010 -ogrun_007.html -c4 -v1E-12+1E-13+1E-14+1E-15 -a3 1> grun_007a3.log 2>&1
+verify_delete HYSPLIT_html.kml GELABEL_html.txt gistmp_html.txt
+
+strace ${PGM}concplot +g1 -icdump_010 -ogrun_007.html -c4 -v1E-12+1E-13+1E-14+1E-15 1> grun_007.log 2>&1
+verify grun_007.html
+rm -f LABELS.CFG MAPTEXT.CFG
+cat grun_007.html >>grun_all.html
+
+# ------------------------
+echo "Test 008 ..."
+echo "'TITLE&','CONCPLOT WITH +g1 -p008 (008)&'"	 >LABELS.008
+echo "LINE 1 NOT USED BY CONCPLOT"			 >MAPTEXT.008
+echo "LINE 2 NOT USED BY CONCPLOT"			>>MAPTEXT.008
+echo "MAPTEXT.008"					>>MAPTEXT.008
+
+strace ${PGM}concplot +g1 -p008 -icdump_010 -ogrun_008.html -c4 -v1E-12+1E-13+1E-14+1E-15 -a2 1> grun_008a2.log 2>&1
+verify_delete GIS_00100_008_01.txt GIS_00100_008_01.att
+
+strace ${PGM}concplot +g1 -p008 -icdump_010 -ogrun_008.html -c4 -v1E-12+1E-13+1E-14+1E-15 -a3 1> grun_008a3.log 2>&1
+verify_delete HYSPLIT_008.kml GELABEL_008.txt gistmp_008.txt
+
+strace ${PGM}concplot +g1 -p008 -icdump_010 -ogrun_008.html -c4 -v1E-12+1E-13+1E-14+1E-15 1> grun_008.log 2>&1
+verify grun_008.008
+rm -f LABELS.008 MAPTEXT.008
+mv grun_008.008 grun_008.html
+cat grun_008.html >>grun_all.html
+
+# ------------------------
+if [ ! -f DELPCT ]; then
+   # From xcluster_example.scr
+
+   subdir_list="Example"
+
+   for subdir in ${subdir_list}
+   do
+  
+      DIR=../cluster/example/endpts/${subdir}
+
+      # plot title
+      ilab1=${subdir}
+
+      # number of clusters
+      case ${subdir} in
+         Example|dateline_start_e|dateline_start_w|equator_start_n|prime_meridian_start_e|prime_meridian_start_w) \
+                         nc=3;;
+         equator_start_s)     nc=4;;
+         east_hem|north_pole) nc=5;;
+         south_hem)           nc=7;;
+         *) nc=3;;
+      esac
+
+      if [ ! -f arlmap ]; then
+         cp ../graphics/arlmap ./
+      fi
+
+      rm -f cluster.ps
+
+      #################
+      # makeinfile.scr
+      #################
+      rm -f INFILE
+      ls ${DIR}/*tdump* | while read fname; do  echo $fname >> INFILE; done   
+      if [ ! -s INFILE ]; then
+         echo "ERROR - INFILE not created"
+         exit
+      fi
+
+      #################
+      # cluster1.scr
+      #################
+      # dur=hours to do clustering
+      case ${subdir} in
+         Example)    dur=12;;
+         south_pole) dur=120;;
+         *)          dur=48;;
+      esac
+      int=1	        # Endpoint interval to use (hours)
+      skip=1	# Skip trajectory interval
+      ODIR=./   	# Cluster output directory (with trailing /)
+      iproj=0
+   
+      echo $dur   > CCONTROL
+      echo $int  >> CCONTROL 
+      echo $skip >> CCONTROL 
+      echo $ODIR >> CCONTROL 
+      echo $iproj >> CCONTROL
+    
+      # do clustering
+      rm -f TCLUS TNOCLUS CLUSTER DELPCT CLUSTERno CMESSAGE
+      $PGM/cluster 
+      err=$?
+      if [ ${err} -ne 0 ]
+      then
+         echo "ERROR - cluster failed"
+         exit ${err}
+      fi
+  
+      if [ ! -f CLUSTER -o ! -f DELPCT ]; then
+         echo "ERROR - cluster failed"
+         exit
+      fi
+      rm TNOCLUS	# not used
+      rm TCLUS	# not used
+   done
+fi
+
+# clean up
+rm -f arlmap CCONTROL CLUSTER CLUSTERno CMESSAGE INFILE
+
+# ------------------------
+echo "Test 009 ..."
+strace ${PGM}clusplot -iDELPCT -ogrun_009.ps -l${ilab1} 1> grun_009.log 2>&1
+verify grun_009.ps
+cat grun_009.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 010 ..."
+strace ${PGM}clusplot -p010 -iDELPCT -ogrun_010.ps -l${ilab1} 1> grun_010.log 2>&1
+verify grun_010.010
+mv grun_010.010 grun_010.ps
+cat grun_010.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 011 ..."
+strace ${PGM}clusplot +g1 -iDELPCT -ogrun_011.html -l${ilab1} 1> grun_011.log 2>&1
+verify grun_011.html
+cat grun_011.html >>grun_all.html
+
+# ------------------------
+echo "Test 012 ..."
+strace ${PGM}clusplot +g1 -p012 -iDELPCT -ogrun_012.html -l${ilab1} 1> grun_012.log 2>&1
+verify grun_012.012
+mv grun_012.012 grun_012.html
+cat grun_012.html >>grun_all.html
+
+# ------------------------
+echo "Test 013 ..."
+cat > GELABEL_ps.txt <<!
+1
+mass/m3&
+Integrated:  0000 UTC  OCT  16   1995&
+        to:  1200 UTC  OCT  16   1995&
+5.1E-12 4.0E-19  8
+1.0E-19 1.0E-18 1.0E-17 1.0E-16 1.0E-15 1.0E-14 1.0E-13 1.0E-12                                     
+ 1.00 0.00 0.00 0.00 0.00 0.80 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+ 1.00 0.40 1.00 1.00 0.60 1.00 1.00 0.60 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+ 1.00 1.00 1.00 0.40 0.00 0.00 0.00 0.00 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+
+!
+
+strace ${PGM}gelabel 1> grun_013.log 2>&1
+verify GELABEL_01_ps.ps
+mv GELABEL_01_ps.ps grun_013.ps
+rm GELABEL_ps.txt
+cat grun_013.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 014 ..."
+cat > GELABEL_014.txt <<!
+1
+mass/m3&
+Integrated:  0000 UTC  OCT  16   1995&
+        to:  1200 UTC  OCT  16   1995&
+5.1E-12 4.0E-19  8
+1.0E-19 1.0E-18 1.0E-17 1.0E-16 1.0E-15 1.0E-14 1.0E-13 1.0E-12                                     
+ 1.00 0.00 0.00 0.00 0.00 0.80 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+ 1.00 0.40 1.00 1.00 0.60 1.00 1.00 0.60 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+ 1.00 1.00 1.00 0.40 0.00 0.00 0.00 0.00 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+
+!
+strace ${PGM}gelabel -p014 1> grun_014.log 2>&1
+verify GELABEL_01_014.ps
+mv GELABEL_01_014.ps grun_014.ps
+rm GELABEL_014.txt
+cat grun_014.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 015 ..."
+cat > GELABEL_html.txt <<!
+1
+mass/m3&
+Integrated:  0000 UTC  OCT  16   1995&
+        to:  1200 UTC  OCT  16   1995&
+5.1E-12 4.0E-19  8
+1.0E-19 1.0E-18 1.0E-17 1.0E-16 1.0E-15 1.0E-14 1.0E-13 1.0E-12                                     
+ 1.00 0.00 0.00 0.00 0.00 0.80 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+ 1.00 0.40 1.00 1.00 0.60 1.00 1.00 0.60 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+ 1.00 1.00 1.00 0.40 0.00 0.00 0.00 0.00 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+
+!
+
+strace ${PGM}gelabel +g1 1> grun_015.log 2>&1
+verify GELABEL_01_html.html
+mv GELABEL_01_html.html grun_015.html
+rm GELABEL_html.txt
+cat grun_015.html >>grun_all.html
+
+# ------------------------
+echo "Test 016 ..."
+cat > GELABEL_016.txt <<!
+1
+mass/m3&
+Integrated:  0000 UTC  OCT  16   1995&
+        to:  1200 UTC  OCT  16   1995&
+5.1E-12 4.0E-19  8
+1.0E-19 1.0E-18 1.0E-17 1.0E-16 1.0E-15 1.0E-14 1.0E-13 1.0E-12                                     
+ 1.00 0.00 0.00 0.00 0.00 0.80 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+ 1.00 0.40 1.00 1.00 0.60 1.00 1.00 0.60 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+ 1.00 1.00 1.00 0.40 0.00 0.00 0.00 0.00 0.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00 1.00
+
+!
+strace ${PGM}gelabel +g1 -p016 1> grun_016.log 2>&1
+verify GELABEL_01_016.html
+mv GELABEL_01_016.html grun_016.html
+rm GELABEL_016.txt
+cat grun_016.html >>grun_all.html
+
+# ------------------------
+echo "Test 017 ..."
+echo "'TITLE&','GRIDPLOT BASELINE (017)&'"		 >LABELS.CFG
+echo "LINE 1 NOT USED BY GRIDPLOT"			 >MAPTEXT.CFG
+echo "LINE 2 NOT USED BY GRIDPLOT"			>>MAPTEXT.CFG
+echo "MAPTEXT.CFG"					>>MAPTEXT.CFG
+echo "labels.txt?"                                       >labels.txt
+
+strace ${PGM}gridplot -icdump_010 -ogrun_017.ps -l-1 -d10.0 -g2 1> grun_017g2.log 2>&1
+verify_delete polygons_001_ps.txt polygons_001_ps.att
+
+strace ${PGM}gridplot -icdump_010 -ogrun_017.ps -l-1 -d10.0 -g3 1> grun_017g3.log 2>&1
+verify_delete grun_017.ps.kml GELABEL_ps.txt
+
+strace ${PGM}gridplot -icdump_010 -ogrun_017.ps -l-1 -d10.0 -b1 1> grun_017.log 2>&1
+verify grun_017.ps soslgd.ps
+mv soslgd.ps grun_017a.ps
+cat grun_017.ps grun_017a.ps >>grun_all.ps
+rm -f LABELS.CFG MAPTEXT.CFG labels.txt
+
+# ------------------------
+echo "Test 018 ..."
+echo "'TITLE&','GRIDPLOT WITH -p018 (018)&'"		 >LABELS.018
+echo "LINE 1 NOT USED BY GRIDPLOT"			 >MAPTEXT.018
+echo "LINE 2 NOT USED BY GRIDPLOT"			>>MAPTEXT.018
+echo "MAPTEXT.018"					>>MAPTEXT.018
+echo "labels_018.txt?"                                   >labels_018.txt
+
+strace ${PGM}gridplot -p018 -icdump_010 -ogrun_018.ps -l-1 -d10.0 -g2 1> grun_018g2.log 2>&1
+verify_delete polygons_001_018.txt polygons_001_018.att
+
+strace ${PGM}gridplot -p018 -icdump_010 -ogrun_018.ps -l-1 -d10.0 -g3 1> grun_018g3.log 2>&1
+verify_delete grun_018.ps.kml GELABEL_018.txt
+
+strace ${PGM}gridplot -p018 -icdump_010 -ogrun_018.ps -l-1 -d10.0 -b1 1> grun_018.log 2>&1
+verify grun_018.018 SOSLGD_018.ps
+mv grun_018.018 grun_018.ps
+mv SOSLGD_018.ps grun_018a.ps
+cat grun_018.ps grun_018a.ps >>grun_all.ps
+rm -f LABELS.018 MAPTEXT.018 labels_018.txt
+
+# ------------------------
+echo "Test 019 ..."
+echo "'TITLE&','GRIDPLOT WITH +g1 (019)&'"		 >LABELS.CFG
+echo "LINE 1 NOT USED BY GRIDPLOT"			 >MAPTEXT.CFG
+echo "LINE 2 NOT USED BY GRIDPLOT"			>>MAPTEXT.CFG
+echo "MAPTEXT.CFG"					>>MAPTEXT.CFG
+echo "labels.txt?"                                       >labels.txt
+
+strace ${PGM}gridplot +g1 -icdump_010 -ogrun_019.html -l-1 -d10.0 -g2 1> grun_019g2.log 2>&1
+verify_delete polygons_001_html.txt polygons_001_html.att
+
+strace ${PGM}gridplot +g1 -icdump_010 -ogrun_019.html -l-1 -d10.0 -g3 1> grun_019g3.log 2>&1
+verify_delete grun_019.html.kml GELABEL_html.txt
+
+strace ${PGM}gridplot +g1 -icdump_010 -ogrun_019.html -l-1 -d10.0 -b1 1> grun_019.log 2>&1
+verify grun_019.html soslgd.html
+mv soslgd.html grun_019a.html
+cat grun_019.html grun_019a.html >>grun_all.html
+rm -f LABELS.CFG MAPTEXT.CFG labels.txt #soslgd.html
+
+# ------------------------
+echo "Test 020 ..."
+echo "'TITLE&','GRIDPLOT WITH +g1 -p020 (020)&'"	 >LABELS.020
+echo "LINE 1 NOT USED BY GRIDPLOT"			 >MAPTEXT.020
+echo "LINE 2 NOT USED BY GRIDPLOT"			>>MAPTEXT.020
+echo "MAPTEXT.020"					>>MAPTEXT.020
+echo "labels_020?"                                       >labels_020.txt
+
+strace ${PGM}gridplot +g1 -p020 -icdump_010 -ogrun_020.html -l-1 -d10.0 -g2 1> grun_020g2.log 2>&1
+verify_delete polygons_001_020.txt polygons_001_020.att
+
+strace ${PGM}gridplot +g1 -p020 -icdump_010 -ogrun_020.html -l-1 -d10.0 -g3 1> grun_020g3.log 2>&1
+verify_delete grun_020.html.kml GELABEL_020.txt
+
+strace ${PGM}gridplot +g1 -p020 -icdump_010 -ogrun_020.html -l-1 -d10.0 -b1 1> grun_020.log 2>&1
+verify grun_020.020 SOSLGD_020.html
+mv grun_020.020 grun_020.html
+mv SOSLGD_020.html grun_020a.html
+cat grun_020.html grun_020a.html >>grun_all.html
+rm -f LABELS.020 MAPTEXT.020 labels_020.txt
+
+# ------------------------
+if [ ! -f cdump_033 ]; then
+   time ${PGM}hycs_std 033
+   rm -f MESSAGE.033 VMSDIST.033 WARNING.033 CONC.033
+fi
+
+# ------------------------
+echo "Test 021 ..."
+echo "'RELEASE&','ISOCHRON BASELINE (021)&'"		 >LABELS.CFG
+
+strace ${PGM}isochron -icdump_033 -ogrun_021.ps -s0 -g2 1> grun_021g2.log 2>&1
+verify_delete polygons_001_ps.txt polygons_001_ps.att
+verify_delete polygons_002_ps.txt polygons_002_ps.att
+
+strace ${PGM}isochron -icdump_033 -ogrun_021.ps -s0 -g3 1> grun_021g3.log 2>&1
+verify_delete grun_021_ps.kml GELABEL_ps.txt
+
+strace ${PGM}isochron -icdump_033 -ogrun_021.ps -s0 1> grun_021.log 2>&1
+verify grun_021.ps
+cat grun_021.ps >>grun_all.ps
+rm -f LABELS.CFG
+
+# ------------------------
+echo "Test 022 ..."
+echo "'RELEASE&','ISOCHRON WITH -p022 (022)&'"		 >LABELS.022
+
+strace ${PGM}isochron -p022 -icdump_033 -ogrun_022.ps -s0 -g2 1> grun_022g2.log 2>&1
+verify_delete polygons_001_022.txt polygons_001_022.att
+verify_delete polygons_002_022.txt polygons_002_022.att
+
+strace ${PGM}isochron -p022 -icdump_033 -ogrun_022.ps -s0 -g3 1> grun_022g3.log 2>&1
+verify_delete grun_022_022.kml GELABEL_022.txt
+
+strace ${PGM}isochron -p022 -icdump_033 -ogrun_022.ps -s0 1> grun_022.log 2>&1
+verify grun_022.022
+mv grun_022.022 grun_022.ps
+cat grun_022.ps >>grun_all.ps
+rm -f LABELS.022
+
+# ------------------------
+echo "Test 023 ..."
+echo "'RELEASE&','ISOCHRON WITH +g1 (023)&'"		 >LABELS.CFG
+
+strace ${PGM}isochron +g1 -icdump_033 -ogrun_023.html -s0 -g2 1> grun_023g2.log 2>&1
+verify_delete polygons_001_html.txt polygons_001_html.att
+verify_delete polygons_002_html.txt polygons_002_html.att
+
+strace ${PGM}isochron +g1 -icdump_033 -ogrun_023.html -s0 -g3 1> grun_023g3.log 2>&1
+verify_delete grun_023_html.kml GELABEL_html.txt
+
+strace ${PGM}isochron +g1 -icdump_033 -ogrun_023.html -s0 1> grun_023.log 2>&1
+verify grun_023.html
+cat grun_023.html >>grun_all.html
+rm -f LABELS.CFG
+
+# ------------------------
+echo "Test 024 ..."
+echo "'RELEASE&','ISOCHRON WITH +g1 -p024 (024)&'"		 >LABELS.024
+
+strace ${PGM}isochron +g1 -p024 -icdump_033 -ogrun_024.html -s0 -g2 1> grun_024g2.log 2>&1
+verify_delete polygons_001_024.txt polygons_001_024.att
+verify_delete polygons_002_024.txt polygons_002_024.att
+
+strace ${PGM}isochron +g1 -p024 -icdump_033 -ogrun_024.html -s0 -g3 1> grun_024g3.log 2>&1
+verify_delete grun_024_024.kml GELABEL_024.txt
+
+strace ${PGM}isochron +g1 -p024 -icdump_033 -ogrun_024.html -s0 1> grun_024.log 2>&1
+verify grun_024.024
+mv grun_024.024 grun_024.html
+cat grun_024.html >>grun_all.html
+rm -f LABELS.024
+
+# ------------------------
+if [ ! -f cdump_131 ]; then
+   time ${PGM}hycs_std 031
+   rm -f MESSAGE.031 VMSDIST.031 WARNING.031 CONC.031
+fi
+
+[ -f fort.17 ] && rm -f fort.17
+[ -f fort.18 ] && rm -f fort.18
+
+# ------------------------
+echo "Test 025 ..."
+echo "'TITLE&','VOLCPLOT BASELINE (025)&'"		 >LABELS.CFG
+echo "'URL&','URL FIELD&'"		 		>>LABELS.CFG
+
+strace ${PGM}volcplot -icdump_131 -ogrun_025.ps -10 -21 -30 -40 -5TEST-131 -61 -71 -z90 -a2 1> grun_025a2.log 2>&1
+verify_delete GIS_06096-06096_ps_01.att GIS_06096-06096_ps_01.txt 
+verify_delete GIS_06096-16764_ps_01.att GIS_06096-16764_ps_01.txt 
+verify_delete GIS_10668-10668_ps_01.att GIS_10668-10668_ps_01.txt 
+verify_delete GIS_16764-16764_ps_01.att GIS_16764-16764_ps_01.txt 
+verify_delete gistmp_ps.txt
+
+strace ${PGM}volcplot -icdump_131 -ogrun_025.ps -10 -21 -30 -40 -5TEST-131 -61 -71 -z90 -a3 1> grun_025a3.log 2>&1
+verify_delete HYSPLIT_ps.kml GELABEL_ps.txt
+verify_delete gistmp_ps.txt
+if [ -f fort.17 -o -f fort.18 ]; then
+   echo "FIXME: volcplot should not create fort.17 and fort.18"
+fi
+
+strace ${PGM}volcplot -icdump_131 -ogrun_025.ps -10 -21 -30 -40 -5TEST-131 -61 -z90 1> grun_025.log 2>&1
+verify grun_025.ps
+verify_delete DATE.TXT
+cat grun_025.ps >>grun_all.ps
+
+rm -f LABELS.CFG
+
+# ------------------------
+echo "Test 026 ..."
+echo "'TITLE&','VOLCPLOT WITH -p026 (026)&'"		 >LABELS.026
+echo "'URL&','URL FIELD&'"		 		>>LABELS.026
+
+strace ${PGM}volcplot -p026 -icdump_131 -ogrun_026.ps -10 -21 -30 -40 -5TEST-131 -61 -71 -z90 -a2 1> grun_026a2.log 2>&1
+verify_delete GIS_06096-06096_026_01.att GIS_06096-06096_026_01.txt 
+verify_delete GIS_06096-16764_026_01.att GIS_06096-16764_026_01.txt 
+verify_delete GIS_10668-10668_026_01.att GIS_10668-10668_026_01.txt 
+verify_delete GIS_16764-16764_026_01.att GIS_16764-16764_026_01.txt 
+verify_delete gistmp_026.txt
+
+strace ${PGM}volcplot -p026 -icdump_131 -ogrun_026.ps -10 -21 -30 -40 -5TEST-131 -61 -71 -z90 -a3 1> grun_026a3.log 2>&1
+verify_delete HYSPLIT_026.kml GELABEL_026.txt
+verify_delete gistmp_026.txt
+if [ -f fort.17 -o -f fort.18 ]; then
+   echo "FIXME: volcplot should not create fort.17 and fort.18"
+fi
+
+strace ${PGM}volcplot -p026 -icdump_131 -ogrun_026.ps -10 -21 -30 -40 -5TEST-131 -61 -z90 1> grun_026.log 2>&1
+verify grun_026.026
+verify_delete DATE.026
+mv grun_026.026 grun_026.ps
+cat grun_026.ps >>grun_all.ps
+
+rm -f LABELS.026
+
+# ------------------------
+echo "Test 027 ..."
+echo "'TITLE&','VOLCPLOT WITH +g1 (027)&'"		 >LABELS.CFG
+echo "'URL&','URL FIELD&'"		 		>>LABELS.CFG
+
+strace ${PGM}volcplot +g1 -icdump_131 -ogrun_027.html -10 -21 -30 -40 -5TEST-131 -61 -71 -z90 -a2 1> grun_027a2.log 2>&1
+verify_delete GIS_06096-06096_html_01.att GIS_06096-06096_html_01.txt 
+verify_delete GIS_06096-16764_html_01.att GIS_06096-16764_html_01.txt 
+verify_delete GIS_10668-10668_html_01.att GIS_10668-10668_html_01.txt 
+verify_delete GIS_16764-16764_html_01.att GIS_16764-16764_html_01.txt 
+verify_delete gistmp_html.txt
+
+strace ${PGM}volcplot +g1 -icdump_131 -ogrun_027.html -10 -21 -30 -40 -5TEST-131 -61 -71 -z90 -a3 1> grun_027a3.log 2>&1
+verify_delete HYSPLIT_html.kml GELABEL_html.txt
+verify_delete gistmp_html.txt
+if [ -f fort.17 -o -f fort.18 ]; then
+   echo "FIXME: volcplot should not create fort.17 and fort.18"
+fi
+
+strace ${PGM}volcplot +g1 -icdump_131 -ogrun_027.html -10 -21 -30 -40 -5TEST-131 -61 -z90 1> grun_027.log 2>&1
+verify grun_027.html
+verify_delete DATE.TXT
+cat grun_027.html >>grun_all.html
+
+rm -f LABELS.CFG
+
+# ------------------------
+echo "Test 028 ..."
+echo "'TITLE&','VOLCPLOT WITH +g1 -p028 (028)&'"	 >LABELS.028
+echo "'URL&','URL FIELD&'"		 		>>LABELS.028
+
+strace ${PGM}volcplot +g1 -p028 -icdump_131 -ogrun_028.html -10 -21 -30 -40 -5TEST-131 -61 -71 -z90 -a2 1> grun_028a2.log 2>&1
+verify_delete GIS_06096-06096_028_01.att GIS_06096-06096_028_01.txt 
+verify_delete GIS_06096-16764_028_01.att GIS_06096-16764_028_01.txt 
+verify_delete GIS_10668-10668_028_01.att GIS_10668-10668_028_01.txt 
+verify_delete GIS_16764-16764_028_01.att GIS_16764-16764_028_01.txt 
+verify_delete gistmp_028.txt
+
+strace ${PGM}volcplot +g1 -p028 -icdump_131 -ogrun_028.028 -10 -21 -30 -40 -5TEST-131 -61 -71 -z90 -a3 1> grun_028a3.log 2>&1
+verify_delete HYSPLIT_028.kml GELABEL_028.txt
+verify_delete gistmp_028.txt
+if [ -f fort.17 -o -f fort.18 ]; then
+   echo "FIXME: volcplot should not create fort.17 and fort.18"
+fi
+
+strace ${PGM}volcplot +g1 -p028 -icdump_131 -ogrun_028.028 -10 -21 -30 -40 -5TEST-131 -61 -z90 1> grun_028.log 2>&1
+verify grun_028.028
+verify_delete DATE.028
+mv grun_028.028 grun_028.html
+cat grun_028.html >>grun_all.html
+
+rm -f LABELS.028
+
+# ------------------------
+if [ ! -f tmpl_029.txt ]; then
+   echo "999 32.50 -97.59" >station.txt
+   ${PGM}con2stn -icdump_033 -otmpl_029.txt -r2 -c1.0E+12 -sstation.txt
+   rm -f station.txt
+fi
+
+# ------------------------
+echo "Test 029 ..."
+echo "'TITLE&','TIMEPLOT BASELINE (029)&'"		 >LABELS.CFG
+
+strace ${PGM}timeplot -itmpl_029.txt -r2 1> grun_029.log 2>&1
+verify timeplot.ps
+mv timeplot.ps grun_029.ps
+cat grun_029.ps >>grun_all.ps
+
+rm -f LABELS.CFG
+
+# ------------------------
+echo "Test 030 ..."
+echo "'TITLE&','TIMEPLOT WITH -e030 (030)&'"		 >LABELS.030
+
+strace ${PGM}timeplot -e030 -itmpl_029.txt -r2 1> grun_030.log 2>&1
+verify timeplot.030
+mv timeplot.030 grun_030.ps
+cat grun_030.ps >>grun_all.ps
+
+rm -f LABELS.030
+
+# ------------------------
+echo "Test 031 ..."
+echo "'TITLE&','TIMEPLOT WITH +g1 (031)&'"		 >LABELS.CFG
+
+strace ${PGM}timeplot +g1 -itmpl_029.txt -r2 1> grun_031.log 2>&1
+verify timeplot.html
+mv timeplot.html grun_031.html
+cat grun_031.html >>grun_all.html
+
+rm -f LABELS.CFG
+
+# ------------------------
+echo "Test 032 ..."
+echo "'TITLE&','TIMEPLOT WITH +g1 -e032 (032)&'"	 >LABELS.032
+
+strace ${PGM}timeplot +g1 -e032 -itmpl_029.txt -r2 1> grun_032.log 2>&1
+verify timeplot.032
+mv timeplot.032 grun_032.html
+cat grun_032.html >>grun_all.html
+
+rm -f LABELS.032
+
+# ------------------------
+if [ ! -f PARDUMP_042 ]; then
+   time ${PGM}hycs_std 042
+   rm -f CONC.042 MESSAGE.042 VMSDIST.042 WARNING.042
+fi
+
+# ------------------------
+echo "Test 033 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.CFG
+echo "LINE2 NOT USED"		 	>>MAPTEXT.CFG
+echo "PARXPLOT BASELINE (033)"		>>MAPTEXT.CFG
+
+strace ${PGM}parxplot -iPARDUMP_042 -k1 -n3 -ogrun_033.ps -a1 1> grun_033a1.log 2>&1
+verify_delete GIS_part_001_ps.att GIS_part_001_ps.txt
+
+strace ${PGM}parxplot -iPARDUMP_042 -k1 -n3 -ogrun_033.ps -a3 1> grun_033a3.log 2>&1
+verify_delete HYSPLITpart_ps.kml
+
+strace ${PGM}parxplot -iPARDUMP_042 -k1 -n3 -ogrun_033.ps 1> grun_033.log 2>&1
+verify grun_033.ps
+cat grun_033.ps >>grun_all.ps
+
+rm -f MAPTEXT.CFG
+
+# ------------------------
+echo "Test 034 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.034
+echo "LINE2 NOT USED"		 	>>MAPTEXT.034
+echo "PARXPLOT WITH -p034 (034)"	>>MAPTEXT.034
+
+strace ${PGM}parxplot -p034 -iPARDUMP_042 -k1 -n3 -ogrun_034.ps -a1 1> grun_034a1.log 2>&1
+verify_delete GIS_part_001_034.att GIS_part_001_034.txt
+
+strace ${PGM}parxplot -p034 -iPARDUMP_042 -k1 -n3 -ogrun_034.ps -a3 1> grun_034a3.log 2>&1
+verify_delete HYSPLITpart_034.kml
+
+strace ${PGM}parxplot -p034 -iPARDUMP_042 -k1 -n3 -ogrun_034.ps 1> grun_034.log 2>&1
+verify grun_034.034
+mv grun_034.034 grun_034.ps
+cat grun_034.ps >>grun_all.ps
+
+rm -f MAPTEXT.034
+
+# ------------------------
+echo "Test 035 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.CFG
+echo "LINE2 NOT USED"		 	>>MAPTEXT.CFG
+echo "PARXPLOT WITH +g1 (035)"		>>MAPTEXT.CFG
+
+strace ${PGM}parxplot +g1 -iPARDUMP_042 -k1 -n3 -ogrun_035.html -a1 1> grun_035a1.log 2>&1
+verify_delete GIS_part_001_html.att GIS_part_001_html.txt
+
+strace ${PGM}parxplot +g1 -iPARDUMP_042 -k1 -n3 -ogrun_035.html -a3 1> grun_035a3.log 2>&1
+verify_delete HYSPLITpart_html.kml
+
+strace ${PGM}parxplot +g1 -iPARDUMP_042 -k1 -n3 -ogrun_035.html 1> grun_035.log 2>&1
+verify grun_035.html
+cat grun_035.html >>grun_all.html
+
+rm -f MAPTEXT.CFG
+
+# ------------------------
+echo "Test 036 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.036
+echo "LINE2 NOT USED"		 	>>MAPTEXT.036
+echo "PARXPLOT WITH +g1 -p036 (036)"	>>MAPTEXT.036
+
+strace ${PGM}parxplot +g1 -p036 -iPARDUMP_042 -k1 -n3 -ogrun_036.html -a1 1> grun_036a1.log 2>&1
+verify_delete GIS_part_001_036.att GIS_part_001_036.txt
+
+strace ${PGM}parxplot +g1 -p036 -iPARDUMP_042 -k1 -n3 -ogrun_036.html -a3 1> grun_036a3.log 2>&1
+verify_delete HYSPLITpart_036.kml
+
+strace ${PGM}parxplot +g1 -p036 -iPARDUMP_042 -k1 -n3 -ogrun_036.html 1> grun_036.log 2>&1
+verify grun_036.036
+mv  grun_036.036 grun_036.html
+cat grun_036.html >>grun_all.html
+
+rm -f MAPTEXT.036
+
+# ------------------------
+echo "Test 037 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.CFG
+echo "LINE2 NOT USED"		 	>>MAPTEXT.CFG
+echo "PARHPLOT BASELINE (037)"		>>MAPTEXT.CFG
+
+strace ${PGM}parhplot -iPARDUMP_042 -k1 -n3 -ogrun_037.ps -a1 1> grun_037a1.log 2>&1
+verify_delete GIS_part_001_ps.att GIS_part_001_ps.txt
+
+strace ${PGM}parhplot -iPARDUMP_042 -k1 -n3 -ogrun_037.ps -a3 1> grun_037a3.log 2>&1
+verify_delete HYSPLITpart_ps.kml
+
+strace ${PGM}parhplot -iPARDUMP_042 -k1 -n3 -ogrun_037.ps 1> grun_037.log 2>&1
+verify grun_037.ps
+cat grun_037.ps >>grun_all.ps
+
+rm -f MAPTEXT.CFG
+
+# ------------------------
+echo "Test 038 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.038
+echo "LINE2 NOT USED"		 	>>MAPTEXT.038
+echo "PARHPLOT WITH -p038 (038)"	>>MAPTEXT.038
+
+strace ${PGM}parhplot -p038 -iPARDUMP_042 -k1 -n3 -ogrun_038.ps -a1 1> grun_038a1.log 2>&1
+verify_delete GIS_part_001_038.att GIS_part_001_038.txt
+
+strace ${PGM}parhplot -p038 -iPARDUMP_042 -k1 -n3 -ogrun_038.ps -a3 1> grun_038a3.log 2>&1
+verify_delete HYSPLITpart_038.kml
+
+strace ${PGM}parhplot -p038 -iPARDUMP_042 -k1 -n3 -ogrun_038.ps 1> grun_038.log 2>&1
+verify grun_038.038
+mv grun_038.038 grun_038.ps
+cat grun_038.ps >>grun_all.ps
+
+rm -f MAPTEXT.038
+
+# ------------------------
+echo "Test 039 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.CFG
+echo "LINE2 NOT USED"		 	>>MAPTEXT.CFG
+echo "PARHPLOT WITH +g1 (039)"		>>MAPTEXT.CFG
+
+strace ${PGM}parhplot +g1 -iPARDUMP_042 -k1 -n3 -ogrun_039.html -a1 1> grun_039a1.log 2>&1
+verify_delete GIS_part_001_html.att GIS_part_001_html.txt
+
+strace ${PGM}parhplot +g1 -iPARDUMP_042 -k1 -n3 -ogrun_039.html -a3 1> grun_039a3.log 2>&1
+verify_delete HYSPLITpart_html.kml
+
+strace ${PGM}parhplot +g1 -iPARDUMP_042 -k1 -n3 -ogrun_039.html 1> grun_039.log 2>&1
+verify grun_039.html
+cat grun_039.html >>grun_all.html
+
+rm -f MAPTEXT.CFG
+
+# ------------------------
+echo "Test 040 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.040
+echo "LINE2 NOT USED"		 	>>MAPTEXT.040
+echo "PARHPLOT WITH +g1 -p040 (040)"	>>MAPTEXT.040
+
+strace ${PGM}parhplot +g1 -p040 -iPARDUMP_042 -k1 -n3 -ogrun_040.html -a1 1> grun_040a1.log 2>&1
+verify_delete GIS_part_001_040.att GIS_part_001_040.txt
+
+strace ${PGM}parhplot +g1 -p040 -iPARDUMP_042 -k1 -n3 -ogrun_040.html -a3 1> grun_040a3.log 2>&1
+verify_delete HYSPLITpart_040.kml
+
+strace ${PGM}parhplot +g1 -p040 -iPARDUMP_042 -k1 -n3 -ogrun_040.html 1> grun_040.log 2>&1
+verify grun_040.040
+mv  grun_040.040 grun_040.html
+cat grun_040.html >>grun_all.html
+
+rm -f MAPTEXT.040
+
+# ------------------------
+echo "Test 041 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.CFG
+echo "LINE2 NOT USED"		 	>>MAPTEXT.CFG
+echo "PARVPLOT BASELINE (041)"		>>MAPTEXT.CFG
+
+strace ${PGM}parvplot -iPARDUMP_042 -k1 -n3 -ogrun_041.ps 1> grun_041.log 2>&1
+verify grun_041.ps
+cat grun_041.ps >>grun_all.ps
+
+rm -f MAPTEXT.CFG
+
+# ------------------------
+echo "Test 042 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.042
+echo "LINE2 NOT USED"		 	>>MAPTEXT.042
+echo "PARVPLOT WITH -p042 (042)"	>>MAPTEXT.042
+
+strace ${PGM}parvplot -p042 -iPARDUMP_042 -k1 -n3 -ogrun_042.ps 1> grun_042.log 2>&1
+verify grun_042.042
+mv grun_042.042 grun_042.ps
+cat grun_042.ps >>grun_all.ps
+
+rm -f MAPTEXT.042
+
+# ------------------------
+echo "Test 043 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.CFG
+echo "LINE2 NOT USED"		 	>>MAPTEXT.CFG
+echo "PARVPLOT WITH +g1 (043)"		>>MAPTEXT.CFG
+
+strace ${PGM}parvplot +g1 -iPARDUMP_042 -k1 -n3 -ogrun_043.html 1> grun_043.log 2>&1
+verify grun_043.html
+cat grun_043.html >>grun_all.html
+
+rm -f MAPTEXT.CFG
+
+# ------------------------
+echo "Test 044 ..."
+echo "LINE1 NOT USED"		 	 >MAPTEXT.044
+echo "LINE2 NOT USED"		 	>>MAPTEXT.044
+echo "PARVPLOT WITH +g1 -p044 (044)"	>>MAPTEXT.044
+
+strace ${PGM}parvplot +g1 -p044 -iPARDUMP_042 -k1 -n3 -ogrun_044.html 1> grun_044.log 2>&1
+verify grun_044.044
+mv  grun_044.044 grun_044.html
+cat grun_044.html >>grun_all.html
+
+rm -f MAPTEXT.044
+
+# ------------------------
+today=`date -u +%Y%m%d`
+forecast_dir="/pub/forecast/${today}/"
+forecast_file="hysplit.t00z.nama"
+forecast_pathname="${forecast_dir}${forecast_file}"
+if [ ! -f "${forecast_pathname}" ]; then
+   echo "ERROR: no showgrid tests because of a missing file: ${forecast_pathname}"
+else
+   # ------------------------
+   echo "Test 045 ..."
+   strace ${PGM}showgrid "-D${forecast_dir}" "-F${forecast_file}" \
+         -Q35.00 -R-90.00 -S40.00 -T-85.0 -B \
+         1> grun_045.log 2>& 1
+   #verify_delete GRIDINFO.txt
+   verify showgrid.ps
+   mv showgrid.ps grun_045.ps
+   cat grun_045.ps >>grun_all.ps
+
+   rm -f WARNING MESSAGE
+
+   # ------------------------
+   echo "Test 046 ..."
+   strace ${PGM}showgrid "-D${forecast_dir}" "-F${forecast_file}" \
+         -P046 \
+         -Q35.00 -R-90.00 -S40.00 -T-85.0 -B \
+         1> grun_046.log 2>& 1
+   #verify_delete GRIDINFO.046
+   verify showgrid_046.ps
+   mv showgrid_046.ps grun_046.ps
+   cat grun_046.ps >>grun_all.ps
+
+   rm -f WARNING MESSAGE
+
+   # ------------------------
+   echo "Test 047 ..."
+   strace ${PGM}showgrid "-D${forecast_dir}" "-F${forecast_file}" \
+         +g1 \
+         -Q35.00 -R-90.00 -S40.00 -T-85.0 -B \
+         1> grun_047.log 2>& 1
+   #verify_delete GRIDINFO.txt
+   verify showgrid.html
+   mv showgrid.html grun_047.html
+   cat grun_047.html >>grun_all.html
+
+   rm -f WARNING MESSAGE
+
+   # ------------------------
+   echo "Test 048 ..."
+   strace ${PGM}showgrid "-D${forecast_dir}" "-F${forecast_file}" \
+         +g1 -P048 \
+         -Q35.0 -R-90.00 -S40.00 -T-85.0 -B \
+         1> grun_048.log 2>& 1
+   #verify_delete GRIDINFO.048
+   verify showgrid_048.html
+   mv showgrid_048.html grun_048.html
+   cat grun_048.html >>grun_all.html
+
+   rm -f WARNING MESSAGE
+fi
+
+# ------------------------
+if [ ! -f STABILITY.049.txt ]; then
+   cat > STABILITY.049.txt <<!
+  38.55 -98.70 HRRR
+    JDAY  YR  MO  DA  HR  PSQ    Var1        Var2
+  97.625  20   4   6  15    B 1.5e+05    1.11e+05
+  97.667  20   4   6  16    B 2.5e+05    2.11e+05
+  97.708  20   4   6  17    B 1.5e+05    3.11e+05
+  97.750  20   4   6  18    B 3.5e+05    2.11e+05
+!
+fi
+[ ! -f STABILITY.050.txt ] && cp STABILITY.049.txt STABILITY.050.txt 
+[ ! -f STABILITY.051.txt ] && cp STABILITY.049.txt STABILITY.051.txt 
+[ ! -f STABILITY.052.txt ] && cp STABILITY.049.txt STABILITY.052.txt 
+
+# ------------------------
+echo "Test 049 ..."
+echo "'TITLE&','STABPLOT BASELINE (049)&'"		 >LABELS.CFG
+
+strace ${PGM}stabplot +g0 1> grun_049.log 2>&1 <<!
+STABILITY.049.txt
+!
+verify stabplot.ps.ps
+mv stabplot.ps.ps grun_049.ps
+cat grun_049.ps >>grun_all.ps
+
+rm -f LABELS.CFG
+
+# ------------------------
+echo "Test 050 ..."
+echo "'TITLE&','STABPLOT WITH -i050 (050)&'"		 >LABELS.050
+
+strace ${PGM}stabplot -i050 1> grun_050.log 2>&1
+verify stabplot.050.ps
+mv stabplot.050.ps grun_050.ps
+cat grun_049.ps >>grun_all.ps
+
+rm -f LABELS.050
+
+# ------------------------
+echo "Test 051 ..."
+echo "'TITLE&','STABPLOT WITH +g1 (051)&'"		 >LABELS.CFG
+
+strace ${PGM}stabplot +g1 1> grun_051.log 2>&1 <<!
+STABILITY.051.txt
+!
+verify stabplot.html.html
+mv stabplot.html.html grun_051.html
+cat grun_051.html >>grun_all.html
+
+rm -f LABELS.CFG
+
+# ------------------------
+echo "Test 052 ..."
+echo "'TITLE&','STABPLOT WITH +g1 -i052 (052)&'"	 >LABELS.052
+
+strace ${PGM}stabplot +g1 -i052 1> grun_052.log 2>&1
+verify stabplot.052.html
+mv stabplot.052.html grun_052.html
+cat grun_052.html >>grun_all.html
+
+rm -f LABELS.052
+
+# ------------------------
+if [ ! -f cmean ]; then
+   cp CONTROL.026 CONTROL
+   for f in 1 2 3 4 5 6 7 8 9; do
+      ${PGM}hycs_ens ${f}
+   done
+   ${PGM}conprob -bcdump_026
+fi
+
+if [ ! -f datem_053.txt ]; then
+   cat > datem_053.txt <<!
+Mockup date for station 999
+year mn dy  shr  dur   lat     lon    pmch  stn
+1995 10 16 0000 0300 40.00  -90.00     0.0  999
+1995 10 16 0300 0300 40.00  -90.00     0.0  999
+1995 10 16 0600 0300 40.00  -90.00  1.6e-13 999
+1995 10 16 0900 0300 40.00  -90.00  2.7e-12 999
+1995 10 16 1200 0300 40.00  -90.00  3.8e-12 999
+1995 10 16 1500 0300 40.00  -90.00  1.0e-12 999
+1995 10 16 1800 0300 40.00  -90.00  6.6e-13 999
+1995 10 16 2100 0300 40.00  -90.00  1.1e-14 999
+1995 10 17 0000 0300 40.00  -90.00     0.0  999
+!
+fi
+
+# ------------------------
+echo "Test 053 ..."
+
+strace ${PGM}boxplots -a -ddatem_053.txt -y40.000 -x-90.00 1> grun_053.log 2>&1
+verify boxplots.ps
+verify_delete boxplots.txt
+mv boxplots.ps grun_053.ps
+cat grun_053.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 054 ..."
+
+strace ${PGM}boxplots +g1 -a -ddatem_053.txt -y40.000 -x-90.00 1> grun_054.log 2>&1
+verify boxplots.html
+verify_delete boxplots.txt
+mv boxplots.html grun_054.html
+cat grun_054.html >>grun_all.html
+
+# ------------------------
+today=`date -u +%Y%m%d`
+forecast_dir="/pub/forecast/${today}/"
+forecast_file="hysplit.t00z.nama"
+forecast_pathname="${forecast_dir}${forecast_file}"
+if [ ! -f "${forecast_pathname}" ]; then
+   echo "ERROR: no contour tests because of a missing file: ${forecast_pathname}"
+else
+   # ------------------------
+   echo "Test 055 ..."
+
+   strace ${PGM}contour "-D${forecast_dir}" "-F${forecast_file}" \
+         -y40.000 -x-90.00 -c1 -VTEMP -a1 1> grun_055a1.log 2>&1
+   verify_delete GIS_METEO_01.txt gistmp.txt
+
+   strace ${PGM}contour "-D${forecast_dir}" "-F${forecast_file}" \
+         -y40.000 -x-90.00 -c1 -VTEMP 1> grun_055.log 2>&1
+   verify contour.ps
+   mv contour.ps grun_055.ps
+   cat grun_055.ps >>grun_all.ps
+
+   # ------------------------
+   echo "Test 056 ..."
+
+   strace ${PGM}contour "-D${forecast_dir}" "-F${forecast_file}" \
+         +g1 \
+         -y40.000 -x-90.00 -c1 -VTEMP 1> grun_056.log 2>&1
+   verify contour.html
+   mv contour.html grun_056.html
+   cat grun_056.html >>grun_all.html
+fi
+
+# ------------------------
+if [ ! -f COVER.TXT ]; then
+   cat > COVER.TXT <<!
+COVER.TXT LINE 1
+!
+fi
+
+if [ ! -f RSMC.TXT ]; then
+   cat > RSMC.TXT <<!
+RSMC.TXT LINE 1
+RSMC.TXT LINE 2
+!
+fi
+
+# ------------------------
+echo "Test 057 ..."
+
+strace ${PGM}coversheet 1> grun_057.log 2>&1
+verify cover.ps
+mv cover.ps grun_057.ps
+cat grun_057.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 058 ..."
+
+strace ${PGM}coversheet +g1 1> grun_058.log 2>&1
+verify cover.html
+mv cover.html grun_058.html
+cat grun_058.html >>grun_all.html
+
+# ------------------------
+today=`date -u +%Y%m%d`
+today_day_of_month=`date -u +%d`
+forecast_dir="/pub/forecast/${today}/"
+forecast_file="hysplit.t00z.gfsf"
+forecast_pathname="${forecast_dir}${forecast_file}"
+if [ ! -f "${forecast_pathname}" ]; then
+   echo "ERROR: no display tests because of a missing file: ${forecast_pathname}"
+else
+   # ------------------------
+   echo "Test 059 ..."
+
+   strace ${PGM}display 1> grun_059.log 2>&1 <<!
+${forecast_dir}
+${forecast_file}
+${today_day_of_month} 0
+40.00 -90.00
+5.0
+1
+1
+1
+PRSS
+8
+-1
+-1
+0,0
+!
+   verify_delete GIS_METEO_01.txt gistmp.txt
+   verify display.ps
+   mv display.ps grun_059.ps
+   cat grun_059.ps >>grun_all.ps
+
+   # ------------------------
+   echo "Test 060 ..."
+
+   strace ${PGM}display +g1 1> grun_060.log 2>&1 <<!
+${forecast_dir}
+${forecast_file}
+${today_day_of_month} 0
+40.00 -90.00
+5.0
+1
+1
+1
+PRSS
+8
+-1
+-1
+0,0
+!
+   verify_delete GIS_METEO_01.txt gistmp.txt
+   verify display.html
+   mv display.html grun_060.html
+   cat grun_060.html >>grun_all.html
+fi
+
+# ------------------------
+if [ ! -f PARDUMP_042 ]; then
+   time ${PGM}hycs_std 042
+   rm -f CONC.042 MESSAGE.042 VMSDIST.042 WARNING.042
+fi
+
+# ------------------------
+echo "Test 061 ..."
+
+strace ${PGM}parsplot -iPARDUMP_042 -k1 -n3 1> grun_061.log 2>&1
+verify_delete P1002120600.ps
+
+strace ${PGM}parsplot -iPARDUMP_042 -k1 -n3 -ogrun_061.ps 1> grun_061.log 2>&1
+verify grun_061.ps
+cat grun_061.ps >>grun_all.ps
+
+# ------------------------
+echo "Test 062 ..."
+
+strace ${PGM}parsplot +g1 -iPARDUMP_042 -k1 -n3 1> grun_062.log 2>&1
+verify_delete P1002120600.html
+
+strace ${PGM}parsplot +g1 -iPARDUMP_042 -k1 -n3 -ogrun_062.html 1> grun_062.log 2>&1
+verify grun_062.html
+cat grun_062.html >>grun_all.html
+
+# ------------------------
+# After running all tests
+${PGM}cat2svg -igrun_all.html -ogrun_all.temp
+mv grun_all.temp grun_all.html
+

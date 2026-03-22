@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>Advanced / Special Topics / Puff Split-Merge Issues (S630)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Special Topics / Puff Split-Merge Issues</h2></p>
+
+<p>When the model is run in 3D particle mode a fixed number of particles are released and
+followed for the duration of the computational period. A sufficient number of particles need
+to be released so that at the end of the simulation, after particles have spread out, 
+adjacent concentration grid cells, have enough particles to be able to properly represent
+the concentration gradients.  For very long duration simulations, a large particle number may
+be required and the computational times may become prohibitive. One compromise is to use one
+of the <a href=S622.htm>hybrid particle-puff</a> combinations. Fewer number of puffs need 
+to be released because as they grow to the size of the meteorological grid, they will split
+into multiple particles. To avoid the particle-puff number quickly exceed the computational
+array limits, puffs occupying the same location may be merged.  There are several different
+parameter settings that control the splitting and merging. These are discussed in more detail
+in this section.</p>
+
+<center><p><img src="Image88.gif" width="463" height="338"></p></center>
+
+<p><h3>Basic Namelist Parameters</h3></p>
+
+<p>The namelist parameters <i>KSPL, FRHS, FRVS, FRTS, KRND, FRMR, FRME</i> control the split-merge
+routines. Normally these should all be left at their default values. Split routines are called
+at <i>KSPL</i> intervals and merging is always called hourly. Merging is most sensitive to the 
+horizontal parameter <i>FRHS</i>. When going from the default value of 1 to 4 almost all the puffs 
+are merged once <i>FRHS=4</i>.  Because merging is called after splitting, most puffs that are merged 
+are already in the same vertical position; hence there is little sensitivity to the vertical 
+parameter <i>FRVS</i>.  The time parameter <i>FRTS</i> only matters when there are continuous emissions.  
+<i>KRND</i> controls the interval at which the enhanced merging routines are invoked. Enhanced merging 
+is similar to standard merging except the parameters are 50% larger and selectively applied to 
+those puffs at the lower end of the mass range as defined by <i>FRME</i>.  Its default value of 0.10 
+means that only puffs whose total mass only represents 0.10 of the mass of all puffs will be 
+subjected to enhanced merging.</p>
+<ul>
+<li><b>KSPL</b> (1) is the interval in hours at which the puff splitting routines are called.
+<li><b>FRHS</b> (1.0) is the horizontal distance between puffs in sigma units that puffs have to be
+within each other to be permitted to merge.
+<li><b>FRVS</b> (0.01) is the vertical distance between puffs in sigma units that puffs have to be
+within each other to be permitted to merge. This parameter only applies to 3d puff simulations.
+<li><b>FRTS</b> (0.10) is the fractional difference in the age that puffs have to be within each other
+to be permitted to merge.
+<li><b>KRND</b> (6) is the interval in hours at which enhanced puff merging takes place. Enhanced merging 
+is less restrictive (<i>FRHS, FRVS, FRTS</i> are 50% larger) and will degrade the accuracy of the
+simulation. Puffs can be further apart and still be merged into the same position. Enhanced
+merging only occurs when the puff number exceeds 25% of <i>MAXPAR</i>.
+<li><b>FRME</b> (0.10) is the fraction of the total mass that represents a puff mass at which all
+puffs with a mass less that puff value will only account for <i>FRME</i> of the total mass. These 
+"Low Mass" puffs will be subject to enhanced merging.
+<li><b>FRMR</b> (0.0) is the fraction of the mass that is permitted to be removed at <i>KRND</i> intervals.
+The normal situation is to permit no mass loss. However for certain simulations, such as
+when a pollutant has a high ambient background relative to a typical plume signal, a small
+removal rate could significantly reduce the number of puffs on the grid with no loss in the 
+accuracy of the simulation. This removal procedure can also be specified for 3D particle simulations.
+</ul>
+
+<p><h3>Automated Split-Merge Procedures</h3></p>
+
+<p>When the puff-particle number approaches the array limits, further splitting is restricted
+until the merge procedures have freed up additional array space. Each time splitting shuts down,
+<i>FRHS</i> is automatically incremented by 0.5 to increase the effectiveness of puff merging, to a
+maximum value of 3 (<i>FRHMAX</i> in the namelist). Further, when splitting shuts down, those remaining
+puffs that are eligible to split but cannot due to the split restriction are prevented from 
+increasing in size (both horizontal and vertical) until the split restriction has been removed.
+Also at the first occurrence of the split restriction, the size to which a puff is permitted to
+grow before splitting is increased in proportion to the namelist parameter <i>SPLITF</i>. Puff
+splitting occurs when the size of the puff reaches <i>SPLITF x METEOROLOGY_GRID_SIZE</i>, or 
+concentration grid size, whichever is larger. A termination message to standard output has been 
+added prior to HYSPLIT completion if puff splitting restrictions are in place at the end of the 
+simulation. Such a message would suggest that it might be necessary to rerun the simulation with 
+added array space or different merge parameters.</p>
+<ul>
+<li><b>FRHMAX</b> (3.0) is the maximum permissible value for FRHS. 
+<li><b>SPLITF</b> (1.0) at the default value of 1.0 is automatically recomputed to be
+the ratio of the number of concentration grid cells to the maximum number of particles permitted.
+For values less than one this feature is disabled and splitting occurs as before. For values
+greater than one, that value is used to determine when a puff splits. The distance adjustment
+is based upon how many particles are required to cover the concentration grid (assuming 20% in
+the PBL). If there are insufficient number of particles, then the puffs are allowed to grow
+larger before they split, providing for smoother patterns.
+</ul>  
+
+<p><h3>Theoretical Considerations</h3></p>
+
+<p>For example, if a global simulation is required using a 1-degree resolution concentration 
+grid, that results in about 65,000 grid points at the surface.  Clearly a very long duration 
+simulation that is expected to spread over much of the domain will require a comparable number 
+of puffs as grid cells to provide smooth concentration patterns.  If we assume the lowest layer 
+only represents about 10 percent of the volume over which the puffs have been transported and 
+mixed, it is not unrealistic to expect such a simulation to require 10 times as many puffs.  
+An alternate approach, would be to dump the puffs into a <a href="S359.htm">global grid</a>
+model rather than splitting them as they grow to the size of the meteorological grid.
+Concentrations at any point would then be a sum from the two modeling approaches.  This is a
+variation of a plume-in-grid model.</p>
+
+<p><h3>Parameter Considerations</h3></p>
+
+<p>Very long duration simulations or simulations using very fine resolution meteorological data, 
+which have an insufficient initial allocation of the puff array space (<i>MAXPAR</i> in the namelist) 
+can result in split shutdown messages or perhaps even emission shutdown messages.  If any of 
+these occur, the simulation results should be viewed with caution.  The results may be noisy 
+and inaccurate if the emissions (new puffs released) have also been restricted. A simulation 
+with puff split restrictions may be improved by first increasing the array space to a value 
+that still results in acceptable simulation times.  If not effective, or the CPU times become 
+too long, the second choice could be to increase the frequency of enhanced merging (perhaps 
+decreasing <i>KRND</i> from 6, to 3, 2, or even 1), and perhaps in combination with decreasing the 
+split interval (increasing <i>KSPLT</i> from 1 to 3, 6, or 12). Although decreasing the split interval 
+will not be effective once splitting has shutdown, it may extend the time at which splitting 
+first shuts down. Enhanced merging has little effect if most of the puffs have the same mass, 
+perhaps because they were released at the same time.  It is most effective for continuous 
+emission simulations, where there is a large range in puff mass due to the different number of 
+splits each puff has been subjected. An effective removal method is setting <i>FRMR</i> to a 
+non-zero value. This has the effect of purging the simulation of low-mass puffs and would be 
+most appropriate for continuous emissions simulations, where the puffs at longer distances have 
+less importance.  Used incorrectly, setting this parameter to a non-zero value can seriously 
+bias the model results. For long-duration continuous emission simulations, it may also be just 
+as effective to stagger the emissions because it would not be necessary to emit puffs every 
+time step for realistic (and accurate) results.  This could be accomplished by emitting more 
+mass over a shorter duration and then cycling the emissions.  For instance instead of a 
+continuous emission, one could emit 10 times the normal hourly amount over 0.1 hours (6 min) 
+and the repeat the emission cycle (<i>QCYCLE</i> parameter) each hour.  The emission cycle 
+could even be staggered over longer times.</p>
+
+<p><h3>CPU Time Considerations</h3></p>
+
+<p>Long simulations may result in excessive CPU times because puffs will almost certainly be 
+transported to the upper regions of the atmosphere where the winds are strongest which results 
+in very small integration time steps. If computational accuracy in these upper regions is not 
+required, perhaps because the only interest is boundary layer transport, the time step should 
+be set to a fixed value.  Given the same number of puffs, the enhanced merging version of the 
+model should run substantially faster than the original version because when puff splitting 
+shuts down and puffs continue to grow, they become quite large and cover many more concentration 
+grid points which must all be sampled.  Unrestricted puff splitting or restricting puff growth 
+avoids this computational problem.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

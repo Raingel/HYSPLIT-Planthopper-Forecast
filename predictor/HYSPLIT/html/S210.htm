@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Trajectory / Setup Run (S210)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Setup Run</h2></p>
+
+<p>When the <i>Setup Run</i> tab is executed, the
+<i>default_traj</i> file is read and the current parameter values
+are loaded. The menu for the example simulation
+(<i>sample_traj</i>) is shown below. The options shown on the menu
+correspond with the various lines in the CONTROL file. See the
+discussion of the <a href="S262.htm">control file format</a> for a
+more detailed description for each of these parameters. However
+there are some features of the GUI that require additional
+explanation.</p>
+
+<center><p><img src="Image10.gif" width="567" height="518"></p></center>
+
+<p>Clicking the <i>Setup Starting Locations</i> tab brings up the
+menu shown below. If the number of starting locations were to have
+been changed from the default value of three on the main menu, then
+there would be that number of starting location lines set on the
+menu, all with the same latitude and longitude. These could then be
+manually edited for different locations or starting heights. The starting
+height is by default defined to be above-ground-level (AGL) unless this
+is changed in the Advanced/Configuration/Trajectory menu.
+Another possibility would be to click on the <i>List</i> tab, which
+brings up a list of pre-selected starting locations from a file
+called <i>plants.txt</i>, which can be found in the
+<i>../hysplit/working</i> directory. This file can be edited to reflect
+starting locations of interest to the user.</p>
+
+<center><p><img src="Image11.gif" width="543" height="269"></p></center>
+
+<p>Another important feature of the main menu is how to select or
+add meteorological data files. The <i>Clear</i> button will erase
+all file selections, then pressing the <i>Add Meteorology Files</i>
+tab brings up the file selection dialog shown below. Select a file
+and click <i>Open</i> and the file will be added to the main menu.
+For each additional file, it is necessary to click again on the
+<i>Add Meteorology Files</i> tab. With each new file the selected
+files number is incremented by one.</p>
+
+<center><p><img src="Image12.gif" width="425" height="265"></p></center>
+
+<p>Once the simulation is configured as required, click the
+<i>Save</i> menu tab. This causes the GUI menu to over-write the
+values in <i>default_traj</i>. Note that the format of
+<i>default_traj</i> is identical to the <i>CONTROL</i> file.
+Clicking on <i>Save</i> closes the menu and then when the 
+<a href="S220.htm">Run Model</a> tab is executed, <i>default_traj</i>
+is first copied to <i>CONTROL</i>, and then the trajectory model is run.</p>
+
+<p>When the GUI menu system is restarted, it loads the last values
+stored in <i>default_traj</i>. The <i>default_traj</i> file may
+also be saved to another name to permit future similar simulations
+to be set up more quickly. This option is available through the <a
+href="S211.htm">Save As and Retrieve</a> menu tab of the setup
+menu.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

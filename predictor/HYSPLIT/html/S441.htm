@@ -1,0 +1,550 @@
+<html>
+<head>
+<title>Advanced / Special Topics (S441)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Special Topics</h2></p>
+
+<p>This section provides some guidance in configuring the model 
+input to for certain specialized calculations. The default 
+configuration supplied with the test meteorological data is confined 
+to a simple trajectory and inert transport and dispersion calculation. 
+Some of these more complex scenarios are configured through the 
+<i>Advanced</i> menu <a href="S413.htm">Configuration Setup</a> 
+tab which modifies the "<i>SETUP.CFG</i>" namelist file.</p>
+
+<p><a name="particle_puff"><b>Particle or Puff Releases</b></a></p>
+
+<p>The concentration model default simulation assumes 3D particle 
+dispersion (horizontal and vertical). Other options are set with the 
+<a href="S622.htm">INITD</a> parameter of the <i>SETUP.CFG</i> namelist
+file defined in the advanced menu section. Normally changes to the
+dispersion distribution are straightforward. However, there are some
+considerations with regard to the initial number of particles released.
+The default release is set to be 2500 particles over the duration of the
+emission cycle (see <a href="S623.htm"> NUMPAR</a>). A 3-dimensional (3D)
+particle simulation requires many more particles to simulate the proper
+pollutant distribution, the number depending upon the maximum downwind
+distance of the simulation and the duration of the release, longer in each
+case require more particles. Too few particles result in noisy
+concentration fields. A 3D puff simulation starts with one puff as the
+puff-splitting process in conjunction with the vertical dispersion
+quickly generates a sufficient number of puffs to represent the complex
+dispersion process.</p>
+
+<p><a name="continuous_emit"><b>Continuous Emissions</b></a></p>
+
+<p>As noted above the default release is 2500 particles over the
+duration of the emission cycle. If continuous emissions are
+specified (e.g. over the duration of the simulation), then those
+2500 particles are spread out over that time period. This may easily
+result in the release of too few particles each hour to provide
+smooth temporal changes in the concentration field. Imagine a
+single particle passing in and out of the vertical concentration
+cell due to turbulent diffusion. One solution would be to increase
+the <a href="S623.htm">NUMPAR</a> parameter until smoother results are
+obtained. Another possibility would be to cycle the emissions by emitting
+particles only for the first time step of each hour. Those particles 
+would contain the total mass for a one-hour release (see how to set 
+<a href="S624.htm">QCYCLE</a>).</p>
+
+<p><a name="emit_time"><b>Time Variation of the Emission Rate</b></a></p>
+
+<p>One way to incorporate a time varying emission rate into the
+existing model structure is to use the particle dump feature to
+restart the model each time with a new emission rate. Another
+option is to assign the name of a temporal emission input file to
+the "EFILE" variable in the setup.cfg namelist file. This ASCII
+file must consist of at least three records, the first two of which
+are used for identification purposes, and the third, and all
+subsequent records, define the temporal sequence of emissions. Each
+emission record contains the start time, duration, location, and
+emission rate. If the EFILE is present, the first emission record's
+values replace the emission values set in the control file. Once
+the model computation time has passed the emission period defined
+on the first emission record, the emission data from the second
+record are loaded and the calculation continues with the new
+emission data. The format of the emission file is given below:</p>
+
+<p><u>Record #3 -&gt; end</u></p>
+<ul>
+<li>	I4	- Start year
+<li>	I3	- Start month
+<li>	I3	- Start day
+<li>	I3	- Start hour
+<li>	I2	- Start minute
+<li>	I3	- Duration hours
+<li>	I2	- Duration minutes
+<li>	F6.2	- Latitude
+<li>	F8.2	- Longitude
+<li>	F8.0	- Emission rate in units/hour
+</ul>
+
+<p><a name="emit_tcm"><b>Time-Varying Unit Source Simulations</b></a></p>
+
+<p>The previous approach defined a time-varying emissions file to use with
+a single simulation. An alternate approach is run the model with a unit
+source emission rate and in a post-processing step, apply a time-varying
+emissions factor. This can be accomplished by multiple simulations, one for
+each emission time period, and then the concentration output results can be
+added together or through a single simulation where individual release time
+periods are tagged as distinct pollutants. This is accomplished using
+the namelist parameters <a href="S624.htm">QCYCLE</a> and 
+<a href="S628.htm">ICHEM</a>.</p>
+
+<p>As an example, if hourly (the minimum) resolution is desired over a 24 hour
+simulation period, then the emission rate needs to be set to emit one one unit for
+a duration of one hour. The namelist variable <i>QCYCLE</i> should also be set to 
+1.0 hour so that the emissions effectively become continuous at a rate of one unit 
+per hour. This in combination with <i>ICHEM=10</i> will result in the creation of
+24 concentration arrays with each particle being tagged according to its release
+hour and those particles will only contribute to concentrations on the grid with
+the same release-time tag. The pollutant identification field is used and its value
+corresponds to hours after the start of the simulation. The output concentration
+grid will appear to be like any other but with 24 pollutants, one for each release
+period as defined by the <i>QCYCLE</i> parameter. Make sure that a sufficient
+number of particles have been released to provide consistent results for all time
+periods.</p>
+
+<p>The output can be processed like any other concentration file by selecting the
+specific pollutant (= release time) or by two different post-processing applications
+that are configured to decode the output file. The <a href="S340.htm">apply source</a>
+concentration utility menu multiplies each concentration field with its associated
+emission rate defined in an external file. Another option is to use the 
+<a href="S342.htm">convert to station</a> menu to extract the time series of
+concentrations contributed by each release time to each sampling period for a
+specific pre-selected location. The <b>TCM format </b> checkbox should be selected
+to enable the proper conversion option.</b>
+
+
+<p><a name="area_source"><b>Area Source Emissions</b></a></p>
+
+<p>Normally emissions are assumed to be point or vertical line 
+sources. Virtual point sources (initial source area &gt;0) can be
+defined two ways: 1) through the definition of an initial area on
+the source location input line of the CONTROL file or 2) by the
+definition of a gridded emissions file. If the model's root startup
+directory contains the file <i>Emission.txt</i>, then the
+pollutants are emitted from each grid cell according to the
+definitions previously set in the <i>Control</i> file. Two source
+points should be selected, which define the lower left
+(1<sup>st</sup> point) and upper right (2<sup>nd</sup> point)
+corner of the emissions grid that will be used in the simulation.
+This should be a subset of the grid defined in <i>emission.txt</i>.
+The release height represents the height from the ground through
+which pollutants will be initially distributed. Note that the 
+structure of the "<i>emission.txt</i> " file has changed with 
+the HYSPLIT 4.6 revision of October 2003.</p>
+
+<p>The "emission.txt" file contains all the information that is
+required to interpret the data in the gridded emission inventory
+file. The file that contains the inventory is now independent of
+the emission.txt file. The file's first record contains information
+about the internal grid cell size that is used by the dispersion
+model to accumulate the file's emissions. The emission file defines
+the emissions at latitude-longitude points, which may represent the
+emissions from an area or from a point. The values at these points
+are accumulated in an internal grid, the size of which is defined
+on the first record. This value can be arbitrarily changed
+according to the desired resolution of the simulation. The
+pollutant puffs are released with an initial size comparable to the
+accumulation cell size. Because the emission file data are remapped
+to an internal grid, the file can consist of emissions data on a
+regular grid or just a collection of individual cells. The emission
+rate in the Control file is used as an additional multiplication
+factor for the data in the emission file. Also note that previously
+discussed particle number restrictions still apply. The particles
+are spread out over the duration of the emission and the number of
+grid cells that are defined in the emission domain. The format of
+the emission.txt file is given below:</p>
+
+<p><u>Record #1</u></p>
+<ul>
+<li>I4	- Number (n) of pollutant species in file
+<li>I4	- Number of emissions defined for each 24 hour period
+<li>F10.4 - Conversion factor: file units to model units/hour
+<li>2F10.4 - Accumulation cell size (latitude &amp; longitude)
+</ul>
+
+<p><u>Record #2</u></p>
+<ul>
+<li>nA4	- Four character pollutant identification string for each pollutant</p>
+</ul>
+
+<p><u>Record #3</u></p>
+<ul><li>A - The /directory/filename of the emission data file</p></ul>
+
+<p>The actual emission data file will contain one record
+identifying the grid location and then two records for each
+pollutant species. The first record defines emissions from GMT
+hours 0 to 12 and the second record from hours 12 to 24. This pair
+of records is repeated for each pollutant species:</p>
+
+<p><u>Records Loop #1 to the number of i,j grid point</u></p>
+<ul>
+<li>	2I4	- I,J grid point of emission cell (arbitrary units for identification)
+<li>	2F10.4	- Southwest corner Longitude and Latitude of this emission cell
+</ul>
+
+<p><u>Record Loop #2 to the number of pollutant species</u></p>
+<ul>
+<li>12E10.3	- emissions for pollutant#1 hours 1-12
+<li>12E10.3	- emissions for pollutant#1 hours 13-24
+</ul>
+
+<p><a name="multiple"><b>Multiple Pollutants</b></a></p>
+
+<p>The model can easily be configured to simulate more complex
+pollutant episodes with multiple pollutant types on different
+particles or multiple pollutant species on the same particle. The
+former is accomplished by defining additional pollutants in the
+<i>CONTROL</i> file. In this configuration, multiple species are
+emitted, have no interaction, and may track differently. This
+situation may represent a volcanic ash plume, where each pollutant,
+a different sized particle, settles at a different rate. An example
+configuration <i>control_volcano</i> can be retrieved in the
+<a href="S211.htm">SETUP</a> menu.</p>
+
+<p><a name="transform"><b>Pollutant Transformations</b></a></p>
+
+<p>In the latter situation, when multiple pollutants are defined
+on the same particle, an external chemistry routine is required
+that converts mass from one species to another, all tracking
+together (advecting and dispersing). In this situation, 
+<i>MAXDIM</i> should be raised to the required value. Increasing
+the <i>MAXDIM</i> value always requires an external routine to
+adjust the mass between species. A simple species conversion
+program is included with the standard model distribution. In the
+default configuration it is only necessary to define two different
+pollutants in the <a href="S312.htm">concentration setup</a> menu
+and select the [fraction] /hr checkbox in the 
+<a href="S628.htm">advanced configuration</a> menu's conversion
+section. The default fraction is 0.10 (10% per hour). This option 
+automatically sets <i>MAXDIM=2</i> in the model and calls the
+transformation routine every time step to convert pollutant #1 to
+#2 at the defined rate per hour.</p> 
+
+<p>Other conversion rates or a greater number of pollutants can be
+defined by editing the <i>CHEMRATE.TXT</i> file in the local directory.
+This file is created automatically each time the <i>Save</i> button
+is pressed when the <i>ICHEM=2</i> option is selected. The file is only
+required when conversions other than the default case.
+The file consists of one or more records, each record defining a 
+pollutant conversion. The data are free-format and consist of four fields,
+the integer "from" and "to" pollutant index numbers, and the real
+hourly conversion "rate", and molecular weight adjustment "factor".
+For instance, if the file were to be defined for the default case,
+the one data record would have the following values: (1 2 0.10 
+1.0). The molecular weight adjustment factor can be used to account
+for other reactions not considered in the simple conversion module.
+For instance, if one were to define pollutants #1 and #2 as SO2 and
+SO4, respectively, then the molecular weight adjustment factor
+should be 1.5 as SO2 transforms to SO4 (the conversion picks up two
+additional oxygen molecules).</p>
+
+<p><a name="chemistry"><b>Complex Chemistry</b></a></p>
+
+<p>Although there are other more complex chemical conversion
+modules available for HYSPLIT, they are not incorporated into the
+standard compilation. More information on these special
+compilations may be found at 
+<a href="http://www.ready.noaa.gov/HYSPLIT_pcchem.php">
+http://www.ready.noaa.gov/HYSPLIT_pcchem.php</a></p>
+
+<p>One feature, required for all these modules, is that there is a
+more complex interaction between the individual pollutant plumes,
+requiring a close link between the concentration grid and the
+meteorological data grid. This option is available in the standard
+model compilation. By setting the namelist file parameter ICHEM=4,
+the concentration grid is redefined to be equal to the
+meteorological data grid in terms of spatial resolution and extent.
+This simplifies the computation of the grid based chemical
+reactions that are dependent upon the meteorological conditions
+within each concentration grid cell.</p>
+
+<p><a name="deposition"><b>Deposition and Decay</b></a></p>
+
+<p>A simple particle deposition configuration (<i>control_nuclear</i>)
+for radioactive Cs-137 can be retrieved into the <i>SETUP</i> menu,
+which shows the default settings for radioactive decay and wet and
+dry deposition. In conjunction, a list of sites can be loaded into
+any <i>SETUP</i> menu, from the "Set Starting Locations" tab by
+pressing the LIST button. The site locations can be found in the
+file "<i>\working\plants.txt</i>" and could be replaced by any user
+generated location file listing.</p>
+
+<p>The normal deposition mode is for particles to loose mass to
+deposition when those particles are within the deposition layer.
+An additional option was added to deposit the entire particle's mass
+at the surface (the particle is removed) when subjected to deposition.
+To insure the same mass removal rates between the two methods, a
+probability of deposition is computed, so that only a fraction of the
+particles within the deposition layer are deposited in any one time step.
+The probability of deposition is a function of the deposition velocity,
+time step, and depth of the layer. One limitation of this method is that
+only one mass species may be assigned to a particle. The probability
+deposition method can be invoked from the namelist file with ICHEM=5.</p>
+
+<p><a name="compilation"><b>Compilation Limits</b></a></p>
+
+<p>With HYSPLIT V4.5 most compilation array limits have been
+eliminated through the use of dynamic array allocation. However,
+one restriction remains with regard to the meteorological input
+data: if only a single value of grids is specified, the maximum
+number of meteorological data files is limited to a maximum of
+12 per simulation.<p>
+
+</p> While not available in the GUI, if the user is creating 
+the CONTROL file themselves, then two numbers can be specified 
+in the CONTROL file on the line for the "number of input data
+grids": the 1st being the number of unique grids and the 2nd being
+the number of files in each grid. For example, an entry of 2 12
+would mean that there are met files for 2 different grids 
+(e.g., a regional and a global grid), and that there are 12 files
+being specified for each grid. The grids should be specified in 
+order of resolution, with the highest resolution grids 
+(i.e, the smallest horizontal spacing between grid points)
+being specified before lower resolution grids. The two entries
+for each file (directory and filename) are repeated for each
+file in the first grid, and then for each file in the second grid,
+and so on, for any subsequent grids. Note that the same number 
+of files are required for each grid in this approach.
+Without the use of this approach (i.e., when only one number is
+specified) the maximum number of files that can be used in the 
+simulation is relatively small, but with this second approach,
+a much larger number of files can be used in the simulation.
+Current compilation limits allow 12 unique grids and up to 128
+files for each grid.<p>
+
+</p> Finally, with current compilation limits, there can be no 
+more than 75 levels or 35 variables in each file. These last 
+restrictions do not limit any computation with data files
+available through the ARL web site, because all available data
+files meet the number of variable and levels restriction.</p>
+
+<p>The use of dynamic memory allocation can result in unpredictable
+results if the computer's hardware memory limits are exceeded. Although
+there are several memory error allocation traps that will result in a
+message and execution termination, memory limits can be exceeded in a
+variety of different locations, such as when opening a file. Memory usage
+is a primarily a function of the meteorological sub-grid size, meteorological
+data grid size, concentration grid size, and the number of pollutants.</p>
+
+<p><a name="automation"><b>Script Automation and Configuration</b></a></p>
+
+<p>Most of the discussion in various sections of the User's Guide are tailored
+to individually configured simulations. However there are several features to
+the model that can be used to automate the computational environment. For instance,
+a sample <i>Auto_traj.tcl</i> script is provided in the <i>/examples/scripts/tcl</i>
+directory that can be used as a guide to automate many applications.</p>
+
+<ul>
+# Auto_traj.tcl</br>
+# the next line restarts using wish</br>
+# exec wish "$0" "$@"</br>
+set Start_hgt "10.0"</br>
+set Traj_path "../exec"</br>
+set Start_time "00 00 00 00"</br>
+set Run_hours "24"</br>
+set Vert_coord "0"</br>
+set Top_model "10000.0"</br>
+set Meteo_path "../metdata/"</br>
+set Meteo_file "oct1618.BIN"</br>
+set Output_path "./"</br>
+set Output_base "tdump"</br>
+set Output_numb 1</br>
+foreach {Start_lat Start_lon} {35.0 -90.0 40.0 -90.0 45.0 -90.0} {</br>
+set Start_loc "$Start_lat $Start_lon $Start_hgt"</br>
+set Output_file "$Output_base$Output_numb"</br>
+file delete Control</br>
+set f [open Control w]</br>
+puts $f "$Start_time"</br>
+puts $f "1"</br>
+puts $f "$Start_loc"</br>
+puts $f "$Run_hours"</br>
+puts $f "$Vert_coord"</br>
+puts $f "$Top_model"</br>
+puts $f "1"</br>
+puts $f "$Meteo_path"</br>
+puts $f "$Meteo_file"</br>
+puts $f "$Output_path"</br>
+puts $f "$Output_file"</br>
+close $f</br>
+exec "$Traj_path/hyts_std.exe"</br>
+incr Output_numb}</br>
+</ul>
+
+<p>In this particular example the test trajectory case is run for
+three different starting locations, each simulation writing a new
+endpoints file with a unique file name. The <i>CONTROL</i> file is
+recreated for each simulation. It would be trivial to rewrite the
+script to set the latitude-longitude and loop through a different
+number of starting days and hours. With Tcl/Tk installed, this
+script can be run under Windows or Unix. For instance, to compute
+new forecast trajectories each day, the process can be automated by
+including a data FTP at the beginning of the script to get the most
+recent meteorological forecast file, setting the starting time as
+"00 00 00 00" so that the trajectories will start at the beginning
+of the file, and finally calling the script once-a-day though the
+Unix crontable or the Window's scheduler commands.</p>
+
+<p>One problem with automated operations is that it is possible to
+generate simultaneous multiple jobs which may interfere with each
+other. The executables, hycs_std and hyts_std have a command line
+option of adding the process ID (PID): e.g. hyts_std [PID]. In this
+situation all standard named input and output files [those not
+defined in the Control file] have the PID added as a suffix to the
+file name: e.g. Control.[PID], Setup.[PID], Message.[PID].</p>
+
+<p>An example of another type of operational configuration is the
+extended simulation of a pollutant emission using archive data to
+bring the simulation to the current time and then using forecast
+meteorological data to provide a daily projection. Each day the
+archive simulation must be updated with the new archive data and a
+new forecast product generated. This process can also be automated
+through a script, but for illustration purposes one can use the
+advanced features of the GUI to configure such a case. Assume a
+one-hour duration accidental pollutant release that occurred 48
+hours prior to the current time. The following sequence
+applies:</p>
+<ul>
+<p>1) From the "<i>Meteorology</i>" menu tab download the
+appropriate archive meteorological data and the most recent
+forecast meteorological data (assume it is available to +48h).</p>
+
+<p>2) Setup the concentration simulation to run 96 hours using two
+meteorological files starting with the archive data and then
+switching to the forecast data.</p>
+
+<p>3) Under the <i>Advanced</i> menu tab and <i>Configuration
+Setup</i> write the initialization file after 72 hours.</p>
+
+<p>4) Run the model.</p>
+</ul>
+
+<p>At the completion of the simulation you will have the plume
+projection from release (-48 h) through the current forecast (+48
+h). The <i>PARDUMP</i> file will contain all the endpoint positions
+at +24 hours, corresponding to the initialization time of when the
+next forecast will be available (assume there is one forecast per
+day).</p>
+
+<p>The next day, when the new forecast data are available, reconfigure
+the model to run only with the forecast meteorological data for a 
+duration of 48 hours. Then write the initialization file after 24 hours
+and run the model to obtain the new projection. In this second part,
+we assume that the first 24 hours of the forecast are not much different
+than the analysis. In practice, this procedure can be run at the same
+frequency that the new forecast data are available, typically 4 times per
+day. Data at the initial forecast hour are identical to the analysis data.</p>
+
+<p><a name="back_dispersion"><b>Source Attribution with Dispersion</b></a></p>
+
+<p>A common application of atmospheric trajectory and dispersion
+models is to try to determine the source of a pollution
+measurement. If a high value has been collected at a particular
+receptor, from which pollutant source region did the air originate?
+One approach is to calculate the trajectory "backwards" from the
+receptor site. In the trajectory calculation this is accomplished by
+setting the integration time step to a negative value. However, the
+trajectory only represents the upwind path of a single point, while the
+pollutant measurement may require of hundreds or thousands of
+trajectories to represent the dispersion of the pollutant in time
+and space.</p>
+
+<p>Another approach is the run the entire dispersion-trajectory model
+upstream (backwards), which is computationally attractive because in a
+3D particle model the dispersion process is represented by a turbulent
+component added to the trajectory calculation and the advection process
+(the trajectory) is fully reversible. The trajectory equation can be
+correctly integrated in either direction. The interpretation of the
+output is a bit more complex because dispersion is an irreversible
+process. The upstream numerical calculation will yield a result because the
+integration of the dispersion equation is still in the downstream mode while
+the advection is integrated backward upstream. The meaning of the
+upwind dispersion result is not as easily interpreted as the downwind
+calculation. In any event, as noted in the earlier instructions, it is
+possible to run the dispersion model "backwards" by setting the run
+duration to its equivalent negative value. The stop time of the sampling
+should be set prior to the start time. All start and stop times should be
+set to their exact values - relative start-stop times are not supported
+in the backward mode.</p>
+
+<p><a name="sfc_water"><b>Transport of Particles Deposited on Water Surfaces</b></a></p>
+
+<p>The main code was modified (October 2003 Version 4.6) to permit
+particles deposited on water surfaces to continue to be transported
+on the water surface by the wind generated drift current. The
+transport output is treated as a deposition surface for display
+purposes. This new deposition method then creates particles that
+can be transported on water surfaces. Particles can be deposited on
+any surface. However, if the surface is defined as water, then the
+particle is assigned a unique identification code to distinguish it
+from atmospheric particles or puffs. These new particles may
+continue to be transported along the surface of the water
+contributing to deposition each time step but not air
+concentration. Dispersion is not computed for these particles. When
+they approach a land surface they are deleted. The water surface
+transport option is invoked from the namelist file with ICHEM=7.
+This option automatically forces the probability deposition
+computation (ICHEM=5) and should only be used only with the 3D
+particle mode (IN ITD=0). Surface water deposition can only be
+displayed if the deposition output level (0) is defined. Although
+particles may deposit over land, over-land deposition values are
+never shown.</p>
+
+<p>The wind induced surface water drift current is assumed to
+equal the vector atmospheric friction velocity. The friction
+velocity represents the momentum transport to the surface and it is
+an approximation of the surface water movement. Currently only the
+GFS meteorological model output file contains the vector momentum
+flux components.</p>
+
+<p><a name="mixrat"><b>Mixing Ratio Output</b></a></p>
+
+<p>Setting this option forces the concentration summation calls within
+the main program to integrate the mass divided by the air density (kg/m3)
+rather than just the mass, thereby permitting the output fields to be more
+easily converted from mass/volume to mixing ratio. This option would most
+likely be used in conjunction with the <a href="S626.htm">CMASS</a>
+namelist variable that can be set to sum mass/volume or just mass.
+</p>
+
+<p><a name="stilt"><b>STILT mode</b></a></p>
+
+<p>The STILT model incorporates the variation of HYSPLIT developed by Lin et al.
+(2003 - JGR, VOL. 108, NO. D16, 4493, doi:10.1029/2002JD003161) that can
+be used to estimate upwind surface fluxes from atmospheric measurements.
+Two changes are introduced; the mass summation is divided by air
+density resulting in a mixing ratio output field (ICHEM=6) and the lowest
+concentration summation layer (concentration layer top depth) is permitted to
+vary with the mixed layer depth (ICHEM=9). The ICHEM=8
+switch turns on both density and varying layer depth. Two text files of particle 
+position information (PARTICLE.DAT and PARTICLE_STILT.DAT) at each time step will 
+also be created unless the namelist parameter <a href="S640.htm">OUTDT</a> defining 
+the output interval (min) is changed. PARTICLE_STILT.DAT follows the same format as 
+STILT. The footprint output in PARTICLE.DAT represents particles that were below 50% 
+of the mixed layer height. The footprint in PARTICLE_STILT.DAT represent particles 
+that were below a user defined height (<a href="S640.htm">VEGHT</a>).
+</p>
+
+<p><a name="varmix"><b>Concentration layer varies with mixed layer depth</b></a></p>
+
+<p>This option changes the height of the lowest concentration layer from a fixed 
+value to a variable, which changes according to the mixed layer depth each time step. 
+The depth, as a fraction of the mixed layer, is computed by the height value of the
+lowest level, where the height is interpreted in hundreds, such that the a fraction
+representing 0.5 of the mixed layer depth would be entered as 50. Note that in this
+mode it may be desired to change the default minimum mixing depth 
+<a href="S625.htm#turb_kmxd">KMIX0</a> from its default value of 250 m, which would
+result in a minimum sampling layer of 125 m. Concentration levels above the first
+level are unaffected by this option.
+</p>
+
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

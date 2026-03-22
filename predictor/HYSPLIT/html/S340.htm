@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>Concentration / Utilities / Binary File / Apply Source (S340)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Utilities / Binary File / Apply Source</h2></p>
+
+<p>When multiple simulations are conducted, each one representing a different emission,
+the model results can be analyzed to determine which simulation provides the best fit
+with any available measurements, or more specifically, what emission rate is required
+with each simulation to provide the best fit with the measurements. These simulations
+can each represent a different emission time or location or a combination of both.
+Currently the code is configured to automatically generate multiple time-varying
+emissions using the namelist parameters <a href="S624.htm">QCYCLE</a> and 
+<a href="S628.htm">ICHEM</a>.</p>
+
+<p>As an example, if hourly (the minimum) resolution is desired over a 24 hour
+simulation period, then the emission rate needs to be set to emit one one unit for
+a duration of one hour. The namelist variable <i>QCYCLE</i> should also be set to 
+1.0 hour so that the emissions effectively become continuous at a rate of one unit 
+per hour. This in combination with <i>ICHEM=10</i> will result in the creation of
+24 concentration arrays with each particle being tagged according to its release
+hour and those particles will only contribute to concentrations on the grid with
+the same release-time tag. The pollutant identification field is used and its value
+corresponds to hours and tenths (no decimal) after the start of the simulation. Only
+4 digits are available which limits the duration to 999.9 h. The output concentration
+grid will appear to be like any other but with 24 pollutants, one for each release
+period as defined by the <i>QCYCLE</i> parameter. Make sure that a sufficient
+number of particles have been released to provide consistent results for all time
+periods.</p>
+
+<p>Once the simulation has completed, the unit source simulation can be converted
+to concentrations by applying an emission rate factor for each release time. This
+is accomplished by clicking on the Concentration / Utilities / Binary File / Apply
+Source menu tab. This menu is only intended to work with a single multi-pollutant
+concentration file created in the manner described previously.</p>
+
+<center><p><img src="Image113.gif" width="830" height="377"></p></center>
+
+<p>The input required is simply the name of the Transfer Coefficient Matrix (TCM)
+input file (the previously created multi-pollutant=multi-time-period) input file,
+the base name of the single pollutant output file which will contain the
+concentration sum of all the release periods after they are multiplied by the
+source term, the 4-character pollutant identification field, and the name of the
+time-varying source term file it it exists, otherwise a new file can be created.
+An emission rate needs to be defined for each release time, otherwise it is 
+assumed to be zero.</p>
+
+<center><p><img src="Image114.gif" width="599" height="392"></p></center>
+
+<p>The emissions file format is simply the starting time of the emission given
+by year, month, day, and hour, and the emission rate in terms of units per hour.
+The first record of all emissions file should contain the column labels then
+followed by the data records, one for each release time period. For example, a 
+constant emission rate corresponding to the 12 hour example test simulation
+(16 October 1995) would appear as follows:</p>
+<ul>
+YYYY MM DD HH TEST<br>
+1996 10 16 00 1.00E+12<br>
+1996 10 16 01 1.00E+12<br>
+1996 10 16 02 1.00E+12<br>
+1996 10 16 03 1.00E+12<br>
+1996 10 16 04 1.00E+12<br>
+1996 10 16 05 1.00E+12<br>
+1996 10 16 06 1.00E+12<br>
+1996 10 16 07 1.00E+12<br>
+1996 10 16 08 1.00E+12<br>
+1996 10 16 09 1.00E+12<br>
+1996 10 16 10 1.00E+12<br>
+1996 10 16 11 1.00E+12<br>
+</ul>
+
+<p><b>Command Line Options - tcmsum</b></p>
+
+<p>The underlying binary file conversion program can be run from the command line. As with all
+other applications, the command line argument syntax is that there should be no space
+between the switch and options. The command line arguments can appear
+in any order:</p>
+<b>tcmsum -[option {value}]</b><br>
+<ul>
+-c[column number in emissions file (1)]<br>
+-i[input file name (cdump)]<br>
+-o[output file base name (tcmsum)]<br>
+-d[output file name suffix (bin)]<br>
+-h[half-life-days (0.0 = none)]<br>
+-p[pollutant sum label (SUM)]<br>
+-s[source term input file name (cfactors.txt)]<br>
+-t[time decay start: MMDDHH (run_start)]<br>
+</ul>
+
+<p>The procedure described in this section is very similar to the 
+<a href="S337.htm">transfer coefficient solution</a> approach with the exception that
+here the dispersion coefficients for the individual release times are contained in a 
+single file while in the other approach an input file is required for each release 
+time simulation. The single file created here can be processed through the utility
+program <b>conlight</b> to extract one time period to its own file with each pass
+through the program. Currently no GUI script application exists to perform this task
+automatically.</p>
+
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

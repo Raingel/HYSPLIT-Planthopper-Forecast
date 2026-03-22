@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.venv/
+predictor/runtime/
+predictor/temp/
+predictor/GFS_forecast/
+predictor/working_forecast/
+predictor/HYSPLIT/make.*.log

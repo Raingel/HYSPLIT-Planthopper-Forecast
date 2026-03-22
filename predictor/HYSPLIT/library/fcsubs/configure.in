@@ -1,0 +1,19 @@
+AC_INIT(fcsubs.c)
+AC_CONFIG_HEADERS([fcsubs.h:fcsubs.hin])
+AC_PROG_F77(xlf f95 f90 pgf90 f77 g77 g95)
+AC_F77_WRAPPERS()
+AC_PROG_INSTALL()
+AC_PROG_RANLIB()
+AC_ARG_ENABLE(aix-64,
+  [  --enable-aix-64     build 64-bit libraries for aix],
+   [if test "$ac_compiler_gnu" = yes; then
+      CFLAGS="${CFLAGS} -maix64"
+    else
+      CFLAGS="${CFLAGS} -q64"
+    fi
+      FFLAGS="${FFLAGS} -q64"
+      ARFLAGS="${ARFLAGS} -X64"
+    ],
+    )
+AC_SUBST(ARFLAGS,)
+AC_OUTPUT(Makefile)

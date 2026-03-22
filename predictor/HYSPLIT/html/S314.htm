@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>Concentration / Setup Run / Deposition Definitions (S314)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Setup Run / Deposition Definitions</h2></p>
+
+<p>This section is used to define the deposition parameters for
+emitted pollutants. The number of deposition definitions must
+correspond with the number of pollutants released. There is a
+one-to-one correspondence. There are 5 entries in the
+<i>CONTROL</i> file for each defined pollutant. The lines 27(1)
+through 31(5) correspond with each of the menu items shown in the
+illustration below. The radio-buttons along the top can be used to
+set default deposition parameters, which can then be edited as
+required in the text entry section. The second line of radio-buttons
+define the deposition values for some preconfigured species: Cesium,
+Iodine (gaseous and particulate), and Tritium. The reset button sets
+all deposition parameters back to zero.</p>
+
+<p><font color=red>Note that turning on deposition will result in the 
+removal of mass and the corresponding reduction in air concentration,
+the deposition will not be available in any output unless height "0" is
+defined as one of the concentration grid levels.
+</font></p>
+
+<center><p><img src="Image25.gif" width="567" height="407"></p></center>
+
+<p>26 - <u>Number of pollutants depositing</u></p>
+<ul>
+<p>Default: number of pollutants on line # 10</p>
+
+<p>Deposition parameters must be defined for each pollutant species
+emitted. Each species may behave differently for deposition
+calculations. Each will be tracked on its own concentration grid.
+The following five lines are repeated for each pollutant defined.
+The number here must be identical to the number on line 10.
+Deposition is turned off for pollutants by an entry of zero in all
+fields.</p>
+</ul>
+
+<p>27(1)- <u>Particle: Diameter (&micro;m), Density (g/cc), and Shape</u></p>
+<ul>
+<p>Default: 0.0 0.0 0.0</p>
+
+<p>These three entries are used to define the pollutant as a
+particle for gravitational settling and wet removal calculations. A
+value of zero in any field will cause the pollutant to be treated
+as a gas. All three fields must be defined (&gt;0) for particle
+deposition calculations. However, these values only need to be
+correct only if gravitational settling or resistance deposition is
+to be computed by the model. Otherwise a nominal value of 1.0 may
+be assigned as the default for each entry to define the pollutant
+as a particle. If a dry deposition velocity is specified as the
+first entry in the next line (28), then that value is used as the
+particle settling velocity rather than the value computed from the
+particle diameter and density.</p>
+
+<p> If gravitational settling is on and the Shape is set to a
+negative value then the Ganser (1993) calculation is used 
+to replace Stokes equation for estimating particle fallspeeds.
+The absolute value of the Shape factor is used for the calculation.
+The Stokes equation overestimates particle fallspeeds for particles 
+larger than about 20 micron diameter. As this diameter often lies 
+within size distributions of volcanic ash particles, it is desirable 
+to use the Ganser formulation so that particle fallspeeds can 
+be computed accurately.
+Ganser, G.H., 1993: A rational approach to drag prediction of 
+spherical and nonspherical particles. Powder Technology, 77, 143-152.
+.</p>
+
+<p>The particle definitions can be used in conjunction with a special
+namelist parameter <a href="S640.htm">NBPTYP</a> that determines if the
+model will just release the above defined particles or create a
+continuous particle distribution using the particle definitions as
+fixed points within the distribution. This option is only valid if
+the model computes the gravitational settling velocity rather than
+pre-defining a velocity for each particle size.</p>
+
+</ul>
+<p>28(2)- <u>Deposition velocity (m/s), Pollutant molecular weight
+(Gram/Mole),</u> <u>Surface Reactivity Ratio, Diffusivity Ratio,
+Effective Henry's Constant</u></p>
+<ul>
+<p>Default: 0.0 0.0 0.0 0.0 0.0</p>
+
+<p>Dry deposition calculations are performed in the lowest model
+layer based upon the relation that the deposition flux equals the
+velocity times the ground-level air concentration. This calculation
+is available for gases and particles. The dry deposition velocity
+can be set directly for each pollutant by entering a non-zero value
+in the first field. In the special case where the dry deposition
+velocity is set to a value less than zero, the absolute value will be
+used to compute gravitational settling <i>but with no mass removal</i>.
+The dry deposition velocity can also be calculated by the
+model using the resistance method which requires setting the
+remaining four parameters (molecular weight, surface reactivity,
+diffusivity, and the effective Henry's constant). See the table
+below for more information. For particles (particle diameter, density, 
+and shape are all nonzero), molecular weight is used as a flag to turn 
+on and off the resistance deposition scheme for particles. Setting the 
+molecular weight to 1.0 will turn on the resistance deposition scheme 
+and setting the molecular weight to 0.0 will turn it off resulting in 
+just gravitational settling playing a role in dry deposition.</p>
+</ul>
+
+<p>Note that the normal deposition mode is for particles to lose mass to
+deposition when those particles are within the deposition layer. Thus
+deposition will not decrease the number of computational particles in the model, but
+only decrease the amount of mass carried on the particles.
+An option to deposit the entire particle's mass
+at the surface (the particle is removed) when subjected to deposition is available.
+See <a href="S441.htm"> Deposition and Decay </a> for further information.
+</p>
+
+<center><p><img src="Image26.gif" width="480" height="460"></p></center>
+
+<p>29(3)- <u>Wet Removal: Actual Henry's constant, In-cloud (GT 1 =L/L; LT 1 =1/s),
+Below-cloud (1/s)</u></p>
+<ul>
+<p>Default: 0.0 0.0 0.0</p>
+
+<p>Suggested: 0.0 8.0E-05 8.0E-05</p>
+
+<p>Henry's constant defines the wet removal process for soluble
+gases. It is defined only as a first-order process by a non-zero
+value in the field. Wet removal of particles is defined by non-zero
+values for the in-cloud and below-cloud parameters. In-cloud removal
+can be defined as a ratio of the pollutant in rain (g/liter) measured
+at the ground to that in air (g/liter of air in the cloud layer) 
+when the value in the field is greater than one. For within-cloud
+values less than one, the removal is defined as a time constant.
+Below-cloud removal is always defined through a removal time
+constant. The default cloud bottom and top RH values can be changed
+through the <a href="S640.htm">SETUP.CFG</a> namelist file. Wet
+removal only occurs in grid cells with both a non-zero precipitation
+value and a defined cloud layer.</p>
+</ul>
+
+<p>30(4)- <u>Radioactive decay half-life (days)</u></p>
+<ul>
+<p>Default: 0.0</p>
+<p>A non-zero value in this field initiates the decay process of
+both airborne and deposited pollutants. The particle mass decays
+as well as the deposition that has been accumulated on the internal
+sampling grid. The deposition array (but not air concentration) is 
+decayed until the values are written to the output file. Therefore,
+the decay is applied only the the end of each output interval. Once
+the values are written to the output file, the values are fixed.
+The default is to decay deposited material. This can be turned off
+so that decay only occurs to the particle mass while airborne by
+setting the <i>decay</i> <a href="S640.htm">namelist variable</a>
+to zero. </p>
+</ul>
+
+<p>31(5)- <u>Pollutant Resuspension (1/m)</u></p>
+<ul>
+<p>Default: 0.0</p>
+
+<!-- <p>Suggested: 1.0E-06</p> -->
+
+<p>A non-zero value for the re-suspension factor causes deposited
+pollutants to be re-emitted based upon soil conditions, wind
+velocity, and particle type. Pollutant re-suspension requires the
+definition of a deposition grid, as the pollutant is re-emitted
+from previously deposited material. Under most circumstances, the
+deposition should be accumulated on the grid for the entire
+duration of the simulation. Note that the air concentration and
+deposition grids may be defined at different temporal and spatial
+scales. Note that more computational particles will be generated when using
+this option.</p>
+
+</ul>
+
+<hr>
+<center><a href="S313.htm">Previous Section of the CONTROL file</a><br>
+
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

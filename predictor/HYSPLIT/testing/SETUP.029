@@ -1,0 +1,6 @@
+ &SETUP
+ initd = 0,
+ numpar = 50000,
+ maxpar = 50000,
+ ichem = 1,
+ /

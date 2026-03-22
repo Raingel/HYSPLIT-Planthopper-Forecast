@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>Advanced / Special Topics / ASCDATA.CFG (S444)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Special Topics / ASCDATA.CFG</h2></p>
+
+<p>
+The <i>bdyfiles</i> subdirectory contains ASCII files for gridded land-use,
+terrain, and roughness length data for HYSPLIT.  The terrain file is used by
+some of the programs in <i>data2arl</i> if the terrain is not provided with
+the other meteorological fields. The resolution for these files is one-degree
+covering the globe: 360 by 180 grid points. The upper left corner starts 
+at 180W - 90N. If these files are not found, the model uses default constant
+values for land-use and roughness length.
+</p>
+
+<p>
+The structure of these files is given in the <i>ASCDATA.CFG</i> file, which defines
+the grid system and gives the directory location of the land-use, terrain, and 
+roughness length files. The <i>ASCDATA.CFG</i> file should be located in the model's
+startup or root directory. The last line in the file should be modified to reflect the 
+path to the <i>bdyfiles</i> directory.
+</p>
+
+<p><b>File Format</b></p>
+
+The ASCDATA.CFG file contains the following six records:
+
+<ul>
+<li>-90.0 -180.0 lat/lon of lower left corner (last record in file)
+<li>1.0	1.0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lat/lon spacing in degrees between data points
+<li>180	360 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lat/lon number of data points
+<li>2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default land use category
+<li>0.2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default roughness length (meters)
+<li>'../bdyfiles/' &nbsp;&nbsp;&nbsp; directory location of data files
+</ul>
+
+<p>
+These files may be replaced by higher resolution user created files. Note 
+that the first data point on the first record is assumed to be centered at 
+179.5W and 89.5N, so that from the northwest corner the the data goes eastward 
+and then southward. User supplied files should define roughness length (cm - F4)
+and the following land use-categories (I4). The record length of the file should 
+be the number of longitude values times four bytes plus one additional byte for CR.  
+</p>
+
+<p><b>The 11 Land-Use Categories</b></p>
+
+<p><img src="Image110.gif" width="722" height="451"></p>
+
+<ol>
+<li>-urban
+<li>-agricultural
+<li>-dry range
+<li>-deciduous
+<li>-coniferous
+<li>-mixed forest
+<li>-water
+<li>-desert
+<li>-wetlands
+<li>-mixed range
+<li>-rocky
+</ol>
+
+<p><b>The One-Degree Terrain</b></p>
+
+<p><img src="Image111.gif" width="732" height="486"></p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

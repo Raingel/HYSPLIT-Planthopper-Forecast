@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Meteorology / ARL Data FTP / Set Server (S101)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / ARL Data FTP / Set Server</h2></p>
+
+<p>Meteorological data files formatted for use by HYSPLIT are available from
+several different FTP servers. The GUI currently supports the definition of
+three different servers for forecast and analysis data. The default server
+locations and their root data directories are written to the file default_ftp
+when the GUI is started for the first time.  The FTP application will only 
+search for data at one location as shown in the text box.  One may select
+either the default, alternate, or backup sites. Not all data files are 
+available at all sites. After selecting a new server, it is only necessary
+to exit the GUI and the location in the text box will be used for all 
+subsequent FTP commands.</p>
+
+<p>It is possible to edit both the server location and root data directory
+and the exiting the GUI will cause subsequent FTPs to use the edited location.
+However, if the edits are desired to be saved, then there are two save options.
+In the first, Save Changes, just updates the internal array so that the edited
+text is saved in either the default, alternate, or backup locations, so that
+pressing the radiobutton will bring up the edited locations rather than the
+original values for those entries.  In the Save to File option, the changes are
+saved to the internal array as well as the default_ftp file, so that when the
+GUI is closed and reopened, the new values will be available.</p>  
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

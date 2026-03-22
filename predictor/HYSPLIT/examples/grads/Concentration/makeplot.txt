@@ -1,0 +1,3 @@
+open grads.ctl
+enable print plot.mif
+run grads.gs

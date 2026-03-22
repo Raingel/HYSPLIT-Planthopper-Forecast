@@ -1,0 +1,160 @@
+<html>
+<head>
+<title>Concentration / Utilities / Convert to Station (S342)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Utilities / Convert to Station</h2></p>
+
+<p>The purpose of the <i>Convert to Station</i> utility menu (also called time
+series data extraction) is to list concentrations at specific latitude-longitude
+locations by extracting that information to a text file. The menu also has an
+option to produce a time series plot at one or more of the stations or a KML
+formatted file suitable for display by Google Earth. An illustration of the 
+menu is shown below. The concentration grid names are determined from the 
+<i>Concentration / Setup Run</i> menu tabs and therefore the setup menu needs
+to be called prior to opening this menu. The species and height values are index
+numbers starting at one. A height index of 1 is the data at the first output
+level, regardless of its actual height value. The date field can be written
+as a fractional Julian day (for plotting) or using a MM/DD/YYYY field
+(for spreadsheets) with or without an index record. The no index record option
+is used to concatenate multiple files.</p>
+
+<p>The TCM checkbox is used to flag the input file as having been created
+using the <a href="S628.htm">ICHEM=10</a> namelist option. There is no specific
+marker in the concentration to indicate that the file is in this format. The file
+contains multiple pollutants, each associated with a different time of release.
+The TCM flag also causes the first output time group with each record to be 
+associated with the time of release rather than the time of the sample 
+collection. The second time group of the record becomes the start time of the
+sample collection.</p>
+
+<center><p><img src="Image35.gif" width="590" height="648"></p></center>
+
+<p>Similar to the other menus in the utility section, the input concentration
+file must be defined in the <a href="S310.htm">Concentration Setup</a> menu.
+The menu options correspond to the <a href="#con2stn">command line</a>
+options of the <i>con2stn</i> extraction program. There are two options that
+can be used to define an extraction location. A station location can be 
+defined directly as an entry in the menu, or a list of stations can be 
+defined using an input file. If the input file does not exist, it can be
+created by using the <i>New File</i> button. In this example illustration,
+a file has been defined with three locations that are within the plume of the
+example simulation. The file consists of three records, one for each station:</p>
+
+<center><p><img src="Image36.gif" width="79" height="33"></p></center>
+
+<p>The extraction program is called <i>con2stn</i> and for these three stations,
+produces the output file shown below, called by default <i>con2stn.txt</i>. The
+base name of the output file (<i>con2stn</i>) can be changed in the menu. 
+In contrast to the simulation shown in all the previous examples, in this
+case the output averaging time was decreased from 12 hours to one hour,
+to generate a smoother looking graphic.</p>
+
+<center><p><img src="Image37.gif" width="307" height="261"></p></center>
+
+<p>The output file shows the Julian day, month, day, and hour of the sample
+start; day and hour of sample ending time, and the concentrations for each
+station (location selected by latitude-longitude). The format of each output
+record is as follows:</p>
+<ul>
+F8.3, 6I4 - Starting: Julian day, year, month, day, hour; Ending: day, hour<br>
+XF10 - Concentration value at X stations<br>
+</ul>
+
+<p>The lower section of the GUI is used to create a simple time series concentration
+plot of the concentration time series or an output file (<i>con2stn.kml</i>)
+suitable for display by Google Earth. The <i>con2stn.txt</i> file is created first
+which is then read by the Google Earth conversion program 
+(<a href="#stn2ge"><i>stn2ge</i></a>).  
+</p>
+
+<p>For time series data, one or more stations may be plotted. The plotting feature
+is also available through the <a href="#timeplot">command line</a>. The option is
+selected from the <b>Display Time Series</b> checkbox. The program, <i>timeplot</i>,
+reads the data file produced by the <i>con2stn</i> conversion program and plots the
+concentration values to the <i>timeplot.ps</i> output file. The illustration for
+the previous text file is shown below.</p>
+
+<center><p><img src="Image38.gif" width="398" height="434"></p></center>
+
+<p>There are only two plot options supported through the GUI: linear or 
+logarithmic ordinate scaling. If integer ordinate units are desired then it may
+be necessary to specify a units conversion factor, in this case 10<sup>15</sup>,
+to create data in the text file that can be plotted. With the log scaling option,
+the conversion factor can be set to 1.0, and the ordinate scale will cover the
+appropriate order-of-magnitude range to plot all the data.</p>
+
+<p><a name="con2stn"><b>Command Line Options - con2stn</b></a></p>
+
+<p>The program can be run from the command line or through interactive prompts
+from the keyboard. The command line argument syntax is that there should be no
+space between the switch and options. The command line arguments can appear
+in any order: <b>con2stn -[option {value}]</b></p>
+<ul>
+ -a[rotation angle:latitude:longitude]<br>
+ -c[input to output concentration multiplier]<br>
+ -d[mm/dd/yyyy format: (0)=no 1=w-Label 2=wo-Label]<br>
+   <ul>The default date format is to write a fractional Julian date in the first
+   output field. This format is required for plotting purposes. However, a more
+   conventional month/day/year format can be selected, which is more compatible with
+   spreadsheet applications. In the first option (=1) an informational header record
+   is written. In the other option (=2) the header record is excluded, which is 
+   more convenient when appending multiple files.</ul>
+ -h[half-life-days (one -h entry for each pollutant)]<br>
+ -i[input concentration file name]<br>
+   <ul>Unspecified file names will result in a standard input prompt.</ul>
+ -m[maximum number of stations (200)]<br>
+ -o[output concentration file name]<br>
+ -p[pollutant index (1) or 0 for all pollutants]<br>
+   <ul>Level and pollutant index values can be selected for files with multiple levels
+   and species. Setting zero (0) for either index forces the output to be the record
+   format rather than the column format. Record format contains the index numbers for
+   the pollutant and level.</ul>
+ -r[record format 0=record (1)=column 2=datem]<br>
+   <ul>The default output format is to create multiple columns, one for each station,
+   for a selected pollutant and level. Setting the value to one formats the output as one
+   record for each station, level, and pollutant. A value of two sets the output to the
+   <a href="S345.htm">DATEM format</a>.</ul>
+ -s[station list file name (contains: id lat lon)]<br>
+   <ul>The station positions can be read from a file (space or comma delimited) with
+   the first field being an integer that represents the location identification, 
+   followed by the decimal location in latitude and longitude.</ul>
+ -t[transfer coefficient processing]<br>
+ -x[(n)=neighbor or i for interpolation]<br>
+   <ul>The default interpolation method (-xn) is to use the value at nearest grid 
+   point to each latitude-longitude position, otherwise bilinear interpolation (-xi) is
+   used.</ul>
+ -z[level index (1) or 0 for all levels]<br>
+</ul>
+
+<p><a name="stn2ge"><b>Command Line Options - stn2ge [option {value}]</b></a></p>
+<ul>
+-i[input text file name] contains data in the format output from <i>con2stn</i><br>
+-s[station list file name] same file used as input to <i>con2stn</i><br>
+-o[google earth output filename (less .kml)]<br>
+</ul>
+
+<p><a name="timeplot"><b>Command Line Options - timeplot [option {value}]</b></a></p>
+<ul>
+-i[input concentration file name] contains data in the same format as output from <i>con2stn</i><br>
++g[graphics type (0) for Postscript output or 1 for HTML output with SVG]<br>
+-m[minimum ordinate value (0.0)]<br>
+-n[sequential station number]<br>
+   <ul>For files with multiple stations select the station to plot; default for multiple stations
+   is to plot all stations; several stations can be selected to plot by appending station numbers
+   with the plus symbol: hence -n3+5+6 will plot stations 3, 5, and 6.</ul>
+-p[draw only points, no connecting line]<br>
+-y[The default is linear ordinate scaling. The flag sets y-axis log scaling.]<br>
+-z[three character time label]<br>
+</ul>
+
+<p>Note that multiple pollutants and levels are not supported. Timeplot labels can also be 
+customized by creating a <i>LABELS.CFG</i> file. See the 
+<a href="S418.htm">Border Labels</a> discussion for more information on this file format.</p> 
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,4 @@
+ &SETUP
+ numpar = 50000,
+ maxpar = 100000,
+ /

@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Concentration / Display / Time-of-Arrival (S339)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Time-of-Arrival</h2></p>
+
+<p>Time of arrival graphic (isochron) shows the time after the start of the
+simulation that the concentration exceeds the given threshold concentration
+at each concentration grid cell. The default contour interval (-1) uses the
+concentration averaging period. Otherwise, the time difference field should
+be set to hours. A text label with release information may be printed below 
+the threshold through the <a href="S418.htm">LABELS.CFG</a> file.  </p>
+
+<p>The GUI and the command line options are similar with the command line
+syntax as follows: <b>USAGE: isochron -[options(default)]</b></p>
+
+<ul>
+-c[color fill no:0 yes:(1)] : the =0 option results in contours<br>
+-d[difference in hours between contours (-1)]<br>
+-f[frames: (0)-all frames one file, 1-one frame per file] : multiple
+frames can only be due to multiple levels or species in the input file<br>
++g[graphics type: (0)-Postscript 1-SVG]<br>
+-i[input file name (cdump)] : the input file needs to contain multiple time period<br>
+-j[graphics map background file (arlmap)] : the shape file option is not available<br>
+-n[number of contours (12)] : only 12 contours fit across the display<br>
+-o[output name (toa)] : the output file represents all time periods<br>
+-p[Process file name suffix: (ps) or process ID]
+-t[threshold value (1.0E-36)]<br>
+
+
+
+
+</ul>
+
+<p>In the 144 hour duration example simulation shown below, the concentration field
+was output every six hours, the contour interval was set to 12 hours, and the 
+threshold to 0.1E-15 . The one hour duration release took about 72 h to reach 
+Hudson's Bay and about 144 h to reach into the Atlantic off the east coast of the U.S.</p>
+
+<center><p><img src="Image90.gif" width="432" height="297"></p></center>
+
+</body>
+</html>
+

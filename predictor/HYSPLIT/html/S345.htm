@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Concentration / Utilities / Convert to DATEM (S345)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Utilities / Convert to DATEM</h2></p>
+
+<p>This menu calls a utility program to convert the HYSPLIT binary concentration
+file to the <a href="S500.htm">DATEM</a> data format
+and compares the model predicted results with the actual measured data.
+The Data Archive of Tracer Experiments and Meteorology 
+(<a href="http://www.arl.noaa.gov/DATEM.php">DATEM)</a> web page contains
+additional details about each of the experiments, the data formats, and more
+complete descriptions of each of the programs used to convert the data and 
+generate the statistical results. The on-line repository has links to several
+different tracer experiments and their associated meterological data. All
+experimental data have been converted to a common format. The meteorological
+data are compatible for direct use by HYSPLIT.</p>
+
+<p>To facilitate application of the analysis software, all the experimental data
+from the second CAPTEX release are provide in the ./hysplit/datem directory. 
+Included are the control, namelist, measured data, and meteorological data files.
+The meteorological data is taken from the North American Regional Reanalysis.
+The computational sequence is as follows:<p>
+
+1) Configure and Run HYSPLIT
+<ul>
+<li> Go to the concentration setup run menu and retrieve ./datem/captex.cnt
+<li> Go to the advanced configuaration concentration menu and retrieve ./datem/captex2.cfg
+<li> Save and then Run Model
+</ul>
+
+2) Convert HYSPLIT run results to DATEM format
+<ul>
+<li> Browse to load the measured data file ./datem/captex2.txt
+<li> Create the DATEM file hysplit.txt from the binary file hysplit2.bin
+<li> Compute the Statistics and view the Scatter Plot
+</ul>
+
+<p>In the first section of the menu, a measured data file already in DATEM format
+should be selected. The input data file represents the HYSPLIT binary concentration
+output file which is then converted to a DATEM formatted text file using the units
+conversion factor. The conversion program will match each measurement with a
+model calculated concentration corresponding to the location and time duration of
+the measurement. Note that the model temporal output frequency needs to be the same
+or of finer resolution than the measurement periods, otherwise calculations cannot
+be matched with the measurements.</p>
+
+<p>The rotation angle entry field (default = 0.0) can be used to test the
+sensitivity of the model prediction to small changes in wind direction. Setting
+a non-zero angle will result in the rotation of the calculated plume with
+respect to the sampling network in the direction specified. The rotation is
+computed using the first source location specified in the setup menu. The 
+effect of this test is comparable to rotating the transport wind direction by
+the same amount. However, this sensitivity test only makes sense in the context
+of plumes that have a relatively homogeneous and stationary structure.</p>
+
+<p>Once the model output file in DATEM format has been created, the statistical
+evaluation program should be run to compare the model calculations with
+the measurements in terms of various performance statistics. Two data processing
+options are available. For verification statistics, all values can be compared, 
+only plume values (both measured and calculated values are greater than zero), or 
+all values but excluding pairs where both measured and calculated values are zero.
+In terms of averaging, the measured and calculated values can be used directly,
+temporally averaged resulting in one value for each location, or spatially averaged
+resulting in one value for each time period. The contingency level is the
+concentration value required to be exceeded to compute the false alarm rate, 
+probability of detection, and threat-score. The contingency level is also used as
+the plotting threshold for the measured-calculated scatter diagram which is created
+by the <i>Scatter Plot</i> menu button.</p>
+
+<p> Note that simulations with multiple species and levels are not supported. The 
+concentration data files follow no specific naming convention and any input or output 
+file name may be selected in the menu. Arbitrary input file names can only be set
+through the <i>Setup / Grids</i> menu. The statistical output files are always written
+to <i>stat{A|T|S}.txt</i> where the character A|T|S represents All data, Temporal
+averaging, or Spatial averaging. An additional output file, <i>data{A|T|S}.txt</i> is
+created for the scatter diagram plot, which is always named <i>scatter.html</i>. The
+<i>Rename output</i> field in the GUI adds those text characters between the above
+prefix and suffix fields: <i>{stat|data}{A|T|S}_{rename}.txt</i></p>
+
+<p><h3>DATEM format description</h3></p>
+
+<ul>
+<li>Record 1 (ASCII) - file identification information
+<li>Record 2 (ASCII) - column identification information
+<li>Record 3 ... end - individual data records
+    <ul>
+    Field 1 (I4) - start year of sample<br>
+    Field 2 (I3) - start month of sample<br>
+    Field 3 (I3) - start day of sample<br>
+    Field 4 (I5) - start hour minute of sample (HHMM)<br>
+    Field 5 (I7) - sample duration hours minutes (HHHMM)<br>
+    Field 6 (F10) - sample location latitude (fractional degrees)<br>
+    Field 7 (F10) - sample location longitude (fractional degrees)<br>
+    Field 8 (F10) - sample value<br>
+    Field 9 (I10) - sample station identification (integer)<br>
+    Field 10 (F10) - sample height (optional; only used in this utility program)  <br>
+    </ul>
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

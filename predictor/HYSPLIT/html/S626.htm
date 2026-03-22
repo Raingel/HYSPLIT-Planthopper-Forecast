@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Concentration Packing and Output Units (S626)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Concentration Packing and Output Units</h2></p>
+
+<p><b>Concentration Packing Method</b></p>
+
+<p><i>CPACK</i> is the flag to turn off (set to 0) concentration output packing.
+The default is to write the binary concentration file at only those grid points
+that have a non-zero concentration value (set to 1). Setting the flag to zero
+results in the output of the entire concentration grid. Due to the nature of the
+packing method, if the plume covers more than 50% of the concentration grid, the
+default concentration packing will result in larger output file than an unpacked
+concentration file. After selecting a new packing value, use the <i>Update</i> 
+button to change its value for the selected grid. The default menu is shown below.</p>
+
+<center><p><img src="Image77.gif" width="583" height="478"></p></center>
+
+<p>The <i>Point</i> option (<i>CPACK=2</i>) is a special feature that forces the
+concentration grid to have a size of one grid point over the location of the center
+point. It is a way to define a single sampling location.</p> 
+
+<p>In the case where <i>CPACK=3</i> defines a polar concentration grid defined by
+radial sectors centered about the origin latitude-longitude position. In this case
+the grid spacing and span defined in the <a href="S313.htm">CONTROL</a> file define
+the arc sector size (latitude values) and the sector distances (longitude values).
+Polar concentration grids may be displayed using the program  
+<a href="Image116.gif" target="_new"><i>poleplot</i></a>. Note that because of
+way a particle's position on the grid is computed, it is not possible to define
+a polar concentration grid spanning the dateline.</p>
+
+<p>If there is more than once concentration grid, the selected packing method will
+be applied to all concentration grids. However, unlike any of the other namelist
+variables, <i>CPACK</i> is dimensioned so that a different value can be set for
+each grid. For instance, in the example shown below, the model was configured with
+two concentration grids, the first with no packing, and the second grid defined
+as a polar grid. If more than two concentration grids exist, but <i>CPACK</i> was
+defined for only the first two grids, as in this example, all subsequent grids
+would be defined as rectangular grids and use the default packing method
+<i>CPACK=1</i>. Commas should terminate each <i>CPACK</i> value.</p>
+
+<center><p><img src="Image77A.gif" width="584" height="477"></p></center>
+
+<p><b>Concentration or Mass Output Units</b></p>
+
+<p>The default option (<i>CMASS=0</i>) is to output units of mass/volume. However,
+if mass-only output is desired, then setting <i>CMASS=1</i> will cause the model
+not to divide the grid cell sum by its volume.</p>
+
+
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

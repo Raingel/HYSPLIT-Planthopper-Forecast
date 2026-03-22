@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>Advanced / File Edit / FMDV Decay (S419)</title>
+</head>
+<body>
+
+<p><h2>Advanced / File Edit / FMDV Decay</h2></p>
+
+<b>Foot and Mouth Disease</b><br>
+<br>keith.lambkin@met.ie, james.hamilton@met.ie, April 2015
+
+<p>Foot and Mouth Disease is a contagious viral disease of cattle and sheep, causing ulceration of the hoofs and around the mouth. Evidence has shown<sup>[1]</sup> that the Foot and Mouth Disease Virus (FMDV) can be transported via airborne means making even a single outbreak highly infectious.</p> 
+
+<p>HYSPLIT is capable of modelling the dispersion of airborne FMDV. The survival of the FMDV particle is dependent on (a) the age of the particle, the virus has a natural lifespan which is simulated within the model with a half-life factor, (b) the air temperature, retrieved from the meteorological file and (c) the air humidity also retrieved from the meteorological file. In reality, wet and dry deposition also influence the distance travelled by the airborne FMDV.</p>
+
+<p>To activate the Foot and Mouth Disease algorithm in HYSPLIT the species identification label must be set to either FM_0 or FM_1 or  .... FM_7 where the integer behaves as a binary switch for including or excluding particle aging, temperature or humidity dependence as desired.</p>
+
+<p>
+The Table below shows the dependences of Foot and Mouth virus survival to the species identification string. FM_7 is the most realistic option.<br>
+<center><table>
+<tr><td><b>Identification</b></td>  <td><b>Particle Aging</b></td>  <td><b>Temperature</b></td>  <td><b>Humidity</b></td> </tr>
+<tr><td>FM_0</td>  <td>False</td>  <td>False</td>  <td>False</td> </tr>
+<tr><td>FM_1</td>  <td>False</td>  <td>False</td>  <td>True </td> </tr>
+<tr><td>FM_2</td>  <td>False</td>  <td>True </td>  <td>False</td> </tr>
+<tr><td>FM_3</td>  <td>False</td>  <td>True </td>  <td>True </td> </tr>
+<tr><td>FM_4</td>  <td>True </td>  <td>False</td>  <td>False</td> </tr>
+<tr><td>FM_5</td>  <td>True </td>  <td>False</td>  <td>True </td> </tr>
+<tr><td>FM_6</td>  <td>True </td>  <td>True </td>  <td>False</td> </tr>
+<tr><td>FM_7</td>  <td>True </td>  <td>True </td>  <td>True </td> </tr>
+</table></center>
+</p>
+
+<br>
+<p>The species identification string can be set in the pollutant emission rate setup menu or automatically using the <b>FMDV</b> radiobutton in the deposition setup menu in the following section.
+<center><p><img src="Image118.gif" width="429" height="251"></p></center>
+</p>
+
+<br><br>
+<b>Default FMDV settings</b><br>
+<br><b>- Deposition</b>
+<p>The species identification string can also be set to a default value by selecting the <b>FMDV</b> radiobutton in the deposition menu. This button will also set default values for wet and dry deposition. For the Foot and Mouth virus a dry deposition velocity of 0.01m/s is assumed<sup>[1]</sup>, but it can be changed by the user if required. FMDV wet deposition defaults are simply those for small particles using the removal time constant of 8x10<sup>-5</sup> for both in-cloud and below-cloud removal which is similar to the value (5x10<sup>-5</sup>) used by Garner<sup>[1]</sup>.
+<center><p><img src="Image119.gif" width="567" height="404"></p></center>
+</p>
+
+<b>- Particle age</b>
+<p>Various publications use a virus decay constant to simulate particle ageing. For the Foot and Mouth virus estimates of an effective half-life range from 30 mins<sup>[1]</sup> to 2 hours<sup>[2]</sup>. This constant is also dependent on the strain of the virus. To be conservative the virus decay constant has been defined to be 2 hours by default but this can be easily redefined by the user in the advanced settings menu (see below). Particle ageing can be turned off altogether if desired by using the species identification label outlined above.<p> 
+
+<b>- Temperature</b> 
+<p>The survival of the virus depends on temperature. Taking the default temperature threshold of 24<sup>o</sup>C, all virus particles of 24<sup>o</sup>C and under are unaffected. The concentration mass of virus particles linearly decreases between 24<sup>o</sup>C and 30<sup>o</sup>C so that none remain by the time they reach 30<sup>o</sup>C. This threshold of 24<sup>o</sup>C can be user defined in advanced settings (preserving the 6<sup>o</sup>C linear fall off) or the temperature dependence can be turned off altogether if required by selecting the appropriate species identification string outlined above.</p>
+
+<b>- Humidity</b>
+<p>The survival of the virus also depends on humidity. The virus survives better in higher humidity. Virus concentrations with relative humidity higher than 60% are left unaffected. Concentrations decrease exponentially as the humidity falls from 60% to 1%. This threshold of 60% can be user defined in the advanced settings or the humidity dependence can be turned off altogether if required by selecting the appropriate species identification string outlined above.</p>
+
+<p>
+<b>FMDV Survival Dependence</b>
+<table>
+<tr><td> ... upon Temperature</td> <td> ... upon Humidity</td> </tr>
+<tr><td><img src="Image120.gif" width="400"></td>    <td><img src="Image121.gif" width="400"></td> </tr>
+</table>
+</p>
+
+<b>How to change default FMDV dependency thresholds</b>
+<p>There are many different variants of FMDV each with their own characteristics. If a different set of threshold dependencies are know the default FMDV can be changed. To do this open the <i>Advanced / File Edit / FMDV Decay</i> menu to edit the decay, and critical temperature and humidity defaults. This information is written into the <i>fm_param.txt</i> file which is read when the HYSPLIT calculation starts.</p>
+<p>
+<center><p><img src="Image122.gif" width="433" height="183"></p></center>
+</p>
+
+<b>References</b>
+<p>[1] M.G. Garner, G.D. Hess and X. Yang, An integrated modelling approach to access the risk of wind-borne spread of foot-and-mouth disease virus from infected premises, Environmental Modelling & Assessment (2006) 11: 195-207.</p>
+<p>[2] J.H. Sorensen, C.O. Jensen, T. Mikkelsen, D.K.J. Mackay and A.I. Donaldson, Modelling the Atmospheric Dispersion of Foot and Mouth Virus for Emergency Preparedness, Phys. Chem. Earth (B), Vol. 26, No. 2, pp. 93-97, 2001.</p>
+
+
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

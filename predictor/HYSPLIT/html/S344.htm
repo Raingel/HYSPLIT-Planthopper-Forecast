@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>Concentration / Utilities / Binary File Merge (S344)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Utilities / Binary File Merge</h2></p>
+
+<p>The purpose of the <i>Binary File Merge</i> utility menu is to  
+add together two or more gridded HYSPLIT binary concentration files, where
+the contents of the input file are added to the contents of the base file,
+the results of which are written to the output file.  The input files need
+not be identical in time, but they must have the same number of pollutants and
+levels. Levels and pollutants will be matched by index number and not actual height
+or species. The horizontal grids need to be identical or even multiples of each
+other. This means that the concentration grid center should be explicitly defined
+rather than using the default values (0.0). For instance, a half-deg and one-deg
+concentration grid needs to at least intersect at the corner points. Summations
+will occur regardless of any grid mismatches. The files are merged at each grid
+point according to the processing rules: a simple summation, selecting the
+maximum value, or the sum only at the intersection points. An additional option,
+called masking, is defined to be such that a concentration value greater than
+the mask value (normally 0.0) in the input file, will cause the base file to be
+set to 0.0 at that grid point. The GUI is shown below.
+</p>
+
+<center><p><img src="Image71.png" width="606" height="774"></p></center>
+
+<p>
+If the <i>Create Filenames</i> button is selected, an special file called 
+<i>INFILE</i> is created that contains all the file names in the working directory
+that have the wildcard sequence as defined in the <i>Input Name</i> box. These
+files are then merged sequentially according to the process rules. Note that the
+concentration multiplier is applied during the writing of the output file and
+during sequential file processing this conversion is disabled. 
+</p>
+
+<p>The <i>Set sampling time labels as min-max</i> checkbox results in the 
+sample times in the output file to contain the minimum time between the input and base files for the sample start time and the maximum time between the input and base files for the sample stop time. An example application of this feature would be when multiple files at
+different times are processed into a single file and the desired sample output duration 
+is from the beginning of the first file to the end time of the last file.
+</p>
+
+<center><p><img src="Image80.gif" width="509" height="399"></p></center>
+
+<p>The above example shows how two plume simulations have been merged. Each was run
+for a different day and starting location, however the graphic and its corresponding
+binary output file, use only the information provided in the base file and the
+labeling information from the input file has been lost.
+</p>
+
+<center><p><img src="Image98.gif" width="509" height="399"></p></center>
+
+<p>In the above example, the input and base files are identical to the previous
+illustration, but in this example the <i>mask</i> checkbox option was selected
+and the result clearly illustrates the region of the base plume that was intersected by
+the input plume.</p>
+
+<center><p><img src="Image109.gif" width="556" height="445"></p></center>
+
+<p>The result from the <i>intersection</i> option is shown in the above figure. In this result
+only the region where the two plumes intersect and both exceed the zero mask value
+is shown. The region is identical to the missing plume area in the <i>mask</i> option.</p>
+
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

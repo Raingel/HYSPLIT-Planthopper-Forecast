@@ -1,0 +1,295 @@
+<html>
+<head>
+<title>GUI Overview (S100)</title>
+</head>
+<body>
+
+<P><h2>GUI Overview</h2></P>
+
+<P>Although the model can be configured and run manually from the command line, it is 
+usually much quicker to use the GUI.  A summary of the main features in each of the 
+primary GUI menus is reviewed below. More detailed help information can be found
+with the help button associated with each specific menu.</P>
+
+<P><B>Meteorology / ARL Data FTP</B></P>
+
+<UL>
+<P><A HREF="S111.htm">Forecasts</A> - Links to only the most recent forecast data for a
+variety of different meteorological models available on the ARL FTP server.  The data 
+have already processed to a HYSPLIT compatible format. Appended data are defined as a 
+combination of analysis and short forecasts (e.g. 0h and +3h appended with each new 6h 
+cycle) that are operationally maintained as a rolling archive valid for 48 hours prior 
+to the most recent forecast cycle.</P>
+
+<P><A HREF="S112.htm">ARL Archive</A> - Provides access to the long-term data archives
+at ARL for various meteorological data that have already been formatted for use by HYSPLIT.
+These data include the global GFS, GDAS, and NCAR/NCEP reanalysis. Files inclusive to North
+America include various versions of NAM, HRRR, and WRF.</P>
+
+<P><A HREF="S101.htm">Set Server</A> - A generic menu that can be customized to open
+different backup or user defined FTP servers to download pre-formatted HYSPLIT compatible
+meteorological forecasts.</P>
+</ul>
+
+<P><B>Meteorology / Convert to ARL</B></P>
+
+<ul>
+<P>Many of the scripts linked in this menu will convert various data file formats
+into the data format used by HYSPLIT. GRIB version 2 is not yet supported. However,
+conversion software from GRIB-2 to GRIB-1 can be obtained from several different
+sources (NOAA-NCEP, ECMWF, WMO). All files must be on the local computer. FTP is
+no longer supported through these menus.</P>
+
+<P><A HREF="S120.htm">WRF-ARW</A> - Processes fields from NCARs Advanced Research
+WRF model into the ARL format. The data conversion routines require NetCDF routines
+currently supported only on UNIX or LINUX platforms.</P>
+
+<P><A HREF="S125.htm">Global Lat-Lon</A> - Archived GRIB-1 fields from the global model of 
+ECMWF or NOAA may be processed locally into ARL format. The procedure is designed only to work 
+with archive data from their current operational model, where the last four digits of
+the file name represent the day.</P>
+
+<P><A HREF="S126.htm">ERA-40</A> - Archive GRIB-1 fields from the ECMWF ERA-40 reanalysis
+may be processed locally into ARL format.  These files must already be present. The procedure
+is designed only to work with the ERA-40 data files. Three different file types must be
+downloaded for this conversion: 3-d fields, 2-d surface fields, and one invariant field.</P>
+
+<P><A HREF="S128.htm">User Entered</A> - This menu tab is intended to convert user
+entered meteorological data to the ARL packed HYSPLIT compatible format. The conversion 
+program will create a data file with one or more time periods containing a uniform field
+in space and height but varying in time. The grid is centered over the location specified
+in the main menu and covers a 50 by 50 km domain.</P>
+</ul>
+
+<P><B>Meteorology / Display Data</B></P>
+
+<ul>
+<P><A HREF="S130.htm">Check File</A> - A program to list the information in the meteorology
+file index record as well as the ASCII header portion of each data record.</p>
+
+<P><A HREF="S131.htm">Contour Map</A> - A simple SVG contouring program that can 
+be used to view the data fields in any ARL packed meteorological data set.  The output 
+is always written to a file called contour.html.  Multiple time periods may be 
+processed.</P>
+
+<P><A HREF="S132.htm">Text Profile</A> - This program is used to extract the 
+meteorological data profile interpolated to a user selected latitude-longitude position.  
+The raw data values at the surface and each level are output on the left while 
+temperature converted to potential temperature and winds rotated from grid orientation 
+to true are shown on the right.  Output is shown on the screen and is also written to 
+a file called profile.txt. </P>
+
+<P><A HREF="S133.htm">Grid Domain</A> - Program to generate a map showing the domain of 
+the meteorological data grid with marks at each selected data grid point.  Output is 
+written to the file showgrid.ps. </P>
+</ul>
+
+<P><B>Utilities</B></P>
+<ul>
+
+<P><A HREF="S134.htm">Convert SVG</A> - Converts any SVG file to another 
+format using ImageMagick. Enter the name of the SVG file and the desired name 
+of the output file, with the file suffix indicating the desired conversion.</P>
+
+<P><A HREF="S135.htm">GIS to Shapefile</A> - When the GIS output option is selected in 
+selected display programs an ASCII text file (in generate format) is created that 
+contains the latitude-longitude values of each contour.  This GIS text file can be 
+converted to an ERSI Arc View shapefile.  This menu tab is available from three 
+different points. From the meteorology tab the conversion is &quot;line&quot;, from the 
+trajectory tab the conversion is &quot;points&quot;, and from the concentration tab the 
+conversion is &quot;polygon&quot;.</P>
+</ul>
+
+<B><P>Trajectory</P></B>
+
+<ul>
+<P><A HREF="S261.htm">Quick Start</A> - menu tab can be used to run any simulation in 
+one-step. The last configuration will be used for the simulation. The menu brings up a 
+global map with the current source location shown as a blue dot which can be moved to
+a new location. The <i>Run Example</i> menu tab resets the control and namelist files
+and reruns the example case. This can be used as a starting point for configurations
+that have been corrupted.</p>
+
+<P><A HREF="S210.htm">Setup Run</A> - This menu is used to write the CONTROL
+file that defines all the model simulation parameters.  Note that once a simulation
+has been defined it can be <A HREF="S211.htm">&quot;Saved As&quot; and later &quot;
+Retrieved.&quot;</A>  Note that the setup must be &quot;Saved&quot; before proceeding
+to the &quot;Run Model&quot; step.</P>
+
+<P><A HREF="S220.htm">Run Model</A> - The selection opens the window for
+standard output and starts the execution of &quot;hyts_std.exe&quot;.  Incremental 
+progress is reported on WinNT and later systems, however on LINUX the display 
+remains frozen until the calculation has completed (a beep will sound).</P>
+
+<P><A HREF="S230.htm">Display</A> - Display options are available to label 
+the time increment along the trajectory and the amount of white space surrounding the 
+trajectory on the map.  The HIRES option limits the domain to just fit the trajectory.  
+Output is written to the file trajplot.ps. The plot title can be defined in a file 
+called <a href="S230.htm#labels">labels.cfg</a> which should be placed in the \working 
+directory. The special <A HREF="S231.htm">frequency</A> display can be used to
+plot the spatial frequency distribution of multiple trajectory simulations.</P>
+
+<P><A HREF="S253.htm">Special Runs</A> - The <A HREF="S253.htm#ensemble">
+Ensemble</A> option invokes a special executable that will run multiple trajectories 
+from the same location, with each trajectory using meteorological data slightly offset 
+from the origin point.  The <A HREF="S253.htm#matrix">Matrix</A> option simultaneously 
+runs a regular grid of trajectory starting locations. Also available are multiple 
+trajectory options in both <a href="S253.htm#multi_time">time</a> and 
+<a href="S253.htm#multi_space"> space</a> as well as the daily menu to run a series of 
+<a href="S254.htm">automated</a> trajectories for multiple days or months per 
+execution. Multiple trajectories can also be <A HREF="S255.htm">clustered</A>.</P>
+</ul>
+
+<B><P>Concentration</P></B>
+
+<ul>
+<P><A HREF="S361.htm">Quick Start</A> - menu tab can be used to run any simulation in 
+one-step or rerun the example simulation. It's functionality is similar to the trajectory
+quick start menu.</P>
+
+<P><A HREF="S310.htm">Setup Run</A> - The menu is almost identical to the 
+Trajectory Setup menu except for the added tab for &quot;<A HREF="S311.htm">Pollutant, 
+Deposition, and Grids</A>&quot;, which is used to customize the concentration 
+computation.  Unlike trajectories, which are terminated at the top of the model domain, 
+pollutant particles reflect at the model top.</P>
+
+<P><A HREF="S320.htm">Run Model</A> - Similar in function to 
+trajectory run menu, executes &quot;hycs_std.exe&quot;.</P>
+
+<P><A HREF="S330.htm">Display</A> - Output is written to concplot.ps.  
+Options on the menu permit concentration contours to be dynamically scaled to the 
+maximum for each map (default) or fixed for all maps based upon the highest value on 
+any one map. Other display programs are available for the color fill of 
+<a href="S338.htm">uncontoured gridded data</a> or the horizontal or vertical display 
+of the <a href="S332.htm">particle distributions</a> and the computation of plume
+<a href="S339.htm">arrival times</a>.
+
+Note that the units label as well as the plot title can be defined in a file called
+<a href="S418.htm">LABELS.CFG</a> which should be placed in the \working 
+directory. Special display programs are available for a source-receptor 
+<a href="S335.htm">matrix</a>, <a href="S334.htm">ensemble</a>, and
+<a href="S355.htm">statistical</a> simulation outputs.</P>
+</ul>
+
+<B><P>Utilities</P></B>
+
+<ul>
+<P><A HREF="S341.htm">Convert to ASCII</A> - Writes an ASCII file for each time period 
+of concentration output with one record for every grid point that has a non-zero 
+concentration value.  Each record is identified by the ending date and time of the 
+sample and the latitude and longitude of each grid point.  The output file name is 
+constructed from the name of the [input file]_[julian day]_[output hour].  Some other 
+output options are available.</P>
+
+<P><A HREF="S342.htm">Grid to Station</A> - This program is used to extract the time-
+series of concentration values for a specific location.  That location may be specified 
+by a single latitude-longitude through the GUI or multiple stations may be defined by 
+entering the name of a file that contains an integer station number, latitude, and 
+longitude on each record.  The output is written to con2stn.txt which can be read by 
+the time series plotting program to produce the file timeplot.ps.  Note that the time 
+series plot is always in integer units and therefore may require the specification of a 
+units multiplication factor.</P>
+
+<P><A HREF="S345.htm">Convert to DATEM</A> - Conceptually similar to Grid-to-Station,
+this menu is used to convert a binary file to the DATEM format and then compute model
+performance statistics. A data file with measurement data in DATEM format must already
+exist, and the conversion program will match each model calculated concentration with a
+measurement, compute performance statistics, and display a scatter diagram of measured
+and calculated values.</P>
+
+<A HREF="S344.htm">Merge Binary Files</A> - Multiple binary concentration files may
+be added together for a sum, or the maximum value is retained at each grid, or one of
+the input files may be used as a zero mask, resulting in zero concentrations in the
+other file when the mask file shows a non-zero value.</P>
+</ul>
+
+<B><P>Special Runs</P></B>
+
+<ul>
+<P><A HREF="S352.htm">Daily</A> - Runs a script to rerun the last dispersion model
+configuration each time with a different starting day and time for days or months. Output 
+files are labeled with the starting time or a sequential number. This script can also
+be used to create a time dependent Transfer Coefficient Matrix (TCM) when the run length
+is reduced with each iteration so that all dispersion simulations end at the same time.</p>
+
+<P><A HREF="S356.htm#run_matrix">Matrix</A> - Runs the matrix pre-processor to create
+a <i>CONTROL</i> file with a grid of starting locations. The source-receptor conversion
+option needs to be selected in the advanced menu to create the coefficient matrix
+required for source attribution applications.</p>
+ 
+<P><A HREF="S357.htm">Geolocation</A> - Runs a special pre-processor that reads a file
+of measured sampling data to automatically configure a <i>CONTROL</i> file for each
+sample which is then run in a script to create a source attribution function for each
+measured sample.</p>
+
+<P><A HREF="S356.htm#run_ensemble">Ensemble / Meteorology</A> - An application similar to the
+trajectory ensemble, in that multiple simulations are run each with a different offset in
+the meteorological data to create an ensemble showing the sensitivity of the simulation
+to gradients in the meteorological data fields.</p>
+
+<P><A HREF="S356.htm#run_variance">Ensemble / Turbulence</A> - Instead of starting each
+simulation with the same random number seed, multiple simulations are run, each with a
+different seed, which then shows the concentration sensitivity to the turbulence.</p>
+
+<P><A HREF="S356.htm#run_physics">Ensemble / Physics</A> - The physics ensemble varies
+different turbulence and dispersion namelist parameters from the base simulation to 
+develop an ensemble showing the sensitivity of the calculation to various model physics
+assumptions.</p>
+
+<P><A HREF="S359.htm">Global</A> - The global special run invokes an executable that
+contains a global Eulerian module to permit particle mass to be transferred to the 
+global model at a specified age. A concentration output grid for each computation is
+created. One representing local/regional scale plumes, the other the contribution to
+global background concentrations.</p>
+ 
+<P><A HREF="S356.htm#run_dust">Dust Storm</A> - Invokes a pre-processor that creates
+a <i>CONTROL</i> file with each location within the selected computational domain that
+contains a desert land-use designation. This option should be used in conjunction with 
+the advanced menu option to turn on the dust emission module.</p>
+
+<P><A HREF="S365.htm">Daughter Products</A> - Invokes a pre-processor that creates a
+DAUGHTER.TXT file containing the daughter nuclides produced by a parent nuclide 
+along with the half-life and branching fractions. In addition a <i>CONTROL</i> file 
+is modified to include the daughter product information. 
+This option should be used in conjunction with the advanced menu option to turn on 
+the daughter product module and set MAXDIM to the number of daughters.</p>
+
+</ul>
+
+<B><P>Advanced Topics</P></B>
+
+<ul>
+<P>Contains several menus for <A HREF="S440.htm">custom model configurations</A> that 
+can be used to change the nature of the simulation and the way the model interprets 
+various input parameters.  These menus would be used to configure matrix, ensemble, 
+global, pollutant transformations, and model initialization options.</P>
+
+<P><A HREF="S411.htm">Trajectory Configuration</A> - Creates the <i>SETUP.CFG</i>
+namelist file for trajectory calculations.</p>
+
+<P><A HREF="S412.htm">Concentration Configuration</A> - Creates the <i>SETUP.CFG</i>
+namelist file for concentration-dispersion calculations.</p>
+
+<P><A HREF="S359.htm">Global Configuration</A> - Creates the <i>GEMPARM.CFG</i>
+namelist file to configure the global Eulerian model subroutines.</p>
+
+<P><A HREF="S415.htm">Dynamic Sampling</A> - Creates a virtual sampler that can fly
+through the computational domain, either passively with the wind or with a pre-defined
+velocity vector.</p>
+
+<P><A HREF="S417.htm">Emissions File</A> - Opens a simple editor to create a special
+emission file that can define point sources that vary in space, time, and intensity.</p>
+
+</ul>
+
+<B><P>Center Reset Button</P></B>
+<p>This will cause any changes to the GUI variables to be set back to the sample trajectory
+and concentration simulation case which uses the oct1618.BIN sample meteorological file.
+This button loads the sample_conc and sample_traj control files from the working directory.
+</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

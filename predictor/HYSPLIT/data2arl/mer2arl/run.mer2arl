@@ -1,0 +1,45 @@
+#!/bin/csh -f
+#
+# The script downloads MERRA2 data using wget (replacing date
+# info in myfile.dat.all) and executes mer2arl convert.
+# Note MERRA2*.nc4 files will be deleted once ARL files are done.
+#
+#-----------------------------------------------------------------
+
+set hdir = ./
+
+set web2d = https://goldsmr4.gesdisc.eosdis.nasa.gov/data/MERRA2
+set web3d = https://goldsmr5.gesdisc.eosdis.nasa.gov/data/MERRA2
+
+set prefix = 'MERRA2_400'  # 100=>19800101,200=>19920101,300=>20010101,400=>20110101
+set suffix = 'nc4'         # nc4 or SUB.nc4
+
+set flist  = 'filelist'    # listing four MERRA2 files
+
+set cdate  = '20190923' 
+
+set yyyy = `echo $cdate |cut -c1-4`
+set mm   = `echo $cdate |cut -c5-6`
+set dd   = `echo $cdate |cut -c7-8`
+
+echo ${web2d}/M2T1NXFLX.5.12.4/${yyyy}/${mm}/${prefix}.tavg1_2d_flx_Nx.${cdate}.nc4  > $flist
+echo ${web2d}/M2T1NXINT.5.12.4/${yyyy}/${mm}/${prefix}.tavg1_2d_int_Nx.${cdate}.nc4 >> $flist
+echo ${web2d}/M2T1NXSLV.5.12.4/${yyyy}/${mm}/${prefix}.tavg1_2d_slv_Nx.${cdate}.nc4 >> $flist
+echo ${web3d}/M2T3NVASM.5.12.4/${yyyy}/${mm}/${prefix}.tavg3_3d_asm_Nv.${cdate}.nc4 >> $flist
+
+wget --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --auth-no-challenge=on --keep-session-cookies --content-disposition -i $flist
+
+$hdir/mer2arl <<EOF
+$yyyy
+$mm
+$dd
+$prefix
+$suffix
+EOF
+
+mv ARLDATA.BIN MERRA2_${cdate}.ARL
+mv MESSAGE MESSAGE.$cdate
+
+rm -rf MERRA2*${cdate}*.nc4
+
+exit

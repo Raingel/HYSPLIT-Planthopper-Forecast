@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Advanced / Help (S440)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Help</h2></p>
+
+<p>This section provides some guidance in configuring the model to perform
+certain specialized calculations. These include deciding between 
+<a href="S441.htm#particle_puff">particle or puff</a> releases, dealing with 
+<a href="S441.htm#continuous_emit">continuous emissions</a>, creating an file with
+<a href="S441.htm#emit_time">time variations</a> of the emission rate, unit-source
+<a href="S441.htm#emit_tcm">simulations</a> with time-varying emissions,
+<a href="S441.htm#area_source">area source</a> emissions,
+<a href="S441.htm#multiple">multiple pollutants</a>, pollutant 
+<a href="S441.htm#transform">transformations</a>, atmospheric 
+<a href="S441.htm#chemistry">chemistry</a>,
+<a href="S441.htm#deposition">deposition</a> and decay,
+<a href="S441.htm#compilation">compilation limits</a>, scripting for 
+<ahref="S441.htm#automation">automation</a> applications, 
+<a href="S441.htm#back_dispersion">backward dispersion</a> for source attribution, 
+configuring the time or spatial <a href="S441.htm#emit_time">
+variation of the emission</a> rate using an input file, and how to compute
+deposited pollutant transport on <a href="S441.htm#sfc_water">ocean water surfaces</a>.
+The Advanced menu is composed of four sections.</p>
+
+<ol>
+<li><p>The <a href="S413.htm"><b>Configuration Setup</b></a> menu permits the
+creation and modification of the <i>SETUP.CFG</i> namelist file for either
+<a href="S411.htm">Trajectory</a> or Air <a href="S412.htm">Concentration</a>
+calculations. The namelist file is a variable length file that is used to set
+additional parameters that can be used to modify the nature of the simulation.
+The namelist file is not required because all the namelist variables take on
+default values when the <i>SETUP.CFG</i> file is not found. The same namelist
+file can be used for either trajectory or air concentration simulations but
+only certain variables are applicable to each simulation. Supplemental
+<a href="S414.htm">plot labeling</a> options are available, a menu to configure
+a <a href="S415.htm"> dynamic sampler</a> that can move in space and time for
+use with the concentration simulation, and a menu to configure the default
+<a href="S416.htm"> directory structure</a> and location of executable programs
+used by the GUI. More complex point source emissions scenarios can be defined
+by creating the <a href="S417.htm">EMITIMES</a> emissions file.</p></li><br>
+
+<li><p>The <b>View MESSAGES</b> menu is used to display the 
+<a href="S443.htm">diagnostic message file</a>. For all trajectory or concentration
+simulations, diagnostic information is written to standard output until the
+initialization process has completed. At that point the <i>MESSAGE</i> file is
+opened and subsequent diagnostic and certain error messages are written to this
+file. If the model does not complete properly, some additional diagnostic 
+information may be obtained from this file.</p></li><br>
+</ol>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

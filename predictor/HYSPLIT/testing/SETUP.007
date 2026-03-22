@@ -1,0 +1,6 @@
+ &SETUP
+ khmax = 12,
+ nstr = 6,
+ mhrs = 36,
+ nver = 0,
+ /

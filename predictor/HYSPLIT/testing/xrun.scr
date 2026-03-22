@@ -1,0 +1,866 @@
+#!/bin/sh
+
+#---------------------------
+# Last Revised: 29 Nov 2010
+#               02 Dec 2010 (GDR) - added color contours, GE, and chemical contours
+#               11 Jul 2011 (RRD) - DATEM statistics for CAPTEX
+#               25 Jul 2011 (BS)  - VMSDIST files
+#               03 Aug 2011 (RRD) - multiple particle re-distribution test (116)
+#               13 Sep 2011 (RRD) - minor cleanup added to run 039
+#               18 May 2012 (AFS) - added 040 and statistics
+#               11 Jun 2012 (GDR) - added shapefile and fixed Google Earth creation
+#               01 Nov 2012 (RRD) - multiple meteorology grid trajectory calculation
+#               14 Feb 2013 (BS)  - concplot shapefiles for run 134
+#               25 Mar 2013 (GDR) - modified gridplot options for new gridplot
+#               03 Apr 2013 (RRD) - added label to Google Earth plot (210)
+#               18 Apr 2013 (RRD) - label correction to (210)
+#               24 Jan 2014 (GDR) - added wildfire case (041)
+#               07 Feb 2014 (RRD) - wildfire script correction
+#               26 Aug 2014 (RRD) - added multi-processor test case (310)
+#               24 Sep 2014 (BS)  - mass loading with concplot -e4 (042)
+#               24 Sep 2014 (BS)  - THIS IS A TEST label concplot +l1
+#               18 Nov 2014 (BS)  - change traj 009 from arlmap to shapefiles
+#               15 Dec 2014 (RRD) - polar concentration grid
+#               07 Jan 2015 (BS)  - parxplot
+#               12 Aug 2015 (AFS) - multiple line sources
+#               22 May 2017 (RRD) - simultaneous polar and rectangular grids
+#               07 Aug 2017 (RRD) - special final PS to PDF options for Mac
+#               18 Sep 2017 (RRD) - added puff test on polar concentration grid
+#               04 Apr 2018 (CPL) - added WRF-ARW CAPTEX tests (050 and 051)
+#               04 Apr 2018 (CPL) - added WRF-ARW CAPTEX STILT tests (052)
+#               06 Mar 2020 (SYZ) - specify contour levels except for cases 033 and 133.
+#               30 Mar 2021 (AMC) - Added *44 tests for numgrd -2 and -4 cases.
+#               14 Jul 2021 (CPL) - remove unnecessary mv statement
+#               14 Oct 2021 (SYZ) - skip concatenating plot_310 if an MPI run failed.
+#               09 Sep 2021 (SYZ) - stop immediately when HYSPLIT crashes
+
+function die() {
+   local msg=$1
+
+   echo "$msg"
+   exit 1
+}
+
+# export PGM=../nwpara/exec/hysplit_ 
+# export DEV=../hysplit/exec/
+
+  export PGM=../exec/
+  export DEV=../exec/
+  export EXM=../examples/
+
+rm -f *.ps
+rm -f *.kml
+rm -f *.txt
+rm -f *.bin
+rm -f gem*
+rm -f tdump*
+rm -f cdump*
+rm -f ccrop*
+rm -f VMS*
+rm -f MAPTEXT.CFG
+
+# -------------------------
+echo "'TITLE&','Forward Trajectory (001)&'" >LABELS.CFG
+time ${PGM}hyts_std 001 || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -itdump_001 -oplot_001.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.001 
+cat plot_001.ps >results.ps
+
+# --------------------------
+echo "'TITLE&','Add Backward Trajectory (002)&'" >LABELS.CFG
+time ${PGM}hyts_std 002 || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -itdump_001+tdump_002 -oplot_002.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.002 
+cat plot_002.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Forward Isobaric Trajectory (003)&'" >LABELS.CFG
+time ${PGM}hyts_std 003 || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -itdump_003 -oplot_003.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.003 
+cat plot_003.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Add Backward Isobaric Trajectory (004)&'" >LABELS.CFG
+time ${PGM}hyts_std 004 || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -itdump_003+tdump_004 -oplot_004.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.004 
+cat plot_004.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Trajectory Ensemble (005)&'" >LABELS.CFG
+time ${PGM}hyts_ens 005 || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -itdump_005 -oplot_005.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.005
+cat plot_005.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Trajectory Matrix (006)&'" >LABELS.CFG
+cp CONTROL.006 CONTROL
+${DEV}latlon
+time ${PGM}hyts_std || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -s1 -l0 -z90 -itdump_006 -oplot_006.ps
+rm -f CONTROL MESSAGE LABELS.CFG TRAJ.CFG MESSAGE.006
+cat plot_006.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Multiple-in-Time Trajectory (007)&'" >LABELS.CFG
+time ${PGM}hyts_std 007 || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -l3 -itdump_007 -oplot_007.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.007
+cat plot_007.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Splitting-in-Time Trajectory (008)&'" >LABELS.CFG
+time ${PGM}hyts_std 008 || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -s0 -l0 -itdump_008 -oplot_008.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.008
+cat plot_008.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Terrain below Trajectory (009)&'" >LABELS.CFG
+time ${PGM}hyts_std 009 || die "ERROR: HYSPLIT crashed"
+echo "'../graphics/county.shp' 0 0.002 0.4 0.6 0.8" >shapefiles.009
+echo "'../graphics/states.shp' 0 0.015 0.2 0.2 0.5" >>shapefiles.009
+${PGM}trajplot -v1 -itdump_009 -oplot_009.ps -jshapefiles.009
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.009 shapefiles.009
+cat plot_009.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Multiple Meteorology Trajectory (109)&'" >LABELS.CFG
+time ${PGM}hyts_std 109 || die "ERROR: HYSPLIT crashed"
+${PGM}trajplot -v1 -itdump_109 -oplot_109.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.109 WARNING.109
+cat plot_109.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Standard Dispersion Simulation (010)&'" >LABELS.CFG
+time ${PGM}hycs_std 010 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_010 -oplot_010.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+rm -f LABELS.CFG CONC.010 MESSAGE.010 VMSDIST.010
+cat plot_010.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Standard Dispersion With 4 User Set Contours (110)&'" >LABELS.CFG
+${PGM}concplot -icdump_010 -oplot_110.ps -c4 -v1E-12+1E-13+1E-14+1E-15
+rm -f LABELS.CFG 
+cat plot_110.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Standard Dispersion With 8 User Contours and GE (210)&'" >LABELS.210 
+${PGM}concplot -p210 -icdump_010 -oplot_210.ps -a3 -c4 -v1E-12+1E-13+1E-14+1E-15+1E-16+1E-17+1E-18+1E-19
+rm -f LABELS.210
+mv plot_210.210 plot_210.ps
+cat plot_210.ps >>results.ps
+
+if [ -f GELABEL_210.txt ];then
+   ${PGM}/gelabel -P210
+   if [ -f GELABEL_01_210.ps ];then
+      let frame=1
+      fnum=`printf %2.2d $frame`
+
+      ghost=`which gs`
+      if [ -z $ghost ];then
+         echo "Ghostscript not found in path! ... cannot create GIF image"
+      else
+         while  [ -f GELABEL_${fnum}_210.ps ]; do
+            gs -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dSAFER -sDEVICE=pnmraw -q \
+               -sOutputFile=- GELABEL_${fnum}_210.ps  -c quit | convert -trim +repage \
+               +adjoin - GIF:GELABEL_${fnum}_210.gif
+            rm GELABEL_${fnum}_210.ps
+            let frame=$frame+1
+            fnum=`printf %2.2d $frame`
+         done
+      fi
+
+      cp ../guicode/noaa_google.gif .
+      cp ../guicode/logocon.gif .
+      cp ../graphics/icon63.png .
+      zip HYSPLIT_210.kmz HYSPLIT_210.kml logocon.gif noaa_google.gif icon63.png GELABEL*210.gif
+      rm -f HYSPLIT_210.kml
+      rm -f GELABEL*210.gif
+      rm -f GELABEL_210.txt
+      rm -f gistmp_210.txt
+      rm -f icon63.png
+      rm -f logocon.gif
+      rm -f noaa_google.gif
+   fi
+fi
+
+if [ -f GIS_00100_210_00.txt ];then
+   ${PGM}ascii2shp -d GIS_00100_210_00 polygons < GIS_00100_210_00.txt
+fi
+
+# ------------------------
+if [ -f ${PGM}hycm_std ];then
+echo "'TITLE&','MPI Dispersion using 4 processors (310)&'" >LABELS.CFG
+time mpirun -np 4 ${PGM}hycm_std 310
+if [ -f cdump_310 ];then
+   ${PGM}concplot -icdump_310 -oplot_310.ps -c4 -v1E-12+1E-13+1E-14+1E-15+1E-16+1E-17+1E-18+1E-19
+   rm -f LABELS.CFG CONC.00? MESSAGE.00? VMSDIST.00? WARNING.00?
+   cat plot_310.ps >>results.ps
+else
+   echo "Multi-processor simulation (310) failed"  >ERROR_LOG.txt          
+fi
+else
+echo "Multi-processor executable (310) not available" >ERROR_LOG.txt
+fi
+
+# ------------------------
+echo "'TITLE&','Polar Concentration Grid (410) Particles&'" >LABELS.CFG
+time ${PGM}hycs_std 410 || die "ERROR: HYSPLIT crashed"
+${PGM}poleplot -ccdump_410 -l0.5
+mv poleplot.ps plot_410.ps
+rm -f LABELS.CFG CONC.410 MESSAGE.410 VMSDIST.410
+cat plot_410.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Polar Concentration Grid (420) Puffs&'" >LABELS.CFG
+time ${PGM}hycs_std 420 || die "ERROR: HYSPLIT crashed"
+${PGM}poleplot -ccdump_420 -l0.5
+mv poleplot.ps plot_420.ps
+rm -f LABELS.CFG CONC.420 MESSAGE.420 VMSDIST.420
+cat plot_420.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Polar+Rectangular Grid (510)&'" >LABELS.CFG
+time ${PGM}hycs_std 510 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -irdump_510 -oplot_51R.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+cat plot_51R.ps >>results.ps
+${PGM}poleplot -cpdump_510 -l0.5
+mv poleplot.ps plot_51P.ps
+rm -f LABELS.CFG CONC.510 MESSAGE.510 VMSDIST.510
+cat plot_51P.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Backward Dispersion for Attribution (011)&'" >LABELS.CFG
+time ${PGM}hycs_std 011 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_011 -oplot_011.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+rm -f LABELS.CFG CONC.011 MESSAGE.011 VMSDIST.011
+cat plot_011.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Dispersion using Deformation (012)&'" >LABELS.CFG
+time ${PGM}hycs_std 012 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_012 -oplot_012.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+rm -f LABELS.CFG CONC.012 MESSAGE.012 VMSDIST.012
+cat plot_012.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Top-Hat Linear Puff Dispersion (013)&'" >LABELS.CFG
+time ${PGM}hycs_std 013 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_013 -oplot_013.ps -c4 -v1.0E-12::255255000+1.0E-14::000000255+1.0E-16::000255000+1.0E-18::000255255
+rm -f LABELS.CFG CONC.013 MESSAGE.013 VMSDIST.013
+cat plot_013.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Top-Hat Empirical Puff Dispersion (014)&'" >LABELS.CFG
+time ${PGM}hycs_std 014 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_014 -oplot_014.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+rm -f LABELS.CFG CONC.014 MESSAGE.014 VMSDIST.014
+cat plot_014.ps >>results.ps
+
+# ------------------------
+# gaussian empirical dispersion (force contours)
+echo "'TITLE&','Gaussian Empirical Puff Dispersion (015)&'" >LABELS.CFG
+time ${PGM}hycs_std 015 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_015 -oplot_015.ps -c4 -v1E-13+1E-14+1E-15+1E-16
+rm -f LABELS.CFG CONC.015 MESSAGE.015 VMSDIST.015
+cat plot_015.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Deposition using Size and Density (016)&'" >LABELS.CFG
+time ${PGM}hycs_std 016 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_016 -oplot_016.ps -c4 -v1.0E-10::255255000+1.0E-12::000000255+1.0E-14::000255000+1.0E-16::000255255
+rm -f LABELS.CFG CONC.016 MESSAGE.016 VMSDIST.016
+cat plot_016.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Deposition using Multiple Size Bins (116)&'" >LABELS.CFG
+time ${PGM}hycs_std 116 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -s0 -icdump_116 -oplot_116.ps -c4 -v1.0E-9::255255000+1.0E-11::000000255+1.0E-13::000255000+1.0E-15::000255255
+rm -f LABELS.CFG CONC.116 MESSAGE.116 VMSDIST.116
+cat plot_116.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Deposition using specified velocity (017)&'" >LABELS.CFG
+time ${PGM}hycs_std 017 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_017 -oplot_017.ps -c4 -v1.0E-9::255255000+1.0E-10::000000255+1.0E-11::000255000+1.0E-12::000255255
+rm -f LABELS.CFG CONC.017 MESSAGE.017 VMSDIST.017
+cat plot_017.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Probability Deposition using 1000 particles (018)&'" >LABELS.CFG
+time ${PGM}hycs_std 018 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_018 -oplot_018.ps -c4 -v1.0E-9::255255000+1.0E-10::000000255+1.0E-11::000255000+1.0E-12::000255255
+rm -f LABELS.CFG CONC.018 MESSAGE.018 VMSDIST.018
+cat plot_018.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Probability Deposition using 10000 particles (019)&'" >LABELS.CFG
+time ${PGM}hycs_std 019 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_019 -oplot_019.ps -c4 -v1.0E-10::255255000+1.0E-11::000000255+1.0E-12::000255000+1.0E-13::000255255
+rm -f LABELS.CFG CONC.019 MESSAGE.019 VMSDIST.019
+cat plot_019.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Species conversion at 10% per hour (020)&'" >LABELS.CFG
+time ${PGM}hycs_std 020 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -s2 -icdump_020 -oplot_020.ps -c4 -v1E-6+1E-7+1E-8+1E-9
+rm -f LABELS.CFG CONC.020 MESSAGE.020 VMSDIST.020
+cat plot_020.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Cycle Short Emissions Every 3 hrs (021)&'" >LABELS.CFG
+time ${PGM}hycs_std 021 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_021 -oplot_021.ps -c4 -v1.0E-11::255255000+1.0E-13::000000255+1.0E-15::000255000+1.0E-17::000255255
+rm -f LABELS.CFG CONC.021 MESSAGE.021 VMSDIST.021 WARNING.021
+cat plot_021.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Simple 4-point Moving Line Source (022)&'" >LABELS.CFG
+echo "YYYY MM DD HH    DURATION #RECORDS"                     >EMITIMES
+echo "YYYY MM DD HH MM DURATION LAT LON HGT RATE AREA HEAT"  >>EMITIMES
+echo "1995 10 16 00 0003 1"                                  >>EMITIMES
+echo "1995 10 16 00 00 0100 40.000 -90.000 10.0 1.0 0.0 0.0" >>EMITIMES
+echo "1995 10 16 03 0003 1"                                  >>EMITIMES
+echo "1995 10 16 03 00 0100 40.000 -88.000 10.0 1.0 0.0 0.0" >>EMITIMES
+echo "1995 10 16 06 0003 1"                                  >>EMITIMES
+echo "1995 10 16 06 00 0100 40.000 -86.000 10.0 1.0 0.0 0.0" >>EMITIMES
+echo "1995 10 16 09 0003 1"                                  >>EMITIMES
+echo "1995 10 16 09 00 0100 40.000 -84.000 10.0 1.0 0.0 0.0" >>EMITIMES
+time ${PGM}hycs_std 022 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_022 -oplot_022.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+rm -f EMITIMES LABELS.CFG CONC.022 MESSAGE.022 VMSDIST.022
+cat plot_022.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Simultaneous Multiple Sources in Space (023)&'" >LABELS.CFG
+time ${PGM}hycs_std 023 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_023 -oplot_023.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+rm -f LABELS.CFG CONC.023 MESSAGE.023 VMSDIST.023
+cat plot_023.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Simultaneous Multiple Sources in Height (024)&'" >LABELS.CFG
+time ${PGM}hycs_std 024 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_024 -oplot_024.ps -c4 -v1.0E-13::255255000+1.0E-14::000000255+1.0E-15::000255000+1.0E-16::000255255
+rm -f LABELS.CFG CONC.024 MESSAGE.024 VMSDIST.024
+cat plot_024.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Vertical Line Source (025)&'" >LABELS.CFG
+time ${PGM}hycs_std 025 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_025 -oplot_025.ps -c4 -v1.0E-14::255255000+1.0E-16::000000255+1.0E-18::000255000+1.0E-20::000255255
+rm -f LABELS.CFG CONC.025 MESSAGE.025 VMSDIST.025
+cat plot_025.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','9-Member Meteorological Ensemble Means (026)&'" >LABELS.CFG
+cp CONTROL.026 CONTROL
+for f in 1 2 3 4 5 6 7 8 9; do 
+    ${DEV}hycs_ens ${f}
+done
+${DEV}conprob -bcdump_026
+${PGM}concplot -icmean -oplot_026.ps -c4 -v1.0E-12::255255000+1.0E-14::000000255+1.0E-16::000255000+1.0E-18::000255255
+rm -f CONTROL cmean cnumb cvarn cmax?? prob?? MESSAGE.00? cdump_026.00? VMSDIST.00?
+rm -f LABELS.CFG CONC.CFG
+cat plot_026.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','9-Member Variance Ensemble Means (027)&'" >LABELS.CFG
+cp SETUP.027 SETUP.CFG
+cp CONTROL.027 CONTROL
+for f in 1 2 3 4 5 6 7 8 9; do
+    ${DEV}hycs_var ${f} || die "ERROR: HYSPLIT crashed"
+done
+${DEV}conprob -bcdump_027
+${PGM}concplot -icmean -oplot_027.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+rm -f CONTROL cmean cnumb cvarn cmax?? prob?? MESSAGE.00? cdump_027.00?  VMSDIST.00?
+rm -f LABELS.CFG SETUP.CFG CONC.CFG
+cat plot_027.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Dust Storm Emission Algorithm (028)&'" >LABELS.CFG
+cp SETUP.028 SETUP.CFG
+cp CONTROL.028 CONTROL
+${DEV}dustbdy
+time ${PGM}hycs_std || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -uug -x1E+6 -icdump_028 -oplot_028.ps -81 -c4 -v10000::255255000+1000::000000255+100::000255000+10::000255255
+rm -f fort.70 CONTROL MESSAGE LABELS.CFG SETUP.CFG CONC.CFG VMSDIST
+cat plot_028.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Matrix - Downwind Receptors (029)&'" >LABELS.CFG
+cp SETUP.029 SETUP.CFG
+cp CONTROL.029 CONTROL
+${DEV}latlon
+time ${PGM}hycs_std || die "ERROR: HYSPLIT crashed"
+${DEV}matrix -icdump_029 -y40.0 -x-90.0 -ms -ocdump
+${PGM}concplot -icdump -oplot_029.ps -c4 -v1.0E-13::255255000+1.0E-14::000000255+1.0E-15::000255000+1.0E-16::000255255
+rm -f CONTROL MESSAGE cdump LABELS.CFG SETUP.CFG CONC.CFG VMSDIST
+cat plot_029.ps >>results.ps
+
+# ------------------------
+echo "'TITLE&','Matrix - Upwind Sources (030)&'" >LABELS.CFG
+${DEV}matrix -icdump_029 -y40.0 -x-90.0 -mr -ocdump
+${PGM}concplot -icdump -oplot_030.ps -c4 -v1.0E-13::255255000+1.0E-15::000000255+1.0E-17::000255000+1.0E-19::000255255
+rm -f cdump LABELS.CFG SETUP.CFG CONC.CFG
+cat plot_030.ps >>results.ps
+
+# ------------------------
+# Volcanic ash - vertical line, multi-pollutant, multi-level
+time ${PGM}hycs_std 031 || die "ERROR: HYSPLIT crashed"
+${PGM}concrop -icdump_131 -occrop_131 -f0
+${PGM}volcplot -iccrop_131 -10 -21 -30 -40 -5TEST-131 -61 -z90 -oplot_131.ps
+rm LABELS.CFG DATE.TXT
+echo "'TITLE&','Volcanic ash (231)&'" >LABELS.CFG
+${PGM}concplot -icdump_231 -k3 -s0 -d2 -l115 -z90 -oplot_231.ps +l1 -c4 -v1.0E-15::194194194+1.0E-17::029029029+1.0E-19::150150150+1.0E-21::179179179
+rm -f LABELS.CFG CONC.031 MESSAGE.031 VMSDIST.031
+cat plot_131.ps >>results.ps
+cat plot_231.ps >>results.ps
+echo "'TITLE&','Volcanic ash (altitude in feet) (331)&'" >LABELS.CFG
+echo "'ALTTD&','ft&'"                >>LABELS.CFG
+${PGM}concplot -icdump_231 -k3 -s0 -d2 -l115 -z90 -oplot_331.ps +l1 -c4 -v1.0E-15::194194194+1.0E-17::029029029+1.0E-19::150150150+1.0E-21::179179179
+cat plot_331.ps >>results.ps
+rm -f LABELS.CFG 
+
+# ------------------------
+# RSMC - Regional Specialized Meteorological Center 
+
+time ${PGM}hyts_std 032 || die "ERROR: HYSPLIT crashed"
+echo "'TITLE&','RSMC Trajectory (032)&'" >LABELS.CFG
+${PGM}trajplot -i./tdump_032 -z80 -oplot_032.ps
+cat plot_032.ps >>results.ps
+rm -f LABELS.CFG TRAJ.CFG MESSAGE.032 WARNING.032
+
+time ${PGM}hycs_std 033 || die "ERROR: HYSPLIT crashed"
+echo "'TITLE&','RSMC Dispersion (033)&'" >LABELS.CFG
+${PGM}concrop -icdump_033 -occrop_033 -f0
+# 5 MAR 2020
+# Note contour levels are not set because there are multiple
+# plots and contour levels are different from one plot to another.
+${PGM}concplot -iccrop_033 -e1 -r3 -uBq -z80 -oplot_033.ps +l1
+rm cdump2
+cat plot_033.ps >>results.ps
+rm -f LABELS.CFG CONC.033 MESSAGE.033 VMSDIST.033 WARNING.033
+
+echo "'TITLE&','RSMC Dispersion With Dynamic Colors (133)&'" >LABELS.CFG
+${PGM}concrop -icdump_033 -occrop_133 -f0
+# 5 MAR 2020
+# Note contour levels are not set because there are multiple
+# plots and contour levels are different from one plot to another.
+${PGM}concplot -iccrop_133 -e1 -r3 -uBq -z80 -31 -oplot_133.ps +l1
+cat plot_133.ps >>results.ps
+rm -f LABELS.CFG 
+
+# ------------------------
+# HLS - 
+
+time ${PGM}hycs_std 034 || die "ERROR: HYSPLIT crashed"
+echo "'TITLE&','HLS fine (134)&'" >LABELS.CFG
+${PGM}concrop -icdump_134 -occrop_134 -f0
+cp ../graphics/roads.shp ./
+cp ../graphics/county.shp ./
+cp ../graphics/states.shp ./
+cp ../graphics/shapefiles_rds.txt shapefiles.txt
+${PGM}concplot -iccrop_134 -d2 -z80 -jshapefiles.txt -oplot_134.ps -c4 -v1.0E-10::255255000+1.0E-11::000000255+1.0E-12::000255000+1.0E-13::000255255
+cat plot_134.ps >>results.ps
+rm roads.shp county.shp states.shp
+rm shapefiles.txt
+echo "'TITLE&','HLS coarse (234)&'" >LABELS.CFG
+${PGM}concrop -icdump_234 -occrop_234 -f0
+${PGM}concplot -iccrop_234 -d2 -z80 -oplot_234.ps -c4 -v1.0E-12::255255000+1.0E-13::000000255+1.0E-14::000255000+1.0E-15::000255255
+cat plot_234.ps >>results.ps
+rm -f LABELS.CFG CONC.034 MESSAGE.034 VMSDIST.034
+
+# ------------------------
+echo "'TITLE&','Short-Range Dispersion Simulation (035)&'" >LABELS.CFG
+time ${PGM}hycs_std 035 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_035 -oplot_035.ps -c4 -v1.0E-09::255255000+1.0E-10::000000255+1.0E-11::000255000+1.0E-12::000255255
+rm -f LABELS.CFG CONC.035 MESSAGE.035 VMSDIST.035
+cat plot_035.ps >>results.ps
+
+# ------------------------
+# Trajectory cluster analysis - example
+./xcluster_example.scr
+mv cluster.ps cluster_example.ps
+cat cluster_example.ps >> results.ps
+
+# ------------------------
+# Trajectory cluster analysis - southpole
+# ./xcluster_southpole.scr
+# mv cluster.ps cluster_southpole.ps
+# cat cluster_southpole.ps >> results.ps
+
+# ------------------------
+echo "'TITLE&','Trajectory Frequency Plot&'" >LABELS.CFG
+echo "'MAPID&',' Values &'"                 >>LABELS.CFG
+echo "'UNITS&',' %&'"                       >>LABELS.CFG
+echo "'VOLUM&',' &'"                        >>LABELS.CFG
+cp ../cluster/example/output/INFILE INFILE
+${PGM}trajfreq -iINFILE -ftrajfreq.bin
+${PGM}concplot -itrajfreq.bin -otrajfreq -z80 -c4 -v10+5+2+1+0.5+0.2+0.1
+cat trajfreq.ps >>results.ps
+rm -f LABELS.CFG trajfreq.bin INFILE
+
+# ------------------------
+# GLOBAL MODEL
+
+echo "'TITLE&','Transport to 24 hours (036)&'" >LABELS.CFG
+time ${PGM}hycs_std 036 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_036 -d2 -z80 -oplot_036.ps -c4 -v1.0E-11::255255000+1.0E-12::000000255+1.0E-13::000255000+1.0E-14::000255255
+rm -f LABELS.CFG CONC.036 MESSAGE.036 VMSDIST.036 WARNING.036
+cat plot_036.ps >>results.ps
+
+echo "&GEMPARM"        >GEMPARM.CFG
+echo "wfreq = 6,"     >>GEMPARM.CFG
+echo "/"              >>GEMPARM.CFG
+time ${PGM}hycs_gem 037 || die "ERROR: HYSPLIT crashed"
+
+echo "'TITLE&','GEM@12h - Lagrangian grid (037)&'" >LABELS.CFG
+${PGM}concplot -icdump_037 -d2 -z80 -oplot_037.ps -c4 -v1.0E-11::255255000+1.0E-12::000000255+1.0E-13::000255000+1.0E-14::000255255
+rm -f GEMPARM.CFG LABELS.CFG CONC.037 MESSAGE.037 VMSDIST.037 WARNING.037
+cat plot_037.ps >>results.ps
+
+echo "'TITLE&','GEM@12h - Eulerian grid (137)&'" >LABELS.137
+${PGM}gridplot -igemconc.bin -p137 -l-1 -d10.0 -g3 
+rm -f LABELS.137 gemdump.bin
+mv gemconc.bin gemconc_037
+mv plot.137 plot_137.ps
+mv plot.ps.kml HYSPLIT_137.kml
+cat plot_137.ps >>results.ps
+
+if [ -f GELABEL_137.txt ];then
+   ${PGM}/gelabel -P137
+   if [ -f GELABEL_01_137.ps ];then
+      let frame=1
+      fnum=`printf %2.2d $frame`
+
+      ghost=`which gs`
+      if [ -z $ghost ];then
+         echo "Ghostscript not found in path! ... cannot create GIF image"
+      else
+         while  [ -f GELABEL_${fnum}_137.ps ]; do
+            gs -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dSAFER -sDEVICE=pnmraw -q \
+               -sOutputFile=- GELABEL_${fnum}_137.ps  -c quit | convert -trim +repage \
+               +adjoin - GIF:GELABEL_${fnum}_137.gif
+            rm GELABEL_${fnum}_137.ps
+            let frame=$frame+1
+            fnum=`printf %2.2d $frame`
+         done
+      fi
+
+      cp ../guicode/noaa_google.gif .
+      cp ../guicode/logocon.gif .
+      cp ../graphics/icon63.png .
+      zip HYSPLIT_137.kmz HYSPLIT_137.kml logocon.gif noaa_google.gif icon63.png GELABEL*137.gif
+      rm -f HYSPLIT_137.kml
+      rm -f GELABEL*137.gif
+      rm -f GELABEL_137.txt
+      rm -f gistmp_137.txt
+      rm -f icon63.png
+      rm -f logocon.gif
+      rm -f noaa_google.gif
+   fi
+fi
+
+echo "'TITLE&','GEM@12h - Lagrangian + Eulerian (237)&'" >LABELS.237
+${PGM}concadd -icdump_037 -bgemconc_037 -ogemhysp_037
+${PGM}gridplot -igemhysp_037 -p237 -l-1 -d10.0 -g3
+rm -f LABELS.237
+mv plot.237 plot_237.ps
+mv plot.ps.kml HYSPLIT_237.kml
+cat plot_237.ps >>results.ps
+
+if [ -f GELABEL_237.txt ];then
+   ${PGM}/gelabel -P237
+   if [ -f GELABEL_01_237.ps ];then
+      let frame=1
+      fnum=`printf %2.2d $frame`
+
+      ghost=`which gs`
+      if [ -z $ghost ];then
+         echo "Ghostscript not found in path! ... cannot create GIF image"
+      else
+         while  [ -f GELABEL_${fnum}_237.ps ]; do
+            gs -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dSAFER -sDEVICE=pnmraw -q \
+               -sOutputFile=- GELABEL_${fnum}_237.ps  -c quit | convert -trim +repage \
+               +adjoin - GIF:GELABEL_${fnum}_237.gif
+            rm GELABEL_${fnum}_237.ps
+            let frame=$frame+1
+            fnum=`printf %2.2d $frame`
+         done
+      fi
+
+      cp ../guicode/noaa_google.gif .
+      cp ../guicode/logocon.gif .
+      cp ../graphics/icon63.png .
+      zip HYSPLIT_237.kmz HYSPLIT_237.kml logocon.gif noaa_google.gif icon63.png GELABEL*237.gif
+      rm -f HYSPLIT_237.kml
+      rm -f GELABEL*237.gif
+      rm -f GELABEL_237.txt
+      rm -f gistmp_237.txt
+      rm -f icon63.png
+      rm -f logocon.gif
+      rm -f noaa_google.gif
+   fi
+fi
+
+echo "'TITLE&','Chemical Dispersion Simulation (038)&'" >LABELS.CFG
+time ${PGM}hycs_std 038 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_038 -oplot_038.ps -m0 -d2 -b100 -t100 -e2 -c4 -r2 -z70 -uppm -x156411.162068966 -y453592.37 -k1 -v20:AEGL\-3+2:AEGL\-2+0.5:AEGL\-1+0.0:AEGL
+rm -f LABELS.CFG CONC.038 MESSAGE.038 VMSDIST.038
+cat plot_038.ps >>results.ps
+
+echo "'TITLE&','Chemical Dispersion Simulation (138)& with INITV=0'" >LABELS.CFG
+time ${PGM}hycs_std 138 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_138 -oplot_138.ps -m0 -d2 -b100 -t100 -e2 -c4 -r2 -z70 -uppm -x156411.162068966 -y453592.37 -k1 -v20:AEGL\-3+2:AEGL\-2+0.5:AEGL\-1+0.0:AEGL
+rm -f LABELS.CFG CONC.138 MESSAGE.138 VMSDIST.138
+cat plot_138.ps >>results.ps
+
+
+#----------------------------
+# DATEM statistics for CAPTEX
+
+time ${PGM}hycs_std 039 || die "ERROR: HYSPLIT crashed"
+echo "'TITLE&','CAPTEX Release Number Two (039)&'" >LABELS.CFG
+${PGM}concplot -icdump_039 -oplot_039.ps -z90 -x1.0E+12 -n3:8 -upg -q../datem/captex2.txt -c4 -v3000+1000+300+100+30+10
+rm -f LABELS.CFG CONC.039 MESSAGE.039 VMSDIST.039 WARNING.039
+cat plot_039.ps >>results.ps
+
+${PGM}c2datem  -icdump_039 -ocdump_039.txt -m../datem/captex2.txt -c1.0E+12 -xi
+${PGM}statmain -t0 -o1 -l10 -d../datem/captex2.txt -rcdump_039.txt
+${PGM}scatter -idataA.txt -oplot_139.ps -p10
+cat plot_139.ps >>results.ps
+mv statA.txt stat_039.txt
+rm -f dataA.txt cdump_039.txt
+
+echo "'TITLE&','CAPTEX Time Series at Station 608&'" >LABELS.CFG
+echo "'UNITS&',' pg&'                              ">>LABELS.CFG
+echo 608 41.98 -77.57 >station.txt
+${PGM}con2stn -icdump_039 -ohysp_608.txt -r2 -c1.0E+12 -sstation.txt
+${PGM}timeplot -ihysp_608.txt -s../datem/captex2_608.txt -r2
+cat timeplot.ps >>results.ps
+mv timeplot.ps plot_239.ps
+rm -f station.txt LABELS.CFG hysp_608.txt
+
+#----------------------------
+# DATEM statistics for CAPTEX
+
+time ${PGM}hycs_std 040 || die "ERROR: HYSPLIT crashed"
+echo "'TITLE&','CAPTEX Release Number Two var VSCALE (040)&'" >LABELS.CFG
+${PGM}concplot -icdump_040 -oplot_040.ps -z90 -x1.0E+12 -n3:8 -upg -q../datem/captex2.txt -c4 -v3000+1000+300+100+30+10
+rm -f LABELS.CFG CONC.040 MESSAGE.040 VMSDIST.040 WARNING.040
+cat plot_040.ps >>results.ps
+
+${PGM}c2datem  -icdump_040 -ocdump_040.txt -m../datem/captex2.txt -c1.0E+12 -xi
+${PGM}statmain -t0 -o1 -l10 -d../datem/captex2.txt -rcdump_040.txt
+${PGM}scatter -idataA.txt -oplot_140.ps -p10
+cat plot_140.ps >>results.ps
+mv statA.txt stat_040.txt
+rm -f dataA.txt cdump_040.txt
+
+echo "'TITLE&','CAPTEX Time Series at Station 608 var VSCALE&'" >LABELS.CFG
+echo "'UNITS&',' pg&'                              ">>LABELS.CFG
+echo 608 41.98 -77.57 >station.txt
+${PGM}con2stn -icdump_040 -ohysp_608.txt -r2 -c1.0E+12 -sstation.txt
+${PGM}timeplot -ihysp_608.txt -s../datem/captex2_608.txt -r2
+cat timeplot.ps >>results.ps
+mv timeplot.ps plot_240.ps
+rm -f station.txt LABELS.CFG hysp_608.txt
+
+# ------------------------
+# Georgia wildfire case with DATEM stats
+
+echo "'TITLE&','Sweat Farm Road Smoke Simulation (041)&'" >LABELS.CFG
+cp ${EXM}wildfire/EMITIMES.txt EMITIMES
+time ${PGM}hycs_std 041 || die "ERROR: HYSPLIT crashed"
+rm -f EMITIMES
+
+${PGM}concplot -icdump_041 -oplot_041.ps -b100 -t100  -c4 -k2 -z90 -uug -n40:40 -v500+200+100+50+20+10
+rm -f LABELS.CFG CONC.041 MESSAGE.041 VMSDIST.041 WARNING.041
+cat plot_041.ps >>results.ps
+
+${PGM}c2datem  -icdump_041 -ocdump_041.txt -m${EXM}wildfire/Mayo_DATEM.txt -xi
+${PGM}statmain -t0 -o1 -l10 -d${EXM}wildfire/Mayo_DATEM.txt -rcdump_041.txt
+${PGM}scatter -idataA.txt -oplot_141.ps -p10
+cat plot_141.ps >>results.ps
+mv statA.txt stat_041.txt
+rm -f dataA.txt cdump_041.txt
+
+echo "'TITLE&','Time Series at Station Mayo&'" >LABELS.CFG
+echo "'UNITS&',' ug&'                              ">>LABELS.CFG
+echo 1 30.2556 -81.4533 >station.txt
+${PGM}con2stn -icdump_041 -ohysp_Mayo.txt -r1 -xi -sstation.txt
+${PGM}timeplot -ihysp_Mayo.txt -s${EXM}wildfire/mayo_pm25.txt
+cat timeplot.ps >>results.ps
+mv timeplot.ps plot_241.ps
+rm -f station.txt LABELS.CFG hysp_Mayo.txt
+
+# ------------------------
+#  Volcano  Soufriere_Hills with DATEM stats
+
+echo "'TITLE&','Volcano  Soufriere_Hills Simulation (042)&'" >LABELS.CFG
+echo "'VOLUM&','/m2&'                                      ">>LABELS.CFG
+echo "'MAPID&','Mass loading&'                             ">>LABELS.CFG
+
+cp ${EXM}volcano/MAPTEXT.042 MAPTEXT.CFG
+
+time ${PGM}hycs_std 042 || die "ERROR: HYSPLIT crashed"
+
+${PGM}concplot -icdump_042 -oplot_042 -m0 -d2 -z75 -n14:14 -a0 -k2 -s0 -l115 -ug  -x1000 -q${EXM}volcano/datem_mass.txt -e4 -c4 -v10::255255000+1::000000255+0.1::000255000+0.01::000255255
+cat plot_042.ps >>results.ps
+${PGM}parxplot -iPARDUMP_042 -k1 -n3 -oplot_142.ps
+cat plot_142.ps >>results.ps
+rm -f LABELS.CFG CONC.042 MESSAGE.042 VMSDIST.042 WARNING.042 datem_mass.txt MAPTEXT.CFG PARDUMP_042
+
+${PGM}concsum -icdump_042 -ocsum_042
+${PGM}c2datem -icsum_042.bin -omodel.txt -m${EXM}volcano/datem_mass.txt -c1.8e+07
+${PGM}statmain -d${EXM}volcano/datem_mass.txt -rmodel.txt -o1 -t0 -l1.0 -b
+${PGM}scatter -idataA.txt -oplot_242.ps -p0.1
+mv statA.txt stat_042.txt
+rm -f dataA.txt model.txt message.txt MAPTEXT.CFG csum_042.bin
+cat plot_242.ps >>results.ps
+
+# -------------------------
+# line source test
+
+echo "'TITLE&','Four line sources with an EMITTIMES file (043)&'" >LABELS.CFG
+echo "'VOLUM&','/m2&'                                     ">>LABELS.CFG
+echo "'MAPID&','Mass loading&'                            ">>LABELS.CFG
+
+echo "YYYY MM DD HH    DURATION(hhhh) #RECORDS " > EMITTIMES.txt
+echo "YYYY MM DD HH MM DURATION(hhmm) LAT LON HGT(m) RATE(/h) AREA(m2) HEAT(w) " >> EMITTIMES.txt
+echo " 1995 10 17 00  9999  8                                                  " >> EMITTIMES.txt
+echo " 1995 10 17 00 00 0100 40.50 -91.00 2000   0.5 0   0                      " >> EMITTIMES.txt
+echo " 1995 10 17 00 00 0100 40.50 -91.00 10000  0.0 0   0                      " >> EMITTIMES.txt
+echo " 1995 10 17 00 00 0100 40.00 -90.50 10000  1.0 0   0                      " >> EMITTIMES.txt
+echo " 1995 10 17 00 00 0100 40.00 -90.50 15000  0.0 0   0                      " >> EMITTIMES.txt
+echo " 1995 10 17 00 00 0100 39.50 -90.00 4000   1.5 0   0                      " >> EMITTIMES.txt
+echo " 1995 10 17 00 00 0100 39.50 -90.00 5000   0.0 0   0                      " >> EMITTIMES.txt
+echo " 1995 10 17 00 00 0100 39.00 -89.50 1000   2.0 0   0                      " >> EMITTIMES.txt
+echo " 1995 10 17 00 00 0100 39.00 -89.50 10000  0.0 0   0                      " >> EMITTIMES.txt
+
+time ${PGM}hycs_std 043 || die "ERROR: HYSPLIT crashed"
+${PGM}concplot -icdump_043 -oplot_043.ps -d2 -s0 -e4 -c4 -v1.0E-09::255255000+1.0E-10::000000255+1.0E-11::000255000+1.0E-12::000255255
+cat plot_043.ps >>results.ps
+${PGM}parxplot -iPARDUMP_043 -k1 -oplot_043.ps
+rm -f LABELS.CFG EMITTIMES.txt  MESSAGE.043 CONC.043 VMSDIST.043
+cat plot_043.ps >>results.ps
+rm -f PARDUMP_043 cdump_043
+
+
+#-----------------------------------------
+# test numgrid=-4 and numgrid=-2
+# for RSMC aviation output. concentration grids mixed agl and msl.
+# Run from Atlantic city in Wyoming. elevation is 2,345 ft.
+# 044 base run with kmsl=0 (agl)
+# 144 base run with kmsl=1 (msl)
+# 244 numgrd = -2 with kmsl=0 (input in agl)
+# 344 numgrid= -2 with kmsl=1 (input in msl)
+# 444 numgrid = -4 with kmsl=0 (input in agl) 
+# 544 numgrid = -4 with kmsl=1 (input in msl) 
+# no graphics created. Instead use python comparison in test_xdump.py
+# to compare the 244,344,444,544 runs to the base cases 044 and 144.
+
+time ${PGM}hycs_std 044 || die "ERROR: HYSPLIT crashed"
+time ${PGM}hycs_std 144 || die "ERROR: HYSPLIT crashed"
+time ${PGM}hycs_std 244 || die "ERROR: HYSPLIT crashed"
+time ${PGM}hycs_std 344 || die "ERROR: HYSPLIT crashed"
+time ${PGM}hycs_std 444 || die "ERROR: HYSPLIT crashed"
+time ${PGM}hycs_std 544 || die "ERROR: HYSPLIT crashed"
+
+#----------------------------
+# DATEM statistics for CAPTEX
+
+time ${PGM}hycs_std 050 || die "ERROR: HYSPLIT crashed"
+echo "'TITLE&','CAPTEX Release Number Two ARW-WRF kblt=2 (050)&'" >LABELS.CFG
+${PGM}concplot -icdump_050 -oplot_050.ps -z90 -x1.0E+12 -n3:8 -upg -q../datem/captex2.txt -c4 -v3000+1000+300+100+30+10
+rm -f LABELS.CFG CONC.050 MESSAGE.050 VMSDIST.050 WARNING.050
+cat plot_050.ps >>results.ps
+
+${PGM}c2datem  -icdump_050 -ocdump_050.txt -m../datem/captex2.txt -c1.0E+12 -xi
+${PGM}statmain -t0 -o1 -l10 -d../datem/captex2.txt -rcdump_050.txt
+${PGM}scatter -idataA.txt -oplot_150.ps -p10
+cat plot_150.ps >>results.ps
+mv statA.txt stat_050.txt
+rm -f dataA.txt cdump_050.txt
+
+echo "'TITLE&','CAPTEX Time Series at Station 608 ARW-WRF kblt=2&'" >LABELS.CFG
+echo "'UNITS&',' pg&'                              ">>LABELS.CFG
+echo 608 41.98 -77.57 >station.txt
+${PGM}con2stn -icdump_050 -ohysp_608.txt -r2 -c1.0E+12 -sstation.txt
+${PGM}timeplot -ihysp_608.txt -s../datem/captex2_608.txt -r2
+cat timeplot.ps >>results.ps
+mv timeplot.ps plot_250.ps
+rm -f station.txt LABELS.CFG hysp_608.txt
+
+#----------------------------
+# DATEM statistics for CAPTEX
+
+time ${PGM}hycs_std 051 || die "ERROR: HYSPLIT crashed"
+echo "'TITLE&','CAPTEX Release Number Two ARW-WRF kblt=3 (051)&'" >LABELS.CFG
+${PGM}concplot -icdump_051 -oplot_051.ps -z90 -x1.0E+12 -n3:8 -upg -q../datem/captex2.txt -c4 -v3000+1000+300+100+30+10
+rm -f LABELS.CFG CONC.051 MESSAGE.051 VMSDIST.051 WARNING.051
+cat plot_051.ps >>results.ps
+
+${PGM}c2datem  -icdump_051 -ocdump_051.txt -m../datem/captex2.txt -c1.0E+12 -xi
+${PGM}statmain -t0 -o1 -l10 -d../datem/captex2.txt -rcdump_051.txt
+${PGM}scatter -idataA.txt -oplot_151.ps -p10
+cat plot_151.ps >>results.ps
+mv statA.txt stat_051.txt
+rm -f dataA.txt cdump_051.txt
+
+echo "'TITLE&','CAPTEX Time Series at Station 608 ARW-WRF kblt=3&'" >LABELS.CFG
+echo "'UNITS&',' pg&'                              ">>LABELS.CFG
+echo 608 41.98 -77.57 >station.txt
+${PGM}con2stn -icdump_051 -ohysp_608.txt -r2 -c1.0E+12 -sstation.txt
+${PGM}timeplot -ihysp_608.txt -s../datem/captex2_608.txt -r2
+cat timeplot.ps >>results.ps
+mv timeplot.ps plot_251.ps
+rm -f station.txt LABELS.CFG hysp_608.txt
+
+#----------------------------
+# DATEM statistics for CAPTEX
+
+time ${PGM}hycs_std 052 || die "ERROR: HYSPLIT crashed"
+echo "'TITLE&','CAPTEX Release Number Two ARW-WRF STILT Features (052)&'" >LABELS.CFG
+${PGM}concplot -icdump_052 -oplot_052.ps -z90 -x1.0E+12 -n3:8 -upg -q../datem/captex2.txt -c4 -v3000+1000+300+100+30+10
+rm -f LABELS.CFG CONC.052 MESSAGE.052 VMSDIST.052 WARNING.052
+cat plot_052.ps >>results.ps
+
+${PGM}c2datem  -icdump_052 -ocdump_052.txt -m../datem/captex2.txt -c1.0E+12 -xi
+${PGM}statmain -t0 -o1 -l10 -d../datem/captex2.txt -rcdump_052.txt
+${PGM}scatter -idataA.txt -oplot_152.ps -p10
+cat plot_152.ps >>results.ps
+mv statA.txt stat_052.txt
+rm -f dataA.txt cdump_052.txt
+
+echo "'TITLE&','CAPTEX Time Series at Station 608 ARW-WRF STILT Features&'" >LABELS.CFG
+echo "'UNITS&',' pg&'                              ">>LABELS.CFG
+echo 608 41.98 -77.57 >station.txt
+${PGM}con2stn -icdump_052 -ohysp_608.txt -r2 -c1.0E+12 -sstation.txt
+${PGM}timeplot -ihysp_608.txt -s../datem/captex2_608.txt -r2
+cat timeplot.ps >>results.ps
+mv timeplot.ps plot_252.ps
+rm -f station.txt LABELS.CFG hysp_608.txt
+
+# ------------------------
+# fix page numbers in concatenated file
+  if [ -s results.ps ]; then
+     mv results.ps results.tmp.ps
+     if [[ "$OSTYPE" == "darwin"* ]]; then
+        ${PGM}/catps2ps -m -iresults.tmp.ps -oresults.ps
+        pstopdf results.ps -l -p -oresults.pdf
+     else
+        ${PGM}/catps2ps -iresults.tmp.ps -oresults.ps
+     fi 
+     rm results.tmp.ps
+  fi
+  chmod g+w *
+
+#------------------------
+# print error log file if it exists
+
+if [ -f ERROR_LOG.txt ];then cat ERROR_LOG.txt; fi

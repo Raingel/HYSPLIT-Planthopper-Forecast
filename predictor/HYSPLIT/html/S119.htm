@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>Meteorology / Convert to ARL / NARR Archive (S119)</title>
+</head>
+<body>
+
+<p><h2>METEOROLOGY / Convert to ARL / NARR Archive</h2></p>
+
+<p>This menu item is intended to convert existing NARR GRIB-1 files
+to the ARL packed format. The data files to process are determined
+by selecting any file in the GRIB data directory. Subsequent file
+names will be constructed automatically between the starting and 
+ending day at the hour interval set by the radio-button. Day (DD)
+and hour (HH) must be embedded the within the GRIB file name according
+to the following NOMADS archive convention: 
+narr-a_221_{YYYY}{MM}{DD}_{HH}00_000.grb.
+Year (YYYY) and month (MM) are fixed according to the file name'
+selected to set the base file name. Time intervals of 12 hours or more
+should be avoided in transport and dispersion calculations. Only one
+month of data or less should be processed into one output file.</p>
+
+<p>The GRIB files for the North American Regional Reanalysis (NARR)
+can be downloaded from the 
+<a href="http://nomads.ncdc.noaa.gov/data.php?name=access#narr_datasets">
+NOMADS</a> web page. When selecting data to download, all variables and 
+cycles should be obtained. The simplest approach is to use an FTP client
+and go to the directories of the desired data and download all the 
+narr-a_221_{YYYY}{MM}{DD}_{HH}00_000.grb files for the desired period.</p> 
+
+<p>
+However, the NARR GRIB files are bit mapped, meaning some of the corners
+do not have data defined due to differences in the internal grid projection
+of the model vesus the output grid. HYSPLIT does not support projections
+with a bit map and when running the data converter a message will be
+generated:
+
+<br>
+<br> WARNING w3fi63: BMS detected in GRIB file
+<br> Insure final grid does not intersect BMS
+<br> Full domain grid:          349         277
+<br> Bitmap reduction:          309         237
+<br>
+<br>
+
+which indicates the the grid has been slightly reduced to insure that 
+all data points within the domain have valid data. The reduced domain
+is shown below with the + indicating every 10th data point.
+</p>
+
+<center><p><img src="Image112.gif" width="902" height="692"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

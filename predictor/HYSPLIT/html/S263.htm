@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Trajectory / Display / Endpoint File Format (S263)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Display / Endpoint File Format</h2></p>
+
+<p>The trajectory model generates its own text output file of
+ASCII end-point positions. The trajectory display program processes
+the end-point file. The format of the file is given below:</p>
+
+<p><u>Record #1</u></p>
+<ul>
+I6 		- Number of meteorological grids used in calculation	<br>
+</ul>
+
+<p><u>Records Loop #2 through the number of grids</u></p>
+<ul>
+A8 		- Meteorological Model identification<br>
+5I6 		- Data file starting Year, Month, Day, Hour, Forecast Hour<br>
+</ul>
+
+<p><u>Record #3</u></p>
+<ul>
+I6		- number of different trajectories in file<br>
+1X,A8		- direction of trajectory calculation (FORWARD, BACKWARD)<br>
+1X,A8		- vertical motion calculation method (OMEGA, THETA, ...)<br>
+</ul>
+
+<p><u>Record Loop #4 through the number of different trajectories in file</u></p>
+<ul>
+4I6		- starting year, month, day, hour<br>
+2F9.3		- starting latitude, longitude<br>
+F8.1		- starting level above ground (meters)<br>
+</ul>
+
+<p><u>Record #5</u></p>
+<ul>
+I6 		- number (n) of diagnostic output variables<br>
+n(1X,A8) 	- label identification of each variable (PRESSURE, THETA, ...)<br>
+</ul>
+
+<p><u>Record Loop #6 through the number of hours in the simulation</u></p>
+<ul>
+I6		- trajectory number<br>
+I6		- meteorological grid number or antecedent trajectory number<br>
+5I6		- year month day hour minute of the point<br>
+I6		- forecast hour at point<br>
+F8.1		- age of the trajectory in hours<br>
+2F9.3		- position latitude and longitude<br>
+1X,F8.1		- position height in meters above ground<br>
+n(1X,F8.1)	- n diagnostic output variables (1<sup>st</sup> to be output is always pressure)<br>
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

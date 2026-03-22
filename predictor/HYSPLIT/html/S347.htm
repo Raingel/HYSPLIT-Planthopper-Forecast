@@ -1,0 +1,236 @@
+<html>
+<head>
+<title>Concentration / Utilities / Convert to Dose (S347)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Utilities / Convert to Dose</h2></p>
+
+<p>
+Converts a HYSPLIT binary concentration and deposition file to dose in rem/hr. The 
+HYSPLIT calculation should be done using a unit emission so that the concentration
+units are m<sup>-3</sup> and the deposition units are m<sup>-2</sup>.
+This post-processing step reads the
+file activity.txt which contains the activity (Bq) at time=0 for all the isotope
+products. Sample activity.txt files can be created by the program for a high-energy
+nuclear detonation or a thermal fission reaction from a power plant reactor.
+The file also contains the half-life and cloud- and ground-shine does conversion
+factors for each radionuclide specified in the file.</p>
+
+<p>
+For nuclear detonations, the activity.txt file contains columns for either a 
+high-energy or thermal fission reaction assuming a yield of 1 kT. The emission 
+factor can be specified as a multiple of 1 kT. Activation products resulting from 
+the fission are not considered. Two fuel sources (U235 and Pu239) are available for 
+each reaction type. The fission yield data were obtained from T.R. England
+and B.F. Rider, Los Alamos National Laboratory, LA-UR-94-3106; ENDF-349 (1993). The
+external dose rate for cloud- and ground-shine is computed from the factors given by
+Eckerman K.F. and Leggett R.W. (1996) DCFPAK: Dose coefficient data file package for
+Sandia National Laboratory, Oak Ridge National Laboratory Report ORNL/TM-13347.</p>
+
+<p>
+During the processing step, the cumulative product of the activity and dose factor
+is computed for each decay weighted concentration averaging period, independently 
+for noble gases and particles. Command line options exist to turn off the dose
+calculation but still multiplying the dispersion factors by the activity, resulting
+in air concentration output. If the dispersion factors input file contains only
+one pollutant type and level, then an option can be set to output each of the species
+defined in the activity.txt file. Concentration units may also be converted from
+Bq to pCi.</p>
+
+<p>
+For nuclear power plant accidents, the same fission product table can be used by
+entering the duration of the reactor operation in terms of mega-watt-hours based upon 
+the relation that 3000 MW-hours releases an energy equivalent to 2.58 kT. An
+alternative approach is to generate an activity.txt file that corresponds with the
+radionuclide release profile of the reactor accident. The command line option
+-afdnpp will create a sample activity.txt file that corresponds to the maximum
+emissions over a 3-hour period during the Fukushima Daiichi Nuclear Power Plant
+accident for the 10 most critical radionuclides for short-term dose calculations. </p>
+
+<center><p><img src="Image82.png" width="496" height="727"></p></center>
+
+<p>
+Post Processing Program <i>CON2REM</i> command line options (default):
+<ul>
+<li> -a[activity data file name (activity.txt) or {create|fdnpp}]
+<p>Names the input file describing activity associated with each species and the dose
+conversion factors. The -acreate option will create a sample activity.txt file
+for a 1kT detonation with just a few species to illustrate the format. The -afdnpp
+option will create a file with the top ten radionuclides contributing to dose
+during the Fukushima Daiichi Nuclear Power Plant accident.</p>
+
+<li> -b[breathing rate for inhalation dose in m3/h (0.925)
+<p>
+The breathing rate is used as a multiplier for the calculation of the inhalation 
+dose factor. This is only used for the cloudshine dose calculations.</p>
+
+<li> -c[Output type: (0)-dose, 1-air conc/dep]<br>
+<img src="Image82C.gif" width="407" height="55">
+<p>If the flag is set to one, the dose conversion factors are set to one and the output
+will be concentration,the product of the input air concentration (from a unit emission)
+times the activity for each radionuclide defined in activity.txt. The values are  summed 
+for all species in each pollutant class (NGAS or RNUC).</p>
+
+<li> -d[Type of dose: (0)=rate (R/hr) 1=summed over the averging period (R)]<br>
+<img src="Image82D.gif" width="258" height="56">
+<p>When computing dose, the option is to output a rate or the total dose accumulated over
+each concentration averaging period. Note that dose from deposition is always summed
+over the duration of the simulation.</p>
+
+<li> -e[include the inhalation dose in the calculation (0)=No 1=Yes]'
+<p>This is used in conjunction with the -b option. The default is not to include the
+inhalation dose as part of the cloudshine calculation. If this is turned on, insure that
+the inhalation dose factors are correctly defined in the last column of activity.txt.</p>
+
+<li> -f[fuel (1)=U235 2=P239]<br>
+<img src="Image82A.gif" width="381" height="167">
+<p>This flag selects which column of the activity.txt file will be used to determine the
+emission amount. The first two columns are for U-235 fission and the last two columns are
+for Pu-239 fission. There are columns for high-energy or thermal fission (see -p flag).
+Also see the -y and -w flags to scale the emissions to the event.</p>
+
+<li> -g[decay type: 0=normal {c=1}, (1)=time averaged decay]
+<p>Prior to computing the dose, the activity is time-decayed to either the end of the
+sampling time (0=normal) or as the time averaged activity between the start and end time
+of each sampling period (1=time-averaged, the default). Normal decay can only be applied
+to air concentration calculations. Dose output always requires time-averaged decay.</p>
+
+<li> -h[help with extended comments]
+<p>Provides a short narrative of the functionality of this program with a list of all the
+command line options.</p>
+
+<li> -i[input file name (cdump)]
+<p>The name of the HYSPLIT air concentration/deposition binary output file. The simulation
+can contain both air concentrations and deposition field. Proper conversion of the model output
+fields to dose requires a unit release rate in the HYSPLIT calculation.</p>
+
+<li> -n[noble gas 4-char ID (NGAS)]
+<p>The program searches for this pollutant 4-character identification to use as the dispersion
+factor for noble gases. All other ID values (RNUC, etc) are assumed to be for particles. All
+species will be summed to either the NGAS or the other dispersion factor unless species matching
+is defined (-s1).</p>
+
+<li> -o[output file name (rdump)] 
+<p>The output file will contain the same number of levels and time periods as the input file
+but with the dispersion factors (unit concentrations) converted to dose or species concentration
+according to the settings of the other command line options.</p>
+
+<li> -p[process (1)=high-energy 2=thermal]
+<p>Defines which column of the activity.txt file to use for a specific fuel type. Option 1 is 
+for high-energy fission (columns 1 or 3) and option 2 is for thermal fission (columns 2 or 4).
+In the case of the FDNPP activity.txt file, the activity values are the same in all columns.
+This feature may be used with customized activity.txt files to select different source options.
+Also see the -f flag for selection the fuel type.</p>
+
+<li> -q[convert dose from rem=0 to sieverts=(1)]<br>
+<img src="Image82D.gif" width="258" height="56">
+<p>The default dose output is in REM because the conversion factors are defined in the activity.txt
+file in REM/Bq. Setting this value to one converts the dose output from REM to Sieverts
+(100 REM = 1 Sievert).</p>
+
+<li> -s[(0)=sum species, 1=match to input, 2=output species]<br>
+<img src="Image82C.gif" width="407" height="55">
+<p>The default value (0) sums each species in the the activity.txt file to its corresponding
+pollutant class (NGAS - noble gas, or RNUC -  radionuclide particle). The match to input option (1)
+just does a one-to-one match of the pollutant ID in the activity.txt file with the pollutant IDs
+used in the simulation. Pollutant IDs can be 4-digit integer number or character for option (1). In
+option (2), the output file can be expanded to include a concentration for each species defined in
+the activity.txt file using the dispersion factors from its pollutant class from the simulation.
+In this configuration, HYSPLIT can only be run with one level and species.<br>
+</p>
+
+<li> -t[0=no decay input decayed, or decay by species half-life (1)]
+<p>The default (1) is for all species to be decayed to the valid time of the concentration output
+from the start time of the simulation which is assumed to be the time fission ceased. The time of
+release to the atmosphere can occur much later. The no decay option is only required when decay
+has already been applied in the dispersion calculation. In general, decay should only be set in
+the dispersion calculation for short-duration releases which coincide with the termination of
+fission, otherwise decay may be computed incorrectly. Computing decay within this post-processing
+step is the most accurate way to approach dose simulations.</p>
+
+<li> -u[units conversion Bq->pCi, missing: assume input Bq]
+<p>When air concentration output is selected, then the output units can be converted from Bq to pCi.</p>
+
+<li> -w[Fission activity in thermal mega-watt-hours, replaces the -y option value]
+<p>If the activity.txt file represents the number of fissions per kT, and the -w field is non-zero, 
+then the activity is computed with respect to the number of MWh generating the fission products. 
+The assumption is that a 3000 MW reactor creates about 2.58 kT per hour of fission products.</p>
+
+<li> -x[extended decay time in hours beyond calculation (0)]
+<p>Additional decay time can be added using this field to estimate long-term doses. This calculation
+applies to either -t option but only for deposition doses. This option permits longer-term doses to be
+computed by adding additional decay to the existing output files.</p>
+
+<li> -y[yield (1.0)=kT]<br>
+<img src="Image82B.gif" width="234" height="135">
+<p>The default assumes that the activity levels defined in activity.txt represent the emissions
+from a 1 kT device. Other values are computed as a multiplier to the values defined in the table.
+The multiplier can be used in the context of a detonation in terms of kT or a multiple of the
+3-hour emission maximum from the Fukushima Daiichi Nuclear Power Plant accident.</p>
+
+<li> -z[fixed decay time in hours (0)]'
+<p>The fixed decay is computed to the end of the sample time in the output file regardless of the
+actual simulation or release start time. All output periods, regardless of sampling time, will be 
+decayed for these number of hours.</p>
+
+</ul>
+
+<p>
+An example of the activity.txt file for a 1 kT detonation:
+</p>
+<ul>
+<li>Mass Nucl         T1/2       U235H       U235T      Pu239H      Pu239T  Cloudshine Groundshine Inhalation
+<li>Hr=   0.00         sec          Bq          Bq          Bq          Bq rem/h|Bq/m3 rem/h|Bq/m2 rem/Bq
+<li>  85 Kr    3.38613E+08 9.44699E+11 7.53098E+11 5.74803E+11 3.27318E+11 9.18000E-11 0.00000E+00 0.00000E+00
+<li>  90 Sr    9.18326E+08 4.50386E+12 5.67152E+12 2.06059E+12 2.06059E+12 3.53880E-11 5.90400E-13 2.38000E-06
+<li> 131 I     6.94656E+05 5.31842E+15 3.74884E+15 5.64272E+15 5.00710E+15 6.08400E-09 1.31040E-10 7.38000E-07
+<li> 133 Xe    4.52995E+05 1.10002E+16 1.33275E+16 9.66744E+15 1.39641E+16 5.00400E-10 0.00000E+00 0.00000E+00
+<li> 137 Cs    9.52093E+08 4.66591E+12 5.85842E+12 4.21162E+12 6.25592E+12 3.34080E-11 1.07640E-12 4.63000E-07
+<li> 140 Ba    1.10160E+06 3.68093E+15 5.07968E+15 3.02654E+15 4.37621E+15 2.90520E-09 6.84000E-11 1.03000E-07
+<li> 140 La    1.44979E+05 2.81554E+16 3.86593E+16 2.38668E+16 3.33141E+16 3.99600E-08 7.77600E-10 1.07000E-07
+</ul>
+
+<p>
+An example of the activity.txt file for the Fukushima-Daichii Nuclear Power Plant Accident for the top ten radionuclides 
+important for short-term dose calculations. The activity represents the maximum number of Bq released over a 3 hour period.
+</p>
+<ul>
+<li>Mass Nucl         T1/2       U235H       U235T      Pu239H      Pu239T  Cloudshine Groundshine Inhalation
+<li>Hr=   0.00         sec          Bq          Bq          Bq          Bq rem/h Bq/m3 rem/h Bq/m2 rem/Bq
+<li>  95 Nb    3.02000E+06 1.62000E+13 1.62000E+13 1.62000E+13 1.62000E+13 1.26000E-08 2.62000E-10 2.38000E-06
+<li> 110 Ag    2.18000E+07 6.48000E+12 6.48000E+12 6.48000E+12 6.48000E+12 4.57000E-08 9.29000E-10 2.38000E-06
+<li> 132 Te    2.82000E+05 1.62000E+16 1.62000E+16 1.62000E+16 1.62000E+16 3.36000E-09 7.63000E-11 7.38000E-07
+<li> 131 I     6.94656E+05 8.10000E+15 8.10000E+15 8.10000E+15 8.10000E+15 6.08400E-09 1.31040E-10 7.38000E-07
+<li> 133 I     7.49000E+04 8.10000E+15 8.10000E+15 8.10000E+15 8.10000E+15 9.94000E-09 2.22000E-10 7.38000E-07
+<li> 133 Xe    4.52995E+05 3.66000E+17 3.66000E+17 3.66000E+17 3.66000E+17 5.00400E-10 0.00000E+00 0.00000E+00
+<li> 134 Cs    6.50000E+07 8.10000E+14 8.10000E+14 8.10000E+14 8.10000E+14 2.54000E-08 5.33000E-10 4.63000E-07
+<li> 137 Cs    9.52093E+08 8.10000E+14 8.10000E+14 8.10000E+14 8.10000E+14 3.34080E-11 1.07640E-12 4.63000E-07
+<li> 140 Ba    1.10160E+06 4.05000E+13 4.05000E+13 4.05000E+13 4.05000E+13 2.90520E-09 6.84000E-11 1.03000E-07
+<li> 140 La    1.44979E+05 4.05000E+13 4.05000E+13 4.05000E+13 4.05000E+13 3.99600E-08 7.77600E-10 1.07000E-07
+</ul>
+
+<p>
+As an example, a HYSPLIT simulation could be configured with two species, NGAS for the noble gases and
+RNUC for the radio-nuclide particles. After the emissions stop, the total emissions of both NGAS and
+RNUC should equal one. Then in the post-processing step, <i>con2rem</i> is called and the concentration
+and deposition fields are multiplied by the total emission and dose conversion factor for each species and
+added together to get a ground-shine and cloud-shine dose file, which can then be plotted using any of 
+the standard HYSPLIT display programs. Dose results, by species, are decayed to the valid time of the
+output graphic. An additional time factor can be added for long-term dose estimates.</p>
+
+<p> One aspect of applying the decay in the the post-processing step is that the decay times are 
+referenced to the start of the simulation rather than the start of the release. This means that the
+radionuclide release rate is valid at the start of the simulation time. This might be the best 
+configuration for a nuclear power plant accident, where the fission is assumed to have stopped
+at the start of the release (and simulation).  However in other situations, where emissions might
+be occurring in concert with some other process, then starting the decay at the time when the
+radionuclides are released might be a more appropriate configuration. If the decay is computed
+during the model calculation for each species released then use the <i>con2rem</i> 
+options -s1 -t0 to apply just the emission factors and not decay in the post-processing step.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

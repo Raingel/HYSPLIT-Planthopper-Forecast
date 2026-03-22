@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Meteorology / Convert to ARL / MCIP IOAPI (S129)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / Convert to ARL / MCIP IOAPI</h2></p>
+
+<p>This menu calls a utility program to convert meteorological
+data files created by <a href="http://www.cmascenter.org"> MCIP</a>
+for the CMAQ model. The data files follow a specific naming
+convention and may contain multiple variables and time periods.  
+They are in the <a href="http://www.baronams.com/products/ioapi">
+IOAPI</a> format. The conversion program is currently only 
+available on UNIX or LINUX systems and will convert all the
+required fields in one pass for all available time periods.
+The data from multiple input files, say each file contains
+one day, may be appended automatically by setting the append
+file name to a non-null string. If there are time period
+overlaps between input files, it is best not to append them,
+but to select multiple input files when running HYSPLIT.</p>
+
+<p>There are three required MCIP input meteorological data files: 
+METCRO3D_, METDOT3D_, METCRO2D_, and one file, GRIDDOT2D_ that
+gives the grid information. All data values are interpolated
+to the dot grid. In the GUI, only one input file needs to be selected
+and the conversion program uses the file suffix and the standard
+naming convention to determine the names of the other files to open.
+Due to file name character length restrictions, the directory
+information is removed and all the input files should be in the 
+local working directory.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

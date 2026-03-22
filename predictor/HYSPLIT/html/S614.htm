@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Add Meteorology Output Along Trajectory (S614)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Add Meteorology Output Along Trajectory</h2></p>
+
+<p>Sets the option to write the value of certain meteorological
+variables along the trajectory to the trajectory output file. The
+marker variables are set to (1) to turn on the option. Multiple
+variables may be selected for simultaneous output but only one
+variable may be plotted. If multiple variables are selected in
+conjunction with the trajectory display option, then only the last
+variable output will be shown in the graphic. The variable output
+order is fixed in the program and cannot be changed.</p>
+
+<ul>
+<li><b>Potential Temperature</b> in degrees Kelvin <i>TM_TPOT (0|1)</i>
+<li><b>Ambient Temperature</b> in degrees Kelvin <i>TM_TAMB (0|1)</i>
+<li><b>Precipitation</b> rainfall in mm per hour <i>TM_RAIN (0|1)</i>
+<li><b>Mixing Depth</b> in meters <i>TM_MIXD (0|1)</i>
+<li><b>Relative Humidity</b> in percent <i>TM_RELH (0|1)</i><br>
+Note: If relative humidity needs to be calculated by HYSPLIT from specific humidity, 
+it may differ from relative humidity shown for other data sets as it 
+may be calculated with respect to water, not ice at low temperatures, such is the 
+case for the 0.5 degree GDAS data set.
+<li><b>Specific Humidity</b> in g/(kg air) <i>TM_SPHU (0|1)</i>
+<li><b>Water Vapor Mixing Ratio</b> in g/(kg dry-air) <i>TM_MIXR (0|1)</i>
+<li><b>Solar Radiation</b> downward solar radiation flux in watts per 
+       square meter <i>TM_DSWF (0|1)</i>
+<li><b>Terrain Height</b> in meters required for the trajectory
+       plot to show underlying terrain <i>TM_TERR (0|1)</i>
+</ul> 
+<br>
+
+<center><p><img width="464" height="387" src="Image69.gif"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Concentration / Display / Ensemble / Statistics (S354)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Ensemble / Statistics </h2></p>
+
+<p><b>Summary: </b>This procedure is intended to analyze the binary output
+files from any of the ensemble simulations. The output file naming convention
+is such that they are defined by the concentration output file name set in the
+CONTROL file to which is automatically appended a three digit sequential 
+number suffix (.000). The ensemble simulation needs
+to be for a case in which experimental data are available for verification. The
+script converts the output to the DATEM format, and then calls the statistical
+analysis program which appends a statistical summary for each member to a 
+single output file.</p>
+
+<center><a name="datem"></a><p><img src="Image100.gif" width="711" height="348"></p></center>
+
+<p><b>Step 1:</b> defines the <a href="S345.htm">DATEM</a> formatted measured data file 
+and unit conversion factor required to convert the HYSPLIT concentration predictions
+to the same units as given in the measured data file. 
+</p>
+
+<p><b>Step 2:</b> defines name of the statistical output file that will contain
+the statistical results for each ensemble member compared with the measured
+data values. Normally the <i>statmain</i> program outputs one results file per
+execution. In this configuration, a subset of the the complete results for each
+member are appended to a single file. The complete statistics are available in file
+named <i>stat_000.txt</i>. 
+</p>
+
+<p><b>Step 3:</b> runs sequentially through all steps, processing each ensemble member
+using <i>c2datem</i> to convert that binary concentration data to the DATEM format, 
+and then running <i>statmain</i> to append the results to the statistical output file.
+</p>
+
+<p><b>Default file names:</b> The following describes the assigned default input and output
+files names for each processing section, so that they can be identified in the working directory.
+File names in italics are the ones that can be changed through the menu.</p>
+
+<p>c2datem<ul>
+<li>{base name}.{xxx} - binary concentration input file, where xxx = 000 to 999</li>
+<li><i>measured.txt</i> - measured data file in DATEM format</li>
+<li>hysplit_datem.txt - model prediction output for a member converted to DATEM format</li>
+</ul></p>
+
+<p>statmain<ul>
+<li><i>measured.txt</i> - measured data input file in DATEM format</li>
+<li>hysplit_datem.txt - model prediction input file for a single source from previous step</li>
+<li><i>sumstats.txt</i> - statistical summary output appended one record per source location</li>
+<li>stat_{xxx}.txt - complete statistics for each member</li>
+</ul></p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<html>
+<head>
+<title>Concentration / Utilities / Transfer Coefficient / Cost Function (S437)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Utilities / Transfer Coefficient / Cost Function</h2></p>
+
+<p>This menu can be used to solve the Transfer Coefficient Matrix (TCM) for the source term
+vector given a measured data vector and where the matrix values are the dilution factors for
+each source-receptor pair. The measured data vector at multiple receptor locations and/or times
+is required and it must be defined in the <a href="http://www.arl.noaa.gov/DATEM.php">DATEM</a>
+format. The format of this file is discussed more detail in the <a href="S357.htm">GeoLocation</a>
+menu. If a time-varying source solution is required, the <a href="S352.htm">Run Daily</a> menu 
+can be used to generate the required dispersion simulations. 
+</p>
+
+<p>Technical details regarding the computational approach used to solve the TCM can be
+found in &quot;Source term estimation using air concentration measurements and a 
+Lagrangian dispersion model–Experiments with pseudo and real cesium-137 observations
+from the Fukushima nuclear accident&quot;,T. Chai, R. Draxler, A. Stein, <i>Atmospheric
+Environment, 106</i>, 241-251.
+</p>
+
+<p>The inverse modeling executable <b>lbfgsb</b> input files:
+<ul>
+<li>Parameters_in.dat : control parameters 
+<li>CSV_IN : TCM file 
+<li>APRIORI : file name of first guess source terms if available 
+</ul>
+</p>
+
+<p>The inverse modeling executable <b>lbfgsb</b> output files:
+<ul>
+<li>SOURCE_OUT_000 : release results
+<li>CONC_OUT_000 : concentrations generated with 'out.dat' release 
+<li>Iterate_000 : minimization progress 
+<li>RPT_OUT_000 : additional run time output 
+</ul>
+where the <i>000</i> represents the process ID, which is always zero for user generated applications.
+</p>  
+
+<p><b>Step 1: defines the binary input files</b> which are the output file from the dispersion
+simulations configured to produce output at an interval that can be matched to the measured
+sampling data. Ideally the model simulation emission rate should be set to a unit value. Each
+simulation should represent a different discrete emission period. For example, a four day
+event might be divided into 16 distinct 6-hour duration emission periods. Therefore the matrix
+would consist of 16 sources (columns) and as many rows as there are sampling data. The
+entry field in step 1 represents the wild card string *entry* that will be matched to the files
+in the <i>working</i> directory. The file names will be written into a file called <i>INFILE</i>.
+This file should be edited to remove any unwanted entries.</p>
+
+<p><b>Step 2: defines the measured data input file</b> which is an ASCII text file in the 
+<a href="S357.htm#datem">DATEM</a> format.  The first record provides some general information, 
+the second record identifies all the variables that then follow on all subsequent records. There
+is one data record for each sample collected. All times are given in UTC. This file defines the
+receptor data vector for the matrix solution. It may be necessary to edit this file to remove 
+sampling data that are not required or edit the simulation that produces the coefficient matrix
+to insure that each receptor is within the modeling domain.</p>
+
+<p><b>Step 3: defines the file conversion details</b> from sampling units to the
+emission units. For instance, the default value of 10<sup>+12</sup> converts the emission
+rate units pg/hr to g/hr if the sampling data are measured in pg/m<sup>3</sup> 
+(pico = 10<sup>-12</sup>). The exponent is +12 rather than -12 because it is applied to the 
+model results in the denominator (Emission=Measured/Model_TCM). The height and species fields
+are the index numbers to extract from the concentration file if multiple species and levels 
+were defined in the simulation. The half life (in days) is only required when dealing with 
+radioactive pollutants and the measured data need to be decay corrected back to the 
+simulation start time.</p>
+
+<p><b>Step 4: creates the comma delimited input file</b> called <i>c2array.csv</i> with the
+dilution factors in a column for each source and where each row represents a specific
+receptor location. The last column is the measured value for that receptor. The column 
+title represents the start time of the emission in days from the year 1900. This step calls
+the program <i>c2array</i> which reads each of the measured data values and matches them to
+the input files to extract the dilution factors from each source to that measured value.
+This step also creates an output file called <i>c2array.txt</i> which contains the 
+number of rows and columns in the matrix. This information is needed when creating the
+<i>Parameters_in.dat</i> input file created by Step 5.</p> 
+
+<p><b>Step 5: creates the <i>PARAMETER_IN_000</i> input file</b> used by the
+inverse modeling executable <b>lbfgsb</b>. Detailed information is required that may not
+always be well known and several solution iterations may be required before the optimal
+input parameters have been properly defined. The default settings almost certainly will
+have to be changed.
+
+<ul>
+<li>The first guess value represents an estimate of the source term. If time-varying
+information is known, it can be specified by a negative value in this field and a file
+name defined in the APRIORI  variable. 
+<li>The scaling factor is used to reduce the numeric range of both the TCM values and
+the emission solution. A smaller range improves the solution convergence.
+<li>The first-guess uncertainty needs to be defined as the sum of a fraction and 
+constant value. 
+<li>The uncertainty should also be defined for the measurements by defining a fraction 
+and fixed value.
+<li>The solution may be bounded or unbounded.
+<li>A logarithmic transformation can be applied to the solution or TCM results prior to
+computing a solution.
+</ul>
+</p>
+
+<p><b>Step 6 runs inverse modeling executable</b> with options defined in Step 5. 
+Different solutions can be tested by sequentially repeating steps 5 and 6. The solution
+results from <i>SOURCE_OUT_000</i> are copied to the output file <i>source.txt</i> defined in
+this step and also displayed by the GUI. The <i>Parameters_in.dat</i> can also be edited
+manually to set parameters not defined in the GUI. In this case only repeating step 6 is
+required. A solution may contain negative values as well as extreme positive emission 
+results. Such values are not realistic and are a result of model errors or other 
+uncertainties.
+</p>
+
+<p><b>Fukushima Example Inputs</b> assuming emissions output units <i>mBq</i>
+<ul>
+<li> bckg_const=1e17
+<li> LN_X=.false.
+<li> LN_Y=.true.
+<li> lbfgs_nbd=1
+<li> X_Scaling=1d12
+<li> Unc_o_f=1d-1
+<li> Unc_o_a=3d-0
+<li> Unc_b_f=1d3
+<li> Unc_b_a=1d14
+</ul>
+</p>
+
+<p><b>PARAMETER_IN_000</b> detailed description
+<ol>
+
+<li> ================   DIMENSIONS   ================
+<ul>
+<li> N_ctrl: Number of unknown source terms. If the source terms are 2-dimensional, 
+Nx_ctrl and Ny_ctrl are their ranges. Note that N_ctrl = Nx_ctrl * Ny_ctrl
+</ul>
+<br>
+<li> ================   TCM_INPUTS   ================
+<ul>
+<li> CSV_IN: TCM file name (in csv format) 
+<li> N_obs:  Number of observations 
+<li> CSV_IN file has (N_obs + 1) lines. The first line has observations time for 
+all source terms (N_ctrl columns). From line 2, each line has "N_ctrl + 1" columns.
+Observations are listed as the last column.
+</ul>
+<br>  
+<li> ================   RUN_CONTRL   ================
+<ul>
+<li> bckg_const: constant first guess, negative values prompt code to read from file
+<li> APRIORI: File name of the a priori source terms 
+<li> LN_X/LN_Y: Switches for using log or original variables for control/metric variables
+</ul>
+<br>  
+<li> ================   SMOOTH_PNT   ================
+<ul>
+<li> Smoother: Switch for smoothness penalty term
+<li> c_smooth: constant to control the source(t) smoothness, trial and error is 
+needed to decide on the magnitude
+</ul> 
+<br>
+<li> ================   SMOOTH_P2D   ================
+<ul>
+<li> Switch and parameters to control smoothness of 2-dimensional sources
+</ul>
+<br>
+<li> ================    MODEL_UNC    ================
+<ul>
+<li> UNC_Model: Under development. Should be turned off at the moment. 
+<li> T_model_unc: Time scale of the model uncertainty growth. Still under development.
+Code section is not available. 
+<li> Floor_x: Lower bounds of control
+<li> Ceiling_x: Upper bounds of control  
+<li> Floor_y: When LN_Y is turned on, Floor_y is enforced to avoid infinity
+</ul>
+<br>
+<li> ================  LBFGS_CTRL ================ 
+<ul>
+<li> Max_iterations:  Maximum number of function evaluations before termination. Refer
+to the <i>lbfgsb</i> source code for a description of the other parameters. 
+</ul>
+<br>
+<li> ================  BOUNDS_ARR ================
+<ul>
+<li> lbfgs_nbd is an array to indicate the type of bounds imposed on the
+control variables, and must be specified as follows:
+<li> 0 : if x(i) is unbounded
+<li> 1 : if x(i) has only a lower bound
+<li> 2 : if x(i) has both lower and upper bounds
+<li> 3 : if x(i) has only an upper bound
+</ul>
+<br>
+<li> ================  UNCERTANTY  ================ 
+<ul>
+<li>Uncertainties of the observations and a priori (first guess)
+are written into two parts, one proportional to the variable
+itself (fractional part) and the other independent of the 
+values of the original variable (additive part). In addition
+to the measurement uncertainties, observational uncertainties
+should include the representative uncertainties. X_scaling is 
+useful when either the source or the observations are too 
+small or too large with current units.
+<li> xoptim=emission rate /X_Scaling
+<li> [emission rate variance = xoptim variance * X_Scaling**2]
+<li> Observation variance     = (   obs*Unc_o_f + Unc_o_a)**2
+<li> a_priori source variance = (xoptim*Unc_b_f + Unc_b_a)**2
+<ul>
+</ol>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>
+
+

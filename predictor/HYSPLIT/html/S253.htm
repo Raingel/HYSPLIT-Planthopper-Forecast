@@ -1,0 +1,171 @@
+<html>
+<head>
+<title>Trajectory / Special Runs (S253)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Special Runs</h2></p>
+
+<p>The <i>Special simulations</i> menu tab is required because
+certain options may require a different executable file,
+modifications to the Control file that are not supported by the
+GUI, or interactions with other items under the <a href=
+"S411.htm">Advanced Menu</a> tab. More information is provided
+below for each special simulation. Some <i>Special Simulations</i>
+may not be available for all operating systems.</p>
+
+<p><a name="test_inputs"></a><b>Test Inputs</b></p>
+
+<p>This menu calls a program called <i>HYSPTEST</i>, which is a simplified version
+of HYSPLIT that will read the various input files such as CONTROL and SETUP.CFG 
+to determine if many of the user options are correctly or optimally configured. 
+The program opens all the meteorological data files. No output files are created
+except MESSAGE and WARNING files. Both trajectory and dispersion input files can
+be read, however only limited testing is conducted with a trajectory calculation.
+Standard analysis messages are written to MESSAGE_mod. When CONTROL file or 
+SETUP.CFG file changes are suggested, these changes will be summarized to the file 
+WARNING_mod. The modified (or unmodified) input files are written to CONTROL_mod and
+SETUP_mod.CFG. The suggested changes can be loaded back into the GUI variables by
+retrieving CONTROL_mod and SETUP_mod.CFG into their respective menus.</p>
+
+<p><a name="ensemble"></a><b>Ensemble</b></p>
+
+<p>The ensemble form of the model automatically starts multiple
+trajectories from the selected starting point. Each member of the
+trajectory ensemble is calculated by offsetting the meteorological
+data by a fixed grid factor as defined in the <a href=
+"S615.htm">Advanced Trajectory Configuration</a> tab. The
+default offset is one meteorological grid point in the horizontal
+and 0.01 sigma units in the vertical. This results in 27 members for
+all-possible offsets in X, Y, and Z. After the model calculation
+has completed, use the normal <a href="S230.htm">Trajectory
+Display</a> tab to view the results. Because the offset is computed
+in both directions in the vertical from the starting location, a
+starting location at the ground would not provide an optimal
+configuration for this type of simulation. The default vertical
+offset is about 250 m. Therefore this should be the minimum
+starting height for ensemble trajectories, unless the default
+offset is changed in the namelist file. An example of the ensemble
+trajectory using the example meteorological data is shown in the
+illustration below.</p>
+
+<center><p><img src="Image43.gif" width="440" height="488"></p></center>
+
+<p><a name="matrix"></a><b>Matrix</b></p>
+
+<p>The matrix calculation is a way to set up the <i>CONTROL</i>
+file for multiple starting locations that may exceed the GUI limit
+of 6 under the <a href="S210.htm">Trajectory Setup</a> tab.
+Hundreds or thousands of starting points may be specified. The
+<i>Run Matrix</i> tab just executes the model using a
+<i>CONTROL</i> file that is dynamically created from the
+<i>default_traj</i> file using a special program called
+<i>latlon</i> that is called from within the GUI. The program reads
+a <i>CONTROL</i> file that is required to have three starting
+locations and then re-writes the same file with multiple locations.
+The multiple starting locations are computed by the <i>latlon</i>
+program based upon the number of starting points that fall in the
+domain between starting point 1 and starting point 2. Each new
+location is offset by an amount equal to the difference between
+starting locations 1 and 3. An example would be more illustrative.
+If the original control file has three starting locations: #1 at
+40N, 90W, #2 at 50N, 80W, and #3 at 41N, 89W; then the matrix
+processing results in a CONTROL file with 121 starting locations,
+all one degree apart, all between 40N 90W and 50N 80W.</p>
+
+<center><p><img src="Image16.gif" width="430" height="265"></p></center>
+
+<p>The reason for this approach is that only the <i>CONTROL</i>
+file is modified and not <i>default_traj</i>. The GUI never reads
+<i>CONTROL</i>, therefore the file does not need to conform to the
+GUI limits. The final matrix trajectory using the example
+meteorological data for this configuration is shown in the
+illustration below.</p>
+
+<center><p><img src="Image44.gif" width="440" height="488"></p></center>
+
+
+<p><a name="multi_time"><b>Multiple Trajectories in Time</a></b></p>
+
+<p>In the normal simulation configuration, all trajectories start
+at time that was defined in the first line of the <a href=
+"S210.htm">Trajectory Setup</a> menu. Trajectories starting at a
+different time would require an independent simulation. However,
+there is shortcut to permit the calculation of multiple
+trajectories in time from the same starting location. Setup the
+simulation for a single trajectory then go to the <a href=
+"S612.htm">Advanced Trajectory</a> configuration menu.
+Under the <i>Temporal Trajectory Restart</i> line, edit the
+temporal interval in hours from the default of zero (no restarts)
+to the desired value. For example, if this value is set to 6 hours
+(corresponding to <i>NSTR=6</i> in the namelist file
+<i>SETUP.CFG</i>), then in addition to the normal trajectory that
+starts at the initial time, new trajectories would be started every
+six hours for the duration of the simulation. The result of this
+simulation, using the example meteorological data, is shown in the
+illustration below.</p>
+
+<center><p><img src="Image45.gif" width="440" height="488"></p></center>
+
+<p><a name="multi_space"><b>Multiple Trajectories in Space and Time</b></a></p>
+
+<p>The standard setup options of the GUI permit the calculation of
+multiple trajectories in space or height by simply specifying new
+locations in the <i>CONTROL</i> file. A variation of that procedure
+was shown above with respect to <a href="#matrix">setting up a
+matrix</a> of starting locations. The model also permits the start
+of new trajectories at different locations along an existing
+trajectory. This can be considered a special case of multiple <a
+href="#multi_time">trajectories-in-time</a> because when starting a
+new trajectory along an existing trajectory, the new starting
+location differs in time and space from the original trajectory. In
+this variation, new trajectories are started at multiple levels at
+the temporal restart interval. The multiple restart levels are
+assumed to be the same multiple starting heights specified in the
+original setup and therefore the number of restart heights must
+equal the number of starting locations. Go the <a href=
+"S612.htm">Advanced Configuration</a> menu and setup the
+example as in the previous case to restart trajectories every 6
+hours. Then change the <i>Number of Levels</i> parameter from its
+default value of zero (no new trajectories) to the number of new
+trajectories will be started. For example, set the number of levels
+to 2 (sets the <i>NVER=</i>2 parameter in the <i>SETUP.CFG</i>
+namelist file). The number of starting locations should also be set
+to two, at the same location, but with release heights of 10 and
+1500 m. Two trajectories, at 10 and 1500 m, will start every 6
+hours. The result is shown in the illustration below.</p>
+
+<center><p><img src="Image46.gif" width="440" height="488"></p></center>
+
+<p><b>Daily</b></p>
+
+<p>Another way to generate <a href="S254.htm">multiple trajectories</a>
+in time is to use the automated daily trajectory menu option to create an 
+endpoints file for each starting time. This differs from the previous 
+approach where all trajectory endpoints were written to one output file. 
+Using this menu the model is executed in a script with a unique output
+file name for each simulation. This method is required for trajectory
+clustering.</p>
+
+<p><b>Clustering</b></p>
+
+<p>Multiple trajectories may be aggregated into groups to minimize the
+difference between trajectories in that group using <a href="S255.htm">
+clustering methods</a>. The use of the clustering program requires one
+endpoints file for each trajectory. Normally a minimum of 30 trajectories
+is recommended for clustering.</p>
+
+<p><b>Geo-Location</b></p>
+
+<p>Multiple trajectories can be run from sampling data to determine the
+highest frequency of upwind directions associated with the non-zero
+measurements. The <a href="S257.htm">geo-location</a> menu automatically
+configures the trajectory control file and runs the model based upon a data
+file of measured values such that a trajectory is started from each location
+every hour that there is a non-zero measurement.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

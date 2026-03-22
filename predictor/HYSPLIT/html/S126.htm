@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Meteorology / Convert to ARL / ECMWF ERA (S126)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / Convert to ARL / ECMWF ERA</h2></p>
+
+<p>This menu tab is intended to <a href="S142.htm#grib2arl">convert</a>
+ECMWF reanalysis data archives (ERA-40) GRIB1 files to the ARL packed
+<a href="S141.htm">HYSPLIT compatible</a> format. Data files must
+first be downloaded from the ECMWF <a href="http://data.ecmwf.int/data/">
+web page </a>. The user can select which fields and time periods to
+extract. A GRIB file may contain multiple time periods. No more than
+one month's data should be included in a GRIB file if it is to be
+converted to ARL format. All the time periods from one input file
+will be processed into one output file. The ECMWF download menu permits
+copying all the data on the global grid or extracting regional sub-grids. 
+The ARL conversion program can handle either option.</p>
+
+<p>The conversion menu is designed to select three different GRIB
+file types: upper air data, surface data, and time invariant data.
+The upper air and surface data files should contain data for the
+same time periods. To be able to run HYSPLIT, the upper air data
+file must contain at a minimum the following variables:
+geopotential, temperature, u-velocity, v-velocity, w-velocity, and
+relative humidity. The surface variable file should contain the 2m
+temperature, the 10m u- and v- velocity components, and the total
+precipitation field, if wet removal calculations are required. The
+invariant file should contain the surface geopotential field
+(terrain height). Terrain height or surface pressure is required
+for HYSPLIT to be able to interpolate pressure level data to its
+internal terrain following coordinate system.</p>
+
+<p>The ECMWF input data may be on pressure surfaces or its native
+hybrid coordinate system. The "number of levels", counted from the
+surface upwards, can be used to restrict the size of the output
+file. This may be particularly useful when the input file consists
+of 60 or more hybrid levels. The rainfall summation time is the
+interval in hours at which the rain "bucket" is emptied. For a pure
+forecast, the bucket is never emptied, for the interim data, the
+bucket is emptied every 12 hours.</p>
+
+<p>Four different grid conversions are available through the menu.
+The "Extract" option interpolates the data to a conformal map
+projection of 100x100 grid points at 100 km resolution at the
+center of the latitude and longitude selection of the slider bar.
+The Northern- or Southern Hemisphere options create a 95-km
+resolution polar stereo-graphic grid centered about the pole. The
+"Input" option results in no interpolation and the program just
+converts the original latitude-longitude data (global or regional)
+to the ARL packed format. The "Input" option must be used for
+latitude-longitude sub-grids because interpolation from input data
+sub-grids is not supported.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

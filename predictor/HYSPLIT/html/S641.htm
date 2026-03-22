@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>TERRAIN.ASC file (S641)</title>
+</head>
+<body>
+
+<p><h2>TERRAIN.ASC file </h2></p>
+
+<p>
+<ul>
+
+If terrain height is not available in the meteorological file, then HYSPLIT will estimate terrain height in an alternative way.
+<ul>
+<li> <i>TERRFLG=0</i> The default is for HYSPLIT to estimate terrain height from the surface pressure. 
+      This method is also used if TERRFLG=1 but the TERRAIN.ASC file cannot be found.
+ <li> <i>TERRFLG=1 </i>If meteorological data does not contain terrain height and TERRFLG=1 then HYSPLIT will utilize the TERRAIN.ASC file to obtain terrain height.
+       <li>versions prior to v5.3.0 do not have the TERRFLG. For prior versions, the TERRAIN.ASC file is utilized if the meteorological file has vertical coordinate system of pressure sigma levels or WRF hybrid coordinates, otherwise the estimation method is used. 
+</ul>
+
+
+As of hysplit.v5.3.0 
+notifications and warnings will be written to the MESSAGE file when either surface pressure or terrain height is not present in the meteorological file.
+</body>
+</html>

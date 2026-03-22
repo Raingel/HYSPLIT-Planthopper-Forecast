@@ -1,0 +1,283 @@
+<html>
+<head>
+<title>Trajectory / Display / Trajectory (S230)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Display / Trajectory</h2></p>
+
+<p>The trajectory model generates a text output file of end-point
+positions. The end-point position file is processed by
+<i>trajplot</i> to produce the Postscript display file.
+<i>Trajplot</i> can be accessed through the GUI or run directly
+from the <a href="#command_line">command line</a>. The
+display program has a variety of command line options, most of
+which are available through the GUI. There is a one-to-one
+relationship between GUI options, an example of which is shown
+below, and the command line options. There are several features
+particular to the GUI. First the <i>Trajectory Display</i> menu
+will not open unless the <i>Trajectory Setup</i> menu was first
+opened and <i>Saved</i>. This procedure sets all the GUI parameters
+to their <i>default_traj</i> values. These are the values shown in
+the <i>Display</i> menu. Normally the map projection is computed
+automatically based upon the location and length of the trajectory.
+However some trajectory combinations may give no maps or improperly
+scaled maps. In these situations one would want to over-ride the
+default projection and try forcing a selection.</p>
+
+<center><p><img src="Image14.png" width="464" height="672"></p></center>
+
+<p><i>Trajplot</i> has an additional implementation in the Python
+language. By default, the GUI uses <i>trajplot</i> built from FORTRAN
+code. To use the Python implementation, select the Python tab
+near the bottom of the user interface before generating a plot.</p>
+
+<br>
+<p><a name="command_line"><b>Trajplot Command Line Options</b></a></p>
+
+<p>The Postscript conversion program <i>trajplot</i> reads the
+trajectory endpoints output file, calculates the most optimum map
+for display, and creates the output file - <i>trajplot.ps</i>. When
+executed from the command line, there are several Unix style
+command line options. There should be no space between the option
+and any arguments: trajplot -[options (default)]</p>
+
+<p>-a[GIS Output: 0-none, 1-ESRI Generate, 3-Google Earth]</p>
+<ul>
+<p><p>Selecting the ESRI Generate format output creates an ASCII text file for each
+output time period that consists of the value and latitude-longitude points along 
+each trajectory. This file can be converted to an ESRI Shapefile or converted for other GIS
+applications through the utility menu "<a href="S135.htm">GIS to Shapefile</a>. 
+The view checkbox would be disabled to do just the GIS conversion without 
+opening the Postscript viewer. Selecting Google Earth will create a compressed file 
+(*.kmz) for use in <a href="http://earth.google.com/"><b>Google Earth</b></a>; a free 
+software package to display geo-referenced information in 3-dimensions. You must have the 
+free <a href="http://www.info-zip.org/Zip.html"><b>Info-Zip</b></a> file compression 
+software installed to compress the Google Earth file and associated graphics.
+The Python implementation can take several formats. See the description for the
+--more-gis-options option below.</p></p>
+</ul>
+
+<p>-e[End hour to plot: #, (all hours)]</p>
+
+<p>-f[Frames: (0)-all frames in one file 1-one frame per file]</p>
+<ul>
+= 0 - all files plotted on one frame<br>
+= 1 - one input file per output frame<br>
+</ul>
+
+<p>-g [Circle overlay: ( )-auto, #circ (4), #circ:dist(km)]</p>
+<ul>
+= {blank} - draws four distance rings about source point, automatically scaled<br>
+= {#} - draws the indicated number of rings about the source point<br>
+= {#1}:{#2} - draws the number {#1} of rings about the source point each {#2} kilometers apart. In the special case where #1 is zero, the rings are not drawn, but the size of the plot is scaled as if one ring of radius {#2} is to be drawn.<br>
+</ul>
+
+<p>+g[Graphics type: (0)-Postscript, 1-SVG]</p>
+<ul><p>
+= 0 - Output in Postscript.<br>
+= 1 - Output in HTML containing Scalable Vector Graphics.</br>
+Note that this option is unavailable in the Python version.
+</p></ul>
+
+<p>-h [Hold map at center lat-lon: (source point), lat:lon]</p>
+<ul>
+= latitude:longitude - forces the map center to be at the selected location instead of the source point. In conjunction with the -g0:{km} option it is possible to create a constant map projection for each execution.<br>
+</ul>
+
+<p>-i[Input files: name1+name2+name3+... or +listfile or (tdump)]</p>
+<ul>
+= tdump - default file name when the -i option is undefined.<br>
+= {user defined file name}<br>
+= {name1+name2+...} - to overlay multiple tdump files on the same plot based upon file name1 plot limits.<br>
+= +filename - filename is a file of filenames to be plotted following the same convention as the previous argument (limit <=5000 files).<br>
+</ul>
+
+<p>-j[Map background file: (arlmap) or shapefiles.(txt|suffix)]</p>
+<ul>
+= arlmap - <a href="#std_map">default ASCII file</a><br>
+= shapefiles.(txt|suffix) - <a href="#shp_map">file of shapefile names</a><br>
+</ul>
+
+<p>-k[Kolor: 0-B&amp;W (1)-Color, N:colortraj#1,...colortraj#N]</p>
+<ul>
+= 0 - for black and white output<br>
+= 1 - for color differentiation of multiple trajectories<br>
+= N - 1=red,2=blue,3=green,4=cyan,5=magenta,6=yellow,7=olive<br>
+</ul>
+
+<p>-l[Label interval: -12, -6, 0, (6), 12, ... hrs]</p>
+<ul>
+= 0 - for no labels along the trajectory<br>
+= 6 - for labels every 6 hours<br>
+= 12 - for labels every 12 hours<br>
+= {X} - positive at synoptic times<br>
+= {-X} - negative with respect to traj start<br>
+</ul>
+
+<p>-L[LatLonLineLabels]</p>
+<ul>
+= 0 - none<br>
+= 1 - auto<br>
+= 2:tenths - at interval specified<br>
+</ul>
+
+<p>-m[Map projection: (0)-auto 1-polar 2-lambert 3-mercator 4-CylEqu]</p>
+
+<p>-o[Output file name: (trajplot.ps)]</p>
+<ul>
+= trajplot.ps is the default Postscript output file name, otherwise it may be {user defined}.
+The Python implementation supports several formats beside postscript. See the description
+for the --more-formats option below.<br>
+</ul>
+
+<p>-p[Process file name suffix: (ps) or process ID}</p>
+
+<p>-s[Symbol at trajectory origin: 0-no (1)-yes]</p>
+
+<p>-v[Vertical: 0-pressure (1)-agl 2-isentropic 3-meteorology 4-none]</p>
+
+<ul>
+= 0 - The vertical trajectory plot coordinate is in hPa (absolute pressure units).<br>
+= 1 - The vertical trajectory plot coordinate is meters above ground level.<br>
+= 2 - An isentropic coordinate display requires the trajectory to have been
+      run in those coordinates.<br>
+= 3 - Forces the display of one of the selected meteorological
+      variables along the trajectory rather than a trajectory vertical
+      position coordinate. The meteorological variable is selected in the
+      "Trajectory" tab of the <a href="S614.htm">Advanced Configuration</a>
+      menu. Only one meteorological variable can be selected for display. If
+      multiple variables are selected, then only the last variable will be
+      plotted.<br>
+= 4 - No vertical projection drawn.<br>
+</ul>
+
+<p>-z[Zoom factor: 0-least zoom, (50), 100-most zoom]</p>
+<ul>
+= 50 - for standard resolution maps.<br>
+= 100 - for high resolution maps (maximum zoom)<br>
+</ul>
+
+<p><a name="command_line_python"><b>Additional Trajplot Command Line Options for Python Implementation</b></a></p>
+
+<p>The following options are available only to the Python <i>trajplot</i>.
+
+<p>--debug</p>
+<ul>
+<p><p>Print debug messages. This is useful for developers to diagnose an issue.</p></p>
+</ul>
+
+<p>--interactive</p>
+<ul>
+<p><p>Enter interactive mode. Users can zoom in or move the plot area.</p></p>
+</ul>
+
+<p>--more-formats=<i>f1</i>[,<i>f2</i>,...]</p>
+<ul>
+<p><p>Specify one or more additional output format(s). This option supplements
+the output format specified by the -o option. For example, for <i>-oa.ps --more-formats=pdf,png</i>,
+three files would be produced, namely, <i>a.ps</i>, <i>a.pdf</i>, and <i>a.png</i>.
+Supported formats are eps, jpg, pdf, pgf, png, ps, raw, rgba, svg, svgz, and tif.</p></p>
+</ul>
+
+<p>--more-gis-options=<i>f1</i>[,<i>f2</i>,...]</p>
+<ul>
+<p><p>Specify one or more additional GIS output format(s). This option supplements
+the -a option. For example, with <i>-a1 --more-gis-options=3</i>, both ESRI Generate
+and Google Earth files will be created.</p></p>
+</ul>
+
+
+<p>--source-time-zone</p>
+<ul>
+<p><p>Display dates and times as a local time at the source location.
+If the option is not given, dates and times will be in Coordinated Universal
+Time (UTC).</p></p>
+</ul>
+
+<p>--street-map[=<i>n</i>]</p>
+<ul>
+<p><p>Show street map in the background. Currently, the option value <i>n</i> may take 0 (OPEN_STREET)
+or 1 (OPEN_TOPO). If no option value is used (i.e., --street-map), <i>n</i> = 0 will be used.
+This option overrides the -j option.</p></p>
+</ul>
+
+<p>--time-zone=<i>tz</i></p>
+<ul>
+<p><p>Show dates and times as a local time at the given time zone <i>tz</i>.
+The time zone should be listed in the pytz Python package. For example,
+it could be US/Eastern, America/New_York, Etc/GMT-5, and so on.
+</p></p>
+</ul>
+
+<p><a name="labels"><b>Additional Map Label Customization</b></a></p>
+
+<p>Many of the Postscript graphics programs have label information
+that can be customized to some extent. This is accomplished by
+placing a file called <i>Labels.cfg</i> in the startup directory
+which contains the following valid entries (all in single quotes
+terminated by &amp;) replacing the new string with the desired
+text. A sample file called <i>Labels.bak</i> may be found in the
+relevant directory. Not all label strings are valid with every
+plotting program. For instance with <i>trajplot</i>, only the title
+entry would be used to replace the top label line of the plot.</p>
+
+<ul>
+'TITLE&amp;','NATIONAL WEATHER SERVICE&amp;'<br>
+'MAPID&amp;','PROBABILITY&amp;'<br>
+'LAYER&amp;','BOUNDARY LAYER AVERAGE&amp;'<br>
+'UNITS&amp;','BQ&amp;'<br>
+'VOLUM&amp;','/M3&amp;'
+</ul>
+
+<p>Additional supplemental text may be added at the bottom of the
+graphic by creating a file called <i>MAPTEXT.CFG</i>, also to be
+located in the startup directory. This is a generic file used by
+all plotting programs but each program will used different lines in
+its display. The file can be created and edited through the <a
+href="S414.htm">Advanced</a> menu tab.</p>
+
+<p><a name="std_map"><b>Standard ASCII Map Background File</b></a></p>
+
+<p>By default, all mapping programs use the same text map background file,
+<i>arlmap</i>, which normally would be located in the ../<i>graphics</i>
+directory. However, all graphics programs first search the local start
+directory (../<i>working</i> if running the GUI), then the ../<i>graphics</i>
+directory. Customized map background files can be read instead of the default
+file for specialized applications. Some higher resolution map background
+files are available from the <a href="http://www.ready.noaa.gov/HYSPLIT.php">
+HYSPLIT</a> download web page. These different map files may be accessed
+implicitly by putting them in the "../working (the startup directory), or
+explicitly through the GUI by entering the name of the customized
+map background file. The map background file format consists of
+three or more records per graphic line with the following format:</p>
+<ul>
+2I5 - line number, number of latitude-longitude points in the line<br>
+10F6.2 - latitude points in line<br>
+10F7.2 - longitude points in line
+</ul>
+
+<p><a name="shp_map"><b>ESRI Shapefile Map Background Files</b></a></p>
+
+<p>Another mapping option would be to specify a special pointer file (originally
+called <i>shapefiles.txt</i>, but now a suffix other than "txt" is permitted) 
+to replace the map background file arlmap in
+the -j command line option (see above). Note -jshapefiles... rather than
+-j./shapefiles... is required.  This file would contain the name
+of one or more shapefiles that can be used to create the map background.
+The line characteristics (spacing, thickness, color) can be specified for
+each shapefile following the format specified below:</p>
+<ul>
+Record format: 'file.shp' dash thick red green blue<br>
+file.shp = /dir/name of input shapefile in quotes<br>
+dash = {0} for solid; {dashes}/in; <0 color fill<br>
+thick = line thickness in inches (default = 0.0)<br>
+Red Green Blue = RGB values (0.0 0.0 0.0 is black)<br>
+Record example for default: 'arlmap.shp' 0 0.005 0.4 0.6 0.8
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

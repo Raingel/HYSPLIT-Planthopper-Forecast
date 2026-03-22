@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>Concentration / Special Runs / Global (S359)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Special Runs / Global </h2></p>
+
+<p>The Global Eulerian Model (GEM) is invoked as a series of subroutines within
+the main HYSPLIT transport and dispersion code. Particles or puffs are always first
+released in the Lagrangian framework and carried within HYSPLIT until they exceed a
+certain age at which point their mass is transferred to the GEM routines. Particles
+can be released and transferred for the entire duration of the simulation. The only
+requirement is that at one pressure-level global meteorological grid (2.5 degree
+reanalysis or 1 degree GFS) needs to be defined for the HYSPLIT calculation.
+Additional finer resolution regional meteorological grids can be defined for the
+Lagrangian portion of the transport calculation. Details of the global model have
+been previously published: Draxler, R.R., 2007, Demonstration of a global modeling
+methodology to determine the relative importance of local and long-distance sources,
+<i>Atmospheric Environment</i>, 41:776-789, doi:10.1016/j.atmosenv.2006.08.052.</p>
+
+<center><p><img src="Image96.gif" width="466" height="465"></p></center>
+
+<p><b>General Instructions</b></p>
+
+<p>Although the HYSPLIT-GEM version has its own executable, without the required
+namelist file <i>GEMPARM.CFG</i> the calculation will proceed as a standard 
+Lagrangian HYSPLIT simulation. In this situation, the model will write the default
+file <i>gemparm.bak</i> as a reminder that a GEM configuration file is required to
+invoke the global subroutines. This file can then be edited and renamed if not 
+using the GUI interface. GEM and HYSPLIT each create their own concentration output
+files and if the total concentration is required, the results from the two 
+calculations must be added together. The program <i>concadd</i> is included in the
+distribution and can be accessed from the <a href="S338.htm"> global display</a> menu
+by selecting the plume add checkbox. Furthermore, the GEM concentration grid is
+always a snapshot concentration. There is no averaging option. In general, the model
+simulation is configured like any other HYSPLIT simulation, through the <i>CONTROL</i>
+and <i>SETUP.CFG</i> files.  Additional GEM specific options are set in the 
+<i>GEMPARM.CFG</i> file. Not all GEM options are available through the GUI and can
+only be modified by editing the file directly.</p>
+
+<p><b>SETUP.CFG Namelist Configuration</b></p>
+
+<p>There is only one parameter in the HYSPLIT namelist that is required for the
+GEM subroutines:</p>
+<ol>
+<li>Set GEMAGE (default=48 hours) for the time a particle or puff is transferred to
+global model. Note that when GEMAGE<0, the particles switch to the GEM grid when the particle
+meteorology grid switches to global meteorological grid or when the particle age=|gemage|.
+<li>When using an <i>EMITIMES</i> file, QCYCLE is not used for emission cycling. Also if
+the <i>EMITIMES</i> file has fewer sources than defined in the <i>CONTROL</i> file, the
+emissions specified in the <i>CONTROL</i> file need to be set correctly and match the
+first value in <i>EMITIMES</i>.
+</ol>
+
+<p><b>GEMPARM.CFG GUI Namelist Options </b></p>
+
+<p>Only a subset of the namelist options are available to be set through the GUI. Note
+that concentration (mass/m3) output will always be written to <i>gemconc.bin</i> as individual
+or averaged layers, but the integrated output (mass/m2) will only be written to <i>gemzint.bin</i>.
+The bottom and top values are given as index numbers where 1 is the bottom layer. Layer thickness 
+corresponds with the input meteorological data and cannot be modified. The GUI interface is shown
+below:</p>
+
+<center><p><img src="Image93.gif" width="589" height="401"></p></center>
+
+<p><b>GEMPARM.CFG Namelist Description</b></p>
+<ul>
+HMIX=200000.0 - horizontal mixing (m2/s) at the equator<br> 
+VMIX=50.0 - maximum vertical mixing (m2/s)<br> 
+KMASS=2 - flag set to conserve mass (0:skip 1:show 2:yes)<br> 
+KINIT=0 - concentration initialization (<0:no_run 0:zero 1:lat_bands 2:dew-point 3:last_dump 4:global_v37) <br> 
+CKON=0.0 - value of initial concentration field if kinit>4<br> 
+CMIN=0.0 - minimum value when using regression initialization (kinit=1|2)<br> 
+CMAX=1.0E+25 - regression fit maximum value <br> 
+WFACT=1.0 - sensitivity of advection to vertical velocity <br> 
+KDIVG=0 - flag to compute vertical velocity from the divergence field (kdivg=1)<br> 
+GEMDUMP='gemdump.bin' - daily 3-dimensional dump of concentration field (for initialization kinit=3) <br> 
+GEMCONC='gemconc.bin' - HYSPLIT formatted concentration output file <br> 
+GEMZINT='gemzint.bin' - HYSPLIT formatted vertically integrated concentration<br> 
+CFACT=1.0 - internal (model) concentration to external (output) concentration units conversion factor<br> 
+KZBOT=1 - grid cell index for the bottom output (or integration/averaging) level<br> 
+KZTOP=1 - grid cell index for the top output (or integration/averaging) level<br> 
+KZAVG=0 - flag for vertical averaging (0:none 1:average{bot-top} 2:integral{bot-top} 3:{2+0} 4:{2+1})<br> 
+WFREQ=3 - output frequency in hours<br> 
+IHOUR=0 - initial UTC output hour<br> 
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

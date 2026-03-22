@@ -1,0 +1,21 @@
+Version 1.00 :: 16 Jan 2007
+
+	1) added stdout to log for Google and Shapefile conversions
+	2) corrected SETUP suffix so that it opens correctly
+	3) made PARDUMP output the default
+	4) removed sampling start as an option and converted to averaging time
+
+Version 2.00 :: 11 Mar 2008
+
+	1) replaced pressure level meteorology with sigma level tiles
+
+Version 2.10 :: 25 Feb 2009
+
+	1) various minor updates for consistency with HYSPLIT 4.9
+	2) 16 Apr 2009 - customized version of 2.1 for forest fire applications
+	3) 21 Oct 2010 - corrections to return codes to cancel changes
+
+Version 2.13 :: 29 Nov 2010
+
+	1) more LINIX friendly scripting and auto directory set for software
+

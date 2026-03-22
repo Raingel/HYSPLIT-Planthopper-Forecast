@@ -1,0 +1,40 @@
+SHELL = @SHELL@
+
+iprefix = @prefix@
+bindir = @bindir@
+srcdir = @srcdir@
+libdir = @libdir@
+top_srcdir = @top_srcdir@
+
+CC  = @CC@
+
+EXEEXT = @EXEEXT@
+DEBUG = @DEBUG@
+CFLAGS=@CFLAGS@ $(DEBUG)
+ARFLAGS=@ARFLAGS@
+
+INSTALL = @INSTALL@
+
+INCLUDES = -I $(top_srcdir) -I $(top_srcdir)/arcview1 -I $(top_srcdir)/arcview2
+
+# $Id: Makefile,v 1.5 2000/06/12 13:24:08 jan Exp $
+
+# add -DWITH_STRICMP if you are compiling i.e. with MS VC
+# add -DDEBUG if you want lots of debugging infos
+
+prefix = ..
+
+all: libshapext.a
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+
+libshapext.a: shapext.o vector2.o utils.o
+	$(AR) $(ARFLAGS) cru $@  $?
+	cp $@ ..
+
+clean:
+	rm -f ascii2shp$(EXEEXT) *.o *.a
+
+distclean: clean
+	rm -f Makefile config.h

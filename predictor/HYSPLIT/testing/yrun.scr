@@ -1,0 +1,702 @@
+#!/bin/bash
+#
+# yrun.scr --- run test scripts in the HYSPLIT tutorial
+#
+# This script can take up to 4 optional comman-line arguments.
+#
+# Usage: yrun.scr [TUTORIAL_DIR] [HYSPLIT_DIR] [OUTPUT_DIR] [CPU_COUNT]
+#
+# 19 Sep 2022 (SYZ) - initial
+# 11 Oct 2022 (SYZ) - create plot files for Secs. 10.4, 10.5, and 10.6.
+#                     check if required HYSPLIT executables are present.
+#  3 Nov 2023 (SYZ) - change the optimal number of clusters to 6 in
+#                     Sec. 6.2. Skip Sec. 10.7 for python graphics.
+#  7 Nov 2023 (SYZ) - test Sec. 10.7.
+
+TTR=${1:-"${HOME}/Tutorial"}
+MDL=${2:-"${HOME}/hysplit"}
+OUT=${3:-"${MDL}/testing"}
+NCPU=${4:-1}			# number of CPUs for parallel execution
+
+echo "TTR=${TTR}"
+echo "MDL=${MDL}"
+echo "OUT=${OUT}"
+
+TTRSCR="${TTR}/bash"		# location of tutorial scripts
+
+# Add the HYSPLIT tutorial location to environment variables
+export TTR
+
+function die() {
+   echo "$*"
+   exit 1
+}
+
+function hy_have_expected_files() {
+   local section_no=$1
+
+   local output_dir="${OUT}/Sec${section_no}"
+
+   # check if all expected files already exist
+   local not_there=0
+   for f in ${EXPECTED_FILES[@]}; do
+      if [ ! -e "${output_dir}/${f}" ]; then
+         not_there=1
+         break
+      fi
+   done
+
+   # Return 0 if all files are there
+   return ${not_there}
+}
+
+function hy_run() {
+   local section_no=$1
+   local script=$2
+
+   local output_dir="${OUT}/Sec${section_no}"
+
+   # check if all expected files already exist
+   local not_there=0
+   for f in ${EXPECTED_FILES[@]}; do
+      if [ ! -e "${output_dir}/${f}" ]; then
+         not_there=1
+         break
+      fi
+   done
+
+   # return if all expected files are there
+   if [ ${not_there} -eq 0 ]; then
+      echo "Sec. ${section_no} is skipped because output(s) exist: ${EXPECTED_FILES[@]}"
+      return
+   fi
+
+   echo "Sec. ${section_no} started [`date`]"
+
+   # create the output directory if necessary
+   [ -d "${output_dir}" ] || mkdir -p "${output_dir}"
+
+   # Note $1 and $2 are already used. Shifting arguments twice makes $*
+   # to contain $3, $4, etc.
+   shift; shift
+   "${script}" "${MDL}" "${output_dir}" "NO" $* || die "ERROR: Sec. ${section_no} failed"
+}
+
+if [ ! -d "${OUT}" ]; then
+   die "ERROR: output directory ${OUT} does not exist"
+fi
+cd "${OUT}"
+ 
+# check executables
+hash ${MDL}/exec/accudiv   > /dev/null 2>&1 || die "FATAL: accudiv   not found"
+hash ${MDL}/exec/ascii2shp > /dev/null 2>&1 || die "FATAL: ascii2shp not found"
+hash ${MDL}/exec/c2array   > /dev/null 2>&1 || die "FATAL: c2array   not found"
+hash ${MDL}/exec/c2datem   > /dev/null 2>&1 || die "FATAL: c2datem   not found"
+hash ${MDL}/exec/clusend   > /dev/null 2>&1 || die "FATAL: clusend   not found"
+hash ${MDL}/exec/cluslist  > /dev/null 2>&1 || die "FATAL: cluslist  not found"
+hash ${MDL}/exec/clusmem   > /dev/null 2>&1 || die "FATAL: clusmem   not found"
+hash ${MDL}/exec/clusplot  > /dev/null 2>&1 || die "FATAL: clusplot  not found"
+hash ${MDL}/exec/cluster   > /dev/null 2>&1 || die "FATAL: cluster   not found"
+hash ${MDL}/exec/con2rem   > /dev/null 2>&1 || die "FATAL: con2rem   not found"
+hash ${MDL}/exec/con2stn   > /dev/null 2>&1 || die "FATAL: con2stn   not found"
+hash ${MDL}/exec/conavgpd  > /dev/null 2>&1 || die "FATAL: conavgpd  not found"
+hash ${MDL}/exec/concadd   > /dev/null 2>&1 || die "FATAL: concadd   not found"
+hash ${MDL}/exec/concplot  > /dev/null 2>&1 || die "FATAL: concplot  not found"
+hash ${MDL}/exec/conlight  > /dev/null 2>&1 || die "FATAL: conlight  not found"
+hash ${MDL}/exec/conprob   > /dev/null 2>&1 || die "FATAL: conprob   not found"
+hash ${MDL}/exec/contour   > /dev/null 2>&1 || die "FATAL: contour   not found"
+hash ${MDL}/exec/dat2cntl  > /dev/null 2>&1 || die "FATAL: dat2cntl  not found"
+hash ${MDL}/exec/dustbdy   > /dev/null 2>&1 || die "FATAL: dustbdy   not found"
+hash ${MDL}/exec/gelabel   > /dev/null 2>&1 || die "FATAL: gelabel   not found"
+hash ${MDL}/exec/gridplot  > /dev/null 2>&1 || die "FATAL: gridplot  not found"
+hash ${MDL}/exec/hyts_ens  > /dev/null 2>&1 || die "FATAL: hyts_ens  not found"
+hash ${MDL}/exec/hycs_std  > /dev/null 2>&1 || die "FATAL: hycs_std  not found"
+hash ${MDL}/exec/hycs_var  > /dev/null 2>&1 || die "FATAL: hycs_var  not found"
+hash ${MDL}/exec/hysptest  > /dev/null 2>&1 || die "FATAL: hysptest  not found"
+hash ${MDL}/exec/hyts_std  > /dev/null 2>&1 || die "FATAL: hyts_std  not found"
+hash ${MDL}/exec/isochron  > /dev/null 2>&1 || die "FATAL: isochron  not found"
+hash ${MDL}/exec/latlon    > /dev/null 2>&1 || die "FATAL: latlon    not found"
+hash ${MDL}/exec/lbfgsb    > /dev/null 2>&1 || die "FATAL: lbfgsb    not found"
+hash ${MDL}/exec/matrix    > /dev/null 2>&1 || die "FATAL: matrix    not found"
+hash ${MDL}/exec/merglist  > /dev/null 2>&1 || die "FATAL: merglist  not found"
+hash ${MDL}/exec/parshift  > /dev/null 2>&1 || die "FATAL: parshift  not found"
+hash ${MDL}/exec/parxplot  > /dev/null 2>&1 || die "FATAL: parxplot  not found"
+hash ${MDL}/exec/profile   > /dev/null 2>&1 || die "FATAL: profile   not found"
+hash ${MDL}/exec/scatter   > /dev/null 2>&1 || die "FATAL: scatter   not found"
+hash ${MDL}/exec/splitsvg  > /dev/null 2>&1 || die "FATAL: splitsvg  not found"
+hash ${MDL}/exec/stat2grid > /dev/null 2>&1 || die "FATAL: stat2grid not found"
+hash ${MDL}/exec/statmain  > /dev/null 2>&1 || die "FATAL: statmain  not found"
+hash ${MDL}/exec/tcsolve   > /dev/null 2>&1 || die "FATAL: tcsolve   not found"
+hash ${MDL}/exec/timeplot  > /dev/null 2>&1 || die "FATAL: timeplot  not found"
+hash ${MDL}/exec/trajfreq  > /dev/null 2>&1 || die "FATAL: trajfreq  not found"
+hash ${MDL}/exec/trajmean  > /dev/null 2>&1 || die "FATAL: trajmean  not found"
+hash ${MDL}/exec/trajplot  > /dev/null 2>&1 || die "FATAL: trajplot  not found"
+hash ${MDL}/exec/txt2dbf   > /dev/null 2>&1 || die "FATAL: txt2dbf   not found"
+
+echo "Run started at `date`"
+
+#------------------------------------------------------------------------------
+# Sec 2.2
+EXPECTED_FILES=("test004.png")
+hy_run "2.2" ${TTRSCR}/test_traj.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 2.3
+EXPECTED_FILES=("test006.png")
+hy_run "2.3" ${TTRSCR}/test_conc.sh
+
+#------------------------------------------------------------------------------
+# Sec 2.4
+if [ ! -e "${OUT}/Sec2.4/batch005.png" ]; then
+   EXPECTED_FILES=("test006.png")
+   hy_run "2.4" ${TTRSCR}/test_conc.sh
+   mv "${OUT}/Sec2.4/test006.png" "${OUT}/Sec2.4/batch005.png"
+fi
+
+#------------------------------------------------------------------------------
+# Sec. 3.2 - meteo_ftp.sh
+echo "Sec. 3.2 not tested"
+
+#------------------------------------------------------------------------------
+# Sec. 3.5 - meteo_enter.sh
+echo "Sec. 3.5 not tested"
+
+#------------------------------------------------------------------------------
+# Sec 4.1
+EXPECTED_FILES=("traj008.png")
+hy_run "4.1" ${TTRSCR}/traj_basic.sh
+
+#------------------------------------------------------------------------------
+# Sec 4.3
+echo "Sec. 4.3 not tested"
+
+#------------------------------------------------------------------------------
+# Sec 4.4
+EXPECTED_FILES=("mixd005.png" "mixd011.png")
+hy_run "4.4" ${TTRSCR}/traj_mixd.sh
+
+#------------------------------------------------------------------------------
+# Sec 4.5
+EXPECTED_FILES=("terr001.png" "terr003.png" "terr005.png")
+hy_run "4.5" ${TTRSCR}/traj_error.sh
+
+#------------------------------------------------------------------------------
+# Sec 4.6
+EXPECTED_FILES=("terr006.png")
+hy_run "4.6" ${TTRSCR}/traj_error2.sh
+
+#------------------------------------------------------------------------------
+# Sec 4.7
+[ -e "${OUT}/Sec4.7/tdump_fwrd" ] || \
+   (mkdir -p "${OUT}/Sec4.7"; cp "${OUT}/Sec4.5/tdump_fwrd" "${OUT}/Sec4.7")
+EXPECTED_FILES=("abse007.png" "abse008.png")
+hy_run "4.7" ${TTRSCR}/traj_abse.sh
+
+#------------------------------------------------------------------------------
+# Sec 5.1
+EXPECTED_FILES=("vert004.png")
+hy_run "5.1" ${TTRSCR}/traj_vert.sh
+
+#------------------------------------------------------------------------------
+# Sec 5.2
+EXPECTED_FILES=("vert010.png")
+hy_run "5.2" ${TTRSCR}/traj_flow.sh
+
+#------------------------------------------------------------------------------
+# Sec 5.3
+EXPECTED_FILES=("tisob004.png" "tisob007.png" "tisob008.png")
+hy_run "5.3" ${TTRSCR}/traj_isob.sh
+
+#------------------------------------------------------------------------------
+# Sec 5.4
+EXPECTED_FILES=("mult002.png" "mult004.png")
+hy_run "5.4" ${TTRSCR}/traj_time.sh
+
+#------------------------------------------------------------------------------
+# Sec 5.5
+EXPECTED_FILES=("mult006.png" "mult009.png")
+hy_run "5.5" ${TTRSCR}/traj_space.sh
+
+#------------------------------------------------------------------------------
+# Sec 5.6
+EXPECTED_FILES=("tensem003.png" "tensem004.png")
+hy_run "5.6" ${TTRSCR}/traj_ensem.sh
+
+#------------------------------------------------------------------------------
+# Sec 6.1
+EXPECTED_FILES=("freq010.png" "freq011.png")
+hy_run "6.1" ${TTRSCR}/traj_freq.sh
+
+#------------------------------------------------------------------------------
+# Sec 6.2
+
+# Copy results from Sec. 6.1
+if [ -d "${OUT}/Sec6.1" ]; then
+   [ -d "${OUT}/Sec6.2" ] || mkdir -p "${OUT}/Sec6.2"
+   cp -f "${OUT}/Sec6.1/INFILE" "${OUT}/Sec6.2"
+   cp -f "${OUT}"/Sec6.1/fdump* "${OUT}/Sec6.2"
+fi
+
+# Five clusters
+if [ ! -e "${OUT}/Sec6.2/clus007.png" ]; then
+   EXPECTED_FILES=("clus007.png")
+   hy_run "6.2" ${TTRSCR}/traj_clus.sh 5
+   mv "${OUT}/Sec6.2/clus006.png" "${OUT}/Sec6.2/clus007.png"
+fi
+
+# Six clusters
+EXPECTED_FILES=("clus004.png" "clus006.png")
+hy_run "6.2" ${TTRSCR}/traj_clus.sh 6
+
+#------------------------------------------------------------------------------
+# Sec. 6.3 - clustering equations
+echo "Sec. 6.3 not tested"
+
+#------------------------------------------------------------------------------
+# Sec 6.4
+
+# Release height at 10 m.
+if [ ! -e "${OUT}/Sec6.4/tgeo005.png" ]; then
+   EXPECTED_FILES=("tgeo005.png")
+   hy_run "6.4" ${TTRSCR}/traj_geol.sh "10.0"
+   mv "${OUT}/Sec6.4/tgeo004.png" "${OUT}/Sec6.4/tgeo005.png"
+fi
+
+# Release height at 600 m.
+EXPECTED_FILES=("tgeo004.png")
+hy_run "6.4" ${TTRSCR}/traj_geol.sh "600.0"
+
+#------------------------------------------------------------------------------
+# Sec 7.1
+EXPECTED_FILES=("cbase003.png")
+hy_run "7.1" ${TTRSCR}/conc_test.sh
+
+#------------------------------------------------------------------------------
+# Sec. 7.2 - air concentration equations
+echo "Sec. 7.2 not tested"
+
+#------------------------------------------------------------------------------
+# Sec 7.3
+
+# Layer depth of 500 m
+if [ ! -e "${OUT}/Sec7.3/cbase013.png" ]; then
+   EXPECTED_FILES=("cbase013.png")
+   hy_run "7.3" ${TTRSCR}/conc_base.sh "500"
+   mv "${OUT}/Sec7.3/cbase009.png" "${OUT}/Sec7.3/cbase013.png"
+fi
+
+# Layer depth of 5000 m
+EXPECTED_FILES=("cbase009.png")
+hy_run "7.3" ${TTRSCR}/conc_base.sh "5000"
+
+#------------------------------------------------------------------------------
+# Sec 7.4
+EXPECTED_FILES=("cbase011.png" "cbase012.gif")
+hy_run "7.4" ${TTRSCR}/conc_view.sh
+
+#------------------------------------------------------------------------------
+# Sec 7.5
+EXPECTED_FILES=("cpart001.png" "cpart002.png" "cpart003.png" "cpart007.png")
+hy_run "7.5" ${TTRSCR}/conc_part.sh
+
+#------------------------------------------------------------------------------
+# Sec 7.6
+EXPECTED_FILES=("cpart005.png" "cmtraj004.png")
+hy_run "7.6" ${TTRSCR}/disp_part.sh
+# Note cpart005b.png and cpart005c.png are generated as well.
+
+#------------------------------------------------------------------------------
+# Sec 7.7
+EXPECTED_FILES=("cpuff003.png" "cpuff005.png" "cpuff006.png" "cpuff009.png" "cpuff010.png")
+hy_run "7.7" ${TTRSCR}/conc_puff.sh
+
+#------------------------------------------------------------------------------
+# Sec 7.8
+EXPECTED_FILES=("cpuff007.png")
+hy_run "7.8" ${TTRSCR}/conc_split.sh
+
+#------------------------------------------------------------------------------
+# Sec 8.1
+EXPECTED_FILES=("hysplit2.bin" "captex_loop.gif")
+hy_run "8.1" ${TTRSCR}/conc_cexp.sh
+
+#------------------------------------------------------------------------------
+# Sec 8.2
+
+# Copy hysplit2.bin from Sec. 8.1
+if [ -d "${OUT}/Sec8.1" ]; then
+   [ -d "${OUT}/Sec8.2" ] || mkdir -p "${OUT}/Sec8.2"
+   cp -f "${OUT}/Sec8.1/hysplit2.bin" "${OUT}/Sec8.2"
+   cp -f "${OUT}/Sec8.1/PARDUMP" "${OUT}/Sec8.2"
+fi
+
+EXPECTED_FILES=("conc014.png" "conc017.gif" "conc020.png" "conc023.png" "conc026.png")
+hy_run "8.2" ${TTRSCR}/conc_disp.sh
+
+#------------------------------------------------------------------------------
+# Sec 8.3
+
+# Copy hysplit2.bin from Sec. 8.1
+if [ -d "${OUT}/Sec8.1" ]; then
+   [ -d "${OUT}/Sec8.3" ] || mkdir -p "${OUT}/Sec8.3"
+   cp -f "${OUT}/Sec8.1/hysplit2.bin" "${OUT}/Sec8.3"
+fi
+
+EXPECTED_FILES=("util008.png" "util009.png")
+hy_run "8.3" ${TTRSCR}/conc_util.sh
+
+#------------------------------------------------------------------------------
+# Sec 8.4
+
+# Copy hysplit2.bin from Sec. 8.1
+if [ -d "${OUT}/Sec8.1" ]; then
+   [ -d "${OUT}/Sec8.4" ] || mkdir -p "${OUT}/Sec8.4"
+   cp -f "${OUT}/Sec8.1/hysplit2.bin" "${OUT}/Sec8.4"
+   cp -f "${OUT}/Sec8.1/ASCDATA.CFG"  "${OUT}/Sec8.4"
+fi
+
+EXPECTED_FILES=("util012.png" "util013.png")
+hy_run "8.4" ${TTRSCR}/conc_stat.sh
+
+#------------------------------------------------------------------------------
+# Sec. 8.5 - test and optimize input files
+echo "Sec. 8.5 not tested"
+
+#------------------------------------------------------------------------------
+# Sec 8.6
+EXPECTED_FILES=("sgrid004.png" "sgrid005.png")
+hy_run "8.6" ${TTRSCR}/conc_multi.sh
+
+#------------------------------------------------------------------------------
+# Sec 9.1
+EXPECTED_FILES=("case004.png" "case005.png")
+hy_run "9.1" ${TTRSCR}/parm_case.sh
+
+#------------------------------------------------------------------------------
+# Sec 9.2
+EXPECTED_FILES=("case007.png" "case008.png" "case009.png" "case011.png")
+hy_run "9.2" ${TTRSCR}/parm_data.sh
+
+#------------------------------------------------------------------------------
+# Sec 9.3
+EXPECTED_FILES=("turb003.png" "turb007.png" "turb009.png" "turb005.png")
+hy_run "9.3" ${TTRSCR}/parm_turb.sh
+
+#------------------------------------------------------------------------------
+# Sec 9.4
+EXPECTED_FILES=("stab002.png" "stab004.png")
+hy_run "9.4" ${TTRSCR}/parm_stab.sh
+
+#------------------------------------------------------------------------------
+# Sec 9.5
+EXPECTED_FILES=("pbl003.png" "pbl009.png" "pbl005.png" "pbl007.png")
+hy_run "9.5" ${TTRSCR}/parm_mixd.sh
+
+#------------------------------------------------------------------------------
+# Sec 9.6
+EXPECTED_FILES=("tker002.png" "tker004.png" "tker006.png")
+hy_run "9.6" ${TTRSCR}/parm_tker.sh
+
+#------------------------------------------------------------------------------
+# Sec 9.7
+EXPECTED_FILES=("turb011.png" "turb014.png" "turb016.png")
+hy_run "9.7" ${TTRSCR}/parm_disp.sh
+
+#------------------------------------------------------------------------------
+# Sec. 10.1 - display scripting
+echo "Sec. 10.1 not tested"
+
+#------------------------------------------------------------------------------
+# Sec 10.2
+EXPECTED_FILES=("maps002.png")
+hy_run "10.2" ${TTRSCR}/disp_maps.sh
+
+#------------------------------------------------------------------------------
+# Sec 10.3
+EXPECTED_FILES=("lab003.png")
+hy_run "10.3" ${TTRSCR}/disp_lab.sh
+
+#------------------------------------------------------------------------------
+# Sec 10.4 - creating KML/KMZ for Google Earth
+EXPECTED_FILES=("HYSPLITconc.kmz")
+hy_run "10.4" ${TTRSCR}/disp_ge.sh
+
+#------------------------------------------------------------------------------
+# Sec 10.5 - creating HYSPLIT shapefiles
+EXPECTED_FILES=("concplot.shp")
+hy_run "10.5" ${TTRSCR}/disp_shp.sh
+
+#------------------------------------------------------------------------------
+# Sec 10.6
+
+# Copy concplot.shp from Sec. 10.5
+if [ -d "${OUT}/Sec10.5" ]; then
+   [ -d "${OUT}/Sec10.6" ] || mkdir -p "${OUT}/Sec10.6"
+   cp -f "${OUT}/Sec10.5/concplot.shp" "${OUT}/Sec10.6"
+   cp -f "${OUT}/Sec10.5/concplot.dbf" "${OUT}/Sec10.6"
+   cp -f "${OUT}/Sec10.5/concplot.prj" "${OUT}/Sec10.6"
+   cp -f "${OUT}/Sec10.5/concplot.shx" "${OUT}/Sec10.6"
+fi
+
+EXPECTED_FILES=("smrg002.png" "smrg004.png" "smrg010.png")
+hy_run "10.6" ${TTRSCR}/disp_merg.sh
+
+#------------------------------------------------------------------------------
+# Sec 10.7 - python display options
+
+# Copy cmtraj.txt from Sec. 7.6
+if [ -d "${OUT}/Sec7.6" ]; then
+   [ -d "${OUT}/Sec10.7" ] || mkdir -p "${OUT}/Sec10.7"
+   cp -f "${OUT}/Sec7.6/cmtraj.txt" "${OUT}/Sec10.7"
+fi
+
+EXPECTED_FILES=("cmtraj006.png" "cmtraj009.png" "cmtraj010.png" \
+                "pyth001.png" "pyth002.png")
+hy_run "10.7" ${TTRSCR}/disp_python.sh
+
+#------------------------------------------------------------------------------
+# Sec 11.1
+EXPECTED_FILES=("dry000.png" "chem005.png" "chem005b.png")
+hy_run "11.1" ${TTRSCR}/chem_linear.sh
+
+#------------------------------------------------------------------------------
+# Sec 11.2
+EXPECTED_FILES=("dry000.png" "dry003.png" "dry004.png")
+hy_run "11.2" ${TTRSCR}/chem_dry.sh
+
+#------------------------------------------------------------------------------
+# Sec 11.3 - dry deposition of particles
+# Note Sec. 11.3 refers to no graphics. So we skip running the script.
+echo "Sec. 11.3 not tested"
+#hy_run "11.3" ${TTRSCR}/chem_dryp.sh
+
+#------------------------------------------------------------------------------
+# Sec 11.4
+EXPECTED_FILES=("wet002.png")
+hy_run "11.4" ${TTRSCR}/chem_wet.sh
+
+#------------------------------------------------------------------------------
+# Sec 11.5
+EXPECTED_FILES=("wet004.png")
+hy_run "11.5" ${TTRSCR}/chem_wetp.sh
+
+#------------------------------------------------------------------------------
+# Sec 12.1
+# Note emet013.png is manually created from emet012.png by placing red dots.
+EXPECTED_FILES=("emet008.png" "emet011.png" "emet012.png")
+hy_run "12.1" ${TTRSCR}/ens_meteo.sh ${NCPU}
+
+#------------------------------------------------------------------------------
+# Sec 12.2
+
+# Run with 50,000 particles
+if [ ! -e "${OUT}/Sec12.2/eturb007.png" ]; then
+   EXPECTED_FILES=("eturb005.png")
+   hy_run "12.2" ${TTRSCR}/ens_turb.sh 50000 ${NCPU}
+   mv "${OUT}/Sec12.2/eturb005.png" "${OUT}/Sec12.2/eturb007.png"
+fi
+
+# Run with 1,852 particles
+EXPECTED_FILES=("eturb005.png")
+hy_run "12.2" ${TTRSCR}/ens_turb.sh 1852 ${NCPU}
+
+#------------------------------------------------------------------------------
+# Sec 12.3
+EXPECTED_FILES=("ephys003.png" "ephys004.png" "ephys005.png")
+hy_run "12.3" ${TTRSCR}/ens_phys.sh
+
+#------------------------------------------------------------------------------
+# Sec 12.4
+EXPECTED_FILES=("edata006.png" "edata007.png" "edata009.png")
+hy_run "12.4" ${TTRSCR}/ens_data.sh
+
+#------------------------------------------------------------------------------
+# Sec 12.5 - ensemble verification
+# Note Sec. 12.5 refers to no graphics.
+
+# Copy hysplit2.001, 002, ..., 005 from Sec. 12.4
+if [ -d "${OUT}/Sec12.4" ]; then
+   [ -d "${OUT}/Sec12.5" ] || mkdir -p "${OUT}/Sec12.5"
+   cp -f "${OUT}"/Sec12.4/hysplit2.??? "${OUT}/Sec12.5"
+fi
+
+EXPECTED_FILES=("sumstat.txt")
+hy_run "12.5" ${TTRSCR}/ens_stats.sh
+
+#------------------------------------------------------------------------------
+# Sec 12.6
+# Note Sec. 12.6 refers to no graphics.
+
+# Copy datem.001, 002, ..., 005 and hysplit2.001, 002, ..., 005 from Sec. 12.5
+if [ -d "${OUT}/Sec12.5" ]; then
+   [ -d "${OUT}/Sec12.6" ] || mkdir -p "${OUT}/Sec12.6"
+   cp -f "${OUT}"/Sec12.5/datem.??? "${OUT}/Sec12.6"
+   cp -f "${OUT}"/Sec12.5/hysplit2.??? "${OUT}/Sec12.6"
+fi
+
+EXPECTED_FILES=("sumstat.txt")
+hy_run "12.6" ${TTRSCR}/ens_reduc.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 13.1
+EXPECTED_FILES=("fwd001.png" "statA.txt")
+hy_run "13.1" ${TTRSCR}/src_fwrd.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 13.2
+EXPECTED_FILES=("con2stn_bak1.txt" "con2stn_bak2.txt")
+hy_run "13.2" ${TTRSCR}/src_back.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 13.3
+EXPECTED_FILES=("geol007.png" "geol008.png" "geol009.png")
+hy_run "13.3" ${TTRSCR}/src_geol.sh ${NCPU}
+ 
+#------------------------------------------------------------------------------
+# Sec 13.4
+EXPECTED_FILES=("srm008.png" "srm010.png")
+hy_run "13.4" ${TTRSCR}/src_recp.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 13.5
+EXPECTED_FILES=("srs003.png" "srs007.png")
+hy_run "13.5" ${TTRSCR}/src_stats.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 13.6
+EXPECTED_FILES=("tcsolve.dat")
+hy_run "13.6" ${TTRSCR}/src_coef.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 13.7
+EXPECTED_FILES=("SOURCE_OUT_000")
+hy_run "13.7" ${TTRSCR}/src_cost.sh
+
+#------------------------------------------------------------------------------
+# Sec 14.1
+EXPECTED_FILES=("smoke_plot.png" "smoke_times.png")
+hy_run "14.1" ${TTRSCR}/cust_smoke.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 14.2
+EXPECTED_FILES=("dust009.png" "dust011.png" "dustbyhr.gif")
+hy_run "14.2" ${TTRSCR}/cust_dust.sh
+ 
+# optional run 1
+EXPECTED_FILES=("dust022.png" "dust011b.png")
+hy_run "14.2_o1" ${TTRSCR}/cust_dust_o1.sh
+ 
+# optional run 2
+EXPECTED_FILES=("dust020.png")
+hy_run "14.2_o2" ${TTRSCR}/cust_dust_o2.sh
+
+#------------------------------------------------------------------------------
+# Sec 14.3
+EXPECTED_FILES=("dust012.png")
+hy_run "14.3" ${TTRSCR}/cust_dust2.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 14.4
+EXPECTED_FILES=("dust014.png" "dust015.png")
+hy_run "14.4" ${TTRSCR}/cust_dust4.sh
+
+#------------------------------------------------------------------------------
+# Sec 15.1
+EXPECTED_FILES=("rad007.png" "rad008.png")
+hy_run "15.1" ${TTRSCR}/cust_decay.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 15.2
+
+# Run with gdas11-22.bin
+if [ ! -e "${OUT}/Sec15.2/fdnpp_dhak2.png" ]; then
+   EXPECTED_FILES=("fdnpp_dhak2.png")
+   hy_run "15.2" ${TTRSCR}/cust_fdnpp.sh "gdas11-22.bin"
+   mv "${OUT}/Sec15.2/fdnpp_dhak.png" "${OUT}/Sec15.2/fdnpp_dhak2.png"
+fi
+
+# Run with RP201103.bin
+EXPECTED_FILES=("fdnpp_dhak.png")
+hy_run "15.2" ${TTRSCR}/cust_fdnpp.sh "RP201103.bin"
+ 
+#------------------------------------------------------------------------------
+# Sec 15.3
+EXPECTED_FILES=("dose012.png" "dose013.png")
+hy_run "15.3" ${TTRSCR}/cust_dose.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 16.1
+EXPECTED_FILES=("volc009.png" "volc011.png")
+hy_run "16.1" ${TTRSCR}/cust_volc.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 16.2
+
+EXPECTED_FILES=("part003.png" "part005.png")
+if hy_have_expected_files "16.2"; then
+   echo "Sec. 16.2 is skipped because output(s) exist: ${EXPECTED_FILES[@]}"
+else
+   # Copy SETUP.CFG, PARDUMP, and CONTROL1 from Sec. 16.1
+   if [ -d "${OUT}/Sec16.1" ]; then
+      [ -d "${OUT}/Sec16.2" ] || mkdir -p "${OUT}/Sec16.2"
+      cp -f "${OUT}"/Sec16.1/SETUP.CFG "${OUT}/Sec16.2"
+      cp -f "${OUT}"/Sec16.1/PARDUMP   "${OUT}/Sec16.2"
+      cp -f "${OUT}"/Sec16.1/CONTROL1  "${OUT}/Sec16.2"
+   fi
+
+   hy_run "16.2" ${TTRSCR}/cust_pard.sh
+fi
+ 
+#------------------------------------------------------------------------------
+# Sec 16.3
+
+EXPECTED_FILES=("adj007.png" "adj006.png")
+if hy_have_expected_files "16.3"; then
+   echo "Sec. 16.3 is skipped because output(s) exist: ${EXPECTED_FILES[@]}"
+else
+   # Copy PARDUMP from Sec. 16.2
+   if [ -d "${OUT}/Sec16.2" ]; then
+      [ -d "${OUT}/Sec16.3" ] || mkdir -p "${OUT}/Sec16.3"
+      cp -f "${OUT}"/Sec16.2/PARDUMP   "${OUT}/Sec16.3"
+   fi
+
+   hy_run "16.3" ${TTRSCR}/cust_toms.sh
+fi
+
+#------------------------------------------------------------------------------
+# Sec 16.4
+EXPECTED_FILES=("psize003.png" "psize007.png")
+hy_run "16.4" ${TTRSCR}/cust_psize.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 16.5
+EXPECTED_FILES=("etime013.png" "etime014.png")
+hy_run "16.5" ${TTRSCR}/cust_emit.sh
+
+#------------------------------------------------------------------------------
+# Sec 17.1
+EXPECTED_FILES=("cntr005.png" "cntr006.png")
+hy_run "17.1" ${TTRSCR}/src_cntr.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 17.2
+# Note no plots are generated.
+EXPECTED_FILES=("LAGOUT.TXT")
+hy_run "17.2" ${TTRSCR}/disp_dyn.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 17.3
+EXPECTED_FILES=("ratio004.png" "ratio005.png")
+hy_run "17.3" ${TTRSCR}/chem_ratio.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 17.4
+EXPECTED_FILES=("sage010.png" "sage013.png")
+hy_run "17.4" ${TTRSCR}/conc_local.sh
+ 
+#------------------------------------------------------------------------------
+# Sec 17.5
+EXPECTED_FILES=("pole006.png")
+hy_run "17.5" ${TTRSCR}/conc_pole.sh
+ 
+echo "Run completed at `date`"

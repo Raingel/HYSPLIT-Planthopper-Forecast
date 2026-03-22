@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Concentration / Display / Ensemble / View Map (S334)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Ensemble / View Map</h2></p>
+
+<p>Multiple concentration output files from the ensemble or variance
+dispersion simulation should have been previously processed in the  
+ensemble <a href="S321.htm">Create Files</a> tab of the display menu.
+This step would have created fourteen probability output files in
+the working directory. These files are used to generate all graphics. The 
+selected files are then plotted using <i>concplot</i> according to
+the menu options. An illustration of the <i>View map</i> menu
+is shown below.</p>
+
+<center><p><img src="Image29.png" width="600"></p></center>
+
+<p>The menu includes some of the standard display program (<i>concplot</i>)
+mapping choices, such as background file, output file name, zoom factor,
+and employment of FORTRAN- or Python-based implementation.</p>
+
+<p>The menu permits a choice of six different ensemble output display
+options:</p>
+
+<ol>
+<li>The <b>number</b> of ensemble members at each grid point with 
+concentrations greater than zero shows the spatial distribution of 
+the number of members (<b>cnumb</b>).</li>
+
+<li>The <b>mean</b> concentration of all ensemble members (<b>cmean</b>).</li>
+
+<li>The <b>variance</b> or the mean square difference between individual 
+members and the mean (<b>cvarn</b>).</li>
+
+<li>The <b>coefficient of variation</b> of all ensemble members expressed as
+the &radic;Cvarn*100/Cmean (<b>ccoev</b>).</li>
+
+<li>The <b>probability of concentration</b> produces contours that give the
+probability of exceeding a fixed concentration value at one of three levels:
+1% of the maximum concentration (<b>cmax01</b>), 10% of the maximum (<b>cmax10</b>), 
+and the maximum concentration (<b>cmax00</b>). The concentration level for the 
+probability display is shown on the graphic with the pollutant identification 
+field set to something like C14, where 14 represents the concentration to the 
+power of 10<sup>-14</sup>.</li>
+
+<li>The <b>concentration at percentile</b> levels shows the concentration contours 
+of areas where concentrations will be exceeded only at the given probability level.
+Although several output levels are computed, the probability level choices through
+the menu are limited to 50, 90, and 95th percentiles (<b>prob[75|90|95]</b>).</li>
+</ol>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Numerical value of handle is: 3
+Length of file is : 18
+ abcd12
+ 6
+ 1234ef
+ 5hg876

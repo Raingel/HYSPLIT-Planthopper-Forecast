@@ -1,0 +1,18 @@
+name = HYSPLIT Global Simulation
+
+layer = Background
+layerdata = ../land.jpg
+
+layer = Aerosols
+layerdata = ../4096
+
+pip = ../colorbar.png
+pipname = colorbar.png
+pipcoords = -16.83,34.25
+
+label = ../labels.txt
+fps = 4.00
+firstdwell = 2000
+lastdwell = 3000
+
+majorcategory = Site-Custom

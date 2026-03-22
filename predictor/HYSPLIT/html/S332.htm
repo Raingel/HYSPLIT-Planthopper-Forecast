@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Concentration / Display / Particle (S332)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Particle</h2></p>
+
+<p>In addition to the normal display programs for air concentrations, 
+which are designed to display and contour the actual values, the 
+particle display programs only show the instantaneous positions of the
+pollutant particles or puffs that are integrated in time by the model
+to produce the air concentration fields. To generate the particle 
+position graphics from this menu it is necessary to generate a particle
+dump file (default name: PARDUMP), which may contain one or more time
+periods of output. The creation of this file is controlled by the
+parameters set in the menu tab: "Advanced / Configuration Setup /
+<a href="S627.htm">Concentration</a>."</p>
+
+<p>The particle display menu requires the name of the particle position
+input file, the base name of the Postscript output file, the type of 
+particle display requested, and some additional options. Setting the mass
+checkbutton changes the size of the particle display dot according to its
+mass, the color option sets the dot color rather than just black. The color
+is set according to the height of the particle or if the age value is non-
+zero, then the color is set according to the particle age. The GIS option
+is (<i>valid only for the horizontal plot</i>) and it will output 
+either the ESRI generate format file or a Google Earth KML file.  
+If there are too many particles, the density of the display can be 
+reduced by plotting only every Nth particle, the default is 1 to display
+every particle. The <i>Set Cross</i> button permits the specification of 
+the actual cross-section vector, rather than letting the program determine
+it automatically. Note that similar to the trajectory and concentration
+plotting programs, shapefiles can also be defined for the map background.</p>
+
+<center><p><img src="Image19.gif" width="567" height="560"></p></center>
+
+<p>The "Plane" option results in the conventional graphic shown below of the
+horizonal plane view. There is one black dot for each particle. The size of 
+the dot varies according to the pollutant mass assigned to the particle. All
+examples are 12 or 24 hours after the start of the test simulation.</p>
+
+<center><p><img src="Image18.gif" width="436" height="458"></p></center>
+
+<p>The "vertical" option shows an integrated particle distribution view from
+the south looking north (top panel) and from the east looking west 
+(bottom panel). All particles in the computational domain are shown.</p>
+
+<center><p><img src="Image17.gif" width="460" height="478"></p></center>
+
+<p>The "cross-section" view is a combination of the horizontal plane and vertical
+views. The top panel shows the horizontal particle distribution, while the bottom
+panel shows the vertical distribution along the red regression line through the
+plume. Again all particles are shown regardless of their distance from the
+regression line. The bottom panel view is from left to right in increasing
+longitude, regardless of the orientation of the regression line.</p>
+
+<center><p><img src="Image15.gif" width="381" height="508"></p></center>
+
+<p>The global display is a special program that will always map the particles
+on a global equidistant projection. The other programs try to automatically
+scale the plots according the to particle distribution, sometimes resulting
+in distorted plots when the particle coverage becomes global. There are 
+additional command line features in this program (<i>parsplot</i>) for 
+particle size and color mapping according to the particle mass that are not
+available through the GUI.</p>
+
+<center><p><img src="Image101.gif" width="664" height="340"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Meteorology / ARL Data FTP / Archive (S112)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / ARL Data FTP / Archive</h2></p>
+
+<p>The ARL web server contains several meteorological model data
+sets already converted into a HYSPLIT compatible format on the
+public directories. Direct access via FTP to these data files is
+"hardwired" into the GUI. Only an email address is required for the
+password to access the server. The "FTP menu" is locked until the
+FTP process is completed, at which point a message box will appear
+indicating the file name that was just transferred.</p>
+
+<p>The ARL analysis data archive consists of output from the Global 
+Data Analysis System (GDAS/GFS) and the North AMerican (EDAS/NAM) Data 
+Analysis System. Data archives are available at various temporal and
+spatial resolutions. See notes below for a more detailed discussion 
+of each file.</p>
+
+<p>
+<ul>
+<li> EDAS :: 40 km 3P (>=2004 SM 650 Mb) Semi-Monthly (1-15; 16-end) data
+files at three hour intervals on pressure surfaces   
+<li> GDAS :: 1-deg 3P (>=2005 WK 600 Mb) Weekly files (W1=1-7; W2=8-14;
+W3=15-21; W4=22-28; W5=29-end) every three hours on pressure surfaces
+<li> GDAS :: 0.5-deg 3S (September 1, 2007 - June 11, 2019 DA 500 Mb) Daily files 
+every three hours on the native GFS hybrid sigma coordinate system.
+<li> GFS.v1 :: 0.25-deg 3S (May 13, 2016 - June 12, 2019 DA 2500 Mb) Daily files 
+every three hours on the native GFS hybrid sigma coordinate system. NCEP GFS.v14
+<li> GFS :: 0.25-deg 3S (>= June 13, 2019 DA 2500 Mb) Daily files 
+every three hours on the native GFS hybrid sigma coordinate system. NCEP GFS.v15(fv3)
+<li> HRRR.v1 :: 3 km 1S (June 15, 2015 - July 23, 2019 DA 3500 Mb) Hourly 
+HRRR output on sigma surfaces in four files per day (00-05, 06-11, 12-17, and 18-23).
+The forecast hour is +1 for all times.   
+<li> HRRR :: 3 km 1S (>=June 13, 2019 DA 3500 Mb) Hourly HRRR output on sigma surfaces 
+in four files per day (00-05, 06-11, 12-17, and 18-23).  The forecast hour is +0 for
+all times.  
+<li> NAM12 :: 12-km 3P (>=2007 DA 450 Mb) Composite archive 0 to +6 hour forecasts
+appended into daily files for the CONUS at three hour intervals on pressure surfaces
+<li> NAMs :: 12 km 1S (>=2010 DA 1300 Mb) Composite archive 0 to +6 hour forecasts
+appended into daily files for the CONUS at one hour intervals on sigma surfaces
+<li> NAMs-AK :: 12 km 1S (>=2010 DA 750 Mb) Composite archive 0 to +6 hour forecasts
+appended into daily files for Alaska at one hour intervals on sigma surfaces
+<li> NAMs-HI :: 2 km 1S (>=2010 DA 500 Mb) Composite archive 0 to +6 hour forecasts
+appended into daily files for Hawaii at one hour intervals on sigma surfaces
+<li> NARR :: 32 km 3P (>=1979 MO 3000 Mb) North American Regional Reanalysis on 
+pressure surfaces at three hour intervals in monthly files
+<li> WRF :: 2.5 deg 6P (>=1948 DA 220 Mb) NCAR/NCEP global reanalysis on pressure 
+surfaces at six hour intervals in monthly files
+<li> WRF :: 27 km 3S (>=1980 DA 220 Mb) Houly WRF output in daily files on sigma 
+surfaces where initial and boundary conditions were taken from the NARR
+
+</ul>
+</p>
+
+<p>Depending upon how the data is archived, from the GUI it is necessary 
+to enter at least the year and month. For other data sets the day and 
+hour (HRRR only) may be required. The file names are created automatically.</p>
+
+<p>Global NOAA-NCEP/NCAR pressure level reanalysis data archives were
+reprocessed into the HYSPLIT compatible format and are available on
+ARL's web site from 1948. More information about the reanalysis project
+and data can be found at the 
+<a href="http://www.esrl.noaa.gov/psd/data/gridded/reanalysis/">CDC</a>
+web site.</p>
+
+<p>A comparable data set is also available from ECMWF's 40 year
+<a href="http://apps.ecmwf.int/datasets/"> reanalysis</a> project. The 
+GRIB files must be downloaded independently from the GUI through a
+web browser.  Although cost free, registration with ECMWF is required.
+The downloaded ECMWF GRIB data files may be <a href="S126.htm">
+converted</a> through the GUI to the ARL format.</p>
+
+<p>Additional information about the data archives on the ARL server
+can be found at the <a href="http://www.ready.noaa.gov/archives.php">ARL web</a> page.
+</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Input and Output of Particle Files (S627)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Input and Output of Particle Files</h2></p>
+
+<p><b>Particle File Initialization Options</b></p>
+
+<p><i>NINIT</i> sets the type of initialization performed. There are two types of 
+initializations. One occurs at model startup, prior to the start of the calculations.
+This sets the initial conditions for the calculation, any particles on the computational
+grid at model startup are loaded. In the second situation, during the model simulation,
+particles are loaded each time step, if a matching time is found in the boundary
+condition file. These particles may represent emissions from a previous calculation and
+can be added to or replace the existing particles in the simulation. When <i>NINIT</i>
+is set to "0" no particle initialization occurs even if the input file is defined. A 
+value of "1" reads the file only during the initialization process. No initialization
+will occur if the time of the particle dump does not match the time of the model
+initialization. A value of "2" will check the file each hour during the simulation, and
+if the times match, the particles will be added to those already contained in the
+simulation. A value of "3" is similar to the previous case, except the particles in the
+file replace all the particles in the simulation.</p>
+
+<p><i>PINPF</i> sets the default name <i>PARINIT</i> for the particle input file that can
+be used for initialization or boundary conditions. Note that particle files are just a
+dump of all the pollutants tracked by the model at a particular time and the file can
+consist of either puffs, particles, or a combination of both.</p>
+
+<p><i>PINBC</i> with a default name <i>PARINBC</i> is a special file that can be used for
+boundary conditions while <i>PINPF</i> can be used for initial conditions or boundary 
+conditions. Setting the <i>PINBC</i> file name is not available through the 
+<a href="S640.htm">GUI</a>. For instance, <i>PINPF</i> can be used for both initial (NINIT=1)
+and boundary conditions (NINIT>1), but when <i>PINBC</i> is also defined, then it would 
+replace <i>PINPF</i> after the initial input time.</p>
+
+<p>Also not yet available through the <a href="S640.htm">GUI</a>, the namelist variable
+<i>KHINP<>0</i> sets the particle age that will be read from the particle initialization
+file that may contain particles of many different ages each output time period. This option
+is intended to be used with continuous initialization (<i>NINIT=2</i>). An example of this
+application may be to create a particle file using high resolution regional meteorology, but
+only for the first few hours of transport. In the case of continuous emissions, this file 
+would be read each time period during the coarser grid simulation, but only initializing with
+particles that are of age = <i>KHINP</i>. The final output requires that the concentration
+grids from the two simulations be added together.</p>
+
+<p>Also note that when a particle file is used for initialization of a simulation,
+the meteorological grid identification of a particle is retained from the previous simulation
+(except when <i>KHINP<>0</i>). This means that if different meteorological input files are
+defined in the two simulations, a particle on the second simulation may not be defined on
+the intended meteorological grid at the start of the calculation.</p>
+
+<p><b>Particle File Output Options</b></p>
+
+<p><i>POUTF</i> sets the name for the particle dump output file. <i>PARDUMP</i> is the default.</p>
+
+<p><i>NDUMP</i> can be set to dump out all the particle/puff points at
+selected time intervals to a file called <i>PARDUMP</i>. This file can be
+read from the root directory at the start of a new simulation to continue the
+previous calculation. 
+<i>NDUMP</i> and <i> NCYCL </i> control when and how often particle positions
+are written to the file. They may be [0] or negative or positive integers. 0 is the
+default value.
+
+<p><b>Summary of NDUMP, NCYCL combinations </b> <p>
+NDUMP=0, NCYCL=0 (default)<br>
+No <i>PARDUMP</i> file written <p>
+NDUMP=+M, NCYCL=0<br>
+particle positions written at hour M. <p>
+NDUMP=+M, NCYCL=+N <br>
+Particle positions written first at M, then again at M+1*N, M+2*N, M+3*N...<br>
+<i>NCYCL</i> sets the repeat interval at which the <i>PARDUMP</i> file is
+to be written after the first write at hours <i>NDUMP</i>. For instance, in a 
+multi-day simulation, one application would be to set <i>NDUMP</i>=24 and 
+<i>NCYCL</i>=24 to output all points at the end of every simulation day. If
+the model were to crash unexpectedly, the simulation could be restarted from
+the last <i>PARDUMP</i> output. 
+<p>
+NDUMP=+M, NCYCL= -N <br>
+Particle positions written at simulation start, then again at M+1*N, M+2*N, M+3*N. However,
+each write over-writes the previous so only positions at M+tN are saved in the file. <br>
+This means that the file will always contain one time period, a more compact
+file for initialization purposes. <p>
+
+NDUMP=0, NCYCL=+N <br>
+Particle positions written at simulation start then again at 1*N, 2*N, 3*N <p>
+NDUMP= -M, NCYCL=0 <br>
+Particle positions written at each time step up to hour M <br>
+Note that if <i>NDUMP</i> is negative, 
+the <i>NCYCL</i> field is ignored.</p>
+
+NDUMP=0, NCYCL= -N <br>
+Particle positions written at simulation start and each time step up to hour N <p>
+
+<center><p><img src="Image78.gif" width="552" height="443"></p></center>
+
+<p>Although not yet available through the GUI, there is a command line program 
+<a href="S350.htm">par2conc</a> that can be used to convert the particle position 
+file to a binary concentration file.</p>
+
+
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

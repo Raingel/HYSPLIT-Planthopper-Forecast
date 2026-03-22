@@ -1,0 +1,16 @@
+DIRECTORY:	/testing
+Last Revised:	January 2010
+________________________________________________________________________________
+
+On the development side, the testing directory is used to insure that as new code
+changes are introduced, various model configuration simulations still produce results.
+The xrun script is executed, which runs a series of simulations in sequence as 
+configured in the various CONTROL and SETUP namelist files.  There is one output graphic
+for each simulation (plot_???.ps) which are combined into a single Postscript file
+(results.ps).  The individual graphical frames in this file should be identical or 
+comparable to the graphics for the simulations run on our development PC as shown in the
+the results.pdf file.
+
+On the applications side, the xrun script can be used as a guidline in configuring
+a variety of different simulations, some of which are not discussed in the user's guide.
+The script also provides a template for automation and other customization scripting.

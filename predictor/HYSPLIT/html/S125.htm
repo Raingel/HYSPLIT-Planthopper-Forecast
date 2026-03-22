@@ -1,0 +1,48 @@
+<html>
+<head>
+<title>Meteorology / Convert to ARL / Global Lat-Lon (S125)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / Convert to ARL / Global Lat-Lon</h2></p>
+
+<p>This menu tab is intended to <a href=
+"S142.htm#grib2arl">convert</a> existing ECMWF or NOAA GRIB-1 files
+to the ARL packed <a href="S141.htm">HYSPLIT compatible</a> format.
+Subsequent file names will be constructed automatically between the
+starting and ending day at the hour interval set by the
+radio-button. Day and hour are assumed to be the last four digits
+of the file name: {base}{DD}{HH}. Input files could consist of
+multiple time period forecasts or single-time period archives. Time
+intervals of 12 hours or more should be avoided in transport and
+dispersion calculations. Only one month of data or less should be
+processed into one output file. HYSPLIT cannot properly position to
+the correct starting data record if there is a month transition
+included within a data file.</p>
+
+<p>The input data may be on pressure surfaces or the native
+hybrid coordinate system. The "number of levels", counted from the
+surface upwards, can be used to restrict the size of the output
+file. This may be particularly useful when the input file consists
+of 60 or more hybrid levels.</p>
+
+<p>Four different grid conversions are available through the menu.
+The "Extract" option interpolates the data to a conformal map
+projection of 100x100 grid points at 100 km resolution at the
+center of the latitude and longitude selection of the slider bar.
+The Northern- or Southern Hemisphere options create a 95-km
+resolution polar stereo-graphic grid centered about the pole. The
+"Input" option results in no interpolation and the program just
+converts the original latitude-longitude data (global or regional)
+to the ARL packed format.</p>
+
+<p>The conversions from this menu are intended for data sets created
+by the operational ECMWF or NOAA forecast models. These may be
+forecast or analysis data. Conversion of <a href="S126.htm">ECMWF
+reanalysis</a> data is done through a different menu.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

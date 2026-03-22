@@ -1,0 +1,35 @@
+212:double Val,minVal,maxVal,mFactor;
+497:          if (nzCellCount == 0) maxVal=minVal=Val;
+498:          minVal = (minVal<Val)?minVal:Val;
+503:      if (nzCellCount == 0) maxVal=minVal=0.;
+505:                           " min value %g\n", nzCellCount,maxVal,minVal);
+539:        nmin = ceil(minVal/sepval);
+557:/*Evaluate separation that fits numCons contours between minVal and maxVal---*/
+560:    double dsep1=(maxVal-minVal)/numCons;
+561:    double dsep2=(maxVal-minVal)/(numCons+1);
+586:      nmin = ceil(minVal/dsep1);
+602:      levels[1] = .5 * (minVal+maxVal);
+212:double Val,minVal,maxVal,mFactor;
+487:      maxVal=0.;
+497:          if (nzCellCount == 0) maxVal=minVal=Val;
+499:          maxVal = (maxVal>Val)?maxVal:Val;
+503:      if (nzCellCount == 0) maxVal=minVal=0.;
+505:                           " min value %g\n", nzCellCount,maxVal,minVal);
+509:        sprintf(buffer,"%12.6e",maxVal);
+540:        nmax = floor(maxVal/sepval);
+557:/*Evaluate separation that fits numCons contours between minVal and maxVal---*/
+560:    double dsep1=(maxVal-minVal)/numCons;
+561:    double dsep2=(maxVal-minVal)/(numCons+1);
+587:      nmax = floor(maxVal/dsep1);
+601:      levels[0] = .01 * maxVal;
+602:      levels[1] = .5 * (minVal+maxVal);
+603:      levels[2] = .99 * maxVal;
+212:double Val,minVal,maxVal,mFactor;
+515:        mFactor = pow(10.,(double) kexpFactor);
+634:      fieldDataFill(&outfil, fd, levels[k]/mFactor,kexpFactor,ptype,height );
+222:int nLevs,nLevsAv;
+313:    nLevsAv = nMandLevels;
+543:        if (nLevs + nmax - nmin + 1 > nLevsAv) {
+546:          nLevsAv = nLevs + nmax - nmin + 1;
+588:      if (nLevsAv < nLevs + nmax - nmin + 1) {
+591:        nLevsAv = nLevs + nmax - nmin + 1;

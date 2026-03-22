@@ -1,0 +1,199 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Variables Not Set in the GUI (S640)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Variables Not Set in the GUI</h2></p>
+
+<p>
+<ul>
+
+<li><i>CAPEMIN (-1)</i> - defines the threshold value of CAPE (convective available
+potential energy J/kg) to initiate enhanced vertical mixing. A value of -1 
+(default = -1) skips the CAPE computation such that if CAPE is not available in the
+input meteorological data file then it is NOT computed. When the value is greater 
+than zero, CAPE enhanced mixing is turned on and if CAPE is not available in the 
+input data file, it is computed for each grid point, which may substantially slow
+down the overall calculation. CAPE enhanced mixing results in particles in the 
+cloud-layer being randomly redistributed within the cloud-layer if they reside in 
+a grid cell where CAPE exceeds <i>CAPEMIN</i>. A initial value of 500 J/kg is 
+suggested to test this computation. Setting CAPEMIN to -2 will utilize the Grell 
+convective parameterization if Grell convective fluxes are in the meteorological 
+input files. Setting CAPEMIN to -3 will utilize the extreme convection 
+parameterization.<br>   
+
+<li><i>DECAY (1)</i> - when (1=default) lets deposited material radioactively decay
+after accumulation on the deposition grid until it is written to the output
+file. When (0) then deposited material does not decay. In both situations, when
+the radioactive half-life is defined in the CONTROL file, the mass on the particles
+while airborne will decay in both cases. This flag only determines what happens
+after the material is deposited on the grid and before the information is written
+to the the output file.<br>
+
+<li><i>IVMAX (20)</i> Number of variables written to PARTICLE_STILT.DAT when running 
+in STILT mode (<i>ICHEM</i> = 8). Must equal the number of variables listed for 
+variable <i>VARSIWANT</i>.<br>
+
+<li><i>K10M (1)</i> - when (1=default) the 10m/2m values for winds and temperatures
+are used as the lowest data level if available in the meteorological file. When set
+to zero, these data values will not be used in any computations.<br>
+
+<li><i>KAGL (1)</i> - KAGL only applies to trajectories, not concentration simulations.
+For trajectory simulations, the default option is to write the heights as AGL (KAGL=1),
+setting KAGL=0 converts the trajectory output heights to MSL. The KMSL namelist
+parameter only applies to how heights are interpreted in the CONTROL file, while KAGL
+determines how the model heights are written to the output file.<br>
+
+<li><i>KHINP (0)</i> - when non-zero sets the particle age in hours that will be read
+from the particle initialization file (<i>PARINIT</i>) that may contain particles of
+many different ages each output time period. This option is intended to be used with
+continuous initialization (<i>NINIT=2</i>) in which the calculation is continued
+from a previous simulation in which particles older than <i>KHINP</i> had been 
+terminated by using the namelist variable <i>KHMAX=KHINP</i>. These continuous
+emission simulations require particles to be added each time step. This configuration
+works best when the integration time step is set to the same fixed value for all
+simulations.<br>
+
+<li><i>KRAND (0)</i> - same as KRAND=1 if NUMPAR is greater than 5000 or same as
+KRAND=2 if NUMPAR is less than or equal to 5000. KRAND=1 precomputes all the random
+numbers required for the particle turbulence calculations. KRAND=2 computes the
+random numbers at each dispersion time step. The dynamic method is slightly more
+accurate than the precomputed random numbers, but it requires about twice as much
+CPU time. With large particle release rates both methods will provide comparable
+results. The special case of KRAND=3 will result in no turbulent mixing being added
+to the particle position; the particle track will follow the mean trajectory. This
+option is primarily intended for diagnostic testing. The option KRAND=4 follows the
+STILT method of randomly selecting an initial seed number for the random number
+generator and compute these random numbers at each dispersion time step. KRAND=0, 1,
+2, and 3 uses the same initial seed number for non-dispersion applications (i.e.,
+emissions placement, deposition, chemistry) to allow simulations to be repeatable.
+KRAND=10, 11, 12, and 13 are the same as KRAND=0, 1, 2, and 3 except a random initial
+seed number is used for non-dispersion procedures. KRAND=4 also uses a random initial
+seed number for non-dispersion procedures.<br>
+
+<li><i>KWET (1)</i> - when (1=default) the code uses the precipitation values in the
+defined meteorological input data file. When KWET=2, the code will try to open a
+file called <i>raindata.txt</i> which defines the directory, base, and suffix
+name of an external precipitation file that is in the ARL standard format. The text
+file also defines the 4-character name of the precipitation variable as well as
+the conversion factor from file units to model units (meters/min). The file name
+is automatically constructed from the prefix and suffix names using current
+calculation date following the convention: {prefix}{YYYYMMDD}{suffix}. If the 
+<i>raindata.txt</i> file is not found in the startup directory, the model will 
+create a template for manual editing and then stop.<br>
+
+<li><i>MAXDIM (1)</i> - is the maximum number of pollutants that can
+be attached to one particle. Otherwise, if multiple pollutants are
+defined they are released as individual particles. This feature is
+only required with chemical conversion modules, which are not part
+of the standard distribution. However, the species 1->2
+<a href="S628.htm">conversion option</a> will automatically set
+MAXDIM=2, but the standard emissions routine will still put each
+species on a different particle in its appropriate array element.
+The only emissions routine that is enabled to release multiple
+species on the same particle is the <a href="S417.htm">emissions</a>
+file option. Setting MAXDIM greater than one forces all the species
+on the same particle with the limitation that the number of defined
+pollutants must equal MAXDIM. No other combinations are permitted.
+The advantage of this approach is that not as many particles are
+required for the calculation as in the situation where every
+pollutant is on its own particle.  The limitation is that each
+species on the particle should have comparable dynamic characteristics,
+such that they are all gases or have similar settling velocities,
+otherwise the transport and dispersion simulation would not be
+very realistic.<br>
+
+<li><i>MESSG (MESSAGE)</i> - is the default base name of the diagnostic 
+MESSAGE file. In normal simulations, the name defaults to the base
+name. In an ensemble multi-processor calculation, the message file name
+would be automatically set to correspond with the process number by
+appending the process number to the base name: {base}.{000}, where the
+process number can be any integer between 001 and 999.<br>
+
+<li><i>NBPTYP (1)</i> - defines the number of bins assigned to each particle
+size as defined in the pollutant section of the CONTROL file. The default value
+of one uses the input parameters. A value larger than one will create that 
+number of particle size bins centered about each value in the CONTROL file.
+The program creates the mass distribution for a range of particle sizes given 
+just a few points within the distribution. We assume that dV/d(log R) is linear
+between the defined points for an increasing cumulative mass distribution with
+respect to particle diameter. The input points in the CONTROL file should be
+sorted by increasing particle size within the array. For instance, if the
+CONTROL file defines 3 particle sizes (5, 20, and 50), and NBPTYP=10, then for
+the 5 micron particle generates sizes from 2.3 to 8.1 microns while the 50 micron
+input particle generates sizes from 30.2 to 68.9 microns.<br>
+
+<li><i>NTURB (0)</i> Turbulence on: 0; turbulence off: 1<br>
+
+<li><i>OUTDT (0)</i> - defines the output frequency in minutes of the endpoint
+positions in the <i>PARTICLE.DAT</i> file when the STILT emulation mode is
+configured. The default value of 0 results in output each time step while the
+positive value gives the output frequency in minutes. A negative value disables
+output. The output frequency should be an even multiple of the time step and be
+evenly divisible into 60. In STILT emulation mode, the time step is forced to
+one minute.<br> 
+
+<li><i>PINBC</i> - defines the input particle file name (default=PARINBC) that
+can be used for boundary conditions during the simulation.<br>
+
+<li><i>PLRISE (1)</i> Brigg's plume rise option (1), Sofiev plume rise option (2), 
+or Freitas plume rise option (3) used when heat/fire radiative power in the 
+<a href="S417.htm">emissions input file</a> is nonzero.<br>
+
+<li><i>RHB (80)</i> - defines the initial relative humidity required to define
+the base of a cloud.<br>
+
+<li><i>RHT (60)</i> - the cloud continues upward until the relative humidity
+drops below this value. The values represent a compromise between the cases when
+the cloud (and precipitation) covers an entire grid cell and those situations
+where the cloud may only cover a fraction of the meteorological grid cell. For
+example, using the cloud fractions as defined in the EDAS (40 km resolution) data, 
+70% of the time 100% cloud cover occurs when the RH exceeds 80%.<br>
+
+<li><i>SEED (0)</i> The value of the random seed is set to -1+SEED. Default value of SEED is 0,
+thus the default of the random seed for the single processor version is -1.<br>
+
+<i>TLFRAC (0.1)</i> The fraction of the Lagrangian vertical time scale used to 
+calculate the dispersion time step in the STILT dispersion scheme. This variable
+is used when the STILT dispersion scheme (<i>IDSP</i> = 2) is selected.<br>
+
+<li><i>TVMIX</i> - vertical mixing scale factor is applied to vertical
+mixing coefficients when <i>KZMIX</i> = 2 for boundary layer values and
+<i>KZMIX</i> = 3 for free-troposerhere values.<br>
+
+<li><i>VARSIWANT ('TIME','INDX','LONG','LATI','ZAGL','SIGW','TLGR','ZSFC','TEMP','SAMT','FOOT','SHTF','DMAS','DENS','RHFR','SPHU','DSWF','WOUT','MLHT','PRES')</i> List of variables 
+written to PARTICLE_STILT.DAT when running in STILT mode (<i>ICHEM</i> = 8). 
+The following variable options are available: TIME (time since start of 
+simulation), SIGW (standard deviation of vertical velocity), TLGR (Lagrangian 
+vertical time scale), LONG (longitude), LATI (latitude), ZAGL (height AGL), 
+ZSFC (terrain height), INDX (particle index), ICDX (cloud index: 1=updraft; 
+2=environment; 3=downdraft), TEMP (temperature at lowest model layer), TEMZ 
+(temperature), PRES (pressure), SAMT (time below VEGHT), FOOT (footprint), 
+SHTF (sensible heat flux), WHTF (latent heat flux), TCLD (total cloud cover), 
+DMAS (particle weight change), DENS (air density), RHFR (relative humidity 
+fraction), SPHU (specific humidity), LCLD (low cloud cover %), ZLOC (limit of 
+convection height), DSWF (downward shortwave radiation), WOUT (vertical mean 
+wind velocity), MLHT (mixed layer height), RAIN (total rain fall rate m/min), 
+CRAI (convective rain fall rate m/min), ZFX1 (vertical displacement due to 
+convective flux).<br>
+
+<li><i>VBUG (0)</i> - additional insect horizontal speed (m/s) added to trajectories.<br>
+
+<li><i>VDIST (VMSDIST)</i> - an output file that contains the hourly vertical
+mass distribution, similar to the values shown in the MESSAGE file every six
+hours. The output can be disabled by setting the default file name to blank
+or null length. Programs <i>vmsmerge and vmsread</i> are available in the
+exec directory to view and process these files.<br>
+
+<li><i>VEGHT (0.5)</i> Height below which particle's time is spent is tallied 
+to create footprint written to PARTICLE_STILT.DAT when run in STILT mode 
+(<i>ICHEM</i> = 8). Less than or equal to 1.0: fraction of PBL height; greater 
+than 1.0: height AGL (m).<br>
+
+</p>
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

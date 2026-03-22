@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / In-Line Conversion Modules (S628)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / In-Line Conversion Modules</h2></a>
+
+<p>Setting the <i>ICHEM</i> variable to a non-zero value changes the model's internal
+configuration in terms of how it treats the pollutants. Some conversion options require
+additional modules and specific requirements in setting up the <i>CONTROL</i> file. See
+the linked discussion under each option for more information.</p>
+
+<p><b><i>ICHEM</i> is chemistry module selection index:</b></p>
+<ul>
+<li>0=none (<b>DEFAULT</b>)
+<li>1=<a href="S356.htm#run_matrix">Restructure the concentration grid to a source-receptor format</a>
+<li>2=<a href="S441.htm#transform">Convert species #1 to species #2 at [fraction] per hour</a>
+<li>3=<a href="S356.htm#run_dust">Enable the PM10 dust storm emission algorithm</a>
+<li>4=<a href="S441.htm#chemistry">Force concentration grid to be identical to meteorology grid</a>
+<li>5=<a href="S441.htm#deposition">Deposit particles rather than reducing their mass</a>
+<li>6=<a href="S441.htm#mixrat">Divide output mass by air density (kg/m3) to sum as mixing ratio</a>
+<li>7=<a href="S441.htm#sfc_water">Transport deposited particles on the ocean surface</a>
+<li>8=<a href="S441.htm#stilt">STILT mode: mixing ratio (#6) and varying layer (#9)</a>
+<li>9=<a href="S441.htm#varmix">Set concentration layer one to a fraction of the boundary layer</a>
+<li>10=<a href="S340.htm">Restructure concentration grid into time-varying transfer matrix</a>
+<li>11=<a href="S365.htm">Enable daughter product calculation</a>
+</ul>
+
+<center><p><img src="Image79.gif" width="592" height="512"></p></center>
+
+<p><b>Additional Chemistry Options</b></p>
+
+<p><i>MAXDIM </i> is the maximum number of pollutants that can be attached to one 
+particle. Otherwise, if multiple pollutants are defined they are released as individual 
+particles. This feature is usually required with chemical conversion modules, which are not 
+part of the standard distribution. However, the species 1->2 conversion option will 
+automatically set MAXDIM=2. Both the standard point source and <a href="S417.htm">emissions file</a>
+input routines are enabled to release multiple species on the same particle. In addition,
+for the daughter product calculation MAXDIM needs to be set equal to the number of daughter nuclides.
+Setting MAXDIM greater than one forces all the species on the same particle, with the limitation that 
+the number of defined pollutants must equal MAXDIM. No other combinations are permitted. 
+The advantage of this approach is that not as many particles are required for the calculation
+as in the situation where every pollutant is on its own particle.  The limitation is that each
+species on the particle should have comparable dynamic characteristics, such that they are all
+gases or have similar settling velocities; otherwise the transport and dispersion simulation 
+would not be very realistic. In the case of multiple species defined on a single particle, the 
+gravitational settling routine will use the characteristics of the last defined pollutant to
+compute settling for that particle. Deposition, decay, and other removal processes are still
+handled for independently for each pollutant on that particle.
+</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

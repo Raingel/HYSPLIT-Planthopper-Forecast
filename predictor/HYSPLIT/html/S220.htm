@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Trajectory / Run Model (S220)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Run Model</h2></p>
+
+<p>Once the <a href="S210.htm">Trajectory Setup</a> menu has been
+closed with the <i>Save</i> button, the changes to the simulation
+parameters are copied to <i>default_traj</i>. Clicking on the
+<i>Run Model</i> menu tab first copies <i>default_traj</i>
+to <i>CONTROL</i> and then runs the trajectory model executable,
+<i>hyts_std{.exe}</i>. The executable, by default, attempts to open a
+file named <i>CONTROL</i> to read all the required input
+parameters. If not found, the model will prompt to standard output
+for values from standard input. This condition should not occur
+running the model through the GUI. When the model execution starts,
+output messages are written to a special window, an example of
+which is shown in the illustration below:</p>
+
+<center><p><img src="Image27.gif" width="510" height="390"></p></center>
+
+<p>Successful completion of a simulation will show a similar
+message. Additional run-time diagnostic messages and other error
+messages are always written to a file called <i>MESSAGE</i>. This
+file may be viewed through one of the <a href="S440.htm">Advanced
+Menu</a> tabs. Depending upon the nature of the error message,
+perhaps a failure in the model initialization process, error
+messages may also appear in above window. Once the model has
+completed, <b>press Exit</b> to close the window.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

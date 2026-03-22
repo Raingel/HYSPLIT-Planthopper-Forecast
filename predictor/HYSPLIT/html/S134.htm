@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Meteorology / Utilities / Convert SVG (S134)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / Utilities / Convert SVG</h2></p>
+
+<p>A utility tab is provided in the meteorology, trajectory, and
+concentration menu's that will convert the Scalable Vector Graphic to
+another format. The menu shows the name of the last HTML file
+that was created. If that is not the file desired, it should be
+replaced with the appropriate file name. All output files are
+assumed to reside in the working directory and therefore a file
+from any menu can be converted from any of the conversion menu
+tabs. The file suffix represents the conversion format. The slider
+bar determines the size of the output graphic in pixels per inch.
+The default value of 70 will produce an output frame of comparable
+size to the input graphic. The checkboxes permit the creation of a
+multiframe animation in one file or multiple output files if the
+"Frames" option has been checked. The "Crop" option eliminates
+the white space around the graphic. However, the crop option may produce
+inconsistent results when used in conjunction with the animation feature.</p>
+
+<p>The conversion process uses the svgsplit program to read the HTML file
+and <a href="http://www.imagemagick.org/">ImageMagick</a>
+to convert that file to a variety of other supported graphical formats.
+These programs can be stand-alone, but they have been linked through the 
+<a href="http://www.tcl.tk">Tcl/Tk</a> GUI menu. Conversion to GIF is the 
+default. Proper installation of all the previously mentioned 3<sup>rd</sup>
+party software is critical in the correct operation of the conversion process.
+This software is included with the HYSPLIT trial version but not with the
+registered installation executable. Links to these programs are also available
+through the HYSPLIT <a href="https://www.ready.noaa.gov/HYSPLIT_util.php">
+utilities web page</a>.</p>
+
+<p>If non-default directory wwas selected during the installation of 
+<i>ImageMagick</i>, it may be necessary to
+manually edit the directory location. The directory pointer can be changed
+from the "Advanced-Configuration-Directories" <a href="S416.htm"> menu</a>
+tab, which modifies the file default_exec. In the rare situation when this file
+cannot be edited or does not exist because the GUI did not load because of
+problems with Tcl/Tk, then the appropriate lines in the upper-level Tcl/Tk file
+<i>..\guicode\hysplit.tcl</i> need to be changed. For instance, the line that
+might require editing would be similar to the following:</p>
+<ul>
+set magick_dir "c:/Program Files (x86)/ImageMagick-6.4.4-Q8/convert.exe"<br>
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

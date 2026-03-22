@@ -1,0 +1,44 @@
+#!/bin/ksh
+
+# script to process SOS images into transparent PNG images for display on the NOAA Science on a Sphere 
+
+  rm -f colorbar.png
+  if [ ! -e "4096" ];then
+    mkdir 4096
+  fi
+  rm -f labels.txt
+  cd 4096
+  rm -f *.ps
+  rm -f *.png
+  rm -f *.kmz
+  rm -f GELABEL*
+
+  /home/glennr/repository/hysplit/trunk/exec/gridplot -i../cdump -b1 -s1 -n-2 -ubq -oconhys -m1 -h500 -c1000.0 -d10.000000 -k0 -l-1.000000 -z0 -g3
+  if [ -f labels.txt ];then
+    mv labels.txt ../labels.txt
+  fi
+  if [ -f conhys.kml ];then
+    /usr/bin/zip conhys.kmz conhys.kml
+    rm conhys.kml
+  fi
+
+# process color legend bar
+  if [ -f soslgd.ps ];then
+      gs -r540 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dSAFER -sDEVICE=png16m -q -sOutputFile=- soslgd.ps -c quit | convert -rotate 90 -transparent white -trim +repage +adjoin - ../colorbar.png
+      rm -f soslgd.ps
+  fi
+
+# process all images
+  if [ -f conhys_001.ps ];then
+    let frame=1
+    fnum=`printf %3.3d $frame`
+    while  [ -f conhys_${fnum}.ps ]; do
+      echo "Concentration png map $fnum..."
+#     create png images for SOS with resolution of 4096x2048 with transparency
+      gs -r540 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dSAFER -sDEVICE=png16m -q -sOutputFile=- conhys_${fnum}.ps -c quit | convert -rotate 90 -transparent white -trim +repage +adjoin -resize 4096x2048\! - hyssos_4096_${fnum}.png
+      rm -f conhys_${fnum}.ps
+      let frame=$frame+1
+      fnum=`printf %3.3d $frame`
+    done
+  fi
+exit

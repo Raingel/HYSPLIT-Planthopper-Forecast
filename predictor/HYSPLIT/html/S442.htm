@@ -1,0 +1,85 @@
+<html>
+<head>
+  <title>Advanced / Special Topics / Particle Dump File Format (S442)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Special Topics / Particle Dump File Format</h2></p>
+
+<p>The concentration configuration menu provides an option to write a model initialization file, 
+which by default is always named "PARDUMP" (for particle dump). This file can be written at 
+regular intervals during the simulation, a convenient way to restart a simulation in case of 
+unexpected failure. To restart the model using the PARDUMP file it is only necessary for the 
+file to be present in the root working directory. If the internal time stamp of the file matches 
+the start time of the simulation, the model will initialize the particle count from the file 
+before emitting new particles according to the emission scenario defined in the control file. 
+The format of the PARDUMP file is given below:</p>
+
+<p>Record #1</p>
+<ul>
+  <li>INT*4 Number of particles</li>
+  <li>INT*4 Number of pollutants per particle</li>
+  <li>INT*4 Time of particle dump (YEAR, MONTH, DAY, HOUR, MINUTES)</li>
+</ul>
+
+<p>Record #2 - Loop to record: Number of particles</p>
+<ul>
+  <li>REAL*4 Particle pollutant mass (times the number of pollutants)</li>
+  <li>REAL*4 Particle LATITUDE, LONGITUDE, HEIGHT, SIGMA-H,SIGMA-W, SIGMA-V</li>
+  <li>INT*4 Particle AGE, DISTRIBUTION, POLLUTANT, METEO-GRID,SORT-INDEX</li>
+</ul>
+
+<p>The "Particle" tab of the "Special File Display" menu brings up a Windows based viewer that
+shows the particle positions over a map background. The display can be zoomed and otherwise adjusted 
+using the left and right mouse buttons in conjunction with the shift and cntl keys. Help is provided 
+on the screen with the left and right side comments corresponding to the respective mouse button. 
+The particle viewer can also be used to overlay satellite images on the particle positions. More 
+information on this is provided "FTP Satellite Data" help menu. The particle position file may be 
+converted to a binary concentration file through the command line utility program 
+<a href="S350.htm">par2conc</a>.</p>
+<p>
+Number of pollutants per particle is set by <a href="S628.htm">MAXDIM</a>. Default is 1. 
+<p>
+HEIGHT is in meters agl. The height is in agl even when KMSL=1 is set in SETUP.CFG <br>
+Note that there may be some differences between the value written to the pardump file and the actual value when
+the terrain height is large.  The terrain height is not passed to the pardump reading or writing routines and
+so the height is written approximating terrain height as 0m. This results in a small difference which is dependent
+on the terrain height and internal scaling height.  
+<br>Za'=(1-Zt)*ZMDL  
+<br>Za=(1-Zt)*(ZMDL-ZTER)
+<br>Za' = (ZMDL / (ZMDL-ZTER))* Za
+<br> Za' is the approximated height written to the pardump file.
+<br> Za is the actual height of the particle
+<br> ZMDL, internal scaling height. Default is 25km. May be higher if model top is chosen higher. <a href="S310.htm">See #6</a>
+<br> ZTER is the terrain height.
+<br> Zt is the terrain following coordinate.
+<br> Example - a height of 100m agl in an area with terrain height tof 1600m would show up as a height of 106.8m in the pardump file.
+<br> This has no impact on the intended functionality which is to restart the model from a pardump file created by the model.
+<br> However if you are writing your own pardump file or using the output for other purposes in a high altitude area, you may
+<br> wish to take this into account.
+
+<p>
+SIGMA-H is the horizontal puff size in meters.
+<p>
+VEL-W is the current value for the turbulent velocity in the vertical in m/s
+<p>
+VEL-V is the current value for the turbulent velocity in the horizontal in m/s
+<p>
+Currently VEL-U is not written to the pardump file and when the model is initialized
+from a pardump file, it assumed that vel-u = vel-v.
+<p>
+POLLUTANT is an integer, N, which corresponds to the Nth pollutant species defined in the CONTROL file. <a href="S312.htm">Pollutant definition</a>
+<p>
+METEO-GRID is n integer, N, which corresponds to the Nth meteorological data grid defined in the CONTROL file. 
+<p>
+SORT-INDEX  Each particle or puff is assigned its own unique sort-index. The sort index is used within HYSPLIT for looping through all the computational particles or puffs. If a computational particle is removed during the simulation, the sort indices are reassigned so that there are only as many sort indices as particles.
+Consequently, the sort index for a computational particle may change during a simulation. If ichem=8, then particle deletion is turned off, and the sort index will refer to the same computational particle throughout the simulation.
+
+In the case of puffs, the sort indices are reassigned when puffs are deleted, merged or split.
+
+<br>
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

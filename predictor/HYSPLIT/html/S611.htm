@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Define subgrid and MSL/AGL units (S611)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Define subgrid and MSL/AGL units</h2></p>
+
+<p><h3>Meteorological Sub-grid Size</h3></p>
+
+<p><i>MGMIN</i> (10) - is the minimum size in grid units of the
+meteorological sub-grid. The sub-grid is set dynamically during the
+calculation and depends upon the horizontal distribution of
+end-points and the wind speed. Larger sub-grids than necessary will
+slow down the calculation by forcing the processing of
+meteorological data in regions where no transport or dispersion
+calculations are being performed. In some situations, such as when
+the computation is between meteorological data files that have no
+temporal overlap or insufficient spatial overlap, the model may try
+to reload meteorological data with a new sub-grid. This will result
+in a fatal error. One solution to this error would be to increase the
+minimum grid size larger than the meteorological grid to force a 
+full-grid data load.</p>
+  
+<p><h3>Height Unit for Input</h3></p>
+
+<p><i>KMSL</i> (0) - sets the default for input heights to be relative
+to the terrain height of the meteorological model. Hence input
+heights are specified as AGL. Setting this parameter to "1" forces
+the model to subtract the local terrain height from source input
+heights before further processing. Hence input heights should be
+specified as relative to Mean Sea Level (MSL). In concentration
+simulations, the MSL option also forces the vertical concentration
+grid heights to be considered relative to mean sea level. The
+special option (xBL) sets KMSL to 2 and treats the input height as
+a fraction of the boundary layer (or mixed layer) depth at the
+trajectory starting location and time. This option is not valid
+with any multiple trajectory in time configurations or any of the
+concentration-dispersion calculations. Valid starting heights can
+be defined as any non-zero fraction less than 2.0.</p>
+ 
+<center><p><img width="558" height="345" src="Image66.gif"></p></center>
+
+<br>
+<p><h3>Height Unit for Output</h3></p>
+
+<p>The namelist variable KAGL (=1) only applies to trajectories, not 
+concentration simulations. For trajectory simulations, the default option
+is to write the heights as AGL (KAGL=1), setting KAGL=0 converts the trajectory
+output heights to MSL. The KMSL namelist parameter described above only applies
+to how heights are interpreted in the CONTROL file, while KAGL determines how
+the model heights are written to the output file. This <a href="S640.htm">variable</a>
+is not available through the GUI.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

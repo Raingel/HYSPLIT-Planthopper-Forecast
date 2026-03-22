@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Multiple Trajectories in Time (S612)</title>
+</head>
+<body>
+ 
+<p><h2>Advanced / Configuration Setup / Multiple Trajectories in Time</h2></p>
+
+<p>Restart Interval - <i>NSTR</i> (0) - Hours between trajectory starts for
+multiple trajectory-in-time simulations. When greater than zero, new
+trajectories will be started from the original starting location
+every NSTR hours from the initial trajectory starting time. See the
+<a href="S253.htm#multi_time">special trajectory</a> simulation
+section for more information.</p>
+
+<p>Number of Multiple Levels - <i>NVER</i> (0) - Number of vertical levels 
+that trajectories are restarted when trajectories for multiple
+trajectory-in-time-and-space simulations. When greater than zero,
+new trajectories will be started at this number of levels from the
+endpoint position at the NSTR interval. The level heights are set
+in the CONTROL file and must match the number of starting
+locations. See the <a href="S253.htm#multi_space">special
+trajectory</a> simulation section for more information.</p>
+
+<p>Trajectory Duration - <i>MHRS</i> (9999) - Sets the maximum temporal trajectory
+restart period. For instance if you want to compute one month's worth of
+two-day trajectories, then the run duration would be 720 hours,
+<i>MHRS</i> would be set to 672 hours (720-48), and <i>KHMAX</i>
+<a href="S613.htm">(see below)</a> would be set to 48 hours.</p>
+
+<center><p><img width="484" height="276" src="Image67.gif"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

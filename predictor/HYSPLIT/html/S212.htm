@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Vertical Motion Methods (S212)</title>
+</head>
+<body>
+
+<p><h2>Vertical Motion Methods</h2></p>
+
+<p>The trajectory vertical motion method is set by a single digit in the CONTROL
+file. This method would apply to all meteorological data files. The default value
+is to use the vertical velocity data fields supplied with the meteorologcal model
+data.</p>
+<ul>
+<li> 0 = uses the data fields from the meteorological model
+<li> 1 = isobaric follows constant pressure surfaces
+<li> 2 = isentropic follows potential temperature surfaces
+<li> 3 = the calculation follows constant density surfaces 
+<li> 4 = isosigma follows the internal terrain following coordinate system, the closest approximation to no vertical velocity
+<li> 5 = computes the vertical velocity by integrating the divergence
+<li> 6 = assumes the vertical velocities are relative to MSL which are remapped to AGL
+<li> 7 = horizontally averages the vertical velocities to be consistent with the temporal frequency of the data 
+<li> 8 = damps the magnitude of the vertical velocity based upon the ratio of data frequency to grid size 
+</ul>
+
+<p>Note that methods 1,2,3,4 are only approximations. Instead of remapping the data
+fields to these surfaces, a vertical velocity is computed that would maintain the 
+trajectory on the selected surface.
+</p>
+
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

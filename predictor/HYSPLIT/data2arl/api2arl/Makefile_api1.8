@@ -1,0 +1,65 @@
+#------------------------------------------------------------------
+# Makefile for the ../data2arl/api2arl data converter 
+# This makefile is for use with the grib_api libraries.
+# v1 - original converter for NCEP archive
+# v2 - modified for JMA mesoscale data on hybrid coordinate
+# v3 - revised for CTBTO ECMWF hybrid and NOAA pressure levels
+# Last Revised: 28 Jan 2007 
+#               09 Aug 2007 - support for gfortran
+#               24 Sep 2012 - multiple version support
+#               12 Feb 2013 - version 4 GSD HRRR
+#------------------------------------------------------------------
+
+SHELL = /bin/sh
+
+EXE=../../exec
+
+export GRIB_API_INCLUDE=../usr/include
+export GRIB_API_LIB=../usr/lib
+
+INC=-I/usr/local/include
+LIB=-L/usr/local/lib -lgrib_api_f90 -lgrib_api -ljasper -L../../library -lhysplit
+
+SUN5 = -O -free
+AIXC = -O3 
+AIX8 = -O3 -qarch=auto -qmaxmem=8192 -qstrict
+AIX6 = -O -qarch=com -qmaxmem=8192
+AIX5 = -O -qarch=com -qmaxmem=8192
+AIX4 = -O -qarch=pwr2 -qmaxmem=8192
+AIX3 = -O -qcharlen=3072 -Pv -Wp,-gv
+DEC3 = -O -assume byterecl
+SGI5 = -O -bytereclen -freeform
+SGI3 = -O -old_rl
+ABSF = -O1 -f free 
+PGF9 = -O -Mfree -byteswapio
+INTL = -O -FR -assume byterecl -convert big_endian -I.
+GF95 = -O2 -fendian=big -ffree-form 
+GFOR = -O2 -fconvert=big-endian -frecord-marker=4 -ffree-form 
+
+CFLAGS = $(GFOR)
+LFLAGS = -vr
+FC = gfortran
+
+all : apidump api2arl_v1 api2arl_v2 api2arl_v3 api2arl_v4
+
+apidump : apidump.f 
+	$(FC) -o $(EXE)/$@ $(CFLAGS) $(INC) $? $(LIB)  
+
+api2arl_v1 : api2arl_v1.f 
+	$(FC) -o $(EXE)/$@ $(CFLAGS) $(INC) $? $(LIB)  
+
+api2arl_v2 : api2arl_v2.f 
+	$(FC) -o $(EXE)/$@ $(CFLAGS) $(INC) $? $(LIB)  
+
+api2arl_v3 : api2arl_v3.f 
+	$(FC) -o $(EXE)/$@ $(CFLAGS) $(INC) $? $(LIB)  
+
+api2arl_v4 : api2arl_v4.f 
+	$(FC) -o $(EXE)/$@ $(CFLAGS) $(INC) $? $(LIB)  
+
+clean :
+	rm -f $(EXE)/apidump
+	rm -f $(EXE)/api2arl_v1
+	rm -f $(EXE)/api2arl_v2
+	rm -f $(EXE)/api2arl_v3
+	rm -f $(EXE)/api2arl_v4

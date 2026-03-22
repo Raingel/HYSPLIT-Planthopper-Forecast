@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>Advanced / Special Topics / Message File Format (S443)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Special Topics / Message File Format</h2></p>
+
+<p> A MESSAGE file is created during each simulation. The file contains information from 
+certain key subroutines that can be used for diagnostic purposes if a simulation were to 
+fail. An example file is shown below in the left column from the test concentration 
+simulation. A trajectory MESSAGE file would be similar but without the particle number 
+and mass information. In the right column, in red, a more detailed description of each 
+item is provided.</p>
+
+<p><h3> Some common warning messages </h3> </p>
+
+<p> <b> WARNING EMSPNT: exceeding puff limit </b> <br>
+This warning occurs when the number of computational particles or puffs in
+the simulation reaches the number set by MAXPAR in the SETUP.CFG file.
+The model will not allow the simulation to have more than the number of particles or
+puffs specified by MAXPAR. When that number has been reached, the model will not create more
+particles or puffs. 
+<br> For particles, this will prevent any new emissions to occur.
+<br> For puffs, this will both prevent any new emissions and will prevent any puff splitting.
+<br> Solutions include increasing MAXPAR, decreasing NUMPAR, 
+
+<p> <b> WARNING DEPSUS: exceeding puff limit </b> <br>
+This warning occurs when the user has a value set for the particle resuspension and
+the number of particles carried in the simulation has exceeded the maximum number set in the SETUP.CFG file.
+It will occur in conjunction with the previous warning. Utilizing this pollutant resuspension algorithm 
+may lead to excessive particle generation <a href=S314.htm> See #31 </a>.  
+
+<p><h3> Description of File Format </h3> </p>
+
+<p><b>Start Namelist configuration</b></p>
+
+Internal grid parameters (nlvl,aa,bb,cc): 19 30.0 -25.0 5.0<br>
+&amp;SETUP INITD = 4, KHMAX = 9999, NUMPAR = 500, MAXPAR = 10000, MAXDIM = 1,<br>
+QCYCLE = 0.0000E+00,<br>
+FRME = 0.10000000,<br>
+FRMR = 0.0000E+00,<br>
+KRND = 6,<br>
+DELT = 0.0000E+00,<br>
+ISOT = 0,<br>
+TKER = 0.50000000,<br>
+NDUMP = 0,<br>
+NCYCL = 0,<br>
+TRATIO = 0.75000000,<br>
+MGMIN = 10,<br>
+KMSL = 0,<br>
+NSTR = 0,<br>
+CPACK = 1,<br>
+ICHEM = 0,<br>
+NOUT = 0, TM_PRES = 0, TM_TPOT = 0, TM_TAMB = 0, TM_RAIN = 0, TM_MIXD = 0,<br>
+DXF = 1.0000000,<br>
+DYF = 1.0000000,<br>
+DZF = 9.9998E-03,<br>
+NINIT = 1,<br>
+PINPF = PARINIT,<br>
+POUTF = PARDUMP<br>
+<b>-- End Namelist configuration ---</b><br>
+
+NOTICE main: pollutant initialization flags<br>
+Gas pollutant - T<br>
+Current version and release date<br>
+Tabulates value of namelist variables<br>
+
+<ul>
+<p>Number of internal model sigma levels and the polynomial parameters used to describe 
+the vertical grid. These are configured automatically based upon the meteorological input 
+data files defined for this simulation.</p>
+
+<p>The value of all variables that can be defined by the SETUP.CFG namelist file are listed. 
+If no SETUP.CFG file was defined for this simulation, then the default values for these 
+variables are listed.</p>
+
+<p>The settings of all internal deposition flags are shown here. In this case the simulation 
+is for a gas.</p>
+</ul>
+
+NOTICE metpos: (mtime,ftime) - 50379840 0<br>
+NOTICE metpos: (mtime,ftime) - 50379960 0<br>
+NOTICE advpnt: (kg,nx,ny,nz) - 1 10 10 19<br>
+NOTICE sfcinp: reading ASCDATA.CFG<br>
+NOTICE metgrd: (kg, xyr,xy1) - 1 10 10 17 9<br>
+NOTICE metinp: NGM 1 1 10 10 17 9 50379840 95 10 16 0<br>
+#################################<br>
+
+WARNING prfsig: extrapolation from level (k,m): 16 7159.121<br>
+Input data levels: 10<br>
+Internal Sigma levels: 19<br>
+##################################<br>
+NOTICE metinp: NGM 1 63 10 10 17 9 50379960 95 10 16 2<br>
+NOTICE main: Initial time step (min) 20<br>
+NOTICE main: 1 50379860166 0.33333320<br>
+NOTICE main: 1 50379880332 0.6666647<br>
+NOTICE main: 1 50379900498 0.9999961<br>
+NOTICE main: 2 50379930498 0.9999961<br>
+NOTICE main: 2 50379960498 0.9999961<br>
+NOTICE metpos: (mtime,ftime) - 50380080 50379840<br>
+NOTICE metinp: NGM 1 125 10 10 17 9 50380080 95 10 16 4<br>
+
+<ul>
+<p>The subroutine that determines which meteorological data are required is called for 
+the first time. Data for times 840 and 960 are requested. The zeros for the second field 
+indicate no data are in memory. Times are always in relative minutes.</p>
+
+<p>The first advection entry sets sub-grid #11 to 10x10 with 19 levels.</p>
+
+<p>The surface boundary files are opened.</p>
+
+<p>The lower left corner of sub-grid #1 is set at position 17,9 of the main meteorological 
+data grid.</p>
+
+<p>The NGM data for the first computational hour are read starting at record #1, loaded 
+into a 10x10 sub-grid, corner 17,9, at time [x]840 for the date: 95 10 16 0</p>
+
+<p>When these data are interpolated to the internal grid, it is determined that there are 
+no input data records above 7159 m, therefore data for those levels are extrapolated.</p>
+
+<p>Computations for the first hour require data at two time periods for interpolation 
+(hours 0 and 2).</p>
+
+<p>The initial time step was set to 20 minutes. Subsequent time steps may change.</p>
+
+<p>The time, number of particles, and the total mass is shown for the three time steps 
+of the first hour. After one hour the emission stops.</p>
+
+<p>During hour two, no further emissions (or particles) are released. The time step is 
+now 30 minutes.</p>
+
+<p>After the hour 2, new NGM data are required. The data in memory at 0 UTC (time 840) 
+are replaced with data at 4 UTC (time 080).</p>
+
+<p>The new data are input into the same sub-grid location.</p>
+</ul>
+
+NOTICE main: 3 50379990498 0.9999961<br>
+NOTICE main: 3 50380020498 0.9999961<br>
+NOTICE main: 4 50380050498 0.9999961<br>
+NOTICE main: 4 50380080498 0.9999961<br>
+NOTICE metpos: (mtime,ftime) - 50380200 50379960<br>
+NOTICE metinp: NGM 1 187 10 10 17 9 50380200 95 10 16 6<br>
+NOTICE main: 5 50380110498 0.9999961<br>
+NOTICE main: 5 50380140498 0.9999961<br>
+NOTICE main: 6 50380170498 0.9999961<br>
+NOTICE main: 6 50380200498 0.9999961<br>
+<ul>
+<li>Index Height %Mass 
+<li>6 935.0 1.41 
+<li>5 630.0 10.84 
+<li>4 385.0 31.33 
+<li>3 200.0 29.72 
+<li>2 75.0 20.48 
+<li>1 10.0 6.22
+</ul>
+
+<p>Computations proceed as before for computational hours 3 and 4. Particle number remains the same because no particles have moved off the computational domain. The mass remains
+the same because deposition is not turned on for this simulation.</p>
+
+<p>At the end of hour 4, data are required for 6 UTC (time 200) to proceed with the calculation. These data replace the 2 UTC (time 960) in memory.</p>
+
+<p>Every 6 hours, the model prints out the vertical mass distribution of all the particles within the computational domain. This is the mass distribution relative to the model's internal sigma levels and there is no relation to the levels that may be specified for the concentration output file. Only non-zero levels are shown. The internal levels are defined by the polynomial parameters given at the beginning of the MESSAGE file.</p>
+
+<p>At this point the computation will continue for the number of hours specified in the CONTROL file. Vertical profiles are shown every 6 hours. As the particles move across the computational domain, the sub-grid position may be moved (from position 17,9) or expanded larger than 10x10) to match the spatial extent of the particle distribution. This may occur at any time during the computation or even multiple times during the same computational hour.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

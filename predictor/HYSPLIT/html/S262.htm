@@ -1,0 +1,203 @@
+<html>
+<head>
+<title>Trajectory / Setup Run / Control File Format (S262)</title>
+</head>
+<body>
+
+<p><h2>Trajectory / Setup Run / Control File Format</h2></p>
+
+<p>The trajectory model input control file can be created using
+any text editor. However if the GUI is not being used, it would be
+easier to let the model create the initial file based upon standard
+output prompts. These are described in more detail below. When data
+entry is through the keyboard (a file named <i>CONTROL</i> is not
+found), a <i>STARTUP</i> file is created. This contains a copy of
+the input, and which later may be renamed to <i>CONTROL</i> to
+permit direct editing and model execution without data entry. If
+you are unsure as to a value required in an input field, just enter
+the forward slash (/) character, and the indicated default value
+will be used. This default procedure is valid for all input fields
+except directory and file names. An automatic default selection
+procedure is also available for certain input fields of the
+<i>CONTROL</i> file when they are set to zero. Those options are
+discussed in more detail below. Each input line is numbered (only
+in this text) according to the order it appears in the file. A
+number in parenthesis after the line number indicates that there is
+an input loop and multiple entry lines may be required depending
+upon the value of the previous entry.</p>
+
+<p>1- <u>Enter starting time (year, month, day, hour, {minutes optional})</u> </p>
+<ul>
+<p>Default: 00 00 00 00 {00}</p>
+<p>Enter the two digit values for the UTC time that the calculation
+is to start. Use 0's to start at the beginning (or end) of the file
+according to the direction of the calculation. All zero values in
+this field will force the calculation to use the time of the first
+(or last) record of the meteorological data file. In the special
+case where year and month are zero, day and hour are treated as
+relative to the start or end of the file. For example, the first
+record of the meteorological data file usually starts at 0000 UTC.
+An entry of "00 00 01 12" would start the calculation 36 hours from
+the start of the data file. The minutes field is optional but should
+only be used when the start time is explicitly set to a value.</p>
+</ul>
+
+<p>2- <u>Enter number of starting locations</u> 	</p>
+<ul>
+<p>Default: 1</p>
+<p>Simultaneous trajectories can be calculated at multiple levels
+or starting locations. Specification of additional locations for
+certain types of simulations can also be accomplished through the
+<a href="S253.htm">Special Simulations</a> menu tab, or through manual
+editing of the <i>CONTROL</i> file and running the model outside of
+the GUI. When multiple starting locations are specified, all
+trajectories start at the same time. A multiple trajectory in time
+option is available through the <a href="S411.htm">Advanced</a>
+menu through a namelist file parameter setting.</p>
+</ul>
+
+<p>3(1)- <u>Enter starting location (lat, lon, meters)</u>	</p>
+<ul>
+<p>Default: 40.0 -90.0 50.0</p>
+<p>Trajectory starting position in degrees and decimal (West and
+South are negative). Height is entered as meters above ground-level.
+An option to treat starting heights as relative to mean-sea-level is
+available through the <a href="S411.htm">Advanced</a> menu through a
+namelist file parameter setting.</p>
+</ul>
+
+<p>4- <u>Enter total run time (hours)</u>	</p>
+<ul>
+<p>Default: 48</p>
+<p>Specifies the duration of the calculation in hours. Backward
+calculations are entered as negative hours. A backward trajectory
+starts from the trajectory termination point and proceeds upwind.
+Meteorological data are processed in reverse-time order.</p>
+</ul>
+
+<p>5- <u>Vertical motion option (0:data 1:isob 2:isen 3:dens 4:sigma
+5:diverg 6:msl2agl 7:average 9: fix-up&down 10: fix-down)</u></p>
+<ul>
+<p>Default: 0</p>
+<p>Indicates the vertical motion calculation method. The default "data"
+selection will use the meteorological model's vertical velocity fields;
+other options include {isob}aric, {isen}tropic, constant {dens}ity,
+constant internal {sigma} coordinate, computed from the velocity
+{diverg}ence, vertical coordinate remapping from MSL to AGL, an option
+to spatially average the vertical velocity, and two options allowing
+user-specified fixed vertical velocities. In the averaging option
+(7), the averaging distance is automatically computed from the ratio of
+the temporal frequency of the data to the horizontal grid resolution.</p>
+
+</p>While not yet available in the GUI, the user-specified
+fixed-velocity option with both up and down motion (9) requires the
+user to also set the rise (WBWR) and fall (WBWF) velocities (m/s) and
+the height at which the motion changes from up to down (WBBH) (m) in
+the SETUP.CFG file. This mode could be used to simulate a weather
+balloon with known upward and downward velocities and a known burst
+height. The downward velocity (WBWF) is specified as a positive number
+even though the motion is downward. The burst height (WBBH) is meters
+above ground level unless the advanced parameter KMSL is set to 1 to
+indicate meters above mean sea level. The top of the model domain
+(next parameter) must be greater than WBBH. In the fixed-downward-
+motion-only mode (10) (also not available yet in GUI), the user must
+simply specify the downward velocity (WBWF, m/s) in the SETUP.CFG file.
+In both of these trajectory-only "weather balloon" modes, the
+simulation stops once the trajectory hits the ground, even if the
+total run time is longer than this. Also, since a typical
+weather-balloon flight (e.g., with WBWR=4.0 m/s, WBWF=10.0 m/s,
+and WBBH=20000.0 m-agl) is only 1-2 hrs, it is recommended that
+the trajectory endpoint output frequency be set to 1 minute in
+the SETUP.CFG file (TOUT=1) to provide output information with
+sufficient time resolution.</p>
+</ul>
+
+<p>6- <u>Top of model domain (internal coordinates m-agl)</u> 	</p>
+<ul>
+<p>Default: 10000.0</p>
+<p>Sets the vertical limit of the internal meteorological grid. If
+calculations are not required above a certain level, fewer
+meteorological data are processed thus speeding up the computation.
+Trajectories will terminate when they reach this level. A secondary
+use of this parameter is to set the model's internal scaling height
+- the height at which the internal sigma surfaces go flat relative
+to terrain. The default internal scaling height is set to 25 km but
+it is set to the top of the model domain if the entry exceeds 25
+km. Further, when meteorological data are provided on terrain sigma
+surfaces it is assumed that the input data were scaled to a height
+of 20 km (RAMS) or 34.8 km (COAMPS). If a different height is
+required to decode the input data, it should be entered on this
+line as the negative of the height. HYSPLIT's internal scaling
+height remains at 25 km unless the absolute value of the domain top
+exceeds 25 km.</p>
+</ul>
+
+<p>7- <u>Number of input data grids</u></p>
+<ul>
+<p>Default: 1</p>
+<p>Number of simultaneous input meteorological files. The following
+two entries (directory and name) will be repeated this number of
+times. A simulation will terminate when the computation is off all
+of the grids in either space or time. Trajectory calculations will
+check the grid each time step and use the finest resolution input
+data available at that location at that time. When multiple
+meteorological grids have different resolution, there is an
+additional restriction that there should be some overlap between
+the grids in time, otherwise it is not possible to transfer a
+trajectory position from one grid to another. If multiple grids are
+defined and the model has trouble automatically transferring the
+calculation from one grid to another, the sub-grid size may need to
+be increased to its <a href="S611.htm">maximum</a> value.<p>
+<p> While not available in the GUI, if the user is creating the
+CONTROL file themselves, two numbers can be specified here:
+the first being the number of unique grids and the second being
+the number of files in each grid. For example, an entry of 2 12
+would mean that there are met files for 2 different grids
+(e.g., a regional and a global grid), and that there are 12 files
+being specified for each grid. The grids should be specified in
+order of resolution, with the highest resolution grids
+(i.e, the smallest horizontal spacing between grid points)
+being specified before lower resolution grids. The two entries
+for each file (directory and filename) are repeated for each
+file in the first grid, and then for each file in the second grid,
+and so on, for any subsequent grids. Note that the same number
+of files are required for each grid in this approach.
+Without the use of this approach (i.e., when only one number is
+specified) the maximum number of files that can be used in the
+simulation is relatively small, but with this second approach,
+a much larger number of files can be used in the simulation.
+</p>
+</ul>
+
+<p>8(1)- <u>Meteorological data grid # 1 directory</u></p>
+<ul>
+<p>Default: ( \main\sub\data\ )</p>
+<p>Directory location of the meteorological file on the grid
+specified. Always terminate with the appropriate slash (\ or /).</p>
+</ul>
+
+<p>9(2)- <u>Meteorological data grid # 1 file name</u></p>
+<ul>
+<p>Default: file_name</p>
+<p>Name of the file containing meteorological data. Located in the
+previous directory.</p>
+</ul>
+
+<p>10- <u>Directory of trajectory output file</u></p>
+<ul>
+<p>Default: ( \main\trajectory\output\ )</p>
+<p>Directory location to which the text trajectory end-points file
+will be written. Always terminate with the appropriate slash (\ or /).</p>
+</ul>
+
+<p>11- <u>Name of the trajectory endpoints file</u></p>
+<ul>
+<p>Default: file_name</p>
+<p>The trajectory end-points output file is named in this entry line.</p>
+</ul>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

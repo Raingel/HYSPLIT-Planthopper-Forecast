@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Mixing Depth Computation Method (S616)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Mixing Depth Computation Method</h2></p>
+
+<p>Permits the selection of the method used to compute the mixed layer depth.
+The mixed layer depth does not affect the trajectory computation, only the 
+dispersion and resulting air concentrations by changing the rate of dispersion
+as well as providing a lid to vertical mixing of pollutants. Options include
+the following:</p>
+<ul>
+<li>Use meteorological model - uses the mixed layer depth value from the meteorological
+model. Not all model outputs provide mixed layer depths.  Valid field IDs are MXHT,
+HPBL, and PBLH.
+<li>From temperature profile - computes the height of the mixed layer as the height at
+which the potential temperature is at least two degrees greater than the minimum
+potential temperature. The computation is made from the top down.
+<li>Compute from TKE profile - uses the meteorological model's TKE profile to estimate
+the mixing depth at the height at which the TKE either decreases by a factor of two or
+falls to a value of less than 0.21. Not all model outputs contain the TKE field.
+<li>Compute using a modified Richardson number approach that includes excess temperature 
+for convective cases.
+<li>Set a constant value (m) - as a last resort the mixing depth can also be set to
+a constant value (meters). The <i>kmixd</i> namelist variable either contains the mixing
+depth value or the integers 0,1,2 indicating one of the other choices.
+</ul>
+
+<center><p><img width="557" height="256" src="Image94.gif"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,773 @@
+%!PS-Adobe-2.0
+%%Title: clusplot.ps
+%%CreationDate: 08-NOV-07 11:48:08
+%%Created with: PSPLOT PostScript Plotting Package
+%%Library Creator: Kevin E. Kohler <kevin@ocean.nova.edu>
+%%Pages: (atend)
+%%EndComments
+/inch {72 mul} bind def
+/Ah {moveto lineto lineto stroke} def
+/Ar {moveto 2 copy lineto 4 -2 roll
+ moveto lineto lineto stroke } def
+/arcit {S /A2 exch def /A1 exch def /Rad exch def
+ /Yc exch def /Xc exch def
+ Xc Rad A1 cos mul add Yc Rad A1 sin mul add
+ moveto newpath
+ Xc Yc Rad A1 A2 arc stroke} def
+/C {/Rad exch def /Yc exch def /Xc exch def
+ Xc Yc Rad 0 360 arc closepath
+ } def
+/c0sf {closepath 0 setgray fill} def
+/cf {closepath fill} def
+/Cs {closepath stroke} def
+/Cln {newpath 3 1 roll
+ moveto {lineto} repeat clip newpath
+ } def
+/Cs {closepath stroke} def
+/Fb {newpath moveto
+ Dx 0 rlineto 0 Dy rlineto Dx neg 0 rlineto closepath
+ fill } def
+/Fbn { newpath 3 1 roll moveto {lineto} repeat
+ closepath fill } def
+/Fbnc { newpath 3 1 roll moveto
+ {lineto} repeat closepath fill } def
+/L /lineto load def
+/Lend {/Strlen exch stringwidth pop def} def
+/Lendi {/Strlen exch stringwidth pop 1.5 mul def} def
+/Lends {/Strlen exch stringwidth pop 1.1 mul def} def
+/Lenssd {/Strlenss exch stringwidth pop 3 mul 4 div def} def
+/LSM {2 copy lineto stroke moveto} def
+/lsm {Xp Yp lineto stroke mover} def
+/M /moveto load def
+/mover {Xp Yp moveto} def
+/Np {newpath} def
+/S /stroke load def
+/Sc {setrgbcolor} def
+/Sg {setgray} def
+/Setf {Curfnt exch scalefont setfont} def
+/SM {stroke moveto} def
+/sm {stroke mover} def
+/Slw {72.0000 mul setlinewidth} def
+/Slw0 {.24 setlinewidth} bind def
+%Line Breaking Procedure
+/TurnLineFL
+ { /T exch def /spacewidth space stringwidth pop def
+ /currentw 0 def /wordspace_count 0 def
+ /restart 0 def /remainder T def
+ {remainder space search
+ {/nextword exch def pop
+ /remainder exch def
+ /nextwordwidth nextword stringwidth pop def
+ currentw nextwordwidth add lw gt
+ {T restart wordspace_count restart sub
+ getinterval showline
+ /restart wordspace_count def
+ /currentw nextwordwidth spacewidth add def
+ }
+ {/currentw currentw nextwordwidth add
+ spacewidth add def
+ }
+ ifelse
+ /wordspace_count wordspace_count
+ nextword length add 1 add def
+ }
+ {pop exit}
+ ifelse
+ } loop
+ /lrem remainder stringwidth pop def
+ currentw lrem add lw gt
+ {T restart wordspace_count restart sub
+ getinterval showline remainder showline}
+ {/lastchar T length def
+ T restart lastchar restart sub getinterval
+ lm y moveto show}
+ ifelse
+ } def
+ /parms {/y exch def /lm exch def /rm exch def
+ /leading exch def /pointsize exch def
+ /lw rm lm sub def
+ findfont pointsize scalefont setfont
+ /showline {lm y moveto show
+ /y y leading sub def} def
+ lm y moveto } def
+/Xposd {/Xpos exch def} def
+/Xposjd {/Xpos exch Xpos exch Strlen mul sub def} def
+/xydef {/Xp Xpos def /Yp Ypos def} def
+%/Xypd {/Yp exch def /Xp exch def} def
+/Xypos0d {/Xpos0 Xpres def /Ypos0 Ypres def} def
+/Xyprset {dup /Xpres exch cos Strlen mul Xpos add def
+ /Ypres exch sin Strlen mul Ypos add def} def
+/Xyprset0 {dup /Xpres exch cos Strlen mul Xpos0 add def
+ /Ypres exch sin Strlen mul Ypos0 add def} def
+/Yposd {/Ypos exch def} def
+/Yposjd {/Ypos exch Ypos exch Strlen mul sub def} def
+%%EndProlog
+/space ( ) def
+%%Page: 1 1
+save
+/Curfnt /Helvetica findfont def
+ 12 Setf
+ 1.000 1.000 scale
+ 1.000 1.000 scale
+Slw0
+ 0.000 Sg
+ 0.000 0.000 0.000 Sc
+ 18.00 18.00 SM
+ 18.00 18.00 translate
+ 18.00 0.00 SM
+ 18.00 0.00 translate
+ 108.00 252.00 SM
+ 108.00 252.00 translate
+ 0.00 324.00 SM
+ 0.00 0.00 LSM
+ 0.00 324.00 SM
+ 7.20 324.00 LSM
+ 0.00 311.04 SM
+ 3.60 311.04 LSM
+ 0.00 298.08 SM
+ 3.60 298.08 LSM
+ 0.00 285.12 SM
+ 3.60 285.12 LSM
+ 0.00 272.16 SM
+ 3.60 272.16 LSM
+ 0.00 259.20 SM
+ 7.20 259.20 LSM
+ 0.00 246.24 SM
+ 3.60 246.24 LSM
+ 0.00 233.28 SM
+ 3.60 233.28 LSM
+ 0.00 220.32 SM
+ 3.60 220.32 LSM
+ 0.00 207.36 SM
+ 3.60 207.36 LSM
+ 0.00 194.40 SM
+ 7.20 194.40 LSM
+ 0.00 181.44 SM
+ 3.60 181.44 LSM
+ 0.00 168.48 SM
+ 3.60 168.48 LSM
+ 0.00 155.52 SM
+ 3.60 155.52 LSM
+ 0.00 142.56 SM
+ 3.60 142.56 LSM
+ 0.00 129.60 SM
+ 7.20 129.60 LSM
+ 0.00 116.64 SM
+ 3.60 116.64 LSM
+ 0.00 103.68 SM
+ 3.60 103.68 LSM
+ 0.00 90.72 SM
+ 3.60 90.72 LSM
+ 0.00 77.76 SM
+ 3.60 77.76 LSM
+ 0.00 64.80 SM
+ 7.20 64.80 LSM
+ 0.00 51.84 SM
+ 3.60 51.84 LSM
+ 0.00 38.88 SM
+ 3.60 38.88 LSM
+ 0.00 25.92 SM
+ 3.60 25.92 LSM
+ 0.00 12.96 SM
+ 3.60 12.96 LSM
+ 0.00 0.00 SM
+ 7.20 0.00 LSM
+ 0.00 0.00 SM
+ 378.00 0.00 LSM
+ 0.00 0.00 SM
+ 0.00 7.20 LSM
+ 12.60 0.00 SM
+ 12.60 3.60 LSM
+ 25.20 0.00 SM
+ 25.20 3.60 LSM
+ 37.80 0.00 SM
+ 37.80 3.60 LSM
+ 50.40 0.00 SM
+ 50.40 3.60 LSM
+ 63.00 0.00 SM
+ 63.00 7.20 LSM
+ 75.60 0.00 SM
+ 75.60 3.60 LSM
+ 88.20 0.00 SM
+ 88.20 3.60 LSM
+ 100.80 0.00 SM
+ 100.80 3.60 LSM
+ 113.40 0.00 SM
+ 113.40 3.60 LSM
+ 126.00 0.00 SM
+ 126.00 7.20 LSM
+ 138.60 0.00 SM
+ 138.60 3.60 LSM
+ 151.20 0.00 SM
+ 151.20 3.60 LSM
+ 163.80 0.00 SM
+ 163.80 3.60 LSM
+ 176.40 0.00 SM
+ 176.40 3.60 LSM
+ 189.00 0.00 SM
+ 189.00 7.20 LSM
+ 201.60 0.00 SM
+ 201.60 3.60 LSM
+ 214.20 0.00 SM
+ 214.20 3.60 LSM
+ 226.80 0.00 SM
+ 226.80 3.60 LSM
+ 239.40 0.00 SM
+ 239.40 3.60 LSM
+ 252.00 0.00 SM
+ 252.00 7.20 LSM
+ 264.60 0.00 SM
+ 264.60 3.60 LSM
+ 277.20 0.00 SM
+ 277.20 3.60 LSM
+ 289.80 0.00 SM
+ 289.80 3.60 LSM
+ 302.40 0.00 SM
+ 302.40 3.60 LSM
+ 315.00 0.00 SM
+ 315.00 7.20 LSM
+ 327.60 0.00 SM
+ 327.60 3.60 LSM
+ 340.20 0.00 SM
+ 340.20 3.60 LSM
+ 352.80 0.00 SM
+ 352.80 3.60 LSM
+ 365.40 0.00 SM
+ 365.40 3.60 LSM
+ 378.00 0.00 SM
+ 378.00 7.20 LSM
+ 378.00 0.00 SM
+ 378.00 324.00 LSM
+ 378.00 0.00 SM
+ 370.80 0.00 LSM
+ 378.00 12.96 SM
+ 374.40 12.96 LSM
+ 378.00 25.92 SM
+ 374.40 25.92 LSM
+ 378.00 38.88 SM
+ 374.40 38.88 LSM
+ 378.00 51.84 SM
+ 374.40 51.84 LSM
+ 378.00 64.80 SM
+ 370.80 64.80 LSM
+ 378.00 77.76 SM
+ 374.40 77.76 LSM
+ 378.00 90.72 SM
+ 374.40 90.72 LSM
+ 378.00 103.68 SM
+ 374.40 103.68 LSM
+ 378.00 116.64 SM
+ 374.40 116.64 LSM
+ 378.00 129.60 SM
+ 370.80 129.60 LSM
+ 378.00 142.56 SM
+ 374.40 142.56 LSM
+ 378.00 155.52 SM
+ 374.40 155.52 LSM
+ 378.00 168.48 SM
+ 374.40 168.48 LSM
+ 378.00 181.44 SM
+ 374.40 181.44 LSM
+ 378.00 194.40 SM
+ 370.80 194.40 LSM
+ 378.00 207.36 SM
+ 374.40 207.36 LSM
+ 378.00 220.32 SM
+ 374.40 220.32 LSM
+ 378.00 233.28 SM
+ 374.40 233.28 LSM
+ 378.00 246.24 SM
+ 374.40 246.24 LSM
+ 378.00 259.20 SM
+ 370.80 259.20 LSM
+ 378.00 272.16 SM
+ 374.40 272.16 LSM
+ 378.00 285.12 SM
+ 374.40 285.12 LSM
+ 378.00 298.08 SM
+ 374.40 298.08 LSM
+ 378.00 311.04 SM
+ 374.40 311.04 LSM
+ 378.00 324.00 SM
+ 370.80 324.00 LSM
+ 378.00 324.00 SM
+ 0.00 324.00 LSM
+ 378.00 324.00 SM
+ 378.00 316.80 LSM
+ 365.40 324.00 SM
+ 365.40 320.40 LSM
+ 352.80 324.00 SM
+ 352.80 320.40 LSM
+ 340.20 324.00 SM
+ 340.20 320.40 LSM
+ 327.60 324.00 SM
+ 327.60 320.40 LSM
+ 315.00 324.00 SM
+ 315.00 316.80 LSM
+ 302.40 324.00 SM
+ 302.40 320.40 LSM
+ 289.80 324.00 SM
+ 289.80 320.40 LSM
+ 277.20 324.00 SM
+ 277.20 320.40 LSM
+ 264.60 324.00 SM
+ 264.60 320.40 LSM
+ 252.00 324.00 SM
+ 252.00 316.80 LSM
+ 239.40 324.00 SM
+ 239.40 320.40 LSM
+ 226.80 324.00 SM
+ 226.80 320.40 LSM
+ 214.20 324.00 SM
+ 214.20 320.40 LSM
+ 201.60 324.00 SM
+ 201.60 320.40 LSM
+ 189.00 324.00 SM
+ 189.00 316.80 LSM
+ 176.40 324.00 SM
+ 176.40 320.40 LSM
+ 163.80 324.00 SM
+ 163.80 320.40 LSM
+ 151.20 324.00 SM
+ 151.20 320.40 LSM
+ 138.60 324.00 SM
+ 138.60 320.40 LSM
+ 126.00 324.00 SM
+ 126.00 316.80 LSM
+ 113.40 324.00 SM
+ 113.40 320.40 LSM
+ 100.80 324.00 SM
+ 100.80 320.40 LSM
+ 88.20 324.00 SM
+ 88.20 320.40 LSM
+ 75.60 324.00 SM
+ 75.60 320.40 LSM
+ 63.00 324.00 SM
+ 63.00 316.80 LSM
+ 50.40 324.00 SM
+ 50.40 320.40 LSM
+ 37.80 324.00 SM
+ 37.80 320.40 LSM
+ 25.20 324.00 SM
+ 25.20 320.40 LSM
+ 12.60 324.00 SM
+ 12.60 320.40 LSM
+ 0.00 324.00 SM
+ 0.00 316.80 LSM
+ -108.00 -252.00 SM
+ -108.00 -252.00 translate
+/Curfnt /ZapfDingbats findfont def
+ 12 Setf
+ 0.020 Slw
+ 460.80 403.19 SM
+ 473.40 397.90 LSM
+Slw0
+S
+ 7 Setf
+ 473.40 Xposd
+ 394.30 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 473.40 397.90 SM
+ 460.80 403.19 LSM
+Slw0
+S
+ 460.80 Xposd
+ 399.59 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 460.80 403.19 SM
+ 448.20 326.29 LSM
+Slw0
+S
+ 448.20 Xposd
+ 322.69 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 448.20 326.29 SM
+ 435.60 318.02 LSM
+Slw0
+S
+ 435.60 Xposd
+ 314.42 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 435.60 318.02 SM
+ 423.00 319.63 LSM
+Slw0
+S
+ 423.00 Xposd
+ 316.03 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 423.00 319.63 SM
+ 410.40 312.19 LSM
+Slw0
+S
+ 410.40 Xposd
+ 308.59 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 410.40 312.19 SM
+ 397.80 297.44 LSM
+Slw0
+S
+ 397.80 Xposd
+ 293.84 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 397.80 297.44 SM
+ 385.20 304.88 LSM
+Slw0
+S
+ 385.20 Xposd
+ 301.28 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 385.20 304.88 SM
+ 372.60 286.94 LSM
+Slw0
+S
+ 372.60 Xposd
+ 283.34 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 372.60 286.94 SM
+ 360.00 281.83 LSM
+Slw0
+S
+ 360.00 Xposd
+ 278.23 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 360.00 281.83 SM
+ 347.40 285.41 LSM
+Slw0
+S
+ 347.40 Xposd
+ 281.81 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 347.40 285.41 SM
+ 334.80 287.35 LSM
+Slw0
+S
+ 334.80 Xposd
+ 283.75 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 334.80 287.35 SM
+ 322.20 284.45 LSM
+Slw0
+S
+ 322.20 Xposd
+ 280.85 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 322.20 284.45 SM
+ 309.60 281.94 LSM
+Slw0
+S
+ 309.60 Xposd
+ 278.34 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 309.60 281.94 SM
+ 297.00 281.45 LSM
+Slw0
+S
+ 297.00 Xposd
+ 277.85 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 297.00 281.45 SM
+ 284.40 283.91 LSM
+Slw0
+S
+ 284.40 Xposd
+ 280.31 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 284.40 283.91 SM
+ 271.80 282.40 LSM
+Slw0
+S
+ 271.80 Xposd
+ 278.80 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 271.80 282.40 SM
+ 259.20 279.19 LSM
+Slw0
+S
+ 259.20 Xposd
+ 275.59 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 259.20 279.19 SM
+ 246.60 273.59 LSM
+Slw0
+S
+ 246.60 Xposd
+ 269.99 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 246.60 273.59 SM
+ 234.00 274.94 LSM
+Slw0
+S
+ 234.00 Xposd
+ 271.34 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 234.00 274.94 SM
+ 221.40 269.76 LSM
+Slw0
+S
+ 221.40 Xposd
+ 266.16 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 221.40 269.76 SM
+ 208.80 270.79 LSM
+Slw0
+S
+ 208.80 Xposd
+ 267.19 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 208.80 270.79 SM
+ 196.20 272.09 LSM
+Slw0
+S
+ 196.20 Xposd
+ 268.49 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 196.20 272.09 SM
+ 183.60 273.51 LSM
+Slw0
+S
+ 183.60 Xposd
+ 269.91 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 183.60 273.51 SM
+ 171.00 273.23 LSM
+Slw0
+S
+ 171.00 Xposd
+ 269.63 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 171.00 273.23 SM
+ 158.40 271.52 LSM
+Slw0
+S
+ 158.40 Xposd
+ 267.92 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 158.40 271.52 SM
+ 145.80 270.61 LSM
+Slw0
+S
+ 145.80 Xposd
+ 267.01 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 145.80 270.61 SM
+ 133.20 271.70 LSM
+Slw0
+S
+ 133.20 Xposd
+ 268.10 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 133.20 271.70 SM
+ 120.60 271.91 LSM
+Slw0
+S
+ 120.60 Xposd
+ 268.31 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+ 0.020 Slw
+ 120.60 271.91 SM
+ 108.00 272.92 LSM
+Slw0
+S
+ 108.00 Xposd
+ 269.32 Yposd
+(l) Lend 0.500 Xposjd
+xydef mover (l) show
+ 0.0 Xyprset
+/Curfnt /Helvetica findfont def
+ 7 Setf
+S
+ 14 Setf
+ 297.00 Xposd
+ 588.96 Yposd
+(Change in TSV as clusters are combined) Lend 0.500 Xposjd
+xydef mover (Change in TSV as clusters are combined) show
+ 0.0 Xyprset
+S
+ 13 Setf
+ 297.00 Xposd
+ 604.51 Yposd
+(Example) Lend 0.500 Xposjd
+xydef mover (Example) show
+ 0.0 Xyprset
+S
+ 14 Setf
+ 108.00 Xposd
+ 231.26 Yposd
+(30) Lend 0.500 Xposjd
+xydef mover (30) show
+ 0.0 Xyprset
+S
+ 171.00 Xposd
+ 231.26 Yposd
+(25) Lend 0.500 Xposjd
+xydef mover (25) show
+ 0.0 Xyprset
+S
+ 234.00 Xposd
+ 231.26 Yposd
+(20) Lend 0.500 Xposjd
+xydef mover (20) show
+ 0.0 Xyprset
+S
+ 297.00 Xposd
+ 231.26 Yposd
+(15) Lend 0.500 Xposjd
+xydef mover (15) show
+ 0.0 Xyprset
+S
+ 360.00 Xposd
+ 231.26 Yposd
+(10) Lend 0.500 Xposjd
+xydef mover (10) show
+ 0.0 Xyprset
+S
+ 423.00 Xposd
+ 231.26 Yposd
+( 5) Lend 0.500 Xposjd
+xydef mover ( 5) show
+ 0.0 Xyprset
+S
+ 486.00 Xposd
+ 231.26 Yposd
+( 0) Lend 0.500 Xposjd
+xydef mover ( 0) show
+ 0.0 Xyprset
+S
+ 297.00 Xposd
+ 213.12 Yposd
+(Number of clusters) Lend 0.500 Xposjd
+xydef mover (Number of clusters) show
+ 0.0 Xyprset
+S
+ 82.80 Xposd
+ 252.00 Yposd
+(  0) Lend 0.500 Xposjd
+xydef mover (  0) show
+ 0.0 Xyprset
+S
+ 82.80 Xposd
+ 316.80 Yposd
+( 25) Lend 0.500 Xposjd
+xydef mover ( 25) show
+ 0.0 Xyprset
+S
+ 82.80 Xposd
+ 381.60 Yposd
+( 50) Lend 0.500 Xposjd
+xydef mover ( 50) show
+ 0.0 Xyprset
+S
+ 82.80 Xposd
+ 446.40 Yposd
+( 75) Lend 0.500 Xposjd
+xydef mover ( 75) show
+ 0.0 Xyprset
+S
+ 82.80 Xposd
+ 511.20 Yposd
+(100) Lend 0.500 Xposjd
+xydef mover (100) show
+ 0.0 Xyprset
+S
+ 82.80 Xposd
+ 576.00 Yposd
+(125) Lend 0.500 Xposjd
+xydef mover (125) show
+ 0.0 Xyprset
+S
+ 57.60 Xposd
+ 414.00 Yposd
+(Change in TSV \(%\)) Lend 0.000 Xposjd 0.500 Yposjd
+xydef mover 90.0 rotate (Change in TSV \(%\)) show -90.0 rotate
+ 90.0 Xyprset
+restore
+stroke showpage
+%%Trailer
+%%Pages: 1
+%%EOF

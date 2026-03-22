@@ -1,0 +1,7 @@
+ &SETUP
+ initd = 3,
+ khmax = 24,
+ numpar = 25000,
+ efile = 'EMITIMES',
+ maxpar = 25000,
+ /

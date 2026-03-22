@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>Advanced / File Edit / Emissions File (S417)</title>
+</head>
+<body>
+
+<p><h2>Advanced / File Edit / Emissions File</h2></p>
+
+<p>This menu creates the optional EMITIMES file which is used to configure 
+more complex point source emissions scenarios. In the standard model simulation,
+the CONTROL file can only be used to define one pollutant release cycle which
+applies equally to all source locations. Although multiple release cycles can
+be defined, they must all be at the same interval.  Using the EMITIMES file to
+define the point source emissions, multiple release locations can each have
+their own emission characteristics, each with different pollutants, if desired.
+Furthermore, multiple emission cycles, at non-regular intervals can also be
+defined. By appropriately locating multiple sources in space and time, line-
+source as well as other non-regular emissions configurations can be created.
+In version 4.8 the format of this file has changed from previous HYSPLIT
+versions to such an extent that they are incompatible with each other. In all
+versions the file name is defined by the <i>EFILE</i> variable in the 
+<a href="S624.htm">namelist</a> configuration file created thorough
+the <i>Advanced / Configuration</i> menu tab.
+</p>
+
+<center><p><img src="Image64.gif" width="511" height="327"></center></p>
+
+<p>The first menu tab defaults to the configuration for one source. If 
+multiple sources are required, then enter the number in this menu. After
+pressing the <i>Configure Locations</i> button, another menu comes up to
+select the location number to configure. Pressing the location number button
+brings up the menu shown below. The GUI menu only supports the creation of
+a file for one pollutant for one emission cycle.  If multiple pollutants are
+defined, or multiple cycles are required, then the file must be edited manually
+by duplicating the emission record at each location for all pollutants in the
+order they are defined in the CONTROL file. Each defined release location must
+be configured according to the following instructions. The point source
+emissions file must be located in the startup directory the name should always
+be in uppercase. The following is an example of the contents of EMITIMES file
+for one location. Multiple locations would have one line per location. The
+number of data records should equal the number of sources defined in the 
+CONTROL file times the number of pollutants released.</p>
+
+<p>The EMITIMES file may also be configured to construct a vertical line source by
+having two consecutive emission points defined at the same spatial location but each
+with different heights. Unlike the vertical line source definition through the
+CONTROL file, where the same emission rate is defined for all sources, here the
+emission rate may be varied through the column. For instance, if the source
+record N is at the same location as record N-1, the the emission rate defined for
+record N-1 will be used for all particles released in the column from N-1 to N.
+This means that the emission value given for the last record, in a series of records
+at the same location will not be used.</p>  
+
+<ul>
+<li>Record 1 - Identification record describing the emission cycle header record
+<li>Record 2 - Identification record describing a location emission data record
+<li>Record 3 - First emission cycle header record
+<li>Record 4 - First emission data record in the first emission cycle
+</ul>
+
+<p><b>Emission Cycle Header Record: {YYYY} {MM} {DD} {HH} {hhhh} {#rec}</b></p>
+<ul>
+<li>{YYYY} {MM} {DD} {HH} - Starting time of the emission cycle, with each new
+             emission cycle, all previous emission records are replaced with
+             those in the new cycle.
+<li>{hhhh} - Duration in hours that this emission cycle is valid.
+<li>{#rec} - Number of emission records in this cycle (= # sources times # pollutants).
+</ul>
+
+<p><b>Emission Cycle Data Record: {YYYY} {MM} {DD} {HH} {mm} {HHmm} {Lat} {Lon} {Hgt} {Rate} {Area} {Heat}</b></p>
+
+<ul>
+<li>{YYYY} {MM} {DD} {HH} {mm} - Emission start time at this location
+<li>{HHmm} - Release duration in hours and minutes (no space).
+<li>{Lat} {Lon} {Hgt} - Position and height of the release.
+<li>{Rate} - Emission rate in mass units per hour.
+<li>{Area} - Emission area in square meters. Zero is treated as a point
+             source.  
+<li>{Heat} - Heat released during the emission or fire radiative power 
+	     for <a href="S640.htm">namelist option PLRISE</a> = 1 or 2, 
+	     respectively. Non-zero values result in a buoyancy plume rise
+	     calculation, replacing the previous height value.
+</ul>
+
+<p>The emission cycle header record defines the valid time period for the subsequent data records.
+At the end of the header record time period {hhhh}, the model will attempt to read the next emission
+cycle header record. If no header record is found, then the EMITIMES emission processing is terminated
+and the model reverts to using the emission values defined in the CONTROL file. For instance, this
+means that if a short emission duration is defined in the data records, but the model simulation
+covers a longer period, the header record duration {hhhh} should be long enough to cover the entire
+simulation period. Unless it is intended to use both methods, the emission rate and duration in the
+CONTROL file should both be set to zero when using an EMITIMES file.</p>
+
+<p><b> Emission Area </b><p>
+For computational particles <a href="S622.htm"> (INITD=0,103,104)</a> the emission area is a square by default. For version v5.1.0 and later,
+the <a href="S640.htm"> AREA namelist option</a> may be used to specify a circular emission area for computational particles, 
+AREA=1.
+Particles are
+distributed randomly with a uniform distribution in the emission area. For versions earlier than v5.1.0 the square area was smaller than the
+specified area by a factor of 1/&pi;. 
+<br>
+For Gaussian puffs, the specified area is the area out to 1.54&sigma;. Hence, the whole puff will cover a larger area.
+The standard deviation for the Gaussian puff is calculated from 
+&sigma; = (A/&pi;)<sup>1/2</sup> / 1.54.  Where A is the specified area in square meters. 
+<br>
+
+<p><b>Special Case: Backward simulations</b></p>
+
+<p>In the case of backward simulations, the cycle header record should point to the first (oldest)
+emission cycle and all subsequent emission cycles should be earlier in time. The emission start time
+within a cycle corresponds to a time such that the duration of emissions proceeds backward from that
+starting time. The internal backward flag has already been set from the negative run duration in the 
+CONTROL file and therefore all time durations in the EMITIMES file should be expressed as positive numbers.
+</p>
+
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

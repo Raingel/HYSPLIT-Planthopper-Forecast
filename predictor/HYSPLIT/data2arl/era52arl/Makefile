@@ -1,0 +1,49 @@
+# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+# 2003, 2004, 2005, 2006, 2007, 2008, 2009  Free Software Foundation,
+# Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# Makefile to be used with ECMWF ecCodes library
+#22 jan 2018 (amc) added intel compiler options.
+#26 aug 2019 (syz) include a Makefile.inc.
+#28 aug 2019 (syz) moved ECCODES path and options to Makefile.inc.
+
+include ../../Makefile.inc
+
+EXE=../../exec/
+PGM=era52arl
+
+LIBHYS = -L../../library -lhysplit
+
+FCFLAGS = -g $(FFLAGS) $(FFLAGS_FREEFORM)
+
+api2arl_DEPENDENCIES =  \
+	$(ECCODES_TOPDIR)/lib/x86_64-linux-gnu/libeccodes_f90.so \
+	$(ECCODES_TOPDIR)/lib/x86_64-linux-gnu/libeccodes.so
+FCCOMPILE = $(FC) $(ECCODESINC) $(FCFLAGS)
+FCLD = $(FC)
+FCLINK = $(FCLD) $(FCFLAGS) $(AM_LDFLAGS) \
+	 $(LDFLAGS) -o $(EXE)/$@
+
+.SUFFIXES:
+.SUFFIXES: .f .lo .o .obj
+
+$(PGM): $(PGM).o $(api2arl_DEPENDENCIES) 
+	@rm -f $(PGM)
+	$(FCLINK) $(PGM).o $(ECCODESLIBS) $(LIBHYS)
+
+
+.f.o:
+	$(FCCOMPILE) -c -o $@ $<  
+
+clean :
+	 rm -f $(EXE)/apidump
+	 rm -f $(EXE)/$(PGM)
+	 rm -f *.o

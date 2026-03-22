@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Concentration / Display / Polar Grids (S331)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Polar Grids </h2></p>
+
+<p>This menu is used to display concentration fields that were created 
+when the concentration grid was defined as a polar grid (radius,distance)
+rather than the traditional cartesian latitude-longitude grid. This option
+is invoked by setting <a href="S626.htm">CPACK=3</a> in the <i>SETUP.CFG</i>
+namelist file. The polar grid is then defined in the
+<a href="S313.htm">CONTROL</a> file by the grid spacing and span as the arc
+size (latitude values) and the sector distances (longitude values). The 
+latitude grid spacing equals the sector angle in degrees and the longitude grid spacing equals the sector distance spacing in kilometers. The latitude
+span always equals 360.0 degrees and the longitude span equals the total
+downwind distance in kilometers.</p>
+
+<center><img src="Image117.gif" width="535" height="297"></center>
+
+<p>The plotting program is called through this menu and provides options
+to fill the grid sectors with colors corresponding with the concentration,
+or draw contour lines, or output both color fill and contours. The contour
+output may also be converted to ESRI generate format for conversion into
+shapefiles using the utility convert menu.</p>
+
+<p>Several other options are available through the command line.<br>
+<br><b>USAGE: poleplot -[options(default)]</b><br>
+-b[background map file name (arlmap)]<br>
+-c[concentration data file name (cdump)]<br>
+-g[graphics (0)=fill, 1=lines, 2=both]<br>
++g[graphics type (0)=Postscript, 1=SVG]<br>
+-l[lat/lon label interval in degrees (0.5)]<br>
+-m[maximum concentration value set]<br>
+-o[output file name (poleplot.ps)]<br>
+-v[vector output (0)=no 1=yes]<br>
+</p>
+
+</body>
+</html>
+

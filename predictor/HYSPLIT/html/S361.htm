@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>Concentration / Quick Start Help (S361)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Quick Start Help</h2></p>
+
+<p>Upon installation the first time the model will be configured
+to run the example case discussed in more detail below. The "Quick
+Start" menu tab can be used to run the example or previous 
+simulation in one-step. For more detailed simulation configurations, 
+follow the steps below.</p>
+
+<p>The easiest way to run the model is to use the GUI menu to edit
+the model's input <i>CONTROL</i> file. For the purposes of this
+demonstration appropriate meteorological files are provided. If for
+some reason the menu system is not available, the <i>CONTROL</i>
+file can be created manually.</p>
+
+<p><u>Step 1</u> - start the GUI menu system using the desktop shortcut
+<i>Hysplit</i> to <i>\working\hysplit.tcl</i>. A widget will appear 
+with the <i>HYSPLIT</i> graphic and three button options: <i>Menu</i>, 
+<i>Help</i> <i>Exit</i>. <b>Click on <i>Menu</i>.</b></p>
+
+<p><u>Step 2</u> - The four main menus of Hysplit will appear: 
+<a href="S140.htm">Meteorology</a>, 
+<a href="S260.htm">Trajectory</a>,
+<a href="S360.htm">Concentration</a>, and the optional 
+<a href="S440.htm">Advanced</a> menu. An additional small widget
+underneath the main menu gives the current Hysplit version
+information. Do not delete this widget as it will terminate the
+GUI. It provides the reference frame for the model's standard
+output and messages and the version number required for updates. 
+<b>Click on <i>Concentration</i>.</b></p>
+
+<p><u>Step 3</u> - Under the concentration menu there are also five
+options: <a href="S310.htm">concentration setup</a>,
+<a href="S320.htm">run standard model</a>, 
+<a href="S330.htm">concentration display</a>, utility programs, and 
+<a href="S356.htm">special simulations</a>. In general, they should
+be executed in sequential order. <b>Click on <i>Setup Run</i>.</b></p>
+
+<p><u>Step 4</u> - The <i>Setup Run</i> menu brings up similar starting
+information requirements as with the <a href="S210.htm">trajectory menu</a>.
+There are three additional sub-menus: <a href="S312.htm">Pollutant</a> - 
+that can be used set the emission rate, duration, and start time of the
+emission; <a href="S313.htm">Grids</a> - to set the location, resolution,
+levels, and averaging times of the concentration output grid; and 
+<a href="S314.htm">Deposition</a> - to set the characteristics of each
+pollutant. <b>Click on <i>Retrieve</i></b>, enter name of sample 
+pre-configured control file: <b><i>sample_conc</i></b>, then 
+<b>click on <i>OK</i></b>. After the data entry widget is closed, 
+<b>click on <i>Save</i></b> and the setup menu will close.</p>
+
+<p><u><a name="run_model"></a>Step 5</u> - From the main
+concentration menu tab <b>select</b> <a href="S320.htm">Run
+Model</a>, which copies the setup configuration to the model's input 
+<i>CONTROL</i> file and starts the model simulation. Messages will 
+appear on standard output showing the progress of the calculation or after
+the calculation has completed. Be patient as concentration calculations
+may take considerably longer than trajectory calculations. 
+<b>Click on Exit</b> to close the message window. At that point the binary
+concentration output file is ready to be converted to a graphical display.</p>
+
+<p><u><a name="conc_display"></a>Step 6</u> - <b>Click on 
+<i>Display / Concentration </i></b> and then <b>select</b> <a href=
+"S330.htm">Contours</a> to run a special program that converts the binary 
+concentration file to the HTML file <i>concplot.html</i>, suitable for
+printing. The display widget contains multiple options for different 
+pollutants (if defined), data grids, levels, and contour options. These 
+are discussed in more detail in the <a href="S330.htm">graphics</a> section. For
+this example, accept the defaults and just click <b>on <i>Execute Display</i></b>.
+If a web browser has been installed and properly associated with .html files,
+then it will be 
+automatically invoked by the GUI. If the viewer does not open, it may be 
+necessary to manually edit the file <i>hysplit.tcl</i> for the directory
+entry associated with your web browser program. The output file can
+be printed through a web browser. The 12 hour average air concentration for a 
+one hour release is shown in the illustration below.</p>
+
+<center><p><img src="Image20.gif" width="458" height="425"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

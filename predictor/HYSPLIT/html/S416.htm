@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Set Directories (S416)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Set Directories</h2></p>
+
+<p>The installation program installs all code and executables to your
+selected directory, and creates a shortcut on the Window's desktop to
+/guicode/hysplit.tcl with the <i>Start In</i> directory as your selected 
+default. On Unix systems the link would appear in the /working directory.
+When the GUI is first started, it looks for the supplemental programs such
+as web browser, ImageMagick, and Tcl/tk in certain standard
+directories, and writes those paths to a file called <i>default_exec</i>.
+If this file already exists, those locations are used instead of the default
+search paths.  The directories specified in this file may be edited through
+the <i>Set Directories</i> menu tab. Copying the <i>default_exec</i> file
+to another computer with a different directory structure may cause the GUI
+to fail to open. In these situations, either delete the file, or manually
+edit the file to reflect the correct directory structure.</p>
+
+<center><p><img src="Image63.png" width="680" height="630"></center></p>
+
+<p>The <i>default_exec</i> values either reflect a directory location, a file
+name, or a directory/executable name. The content is mostly self-explanatory.
+Under UNIX systems, the X-windows directory should point to the location of the
+<i>xterm</i> program. This is optional. If the directory is defined, then many
+of the programs called by the GUI will run in their own <i>xterm</i> window.</p>
+
+<p>The Anaconda3 environment path is necessary for Python scripts. With Anaconda,
+users can create an environment and manage python packages in it. Each environment
+is self-contained and users can test out a new version of package without affecting
+other environments. For hysplit use, it is recommended to create the hysplit
+environment and have the Anaconda3 environment path on the graphical user
+interface point to the environment. For Windows 10 users, the environment path
+would be C:/Users/YOUR_USER_NAME/AppData/Local/Continuum/anaconda3/envs/hysplit
+when default values were used for Anaconda installation.</p>
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

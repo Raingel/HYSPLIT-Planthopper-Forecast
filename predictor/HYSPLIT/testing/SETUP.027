@@ -1,0 +1,4 @@
+ &SETUP
+ initd = 0,
+ numpar = 100,
+ /

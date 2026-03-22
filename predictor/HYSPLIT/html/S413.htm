@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup (S413)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup</h2></p>
+
+<p>This section provides some guidance in configuring the model input to 
+perform certain specialized calculations. The default configuration
+supplied with the test meteorological data is confined to a simple
+trajectory and inert transport and dispersion calculation. More complex
+scenarios can be configured through the <i>Advanced / Configuration Setup</i>
+menu tabs. There are seven sub menus available.<p>
+
+<ol> 
+<li><p>The <b>Trajectory</b> tab opens a menu creation or modification of
+the <i>SETUP.CFG</i> namelist file. This can be accomplished through the GUI
+or by directly editing the namelist file. The file is required to be in the
+model startup directory, usually <i>./working</i> when running the model
+through the GUI. More information about the trajectory namelist variables
+can be found in the trajectories <a href="S411.htm">help file</a>.</p>
+
+<li><p>The <b>Concentration</b> tab opens a similar menu to the trajectory
+tab, but with many more options. The <i>trajectory</i> and <i>concentration</i>
+menus are confined to the variables relevant to the respective model calculation.
+More information about the concentration namelist variables can be found in the
+concentration <a href="S412.htm">help file</a>.</p>
+
+<li><p>The <b>Global</b> tab opens a menu to create or edit a special namelist
+file that configures the <a href="S359.htm">Global Eulerian Model</a> (GEM), a series
+of subroutines within the main HYSPLIT transport and dispersion code. Particles or
+puffs are always first released in the Lagrangian framework and carried within HYSPLIT
+until they exceed a certain age at which point their mass is transferred to the GEM
+routines. Particles can be released and transferred for the entire duration of the
+simulation.</p> 
+
+<li><p>The <b>Dynamic Sampling</b> menu is used to configure a special virtual
+<a href="S415.htm">sampler</a> that can move in space and time through the computational
+domain during the concentration simulation. Dynamic samplers can move passively with
+the wind or have a define pathway, similar to an airplane.</p> 
+
+<li><p>The <b>Emissions File</b> opens a menu to edit or create a point-source 
+<a href="S417.htm">emission file</a> that can define more complex release scenarios than
+could be created using just the CONTROL file. Simple scenarios like time-varying emissions
+to more complex moving line or point sources cab be configured.</p>
+
+<li><p>The <b>Set Directories</b> menu is used to configure the GUI's <a href="S416.htm">
+directory structure</a> as well as the location and name of certain executable programs
+used by the GUI. The structure is written to the <i>default_exec</i> file. If that file is
+not found in the startup directory, the GUI attempts to set all the values. Significant
+differences are found between Windows, Apple, and UNIX installations.</p>  
+
+<li><p>The <b>Extra Labeling</b> menu opens a simple editor menu to create a file of 
+<a href="S414.htm">extra label</a> information that is added to the bottom of all 
+<a href="S230.htm"> trajectory</a> or <a href="S330.htm">concentration</a> plots. Only
+these two display programs support the extra label function.</p> 
+</ol>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

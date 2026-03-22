@@ -1,0 +1,12 @@
+#!/bin/csh -f
+
+set yyyy = 2017
+
+set mm = 10
+
+./cdf2arl <<EOF
+$yyyy
+$mm
+EOF
+
+exit

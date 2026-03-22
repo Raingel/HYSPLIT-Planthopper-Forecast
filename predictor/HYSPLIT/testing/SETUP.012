@@ -1,0 +1,5 @@
+ &SETUP
+ initd = 0,
+ kpuff = 0,
+ kdef = 1,
+ /

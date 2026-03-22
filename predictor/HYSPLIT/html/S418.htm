@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Advanced / File Edit / Border Labels (S418)</title>
+</head>
+<body>
+
+<p><h2>Advanced / File Edit / Border Labels</h2></p>
+
+<p>Many of the HYSPLIT plotting programs have label information that can be
+customized to some extent. This is accomplished by placing a file called 
+<i>LABELS.CFG</i> in the working directory which should contain one or more of
+the following valid entries (all in single quotes terminated by &amp;). Replace
+the second text string with the new desired text. Not all label strings are valid
+with every plotting program. This file can be created and edited through the
+menu system. Quotes and string terminators are not required in the edit menu.</p>
+<ul>
+<li>'TITLE&amp;','NOAA AIR RESOURCES LABORATORY&amp;'
+<li>'MAPID&amp;','Air Concentration&amp;'
+<li>'LAYER&amp;','Layer Averaged&amp;'
+<li>'UNITS&amp;','Bq&amp;'
+<li>'VOLUM&amp;','/m3&amp;'
+<li>'TZONE&amp;','UTC+00&amp;'
+<li>'RELEASE&amp;','Release info&amp;'
+<li>'ALLTD&amp;','m&amp;'
+</ul>
+<p>The time zone variable can be used to force a specific time zone for the air
+concentration contour plot. All calculations are performed in UTC, but prior to
+plotting, all times are converted by the time zone adjustment. The field should
+always be six characters in length. The first three represent the time zone label,
+such as UTC, the next character is the sign field (+ to the east or - to the west),
+and last two digits are the hours difference of the time zone from UTC.</p> 
+<p>Altitude units (ALTTD) may be set to feet for concentration output plots.</p>
+
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

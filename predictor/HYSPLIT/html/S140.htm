@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Meteorology / Help (S140)</title>
+</head>
+<body>
+
+<p><h2>Meteorology / Help</h2></p>
+
+<p>Meteorological data fields to run the model are usually already
+available or can be created from routine analysis archives or
+forecast model outputs. More complete descriptions of the different
+data sets are available <a href="https://www.ready.noaa.gov/READYmetdata.php">
+on-line</a>. The meteorological data available through the menu system are
+summarized in the following sections.</p>
+
+<p>The meteorology menu is divided into four sections: data FTP, data
+conversion, data display, and utility programs.</p>
+<ul>
+<li>The FTP section provides access to various data files that may be FTP'd
+from the <a href="S101.htm"> ARL server</a> compatible for immediate input
+to HYSPLIT. These files include <a href="S111.htm">current and appended</a>
+forecasts as well as various regional and global <a href="S112.htm">
+analysis archives</a>. All data files have already been converted for 
+HYSPLIT applications.
+
+<li>The convert menu gives data processing options for files that are stored
+on the local computer. Processing of forecast or analysis files are available
+for archive, forecast, and regional or global data files in various formats.
+Processing for GRIB1 formatted input files is available for 
+<a href="S125.htm">Global ECMWF/NOAA</a>, and <a href="S126.htm">ERA-40</a>.
+NetCDF is supported on UNIX systems permitting conversion of 
+<a href="S120.htm">WRF-ARW</a> data files. In addition, a simple interface
+has been created to permit the entry of <a href="S128.htm">user generated</a>
+time-varying data at a single location. 
+ 
+<li>The display data menu tab provides some simple tools that can
+be used to examine the data already in ARL packed format. The most
+basic is the <a href="S130.htm">check file</a> listing of the 
+individual data records. The <a href="S131.htm">contour map</a>
+program will display a contour plot of any variable at any one 
+time in the file. Multiple time periods may be processed. The 
+<a href="S132.htm">profile program</a> returns a text file of the
+profile of meteorological parameters at a pre-selected point. 
+The <a href="S133.htm">grid domain</a> menu shows the extent 
+of the meteorological grid with a mark at each point.
+
+<li>The utility menu permits <a href="S134.htm">conversion </a>
+of SVG files to any other graphical format and the
+creation of <a href="S135.htm">shapfiles</a>.
+</ul>
+
+<p>More detailed information about the format of the <a href=
+"S141.htm">ARL packed data</a> is available. In addition, various
+library routines and <a href="S142.htm">utility programs</a> are
+provided to manipulate both the GRIB and ARL packed data files.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

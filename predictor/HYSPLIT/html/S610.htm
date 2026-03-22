@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Time Step Selection Criteria (S610)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Time Step Selection Criteria</h2></p>
+
+<p>Set Ratio - <i>TRATIO</i> (0.75) - defines the fraction of a grid 
+cell that a particle or trajectory is permitted to transit in one 
+advection time step. Reducing this value will reduce the time step and
+increase computational times. Smaller time steps result in less
+integration error. Integration errors can be estimated by computing
+a backward trajectory from the forward trajectory end position and
+computing the ratio of the distance between that endpoint and the
+original starting point divided by the total forward and backward
+trajectory distance.</p>
+
+<p>Set Value - <i>DELT</i> (0.0) - is used to set the integration time step
+to a fixed value in minutes from 1 to 60. It should be evenly divisible
+into 60. The default value of zero causes the program to compute
+the time step each hour according to the maximum wind speed,
+meteorological and concentration grid spacing, and the
+<i>TRATIO</i> parameter. The fixed time step option should only be
+used when strong winds in regions not relevant to the dispersion
+simulation (perhaps the upper troposphere) are causing the model to
+run with small time steps. Improper specification of the time step
+could cause aliasing errors in advection and underestimation of air
+concentrations. An alternate approach is to set the a negative value
+which will result in that value (abs) being used as the minimum time step.</p>
+ 
+<center><p><img width="582" height="233" src="Image65.gif"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

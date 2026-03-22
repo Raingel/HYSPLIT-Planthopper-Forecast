@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Namelist Variables (S410)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Namelist Variables</h2></p>
+
+<p>This section provides a summary of the <i>SETUP.CFG</i> namelist file parameters
+required in configuring the model to perform certain specialized calculations. The 
+default value is shown in <b>bold</b> with each variable and a link to the User's
+Guide page with a more detailed discussion of the options. The namelist options that
+only affect <i>trajectories</i> are shown in italics.<p>
+
+<ul>
+<li><b>CAPEMIN=-1</b> -1 no convection; -2 Grell convection scheme; -3 extreme convection; >0 enhanced vertical mixing when <a href="S640.htm">CAPE</a> exceeds this value (J/kg)
+<li><b>AREA=0</b> set emission area shape <a href="S417.htm">square (0) or circle (1)</a> 
+<li><b>CMASS=0</b> compute grid <a href="S626.htm">concentrations (0) or grid mass (1)</a>
+<li><b>CMTFN=' '</b> center-of-mass trajectory <a href="S631.htm">output file name</a>
+<li><b>CONAGE=24</b> particle to or from puff conversions at <a href="S622.htm">conage (hours)</a>
+<li><b>CPACK=1</b> binary concentration packing <a href="S626.htm">0:none 1:nonzero 2:points 3:polar</a> 
+<li><b>DELT=0.0</b> integration time step <a href="S610.htm">(0=autoset GT-0=constant LT-0=minimum)</a>
+<li><b>DXF=1.0</b> horizontal X-grid adjustment factor for <a href="S615.htm">ensemble</a>
+<li><b>DYF=1.0</b> horizontal Y-grid adjustment factor for <a href="S615.htm">ensemble</a>     
+<li><b>DZF=0.01</b> vertical  (0.01 ~ 250m) factor for <a href="S615.htm">ensemble</a>
+<li><b>EFILE=' '</b> temporal emission <a href="S624.htm">file name</a>
+<li><b>FRHMAX=3.0</b> maximum value for the <a href="S630.htm">horizontal rounding parameter</a>
+<li><b>FRHS=1.00</b> standard horizontal puff rounding <a href="S630.htm">fraction for merge</a>
+<li><b>FRME=0.10</b> mass rounding fraction for <a href="S630.htm">enhanced merging</a>
+<li><b>FRMR=0.0</b> mass removal fraction during <a href="S630.htm">enhanced merging</a>
+<li><b>FRTS=0.10</b> temporal puff <a href="S630.htm">rounding fraction</a>
+<li><b>FRVS=0.01</b> vertical puff <a href="S630.htm">rounding fraction</a>
+<li><b>GEMAGE=48</b> particle or puff transfer to the global model after <a href="S622.htm">gemage (hours)</a>
+<li><b>HSCALE=10800.0</b> horizontal <a href="S625.htm">Lagrangian time scale (sec)</a>
+<li><b>ICHEM=0</b> chemistry conversion modules <a href="S628.htm">0:none 1:matrix 2:convert 3:dust ...</a>
+<li><b>IDSP=1</b> particle dispersion scheme <a href="S622.htm">1:HYSPLIT 2:STILT</a>
+<li><b>INITD=0</b> initial distribution, <a href="S622.htm">particle, puff, or combination</a>
+<li><b>IVMAX=20</b> <a href="S640.htm">number of variables</a> written to PARTICLE_STILT.DAT. Must equal the number of variables listed for variable VARSIWANT
+<li><b>K10M=1</b> use surface 10m winds / 2m temperature (1) or <a href="S640.htm">skip (0) </a>
+<li><b>KAGL=1</b> trajectory output heights are written as AGL (1) or as <a href="S640.htm">MSL (0)</a>
+<li><b>KBLS=1</b> boundary layer stability derived from <a href="S625.htm">1:fluxes 2:wind_temperature</a>
+<li><b>KBLT=2</b> boundary layer turbulence parameterizations <a href="S625.htm">1:Beljaars 2:Kanthar 3:TKE 4:Measured 5:Hanna</a>
+<li><b>KDEF=0</b> horizontal turbulence <a href="S625.htm">0=vertical 1=deformation</a>
+<li><b>KHINP=0</b> when non-zero sets the <a href="S640.htm">age (h)</a> for particles read from <i>PINPF</i>
+<li><b>KHMAX=9999</b> maximum duration (h) for a <a href="S623.htm">particle</a> or <a href="S613.htm">trajectory</a>
+<li><b>KMIXD=0</b> mixed layer obtained from <a href="S625.htm">0:input 1:temperature 2:TKE 3:modified Richardson #</a>
+<li><b>KMIX0=150</b> minimum <a href="S625.htm">mixing depth</a>
+<li><b>KMSL=0</b> starting heights default to <a href="S611.htm">AGL=0 or MSL=1</a>
+<li><b>KPUFF=0</b> horizontal puff dispersion <a href="S625.htm">linear (0) or empirical (1) growth</a>
+<li><b>KRAND=0</b> method to calculate random number <a href="S640.htm"> 0=precompute
+if NUMPAR greater than 5000 or dynamic if NUMPAR less than or equal to 5000;
+1=precalculated; 2=calculated in pardsp; 3=none; 4=random initial seed number and
+calculated in pardsp; 10=same as 0 with random initial seed for non-dispersion
+applications; 11=same as 1 with random initial seed for non-dispersion applications;
+12=same as 2 with random initial seed for non-dispersion applications; 13=same as 3
+with random initial seed for non-dispersion applications</a>
+<li><b>KRND=6</b> enhanced merge <a href="S630.htm">interval (hours)</a>
+<li><b>KSPL=1</b> standard splitting <a href="S630.htm">interval (hours)</a>
+<li><b>KWET=0</b> precipitation from an <a href="S640.htm">external file</a>
+<li><b>KZMIX=0</b> vertical mixing adjustments: <a href="S625.htm">0=none 1=PBL-average 2=scale_TVMIX</a>
+<li><b>MAXDIM=1</b> maximum number of pollutants to carry on <a href="S628.htm">one particle</a>
+<li><b>MAXPAR=10000</b> maximum number of particles <a href="S623.htm">carried in simulation</a>
+<li><b>MESSG='MESSAGE'</b> diagnostic message <a href="S640.htm">file base name</a>
+<li><b>MGMIN=10</b> minimum meteorological <a href="S611.htm">subgrid size</a>
+<li><b>MHRS=9999</b> <i>trajectory</i> restart <a href="S612.htm">duration limit (hours)</a>
+<li><b>NBPTYP=1</b> number of redistributed particle size <a href="S640.htm">bins per pollutant type</a>
+<li><b>NINIT=1</b> particle initialization <a href="S627.htm">(0-none; 1-once; 2-add; 3-replace)</a>
+<li><b>NCYCL=0</b> pardump output <a href="S627.htm">cycle time</a>
+<li><b>NDUMP=0</b> dump particles to/from file <a href="S627.htm">0-none or nhrs-output interval</a> 
+<li><b>NSTR=0</b> <i>trajectory</i> restart time <a href="S612.htm">interval in hours</a>
+<li><b>NTURB=0</b> Turbulence flag <a href="S640.htm">0-on; 1-off</a>
+<li><b>NUMPAR=2500</b> number of puffs or particles to <a href="S623.htm">released per cycle</a>
+<li><b>NVER=0</b> <i>trajectory</i> vertical <a href="S612.htm">split number</a>
+<li><b>P10F=1.0</b> dust threshold velocity <a href="S356.htm">sensitivity factor</a>
+<li><b>PINBC=' '</b> particle <a href="S627.htm">input file name </a> for time-varying boundary conditions
+<li><b>PINPF=' '</b> particle <a href="S627.htm">input file name </a> for initialization or boundary conditions
+<li><b>PLRISE=1</b> plume rise option <a href="S640.htm">1-Briggs; 2-Sofiev; 3-Freitas </a> used when heat/fire radiative power is nonzero in emissions input file
+<li><b>POUTF=' '</b> particle <a href="S627.htm">output file name</a>
+<li><b>QCYCLE=0.0</b> optional <a href="S624.htm">cycling of emissions (hours)</a>
+<li><b>RHB=80</b> is the RH defining the <a href="S640.htm">base of a cloud</a>
+<li><b>RHT=60</b> is the RH defining the <a href="S640.htm">top of a cloud</a>
+<li><b>SEED=-1</b> set the seed for the random number generator. (v988 and higher)</a>
+<li><b>SPLITF=1.0</b> automatic size adjustment (<0=disable) factor for <a href="S630.htm">horizontal splitting</a>
+<li><b>TERRFLG=0</b> <a href="S641.htm">If terrain not available in meteological file estimate from surface pressure (0) or terrain.asc file (1). </a>
+<li><b>TKERD=0.18</b> unstable turbulent kinetic energy ratio = <a href="S625.htm">w'2/(u'2+v'2)</a>
+<li><b>TKERN=0.18</b> stable turbulent kinetic <a href="S625.htm">energy ratio</a>
+<li><b>TLFRAC=0.1</b> The <a href="S640.htm">fraction of the Lagrangian vertical time scale</a> used to calculate the dispersion time step in the STILT dispersion scheme.
+<li><b>TM_PRES=0</b> <i>trajectory</i> diagnostic output <a href="S614.htm">pressure variable marker flag</a>
+<li><b>TM_TPOT=0</b> <i>trajectory</i> diagnostic output <a href="S614.htm">potential temperature</a>
+<li><b>TM_TAMB=0</b> <i>trajectory</i> diagnostic output <a href="S614.htm">ambient temperature</a> 
+<li><b>TM_RAIN=0</b> <i>trajectory</i> diagnostic output <a href="S614.htm">rainfall rate</a>
+<li><b>TM_MIXD=0</b> <i>trajectory</i> diagnostic output <a href="S614.htm">mixed layer depth</a>
+<li><b>TM_TERR=0</b> <i>trajectory</i> diagnostic output <a href="S614.htm">terrain height</a>   
+<li><b>TM_DSWF=0</b> <i>trajectory</i> diagnostic output <a href="S614.htm">downward short-wave flux</a>
+<li><b>TM_RELH=0</b> <i>trajectory</i> diagnostic output <a href="S614.htm">relative humidity</a>
+<li><b>TOUT=60</b> <i>trajectory</i> output <a href="S613.htm">interval in minutes</a>
+<li><b>TRATIO=0.75</b> advection <a href="S610.htm">stability ratio</a>
+<li><b>TVMIX=1.0</b> vertical mixing <a href="S625.htm">scale factor</a>
+<li><b>VARSIWANT='TIME','INDX','LONG','LATI','ZAGL','SIGW','TLGR','ZSFC','TEMP','SAMT','FOOT','SHTF','DMAS','DENS','RHFR','SPHU','DSWF','WOUT','MLHT','PRES'</b>  <a href="S640.htm">variables</a> written to PARTICLE_STILT.DAT.
+<li><b>VBUG=0</b> insect <a href="S640.htm"> additional horizontal speed (m/s)</a> added to trajectories
+<li><b>VDIST='VMSDIST'</b> diagnostic file <a href="S640.htm">vertical mass distribution</a>
+<li><b>VEGHT=0.5</b> Height below which particle's time is spent is tallied to calculate footprint for PARTICLE_STILT.DAT  <a href="S640.htm">less than or equal to 1.0: fraction of PBL height; greater than 1.0: height AGL (m)</a>
+<li><b>VINIT=1</b> initial turbulent velocity. Draw from distribution (1)  set to 0 (0) </a>
+<li><b>VSCALEU=200.0</b> vertical Lagrangian <a href="S625.htm">time scale (sec) for unstable PBL</a>
+<li><b>VSCALES=5.0</b> vertical Lagrangian <a href="S625.htm">time scale (sec) for stable PBL</a>
+<li><b>WBWR=0.0</b> <i>trajectory</i> fixed rise velocity (m/s) <a href="S262.htm">required if vertical motion option = 9</a>
+<li><b>WBWF=0.0</b> <i>trajectory</i> fixed fall velocity (m/s, >0) <a href="S262.htm">required if vertical motion option = 9 or 10</a>
+<li><b>WBBH=0.0</b> <i>trajectory</i> height at which vertical velocity switches from rise to fall (m) <a href="S262.htm">required if vertical motion option = 9</a>
+<li><b>WVERT=.FALSE.</b> Vertical interpolation scheme for WRF fields <a href="S632.htm">.FALSE.:HYSPLIT scheme .TRUE.:WRF scheme</a>
+</ul>
+
+ 
+<br><br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

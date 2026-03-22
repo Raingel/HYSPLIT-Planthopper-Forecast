@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>Advanced / File Edit / Dynamic Sampling (S415)</title>
+</head>
+<body>
+
+<p><h2>Advanced / File Edit / Dynamic Sampling</h2></p>
+
+<p>This menu creates the optional LAGSET.CFG file which is used to configure 
+a dynamic sampler. A dynamic sampler is defined as a moving sampler that can 
+pass through the model simulation domain, either passively with the wind 
+(Lagrangian mode) or by using a pre-defined velocity vector (Forced mode). 
+In the current version the dynamic sampler transport is always vertically 
+isobaric regardless of the vertical motion method selected for the 
+pollutant transport. The dynamic sampler samples model produced values 
+that are generated internally on a snapshot concentration grid.</p>
+
+<p>The first menu tab defaults to the configuration for one sampler. If 
+multiple samplers are required, then enter the number in this menu. After
+pressing the <i>Configure Samplers</i> button, another menu comes up to
+select the sampler number to configure. Pressing the sampler number button
+brings up the menu shown below. Each defined sampler must be configured
+according to the following instructions.</p>
+
+<center><p><img src="Image62.gif" width="518" height="368"></center></p>
+
+The dynamic sampler configuration file must be located in the model's
+startup directory to be found and the name should always be in uppercase.
+The following is an example of the contents of LAGSET.CFG for one dynamic
+sampler. Multiple samplers would repeat the last seven line sequence.</p>
+
+<ul>
+<p>1 : number of dynamic samplers</p>
+<p>40.0 -90.0 500.0 : release location and height (agl)</p>
+<p>0.0 0.0 : force vector - direction, speed (m/s)</p>
+<p>95 10 16 00 00 : release start - year month day hour minute</p>
+<p>95 10 16 00 00 : sampling start - year month day hour minute</p>
+<p>00 : sample averaging (min)</p>
+<p>60 : disk file output interval (min)</p>
+<p>'LAGOUT.TXT' : sampler output file</p>
+</ul>
+
+<p><i>Number of dynamic samplers</i>: Due to file unit number restrictions, the current 
+version only supports 9 simultaneous sampler definitions. The following seven lines need 
+to be repeated for every defined sampler.</p>
+
+<p><i>Release location and height</i>: The location is the latitude-longitude point at 
+which the trajectory of the sampler path is started. Although the subsequent vertical 
+motion is isobaric, the initial starting height must be defined in meters above ground-level. 
+Note that the isobaric sampler trajectory will not be identical to the HYSPLIT 
+trajectory model isobaric trajectory because of differences in how the vertical 
+motion is computed between the two models.</p>
+
+<p><i>Force vector</i>: If the direction (downwind) and speed (m/s) set to zero, 
+then the model computes the sampler trajectory according to the meteorological 
+input data wind velocity. If any of these values are not zero, then the sampler
+trajectory is computed using these values for its entire length. To simulate a 
+more complex aircraft sampling path, each leg of the flight pattern requires its 
+own sampler definition. For instance, an aircraft flying east with have a
+direction vector of 090.</p>
+
+<p><i>Release start</i>: The release time of the sampler gives the date and time 
+that sampler starts from the previously defined release location. Note that in 
+the current version, zero's for this field (relative start time) are not supported.</p>
+
+<p><i>Sampling start</i>: The sampler may proceed on its trajectory for quite some 
+time before sampling is started. The sampler start time must be greater than or 
+equal to the release start time.</p>
+
+<p><i>Sample averaging (minutes)</i>: At every computational time step the model 
+determines the sampler position in the concentration grid and accumulates the 
+concentration value in memory. When the sampler accumulation time reaches the 
+sample averaging time, all sums are reset to zero. A sample averaging time of 
+zero means that the sample is only accumulated for one model integration 
+time step.</p>
+
+<p><i>Disk file output interval (minutes)</i>: At the disk output interval, 
+the sampler concentration values are written to the output file defined on 
+the next input line. The value written is the accumulated concentration 
+divided by the accumulated minutes. The disk output interval is independent 
+from the sample averaging time. </p>
+
+<p><i>Sampler output file</i>: The directory and file name should be enclosed 
+in single quotes.  If the file is defined without a directory it is written 
+to the model startup directory. </p>
+
+<p><b>Concentration Grid Configuration</b></p>
+
+<p>Note that dynamic sampling will only work if the sampler trajectory passes 
+through a concentration grid covering the region of interest. That means that a
+concentration grid of sufficient resolution, in both the horizontal and 
+vertical is required for a sampler to capture the pollutant. However too much 
+resolution (too fine a grid) may mean that there could be an insufficient number 
+of pollutant particles to provide a uniform distribution and therefore the 
+sampling could provide unrepresentative results. The concentration grid is 
+required to be defined as a snapshot grid. In the current version, only one 
+pollutant species per simulation is supported.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Concentration / Display / Grid Values (S338)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Display / Grid Values </h2></p>
+
+<p>A generic Postscript equivalent of the Windows-only concentration 
+grid point data display program is available through this menu. 
+This particular program (<i>gridplot</i>) was designed to plot global
+sized concentration grids, although any sized grid may be displayed.
+Concentration values over the entire grid (or a zoomed area) will be 
+shown using a color-fill in each grid cell according to its
+concentration value. The options available through the GUI are setting
+the input file, output file, lowest contour value, contour interval, 
+species number, linear or logarithmic scaling, and the longitude offset,
+the center latitude, the zoom factor, the concentration multiplier,
+and the choice of GIS output. By default, each time period is output 
+to a different file name, gridplot_{???}.html, where the sequence number 
+{???} is incremented by one for each time period. When called from the 
+<i>Global Grid</i> menu tab, the default output file name is gemplot 
+rather than gridplot.</p>
+
+<p>Several other options are available through the command line, which
+may be needed if multiple levels have been written to the concentration
+output file. <b>USAGE: gridplot -[options(default)]</b></p> 
+
+<ul>
+-i[input file name (cdump.bin)]<br>
+-p[Process output file name suffix]<br>
+-o[output name (plot.ps)]<br>
+-l[lowest interval value (1.0E-36), -1 = use data minimum]<br>
+-m[multi frames one file (0=no) 1=yes]<br>
+-c[concentration multiplier (1.0)]<br>
+-d[delta interval value (1000.0)]<br>
+-s[species number to display: (1); 0-sum]<br>
+-h[height of level to display (m) (integer): (0 = dep)]<br>
+-j[Graphics map background file name: (arlmap)]<br>
+-a[scale: 0-linear, (1)-logarithmic]<br>
+-x[longitude offset (0), e.g., o--90: U.S. center; o-90: China center]<br>
+-y[latitude center (0), e.g., 40.0: U.S. center]<br>
+-f[(0), 1-ascii text output files for mapped values]<br>
+-g[GIS: 0-none 1-GENERATE(log10) 2-GENERATE(value) 3-KML 4-partial KML]<br>
++g[graphics type: (0)-Postscript 1-SVG]<br>
+-k[KML options: 0-none 1-KML with no extra overlays]<br>
+-u[mass units(ie, kg, mg, etc); note these are labels only]<br>
+-z[zoom: (0)-no zoom, 99-most zoom]<br>
+</ul>
+
+<center><img src="Image86.gif" width="448" height="310"></center>
+
+<p>When called from the <i>Global Grid</i> menu tab, an additional feature is
+available through the <i>Add Plume</i> checkbox. In this case, the first
+plume model concentration grid (if more than one is defined) is added to the
+global model concentration grid as defined in this menu. The merged
+concentration file is called <i>concadd.bin</i> which is then displayed
+by <i>gridplot</i>. The two concentration files that are added must be
+identical in terms of the number levels and pollutants. However, the spatial grid
+characteristics may be different. The height of the levels at each index do not
+have to be identical. If this issue is important, then the heights heights
+corresponding to the global model heights needs to be set in the CONTROL file
+setup menu. Note that the global model vertical heights cannot be changed by the
+user and correspond with the heights of the meteorological data levels. The
+horizontal characteristics of the output grid always takes the grid
+dimensions of the second grid (-b).</p>
+
+<b>USAGE: concadd -[options(default)]</b>
+
+<ul>
+    -i[input file name (cdump)]<br>
+    -b[base file name to which input is added (gdump)]<br>
+    -o[output file name with base format (concadd.bin)]<br>
+    -g[radius (grid points around center) to exclude; default=0]<br>
+    -c[concentration conversion factor (1.0)]<br>
+    -p[sum process (0)=add | 1=max value | 2=zero mask | 3=intersect]<br>
+                                         | 4=replace]<br>
+    -z[zero mask value (base set to zero when input>mask; default=0.0)]<br>
+                       if zero mask value < 0 :<br>
+                            base set to zero when input> zero mask value * base<br>
+</ul>
+
+</body>
+</html>
+

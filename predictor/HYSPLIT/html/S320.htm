@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>Concentration / Run Model (S320)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Run Model</h2></p>
+
+<p>Once the Concentration Setup menu has been closed with the
+<i>Save</i> button, the changes to the simulation parameters are
+copied to <i>default_conc</i>. Clicking on the <i>Run Standard
+Mode</i>l menu tab first copies <i>default_conc</i> to
+<i>CONTROL</i> and then runs the trajectory model executable,
+<i>hycs_std</i>. The executable, by default, attempts to open a
+file named <i>CONTROL</i> to read all the required input
+parameters. If not found, the model will prompt to standard output
+for values from standard input. This condition should not occur
+running the model through the GUI.</p>
+
+<p>In the situation where the namelist file <i>SETUP.CFG</i> has
+been created through the <i>Advanced/Configuration</i> menu tab,
+the message shown below will appear. If the intent was to run using
+this file, then continue, otherwise one can delete the file and run,
+or terminate the simulation. The situation may arise that the
+namelist file was created for a previous simulation and is not needed
+this time.</p>
+
+<center><p><img src="Image61.gif" width="528" height="116"></p></center>
+
+<p>When the model execution starts, output messages are written
+to a special window. Successful completion of a simulation will
+show a message similar to the example shown in the illustration
+below:</p>
+
+<center><p><img src="Image27.gif" width="510" height="387"></p></center>
+
+<p> Additional run-time diagnostic messages and other
+error messages are always written to a file called <i>MESSAGE</i>.
+This file may be viewed through one of the Advanced Menu tabs.
+Depending upon the nature of the error message, perhaps a failure
+in the model initialization process, error messages may also appear
+in above window. Once the model has completed, <b>press Exit</b> to
+close the window.</p>
+
+<p> Sometimes a configuration (long duration, very fine grid, too many particles)
+will lead to extremely long run times, perhaps requiring the model to be
+terminated prematurely. Closing the GUI will not terminate the simulation because it
+always runs in background. In this situation it is necessary to use the
+<i>cntl-alt-del</i> key combination (Windows) to find and kill the <i>hycs_std</i>
+executable.</p>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

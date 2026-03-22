@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Concentration / Utilities / Binary File Extract (S349)</title>
+</head>
+<body>
+
+<p><h2>Concentration / Utilities / Binary File Extract</h2></p>
+
+<p>
+Calls the utility program <i>concrop</i> to extract a sub-grid from a HYSPLIT binary
+concentration data file. The new subgrid is written to the file <i>conxtrct.bin</i>.
+The utility program can be used to remove the whitespace by resizing the grid about
+the non-zero concentration domain or by specifying a sub-grid. Using the -x option
+will force the extract of the users domain regardless of white space.
+</p>
+
+<br>USAGE: concrop -[options (default)]
+<br>-b[latmin:lonmin:latmax:lonmax (all zeroes will produce full grid extract]
+<br>-d[process id (txt)]
+<br>-f[FCSTHR.TXT: (0)=none 1=output]
+<br>-i[Input file name: (cdump)]
+<br>-g[Output plume grid limits rather than cropped file: (0)=no; 1=center-radius -1=from{-b}]
+<br>-o[Output file name: (ccrop)]
+<br>-p[time extract MMDDHH:MMDDHH]
+<br>-x[override white space: (0)=no (default) 1=yes]
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

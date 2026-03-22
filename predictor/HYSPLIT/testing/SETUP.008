@@ -1,0 +1,6 @@
+ &SETUP
+ khmax = 999,
+ nstr = 8,
+ mhrs = 999,
+ nver = 3,
+ /

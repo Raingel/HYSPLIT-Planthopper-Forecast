@@ -1,0 +1,167 @@
+#-----------------------------------------------------------------------------
+# Makefile.inc.gfortran - declares options for the GFORTRAN compiler and
+# 			  linker.
+#
+# Change History Log:
+#   Last Revised: 23 Aug 2019 - Initial.
+#                 26 Aug 2019 - Removed INC and redefined NETINC and NETLIBS.
+#                 28 Aug 2019 - Added variables for MPI compilation.
+#                 23 Feb 2021 - Added MINC and MLIB for MPI compilation.
+#                 17 Jun 2021 - Add C++ compiler.
+#                 13 Oct 2021 - Add GTEST_INC and GTEST_LIB.
+#                 14 Oct 2021 - Add GRIBUSE, GRIB_INC, and GRIB_LINK.
+#                 26 Jan 2022 - Add FFLAGS_STRICT.
+#                 02 Feb 2022 - Add -finit-local-zero to initialize all
+#                               uninitialized local variables to zero.
+#                 18 Oct 2022 - Require declaring subroutine interfaces
+#                 16 Nov 2023 - Add LDFLAGS_CPROG and LDFLAGS_FPROG.
+#-----------------------------------------------------------------------------
+# This file is to be included by other Makefiles.
+
+# Need BASH not the default SH
+SHELL=/bin/bash
+
+# NetCDF library
+NETINC= -I/usr/include
+NETLIBS= -L/usr/lib64 -lnetcdff	# for netCDF4
+#NETLIBS= -L/usr/lib64 -lnetcdf	# for netCDF3
+
+#NETINC= -I/usr/local/include
+#NETLIBS= -L/usr/local/lib -lnetcdff
+#NETINC= -I/usr/local/netCDF4/include
+#NETLIBS= -L/usr/local/netCDF4/lib -lnetcdff
+#NETINC= -I/usr/local/netcdf/netcdf363/include
+#NETLIBS= -L/usr/local/netcdf/netcdf363/lib -lnetcdf
+
+# IOAPI library for the CMAQ converters
+IOAPIINC= -I${HOME}/ioapi-3.2/ioapi
+IOAPILIBS= -L${HOME}/ioapi-3.2/Linux3_x86_64gfort -lioapi -lpthread
+#IOAPIINC= -I/usr/local/include
+#IOAPILIBS= -L/usr/local/lib -lioapi
+
+# ECCODES library for building the API2ARL and ERA2ARL programs
+#ECCODES_TOPDIR= /opt/eccodes
+#ECCODESINC= -I/opt/eccodes/include
+#ECCODESLIBS= -L/opt/eccodes/lib -leccodes_f90 -leccodes 
+ 
+# Google Test framework
+GTEST_INC= ${HOME}/googletest/googletest/include
+GTEST_LIB= -L${HOME}/googletest/build/googlemock/gtest -lgtest -lgtest_main
+
+# GRIB-dependent programs
+#GRIBUSE=TRUE
+#GRIB_INC= ${HOME}/nceplib/g2lib-3.2.0
+#GRIB_LINK= -L${HOME}/nceplib/g2lib-3.2.0 -lg2 \
+#   -L${HOME}/nceplib/lib -ljasper -lpng \
+#   -L${HOME}/nceplib/bacio-1.3 -lbacio
+ 
+#OPTIMIZATION=-O0 -g
+OPTIMIZATION=-O2 -g
+
+# Define additional linker options for C/C++ and FORTRAN programs.
+LDFLAGS_CPROG=
+LDFLAGS_FPROG=
+
+# Define C compiler and its options.
+CC=gcc
+CFLAGS=$(OPTIMIZATION) \
+   -Wall -Wpadded -Wpacked -malign-double $(LDFLAGS_CPROG)
+
+# Define C++ compiler and its options.
+CXX=g++
+CXXFLAGS=$(OPTIMIZATION) -std=c++11 \
+   -Wall -Wpadded -Wpacked -malign-double $(LDFLAGS_CPROG)
+
+# Define FORTRAN compiler and its options.
+FC=gfortran
+FFLAGS_FREEFORM= -ffree-form
+FFLAGS=$(OPTIMIZATION) \
+   -fconvert=big-endian -frecord-marker=4 -fPIC \
+   -falign-commons -finit-local-zero \
+   $(LDFLAGS_FPROG)
+FFLAGS_STRICT=$(FFLAGS) \
+   -fimplicit-none -Wunused \
+   -Wimplicit-interface -Wimplicit-procedure
+
+# additional gfortran diagnostics
+#  -Werror -Wall -fbounds-check -fbacktrace
+#  -ffpe-trap=invalid,zero,overflow
+
+# MPI compilation
+# generic MPI flags: /usr/local/mpich/bin or /usr/local/mpi/mpich2/bin
+#MPIUSE=TRUE
+#MPIFC=/usr/lib64/mpich/bin/mpif90
+#MPIFC=/usr/lib64/mvapich2/bin/mpif90
+#MINC=
+#MLIB=
+
+# Application specific options
+# PREP not required for INTEL/PGF; use spaces between options: -D{OPT1} -D{OPT2}
+# required for SGI compilers
+# PREP=-Wf,
+# required for IBM compilers
+# PREP=-WF,
+FFLAGS_HYCS_STD_EXE= -DSTD
+FFLAGS_HYCM_STD_EXE= -DMPI
+FFLAGS_HYCS_ENS_EXE= -DENS
+FFLAGS_HYCM_ENS_EXE= -DENS -DMPI
+FFLAGS_HYCS_VAR_EXE= -DVAR
+FFLAGS_HYCS_GEM_EXE= -DGEM
+FFLAGS_HYCS_IER_EXE= -DIER
+FFLAGS_HYCS_GRS_EXE= -DGRS
+FFLAGS_HYCS_SO2_EXE= -DSO2
+FFLAGS_HYCS_CB4_EXE= -DCB4
+FFLAGS_HYCM_CB4_EXE= -DCB4 -DMPI
+FFLAGS_HYTM_STD_EXE= -DMPI
+FFLAGS_HYTS_ENS_EXE= -DENS
+FFLAGS_HYTS_STD_EXE= -DSTD
+FFLAGS_HYSPTEST_EXE= -DSTD
+FFLAGS_PROFILE_EXE= -DSTD
+FFLAGS_DISPLAY_EXE= -DSTD
+FFLAGS_LATLON_EXE= -DSTD
+FFLAGS_SHOWGRID_EXE= -DSTD
+FFLAGS_DUSTBDY_EXE= -DSTD
+
+FFLAGS_CAT2SVG_EXE=
+# compiler specific flags
+#SUN5 = -O -free
+#AIXC = -O3
+#AIX8 = -O3 -qarch=auto -qmaxmem=-1 -qstrict
+#AIXR = $(AIX8) -qsmp=omp -qsmp=noauto -qsmp=noopt -qnosave 
+#AIX5 = -O -qarch=com -qmaxmem=8192
+#DEC3 = -O -assume byterecl
+#SGI5 = -OPT:Olimit=3091 -bytereclen -freeform 
+#PGF9 = -O1 -Mfree -byteswapio -Mlfs
+#INTL = -O -FR -diag-disable 8290,8291 -assume byterecl -convert big_endian
+#GF95 = -O2 -fendian=big -ffree-form
+# -----------------------
+# standard compilation flags
+#SUN5 = -free $(NETINC)    
+#AIXC = $(NETINC)
+#AIX8 = -qarch=auto -qmaxmem=8192 $(NETINC) -qstrict
+#DEC3 = -assume byterecl $(NETINC)
+#SGI5 = -bytereclen $(NETINC) -freeform 
+#ABSF = -f free $(NETINC)
+#PGF9 = -Mfree -byteswapio $(NETINC)
+#INTL = -FR -assume byterecl -convert big_endian $(NETINC)
+#GF95 = -fendian=big -ffree-form $(NETINC)
+#
+#SUN5 = -O -free
+#AIXC = -O3 -I.
+#AIX5 = -O -qarch=com -qmaxmem=8192 -I.
+#AIX8 = -O3 -qarch=auto -qmaxmem=8192 -qstrict
+#DEC3 = -O -assume byterecl
+#SGI5 = -O -bytereclen -freeform
+#ABSF = -O1 -f free 
+#PGF9 = -O -Mfree -byteswapio
+#PGF9 = -O -Mfree -byteswapio -Mlfs -I.
+#INTL = -O -FR -assume byterecl -convert big_endian -I.
+#INTL = -O -FR -diag-disable 8290,8291 -assume byterecl -convert big_endian -I.
+#GF95 = -O2 -fendian=big -ffree-form 
+
+# other PGF9 options (also -O2 -Munroll -Mnoframe) 
+# PGF9 = -O2 -Mfree -byteswapio -Mlfs -Munroll -I$(INC)
+# -----------------------
+
+# only requred if using the "C" version of the fcsubs IO library
+#CLIB=-lgfortranfcsubs

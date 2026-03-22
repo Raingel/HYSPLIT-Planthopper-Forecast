@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Advanced / Configuration Setup / Particle-Puff Release Number Limits (S623)</title>
+</head>
+<body>
+
+<p><h2>Advanced / Configuration Setup / Particle-Puff Release Number Limits</h2></p>
+
+<p>The number of particles released per cycle <i>NUMPAR (2500)</i> would be
+the maximum number of particles or puffs released over the duration of the
+emission. <i>NUMPAR</i> has a different meaning for puff and particle
+simulations. In a full puff simulation (<i>INITD</i> = 1 or 2), only one
+puff per time step is released, regardless of the value of <i>NUMPAR</i>.
+In a particle or mixed particle-puff simulation (<i>INITD</i> = 0, 3, 4),
+<i>NUMPAR</i> represents the total number of particles that are released
+during one release cycle. Multiple release cycles cannot produce more than
+<i>MAXPAR</i> number of particles. For a mixed simulation (particle-puff),
+<i>NUMPAR</i> should be greater than one but does not need to be anything
+close to what is required for a full 3D particle simulation.</p>
+
+<p>To simplify certain simulations when a constant particle number release rate
+is required, specifying a negative value for <i>NUMPAR</i> will over-ride the
+particle number release rate calculations (in terms of the number of sources, 
+hours emission, and pollutants) and force the particle release rate to be 
+<i>|NUMPAR|</i> particles per hour for each source and pollutant.</p>
+
+<p>The maximum number of particles <i>MAXPAR (10000)</i> is the maximum number
+permitted to be carried at any time during a simulation. In all simulation
+types, particle or puffs are only emitted if the particle count is less than
+<i>MAXPAR</i>. Note that there are situations where <i>NUMPAR</i> can (and
+should) exceed <i>MAXPAR</i> because the actual particle release rate is
+computed by dividing <i>NUMPAR</i> by the number of sources, pollutants,
+and release hours.</p>
+
+<p>The maximum particle duration <i>KHMAX (9999)</i> is the number of hours
+after release that a particle is dropped from the simulation. For simulations using
+regional meteorological grids, particles are dropped when the reach the grid
+boundary. However, when using global meteorological data, it may be computationally
+prudent to drop particles after they are no longer over the region of interest.</p>
+
+<center><p><img src="Image74.gif" width="582" height="249"></p></center>
+
+<br>
+<hr>
+<center><p><a href="index.htm">Table of Contents</a></p></center>
+</body>
+</html>

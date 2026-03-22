@@ -1,0 +1,46 @@
+#!/bin/ksh
+
+  set -x
+# set hysplit home directory
+  HYHOME="../.."
+
+  cp $HYHOME/bdyfiles/ASCDATA.CFG ./
+  cp $HYHOME/graphics/arlmap ./
+
+
+
+ $HYHOME/exec/hycs_std volcano 
+
+# -----
+  $HYHOME/exec/parxplot -iPARDUMP_volcano -pvolcano -k1 -m1 -z90 
+ mv parxplot.volcano parxplot_volcano.ps
+
+ gs -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dSAFER -sDEVICE=pnmraw -q -sOutputFile=- parxplot_volcano.ps  -c quit | convert -trim +repage +adjoin - GIF:parxplot_volcano.gif
+
+# -----
+# mass loading (datem_loc.txt)
+#  force start time in datem.txt to be 0600z so symbols will be plotted 
+#     AND - in conmap.f, change .LT. to >LE. for the timing test in the QFILE section
+#                          for snapshot output 
+  dashx="-x18000000"	# 18000m deep conc layer x 1000g/kg (conc is kg/m3, want massl in g/m2)
+  $HYHOME/exec/concplot -icdump_volcano -omassl.volcano -m0 -d2 -c1 -z75 \
+      -n14:14 -a0 -k2 -s0 -l115 -ug  ${dashx} -pvolcano -qdatem_loc.txt
+  mv massl.volcano massl.volcano.ps
+
+  gs -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dSAFER -sDEVICE=pnmraw -q -sOutputFile=- massl.volcano.ps  -c quit | convert -trim +repage +adjoin - GIF:massl.volcano.gif
+
+# mass loading plotting mass loading values (datem_mass.txt)
+  $HYHOME/exec/concplot -icdump_volcano -omassl_val.volcano -m0 -d2 -c1 -z75 \
+     -n14:14 -a0 -k2 -s0 -l115 -ug  ${dashx} -pvolcano    -qdatem_mass.txt
+  mv massl_val.volcano massl_val.volcano.ps
+
+  gs -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dSAFER -sDEVICE=pnmraw -q -sOutputFile=- massl_val.volcano.ps  -c quit | convert -trim +repage +adjoin - GIF:massl_val.volcano.gif
+
+
+$HYHOME/exec/concsum -icdump_volcano -ocsum_volcano
+$HYHOME/exec/c2datem  -icsum_volcano.bin -omodel.txt -mdatem_mass.txt -c1.8e+07  -d
+$HYHOME/exec/statmain -ddatem_mass.txt -rmodel.txt -o1 -t0 -l1.0 -b
+
+
+exit
+

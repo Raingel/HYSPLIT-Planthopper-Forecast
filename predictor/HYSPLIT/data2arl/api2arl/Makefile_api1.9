@@ -1,0 +1,56 @@
+# Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002,
+# 2003, 2004, 2005, 2006, 2007, 2008, 2009  Free Software Foundation,
+# Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# Makefile to be used with grib_api libraries version 1.9 and higher
+
+EXE=../../exec
+
+top_builddir = ../../../../grib_api-1.9.18
+LIBHYS = -L../../library -lhysplit
+LIBS = -lm -ljasper 
+
+SHELL = /bin/sh
+
+FC = gfortran
+FCFLAGS = -g -O2 -fconvert=big-endian -frecord-marker=4 -ffree-form
+
+PROGRAMS = api2arl 
+api2arl_LDADD = $(LDADD)
+api2arl_DEPENDENCIES =  \
+	$(top_builddir)/fortran/libgrib_api_f90.la \
+	$(top_builddir)/src/libgrib_api.la
+FCCOMPILE = $(FC) $(AM_FCFLAGS) $(FCFLAGS)
+FCLD = $(FC)
+LIBTOOL = $(SHELL) $(top_builddir)/libtool
+FCLINK = $(LIBTOOL) --tag=FC \
+	--mode=link $(FCLD) $(AM_FCFLAGS) $(FCFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $(EXE)/$@
+
+
+
+AM_FCFLAGS = -I$(top_builddir)/fortran
+LDADD = $(top_builddir)/fortran/libgrib_api_f90.la $(top_builddir)/src/libgrib_api.la
+
+.SUFFIXES:
+.SUFFIXES: .f .lo .o .obj
+
+api2arl: api2arl_v4.o $(api2arl_DEPENDENCIES) 
+	@rm -f api2arl
+	$(FCLINK) api2arl_v4.o $(api2arl_LDADD) $(LIBS) $(LIBHYS)
+
+.f.o:
+	$(FCCOMPILE) -c -o $@ $<
+
+clean :
+	 rm -f $(EXE)/apidump
+	 rm -f $(EXE)/api2arl
+	 rm -f *.o
