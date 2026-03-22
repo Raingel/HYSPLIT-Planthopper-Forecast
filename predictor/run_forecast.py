@@ -15,6 +15,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Iterable, Sequence
 
+from dateutil.parser import parse as parse_datetime
+
 import matplotlib
 
 matplotlib.use("Agg")
@@ -183,6 +185,17 @@ def select_cycles(
     return selected
 
 
+def parse_ready_datetime(value: str) -> datetime:
+    value = value.strip()
+    legacy_formats = ["%H %d %b %Y", "%B %d, %Y at %H UTC"]
+    for legacy_format in legacy_formats:
+        try:
+            return datetime.strptime(value, legacy_format)
+        except ValueError:
+            continue
+    return parse_datetime(value).replace(tzinfo=None)
+
+
 def fetch_cycle_span(session: requests.Session, cycle: datetime) -> tuple[datetime, datetime]:
     response = session.post(
         READY_SPAN_URL,
@@ -198,8 +211,8 @@ def fetch_cycle_span(session: requests.Session, cycle: datetime) -> tuple[dateti
     span_match = READY_SPAN_PATTERN.search(response.text)
     if span_match is None:
         raise RuntimeError(f"Could not parse the data span for GFS cycle {cycle:%Y-%m-%d %H}.")
-    start = datetime.strptime(span_match.group(1).strip(), "%H %d %b %Y")
-    end = datetime.strptime(span_match.group(2).strip(), "%H %d %b %Y")
+    start = parse_ready_datetime(span_match.group(1))
+    end = parse_ready_datetime(span_match.group(2))
     return start, end
 
 
