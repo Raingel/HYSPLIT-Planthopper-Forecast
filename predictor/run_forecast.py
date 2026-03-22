@@ -51,6 +51,8 @@ READY_FILE_PATTERN = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 THERMAL_CUTOFF_K = 16.5 + 273.0
+READY_TIMEOUT = (30, 120)
+READY_REQUEST_ATTEMPTS = 5
 GRID_Y_VALUES = np.arange(8.0, 25.0, 0.5)
 GRID_X_VALUES = np.arange(100.0, 125.0, 0.5)
 CONTOUR_LEVELS = [0, 10, 20, 30, 40, 50, 999]
@@ -130,6 +132,40 @@ def create_session() -> requests.Session:
     return session
 
 
+def perform_ready_request(
+    session: requests.Session,
+    method: str,
+    url: str,
+    *,
+    attempts: int = READY_REQUEST_ATTEMPTS,
+    retry_label: str | None = None,
+    **kwargs,
+) -> requests.Response:
+    kwargs.setdefault("timeout", READY_TIMEOUT)
+
+    for attempt in range(1, attempts + 1):
+        try:
+            response = session.request(method, url, **kwargs)
+            response.raise_for_status()
+            return response
+        except requests.exceptions.RequestException as exc:
+            if attempt == attempts:
+                raise
+            delay_seconds = min(5 * attempt, 30)
+            label = retry_label or f"{method.upper()} {url}"
+            logging.warning(
+                "%s failed (%s/%s): %s; retrying in %ss",
+                label,
+                attempt,
+                attempts,
+                exc,
+                delay_seconds,
+            )
+            time.sleep(delay_seconds)
+
+    raise RuntimeError(f"Unreachable retry flow for {method.upper()} {url}.")
+
+
 def parse_cycle_string(value: str) -> datetime:
     return datetime.strptime(value.strip(), "%H %Y%m%d")
 
@@ -139,12 +175,13 @@ def parse_cycle_from_path(path: Path) -> datetime:
 
 
 def fetch_available_cycles(session: requests.Session) -> list[datetime]:
-    response = session.post(
+    response = perform_ready_request(
+        session,
+        "post",
         READY_CYCLE_URL,
         data={"metdata": "GFS", "xtype": "3"},
-        timeout=30,
+        retry_label="Fetch READY cycle list",
     )
-    response.raise_for_status()
     cycle_values = re.findall(r'<option value="(.*?)">', response.text)
     if not cycle_values:
         raise RuntimeError("Could not find any READY GFS forecast cycles.")
@@ -197,7 +234,9 @@ def parse_ready_datetime(value: str) -> datetime:
 
 
 def fetch_cycle_span(session: requests.Session, cycle: datetime) -> tuple[datetime, datetime]:
-    response = session.post(
+    response = perform_ready_request(
+        session,
+        "post",
         READY_SPAN_URL,
         data={
             "metdata": "GFS",
@@ -205,9 +244,8 @@ def fetch_cycle_span(session: requests.Session, cycle: datetime) -> tuple[dateti
             "metext": "gfsf",
             "metcyc": cycle.strftime("%H %Y%m%d"),
         },
-        timeout=30,
+        retry_label=f"Fetch READY span for {cycle:%Y-%m-%d %H}Z",
     )
-    response.raise_for_status()
     span_match = READY_SPAN_PATTERN.search(response.text)
     if span_match is None:
         raise RuntimeError(f"Could not parse the data span for GFS cycle {cycle:%Y-%m-%d %H}.")
@@ -223,7 +261,9 @@ def request_cycle_extract(
     end: datetime,
 ) -> int:
     proc = random.randint(1000, 9999)
-    response = session.post(
+    perform_ready_request(
+        session,
+        "post",
         READY_EXTRACT_URL,
         data={
             "metdata": "GFS",
@@ -246,21 +286,27 @@ def request_cycle_extract(
             "latR": "60",
             "lonR": "160",
         },
-        timeout=30,
+        retry_label=f"Start READY extract for {cycle:%Y-%m-%d %H}Z",
     )
-    response.raise_for_status()
     return proc
 
 
 def wait_for_extract_file(session: requests.Session, proc: int) -> str:
     max_attempts = 40
     for attempt in range(max_attempts):
-        response = session.get(
-            READY_RESULTS_URL,
-            params={"proc": proc},
-            timeout=30,
-        )
-        response.raise_for_status()
+        try:
+            response = perform_ready_request(
+                session,
+                "get",
+                READY_RESULTS_URL,
+                params={"proc": proc},
+                retry_label=f"Poll READY extract {proc}",
+            )
+        except requests.exceptions.RequestException as exc:
+            logging.warning("READY extract %s poll failed on loop %s/%s: %s", proc, attempt + 1, max_attempts, exc)
+            sleep_seconds = min(3 * (2**attempt), 30)
+            time.sleep(sleep_seconds)
+            continue
         file_match = READY_FILE_PATTERN.search(response.text)
         if file_match is not None:
             return file_match.group(1)
@@ -303,8 +349,13 @@ def download_cycle(
     temp_zip_path = output_dir / f"{proc}.zip"
 
     logging.info("Downloading %s to %s", zip_url, output_path.name)
-    with session.get(zip_url, stream=True, timeout=60) as response:
-        response.raise_for_status()
+    with perform_ready_request(
+        session,
+        "get",
+        zip_url,
+        stream=True,
+        retry_label=f"Download READY archive for {cycle:%Y-%m-%d %H}Z",
+    ) as response:
         with temp_zip_path.open("wb") as zip_file:
             for chunk in response.iter_content(chunk_size=8192):
                 if chunk:
