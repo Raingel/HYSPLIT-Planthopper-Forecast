@@ -47,7 +47,7 @@ READY_SPAN_PATTERN = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 READY_FILE_PATTERN = re.compile(
-    r'<a href="(.*?)">\s*Download the extracted meteorology file',
+    r'(/extractout/[^\s"<>]+?\.zip)',
     re.IGNORECASE | re.DOTALL,
 )
 THERMAL_CUTOFF_K = 16.5 + 273.0
@@ -273,6 +273,10 @@ def wait_for_extract_file(session: requests.Session, proc: int) -> str:
 
 
 def extract_zip_to_bin(zip_path: Path, output_path: Path) -> None:
+    if not zipfile.is_zipfile(zip_path):
+        snippet = zip_path.read_text(encoding="utf-8", errors="ignore")[:500]
+        raise RuntimeError(f"READY returned a non-zip payload: {snippet}")
+
     with zipfile.ZipFile(zip_path, "r") as archive:
         members = [name for name in archive.namelist() if name.endswith(".bin")]
         if not members:
